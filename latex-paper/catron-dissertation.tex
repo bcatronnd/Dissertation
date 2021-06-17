@@ -1,0 +1,72 @@
+% !TEX root = catron-dissertation.tex
+% arara: pdflatex
+% arara: bibtex
+% arara: pdflatex
+% arara: pdflatex
+
+\documentclass[twoadvisors,noinfo]{nddiss2e}
+
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{csquotes}
+\usepackage[outdir=./images/]{epstopdf}
+\usepackage[makeroom]{cancel}
+\usepackage{listings}
+\lstset
+{ %Formatting for code in appendix
+    language=Matlab,
+    basicstyle=\footnotesize,
+    numbers=left,
+    stepnumber=1,
+    showstringspaces=false,
+    tabsize=1,
+    breaklines=true,
+    breakatwhitespace=false,
+}
+\begin{document}
+
+\frontmatter
+
+\title{ Filtering of Acoustic Information from Aero-Optical Measurements }
+\author{ Brian Lowell Catron }
+\work{ Dissertation }
+\degaward{ Doctor of Philosophy }
+\advisor{ R. Mark Rennie }
+\secondadvisor{ Eric J. Jumper}
+\department{ Aerospace and Mechanical Engineering}
+\maketitle
+
+\copyrightyear{ 2021 }
+\makecopyright
+
+\begin{abstract}
+Abstract Goes Here
+\end{abstract}
+
+\begin{dedication}
+To my wife Karen \& our son Arthur
+\end{dedication}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\include{00_symbols}
+
+\begin{acknowledge}
+\end{acknowledge}
+
+\mainmatter
+\include{01_intro_draft_00}
+\include{02_background_draft_00}
+\include{03_aero_optics_accoustics_draft_00}
+\include{04_basic_filtering_draft_00}
+
+\appendix
+\include{90_code_samples_00}
+
+\backmatter
+\bibliographystyle{nddiss2e}
+\bibliography{00_references.bib}
+
+\end{document}
