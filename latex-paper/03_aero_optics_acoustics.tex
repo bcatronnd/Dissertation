@@ -1,0 +1,77 @@
+% !TEX root = catron-dissertation.tex
+\epstopdfsetup{outdir=./images/03_aero_optics_acoustics/}
+
+\chapter{Aero-Optical and Acoustical Coupling}
+
+Acoustic waves are isentropic compression waves with the fluctuating pressure, $p'$, determining the strength of the wave.
+This fluctuating pressure is related to the sound pressure level, $\spl$ by
+\begin{equation}
+  \spl = 20\log_{10}\left(\frac{p_{rms}}{p_0}\right)
+  \label{eqn:03_spl}
+\end{equation}
+where $p_{rms}$ is the root mean square of the pressure fluctuation, and $p_0$ is the reference pressure (20 $\mu$Pa for air).
+The pressure fluctuations can be converted to the density fluctuations via the definition of the speed of sound:
+\begin{equation}
+  c_0^2 = \left(\frac{\partial p}{\partial \rho}\right)_s=\frac{p'}{\rho'}
+  \label{eqn:03_speed_sound}
+\end{equation}
+where $c_0$ is the speed of sound at mean fluid properties and the subscript $s$ denotes constant entropy.
+It can be shown by combining Equations \ref{eqn:02_gladstone_dale_relation_fluctuating} and \ref{eqn:02_opd} that the fluctuating density can be related to the $\opd$:
+\begin{equation}
+  \opd = K_{GD}\int_{s_1}^{s_2}{\rho'}ds
+  \label{eqn:03_opd_fluct}
+\end{equation}
+These equations form the bases of calculating the optical effect of acoustic waves or determining the sound pressure level of a flow field from a non-intrusive optical measurement.
+
+\section{Examples of Acoustic-Optical Coupling}
+
+\subsection{Planar Acoustic Waves}
+This section will show several plots to show the effect that acoustic waves have on the optical wavefront of a planar wave with the general geometry shown in Figure \ref{fig:03_planar_sample_domain}.
+\begin{figure}
+  \centering
+  \includegraphics{../matlab/03_aero_optics_acoustics/planar_sample_domain.eps}
+  \caption{General geometry for various sample calculations for showing the acoustic-optical coupling effect.}
+  \label{fig:03_planar_sample_domain}
+\end{figure}
+For the following example, $l_n$ is the width of the acoustic disturbance (for example, the width of the wind tunnel), $\theta$ is the angle between the planar acoustic wave and the beam direction, $A_p$ is the aperture diameter of the beam, and $\Lambda$ is the wavelength of the acoustic wave.
+
+Figure \ref{fig:03_planar_sample_calc_3} shows the time averaged $\opdrms$ per meter of beam propagation when the beam path is parallel ($\theta=0$) to the peaks and troughs of the planar acoustic wave as $\spl$ is varied.
+\begin{figure}
+  \centering
+  \includegraphics{../matlab/03_aero_optics_acoustics/planar_sample_calc_3.eps}
+  \caption{Theoretical time-averaged $\opdrms$ per meter of beam propagation as a function of sound pressure level, $\spl$, for several $\Lambda/Ap$ ratios and $\theta=0$.}
+  \label{fig:03_planar_sample_calc_3}
+\end{figure}
+As the sound pressure level increases the time averaged $\opdrms$ also increases and can easily reach the point of being a significant factor in the measured optical disturbance.
+There is little difference between 0.1 and 1 $\Lambda/Ap$, but as the wavelength gets much larger compared to the beam diameter, then the optical effect of the noise is greatly reduced, this effect is known as aperture filtering \cite{Siegenthaler-2005-KQ2HGmfp}.
+
+Aperture filtering is more clearly shown in Figure \ref{fig:03_planar_sample_calc_1}.
+\begin{figure}
+  \centering
+  \includegraphics{../matlab/03_aero_optics_acoustics/planar_sample_calc_1.eps}
+  \caption{Theoretical time-averaged $\opdrms$ for a rms sound pressure of 1 Pa ($\spl$ of 94 dB), $l_n$ of 1 m, and various angles and $\Lambda/Ap$ ratios.}
+  \label{fig:03_planar_sample_calc_1}
+\end{figure}
+As the $\Lambda/Ap$ ratio increases from 0.1, time-averaged $\opdrms$ remains fairly constant until it starts to drop around $\Lambda/Ap$ of 0.7 and starts to asymptotically approach zero which it basically reaches by $\Lambda/Ap$ of 10.
+Figure \ref{fig:03_planar_sample_calc_1} also shows the effect of changing the beam angle, $\theta$, through the acoustic field.
+For nonzero $\theta$, the beam encounters alternating high and low index of refraction as it passes through the test region, so that the time-averaged $\opdrms$ begins to decrease compared to the $\theta = 0^\circ$ case below $\Lambda/Ap=1$.
+There are also points of zero optical disturbance that occur at $\theta_{zero}=\tan^{-1}(n\Lambda/l_n)$ for $n\neq0$; these points occur because the peaks and valleys of the optical disturbance caused by the sound wave effectively cancel out over the length of the integration path, $l_n/\cos\theta$.
+
+Figures \ref{fig:03_planar_sample_calc_3} and \ref{fig:03_planar_sample_calc_1} show the optical effect of plane acoustic waves in a no-flow environment.
+The effect of wind-tunnel flow is to stretch (downstream-traveling waves) or compress (upstream-traveling waves) the wavelength of the acoustic noise thereby altering the filtering effect of the beam aperture.
+Figure \ref{fig:03_planar_sample_calc_2} shows a typical optical disturbance from the two transverse acoustic waves (u+c and u-c) present in a wind tunnel at Mach 0.6.
+\begin{figure}
+  \centering
+  \includegraphics{../matlab/03_aero_optics_acoustics/planar_sample_calc_2.eps}
+  \caption{Theoretical time-averaged $\opdrms$ for the two acoustic waves (u+c and u-c) for the blade pass frequency (534 Hz) at Mach 0.6 with a RMS sound pressure of 1 Pa ($\spl$ of 94 dB), $l_n$ of 1 m, and $Ap$ of 15 cm.}
+  \label{fig:03_planar_sample_calc_2}
+\end{figure}
+Both waves have a RMS sound pressure of 1 Pa and the beam has an aperture of 15 cm and propagates through a 1 m acoustic field inside the tunnel.
+Over a vast majority of the look back angles the upstream-traveling acoustic wave has a much greater effect on the optical disturbance compared to the downstream-traveling acoustic wave, due to the much shorter wavelength of the upstream-traveling waves which is less affected by aperture filtering.
+However, the upstream-traveling wave goes through several zero points so the downstream-traveling wave dominates at some look back angles.
+
+In summary, Figures \ref{fig:03_planar_sample_calc_3} to \ref{fig:03_planar_sample_calc_2} give an example of how planar acoustic waves are expected to affect a beam traveling a finite distance $l_n$ at an angle $\theta$ through the acoustic field.
+
+\subsection{Higher Order Duct Modes}
+
+\subsection{Spherical Acoustic Waves}
