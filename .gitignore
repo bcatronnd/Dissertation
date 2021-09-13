@@ -1,0 +1,15 @@
+# ignore converted eps files
+*-eps-converted-to.pdf
+
+# ignore temporary latex files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.synctex.gz
+*.toc
