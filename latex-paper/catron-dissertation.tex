@@ -14,9 +14,9 @@
 \usepackage[makeroom]{cancel}
 \usepackage{listings}
 \usepackage{amsmath}
-\usepackage{fdsymbol}
-\usepackage{physics}
-\usepackage{mathtools}
+% \usepackage{fdsymbol}
+% \usepackage{physics}
+% \usepackage{mathtools}
 
 \lstset
 { %Formatting for code in appendix
@@ -41,8 +41,10 @@
 \DeclareMathOperator{\f}{F}
 \DeclareMathOperator{\opd}{OPD}
 \DeclareMathOperator{\opdrms}{OPD_{RMS}}
+\DeclareMathOperator{\opl}{OPL}
 \DeclareMathOperator{\sr}{SR}
-
+\DeclareMathOperator{\spl}{SPL}
+\DeclareMathOperator{\real}{REAL}
 
 
 \begin{document}
@@ -80,12 +82,12 @@ To my wife Karen \& our son Arthur
 
 \mainmatter
 \include{01_introduction}
-% \include{02_background_draft_00}
-% \include{03_aero_optics_accoustics_draft_00}
-% \include{04_basic_filtering_draft_00}
+\include{02_background}
+\include{03_aero_optics_acoustics}
+\include{04_basic_filtering}
 
 \appendix
-% \include{90_code_samples_00}
+\include{90_code_samples}
 
 \backmatter
 \bibliographystyle{nddiss2e}

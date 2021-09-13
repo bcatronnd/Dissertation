@@ -1,6 +1,12 @@
 # ignore converted eps files
 *-eps-converted-to.pdf
 
+# ignore .gifs
+*.gif
+
+# ignore .mats
+*.mat
+
 # ignore temporary latex files
 *.aux
 *.bbl
