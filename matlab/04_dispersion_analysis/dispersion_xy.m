@@ -12,11 +12,16 @@ WF = cat(2,WF,NaN*zeros(size(WF,1),2^nextpow2(size(WF,2))-size(WF,2),size(WF,3))
 
 blockageRatio = 34.462/36^2;
 RunLog.u = RunLog.u*(1+blockageRatio);
+% RunLog.u = 0.8*RunLog.u;
+lowerRatio = 0.7;
 
+%%
+close all;
 f1 = figure(1);
 fPoints = [0 2.5e4];
 clim = [-17 -7];
 subplot(2,1,1);
+% plot(fPoints,fPoints/RunLog.u/lowerRatio,'k:',fPoints,fPoints/RunLog.u,'k-',fPoints,fPoints/(RunLog.u+RunLog.c),'k--',fPoints,fPoints/(RunLog.u-RunLog.c),'k-.');
 plot(fPoints,fPoints/RunLog.u,'k-',fPoints,fPoints/(RunLog.u+RunLog.c),'k--',fPoints,fPoints/(RunLog.u-RunLog.c),'k-.');
 hold on;
 surf(squeeze(freq{3}),squeeze(freq{2}),squeeze(WF(end/2+1,:,:)),'linestyle','none','facecolor','interp');
@@ -26,6 +31,7 @@ xlim([0 2e4]);
 ylim(125*[-1 1]);
 caxis(clim);
 ylabel('X-Spatial Frequency, $\xi_x$ ($1/m$)','interpreter','latex');
+% legend(['$' num2str(lowerRatio) 'u$'],'$u$','$u+c$','$u-c$','interpreter','latex','location','northwest');
 legend('$u$','$u+c$','$u-c$','interpreter','latex','location','northwest');
 title('Horizontal Moving Disturbances','interpreter','latex');
 subplot(2,1,2);
