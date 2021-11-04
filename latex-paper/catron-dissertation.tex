@@ -8,12 +8,12 @@
 
 \usepackage{graphicx}
 \usepackage{subcaption}
-\usepackage{csquotes}
 \usepackage{epstopdf}
 \epstopdfsetup{outdir=./images/}
-\usepackage[makeroom]{cancel}
 \usepackage{listings}
 \usepackage{amsmath}
+% \usepackage[makeroom]{cancel}
+% \usepackage{csquotes}
 % \usepackage{fdsymbol}
 % \usepackage{physics}
 % \usepackage{mathtools}
@@ -46,54 +46,49 @@
 \DeclareMathOperator{\spl}{SPL}
 \DeclareMathOperator{\real}{REAL}
 
-
 \begin{document}
+  \frontmatter
+    \title{ Filtering of Acoustic Information from Aero-Optical Measurements }
+    \author{ Brian Lowell Catron }
+    \work{ Dissertation }
+    \degaward{ Doctor of Philosophy }
+    \advisor{ R. Mark Rennie }
+    \secondadvisor{ Eric J. Jumper}
+    \department{ Aerospace and Mechanical Engineering}
 
-\frontmatter
+    \maketitle
+    \copyrightyear{ 2021 }
+    \makecopyright
 
-\title{ Filtering of Acoustic Information from Aero-Optical Measurements }
-\author{ Brian Lowell Catron }
-\work{ Dissertation }
-\degaward{ Doctor of Philosophy }
-\advisor{ R. Mark Rennie }
-\secondadvisor{ Eric J. Jumper}
-\department{ Aerospace and Mechanical Engineering}
-\maketitle
+    \begin{abstract}
+      Abstract Goes Here
+    \end{abstract}
+    \begin{dedication}
+      To my wife Karen \& our son Arthur
+    \end{dedication}
 
-\copyrightyear{ 2021 }
-\makecopyright
+    \tableofcontents
+    \listoffigures
+    \listoftables
+    \include{00_symbols}
 
-\begin{abstract}
- Abstract Goes Here
-\end{abstract}
+    \begin{acknowledge}
+    \end{acknowledge}
 
-\begin{dedication}
- To my wife Karen \& our son Arthur
-\end{dedication}
+  \mainmatter
+    \include{01_introduction}
+    \include{02_background}
+    \include{03_aero_optics_acoustics}
+    \include{04_dispersion_analysis}
+    \include{05_synthetic_wavefront}
+    \include{06_single_sensor_filtering}
+    \include{07_multiple_sensor_filtering}
 
-\tableofcontents
-\listoffigures
-\listoftables
+  \appendix
+    \include{90_code_samples}
+    % \include{91_nd_psd}
 
-\include{70_symbols}
-
-\begin{acknowledge}
-\end{acknowledge}
-
-\mainmatter
-\include{01_introduction}
-\include{02_background}
-\include{03_aero_optics_acoustics}
-\include{04_dispersion_analysis}
-\include{05_synthetic_wavefront}
-\include{06_single_sensor_filtering}
-\include{07_multiple_sensor_filtering}
-
-\appendix
-\include{90_code_samples}
-
-\backmatter
-\bibliographystyle{nddiss2e}
-\bibliography{80_references.bib}
-
+  \backmatter
+    \bibliographystyle{nddiss2e}
+    \bibliography{99_references.bib}
 \end{document}

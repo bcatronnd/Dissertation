@@ -29,7 +29,7 @@ axes('ColorOrder',brewermap(10,'Set1'),'NextPlot','replacechildren')
 plot(THETA,results*1e6,'linewidth',1.5)
 grid on
 xlabel('$\theta$ (deg)')
-ylabel('$\overline {OPD_{rms}}$ ($\mu m$)')
+ylabel('$OPD_{RMS}$ ($\mu m$)')
 legend('u+c','u-c')
 xlim([0 45])
 

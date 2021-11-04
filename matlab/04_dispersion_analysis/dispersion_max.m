@@ -21,16 +21,24 @@ for aa=1:2
     freq2{aa} = (-0.5:1/size(wf,aa):0.5-1/size(wf,aa))*sampleRate(aa);
 end
 
-
+%%
+df = diff(freq2{1}(1:2));
 f1 = figure(1);
-loglog(freq1,sxx1,freq2{2},sampleRate(1)*max(sxx2,[],1));
+loglog(freq1,sxx1,freq2{2},sampleRate(1)*max(sxx2,[],1),freq2{2},sampleRate(1)*sum(sxx2,1));
 grid on;
 xlim([1e2 2e4]);
+% ylim(10.^[-10 -6]);
 xlabel('Temporal Frequency, $f$ ($Hz$)','interpreter','latex');
 ylabel('$S_{xx}$ ($\mu m^2/Hz$)','interpreter','latex');
-legend('Power Spectra - Time','max(2-D Dispersion)$\cdot f_{s,x}$','interpreter','latex');
+legend('Power Spectra - Time','max(2-D Dispersion)$\cdot f_{s,x}$','sum(2-D Dispersion)$\cdot f_{s,x}$','interpreter','latex','location','southwest');
 f1.Units = 'inches';
 f1.Position = [1 1 5.5 3.25];
 f1.Children(2).TickLabelInterpreter = 'latex';
 
-saveas(f1,'dispersion_max.eps','epsc');
+% saveas(f1,'dispersion_max.eps','epsc');
+% saveas(f1,'dispersion_max.png','png');
+clc;
+disp(['Error (max): ' num2str(sum((sxx1-sampleRate(1)*max(sxx2(:,end/2+1:end),[],1)).^2))]);
+disp(['Error (sum): ' num2str(sum((sxx1-sampleRate(1)*sum(sxx2(:,end/2+1:end),1)).^2))]);
+disp(['Error (rms): ' num2str(sum((sxx1-sampleRate(1)*rms(sxx2(:,end/2+1:end),1)).^2))]);
+disp(['Error (mean): ' num2str(sum((sxx1-sampleRate(1)*mean(sxx2(:,end/2+1:end),1)).^2))]);

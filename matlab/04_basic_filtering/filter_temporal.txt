@@ -1,0 +1,19 @@
+\begin{tabular}{|c|c|c|}
+\hline
+Filter & Total & AO Only \\
+\hline \hline
+None & 0.0112 & 0.0073 \\
+\hline
+High Pass - 1000 Hz & 0.0080 & 0.0060 \\
+\hline
+High Pass - 2000 Hz & 0.0062 & 0.0050 \\
+\hline
+High Pass - 5000 Hz & 0.0039 & 0.0033 \\
+\hline
+Low Pass - 1000 Hz & 0.0078 & 0.0042 \\
+\hline
+Low Pass - 2000 Hz & 0.0093 & 0.0053 \\
+\hline
+Low Pass - 5000 Hz & 0.0105 & 0.0065 \\
+\hline
+\end{tabular}

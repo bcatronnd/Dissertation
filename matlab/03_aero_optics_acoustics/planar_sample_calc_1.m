@@ -25,7 +25,7 @@ axes('ColorOrder',brewermap(10,'Set1'),'NextPlot','replacechildren')
 semilogx(LAMBDA/D,results*1e6,'linewidth',1.5)
 grid on
 xlabel('$\Lambda/Ap$')
-ylabel('$\overline {OPD_{rms}}$ ($\mu m$)')
+ylabel('$OPD_{RMS}$ ($\mu m$)')
 for aa=1:length(THETA)
     s_legend{aa} = ['$\theta=' num2str(THETA(aa)) '^\circ$'];
 end

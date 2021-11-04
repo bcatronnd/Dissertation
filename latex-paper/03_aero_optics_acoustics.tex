@@ -3,6 +3,15 @@
 
 \chapter{Aero-Optical and Acoustical Coupling}
 
+\begin{itemize}
+  \color{red}
+  \item Update plots to have constant nomenclature with the rest of the document
+  \item Coordinate transform between beam and duct geometry
+  \item Spherical solutions and measurements
+  \item Mode marching method
+\end{itemize}
+
+
 Acoustic waves are isentropic compression waves with the fluctuating pressure, $p'$, determining the strength of the wave.
 This fluctuating pressure is related to the sound pressure level, $\spl$ by
 \begin{equation}
@@ -16,16 +25,43 @@ The pressure fluctuations can be converted to the density fluctuations via the d
   \label{eqn:03_speed_sound}
 \end{equation}
 where $c_0$ is the speed of sound at mean fluid properties and the subscript $s$ denotes constant entropy.
-It can be shown by combining Equations \ref{eqn:02_gladstone_dale_relation_fluctuating} and \ref{eqn:02_opd} that the fluctuating density can be related to the $\opd$:
+It can be shown by combining Equations \ref{eqn:02_gladstone_dale_relation_fluctuating} and \ref{eqn:02_opd} that the fluctuating density can be related to the $\opd$,
 \begin{equation}
-  \opd = K_{GD}\int_{s_1}^{s_2}{\rho'}ds
+  \opd = K_{GD}\int_{s_1}^{s_2}{\rho'}ds \textrm{.}
   \label{eqn:03_opd_fluct}
 \end{equation}
-These equations form the bases of calculating the optical effect of acoustic waves or determining the sound pressure level of a flow field from a non-intrusive optical measurement.
+This can be combined with Equation \ref{eqn:03_speed_sound},
+\begin{equation}
+  \opd = \frac{K_{GD}}{c_0^2}\int_{s_1}^{s_2}{p'}ds \textrm{,}
+  \label{eqn:03_opd_pressure}
+\end{equation}
+to provide a way of computing the optical path difference of a pressure field.
 
-\section{Examples of Acoustic-Optical Coupling}
+When the pressure field is known in complex quantities (magnitude and phase), a complex optical path difference can calculated,
+\begin{equation}
+  \widehat{\opd}(x,y) = \frac{K_{GD}}{c_0^2}\int_{z_1}^{z_2} \hat{p}(x,y,z)dz \textrm{.}
+  \label{eqn:03_opd_complex}
+\end{equation}
+Here the complex pressure field was assumed to be seperable in time and space.
+The measurable $\opd$ is
+\begin{equation}
+  \opd(x,y) = \real\left[\sum\widehat{\opd}(x,y)\exp\{j\omega t\}\right] \textrm{.}
+  \label{eqn:03_opd_real}
+\end{equation}
+This can greatly reduce the computational cost of simulating a beam passing through a pressue or density field that is separable in time and space by only performing the spatial integration once for each temporal frequency component.
+
+\section{Simple Examples of Acoustic-Optical Coupling}
+Two basic acoustic pressure fields will be numerically examined for their optical properties.
+The first will be a planar acoustic wave that will be numerically simulated over a variety of conditions.
+The second will be a spherical acoustic wave that will be both numerically simulated and validated experimentally.
 
 \subsection{Planar Acoustic Waves}
+A planar wave is the simplest solution to the wave equation and varies only in time and the direction of travel.
+A planar wave can be calculated from the set of solutions for duct acoustics, Equation \ref{eqn:02_pressure_solution_duct}, given that $\Psi_m(x,y)=1$,
+\begin{equation}
+  \hat{p}(z,t) = p_m\exp\left\{j(\omega t \mp k_{zm}^\pm z)\right\} \textrm{.}
+  \label{eqn:03_plane_wave}
+\end{equation}
 This section will show several plots to show the effect that acoustic waves have on the optical wavefront of a planar wave with the general geometry shown in Figure \ref{fig:03_planar_sample_domain}.
 \begin{figure}
   \centering
@@ -70,8 +106,61 @@ Both waves have a RMS sound pressure of 1 Pa and the beam has an aperture of 15 
 Over a vast majority of the look back angles the upstream-traveling acoustic wave has a much greater effect on the optical disturbance compared to the downstream-traveling acoustic wave, due to the much shorter wavelength of the upstream-traveling waves which is less affected by aperture filtering.
 However, the upstream-traveling wave goes through several zero points so the downstream-traveling wave dominates at some look back angles.
 
-In summary, Figures \ref{fig:03_planar_sample_calc_3} to \ref{fig:03_planar_sample_calc_2} give an example of how planar acoustic waves are expected to affect a beam traveling a finite distance $l_n$ at an angle $\theta$ through the acoustic field.
-
-\subsection{Higher Order Duct Modes}
+% In summary, Figures \ref{fig:03_planar_sample_calc_3} to \ref{fig:03_planar_sample_calc_2} give an example of how planar acoustic waves are expected to affect a beam traveling a finite distance $l_n$ at an angle $\theta$ through the acoustic field.
 
 \subsection{Spherical Acoustic Waves}
+The acoustic field from an speaker maybe assumed to be a spherical wave from a pulsating sphere if the frequency is sufficiently low and measurement region is far enough away from the source \cite{Randall-1951-9NtPPXPq}.
+
+\begin{equation}
+  \hat{p}(r,t) = \frac{A_0}{r}\exp\left\{-j(kr-\omega t+\phi_0)\right\}
+  \label{eqn:03_spherical_pressure}
+\end{equation}
+
+% 3-16 pg61
+
+\begin{figure}
+  \centering
+  \includegraphics{../matlab/03_aero_optics_acoustics/spherical_sample.eps}
+  \caption{Theoretical time-averaged $\opdrms$ for a spherical acoustic wave.}
+  \label{fig:03_spherical_sample}
+\end{figure}
+
+
+\section{Estimating the Acoustic Field Inside the Test-Section}
+
+
+
+\subsection{Mode Marching Process}
+\begin{enumerate}
+  \item Start with a known or assumed source acoustic field, $p^n(x,y)$
+
+  \item Calculate the transmitted pressure ratio
+  \begin{itemize}
+    \item Traveling with subsonic flow
+      \begin{equation}
+        \frac{p^t}{p^i} = \left(\frac{1+M_n}{1+M_{n+1}}\right)\left(\frac{2M_{n+1}}{M_n+M_{n+1}}\right)\left(\frac{X_{n,n}}{X_{n,n+1}}\right)\left(\frac{X_{n,n}}{X_{n+1,n+1}}\right)^{1/(\gamma-1)}
+      \end{equation}
+    \item Traveling against subsonic flow
+      \begin{equation}
+        \frac{p^t}{p^i} = \left(\frac{1-M_n}{1-M_{n+1}}\right)\left(\frac{2M_{n+1}}{M_n+M_{n+1}}\right)\left(\frac{X_{n,n}}{X_{n,n+1}}\right)\left(\frac{X_{n,n}}{X_{n+1,n+1}}\right)^{1/(\gamma-1)}
+      \end{equation}
+    \item Where
+      \begin{equation}
+        X_{a,b} = 1+\frac{\gamma-1}{2}M_aM_b
+      \end{equation}
+  \end{itemize}
+
+  \item March acoustic field to next axial step,
+    \begin{equation}
+      p^{n+1}(x,y) = p^{n}(x,y)\frac{p^t}{p^i}\exp\{j(\omega t\mp k_{zm}^\pm z)\}
+    \end{equation}
+
+  \item Best-fit set of local duct modes coefficients, $C_m$, to acoustic field $p^{n+1}(x,y)$
+
+  \item Calculate new acoustic field from duct mode and repeat from step 2
+    \begin{equation}
+      p^n(x,y) = \sum_{m=0}^{M} C_m\cdot p_m(x,y)
+    \end{equation}
+
+  \item When the end point is reached, step inlet acoustic field (rotate fan) and repeat
+\end{enumerate}

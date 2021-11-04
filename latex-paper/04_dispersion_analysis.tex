@@ -2,6 +2,8 @@
 \epstopdfsetup{outdir=./images/04_dispersion_analysis/}
 
 \chapter{Dispersion Analysis}
+\textcolor{red}{I think an analytical solution maybe needed for the n-dimensional case. Either a n-dimensional tophat function or dirac delta function. I also plan on adding a little analysis on viewing angle in the test-section.}
+
 Dispersion analysis is an expansion of power spectra analysis from one-dimension to $n$-dimensions.
 The technique allows a signal that is measured in both time and space to be separated into not only temporal-frequency components but also spacial-frequency components.
 This allows not only the direction of travel that a particular wave to be determined but also the velocity of which that the wave travels.
@@ -22,7 +24,7 @@ Both the middle and bottom plots show a dispersion plot or two-dimensional power
 The colorbars were intentionally not shown in order to allow for all three plots to be aligned in the temporal frequency axis and the color space is representative of the power spectra in log-space.
 The middle plot shows horizontally moving waves with the y-axis representing the spatial frequency, $\xi_x$, with units of inverse meters.
 Waves with positive spatial frequencies are moving in the direction of flow.
-All of the temporal frequency below 2000-Hz where the is an obvious separation between the upstream and downstream traveling optical disturbances are significantly more on the upstream traveling side.
+All of the temporal frequency below 2000-Hz, where there is an obvious separation between the upstream and downstream traveling optical disturbances, are significantly more on the upstream traveling side.
 The blade-passing frequency and its various harmonics show some significant broadband spatial frequency signals.
 The three signals of unknown origin are clearly moving upstream but also show some significant broadband spatial signal that is indicative of a source producing optical disturbances that travel in both directions around the tunnel similar to the blade-passing frequency disturbances coming off of the wind tunnel fan.
 In addition to optical disturbances branching off in the upstream and downstream moving directions there is a significant disturbances along zero spatial frequency representing a collection of standing waves.
@@ -46,15 +48,14 @@ This is why the disturbances along the zero-spatial frequency line are a collect
 More discussion will follow a derivation of the dispersion analysis technique which is the n-dimensional power spectra.
 
 \section{One-Dimensional Power Spectra Calculation}
-The typical power spectra calculation on a set of data is only in one dimension.
-This single dimension is often a time as would be the case when measuring a time series from a single sensor.
-A sensor array used to take data at one moment in time could used to measure the power spectra in terms of spatial frequencies.
+The typical power spectrum calculation on a set of data that is only in one dimension, typically over the temporal dimension.
+A typical example would be a single sensor measurement over time but a sensor array used to take data at one moment in time could used to measure the power spectrum in terms of spatial frequencies.
 For a typical single-point measurement that varies in time, $x(t)$, the power spectra calculation is
 \begin{equation}
  S_{xx} = \frac{|\fft(x(t))|^2}{N\cdot f_{s}} \textrm{,}
  \label{eqn:04_basic_sxx}
 \end{equation}
-where $\fft$ is the Fast Fourier Transform, $N$ is the number of samples, and $f_{s}$ is the sample rate.
+where $\fft$ is the Fast Fourier Transform, $N$ is the number of samples, and $f_{s}$ is the sample rate \cite{Blackman-1958-4QtKgDb8}.
 For data that has only a real component the Fast Fourier Transform function produces magnitude and phase relations at each frequency step, $f_{s}/N$, over the range from zero-frequency up to but not including the Nyquist frequency, $f_s/w$, with a mirrored set of data that can be represented either below (starting at $-f_s/2$) or above (ending just below $f_s$) this range.
 The Nyquist frequency not being included and the mirrored data is due to an assumption that is integral to the Fourier Transform, that being the signal is assumed to be periodic.
 
@@ -83,18 +84,18 @@ When Equation \ref{eqn:04_basic_sxx} is combined with a windowing function and a
  S_{xx} = \cdot\frac{|c_w\cdot\fft\{x(t)\cdot w(t)\}|^2}{N\cdot f_{s}} \textrm{.}
  \label{eqn:04_windowed_sxx}
 \end{equation}
-A simple MATLAB function for computing the power spectra of a one-dimension signal with an arbitrary windowing function is shown in Listing \ref{code:sc_simpleSXX}.
+A simple MATLAB function for computing the power spectrum of a one-dimensional signal with an arbitrary windowing function is shown in Appendix \ref{code:sc_simpleSXX}.
 
 \section{N-Dimensional Power Spectra Calculation}
-For measurements with multiple spatial and temporal dimensions the Fast Fourier Transform is just applied $n$-times where $n$ is the total number of dimensions, with each application in a different dimension,
+For measurements with multiple spatial and temporal dimensions the Fast Fourier Transform is applied $n$-times where $n$ is the total number of dimensions, with each application in a different dimension,
 \begin{equation}
  \fftn(x) = \fft(\fft(\cdots\fft(\fft(x,1),2)\cdots,n-1),n) \textrm{,}
  \label{eqn:04_fftn}
 \end{equation}
 where $\fft(x,n)$ is the Fast Fourier Transform of $x$ in the $n^{th}$ dimension.
-For a $n$-dimensional array the power spectra the function becomes,
+For a $n$-dimensional array the operation becomes,
 \begin{equation}
- \mathbf{S_{xx}} =c_w\cdot\frac{|\fftn\{f(\mathbf{x})\cdot w(\mathbf{x})\}|^2}{\prod{\overrightarrow{N}\cdot\overrightarrow{f_s}}} \textrm{,}
+ \mathbf{S_{xx}} =\frac{|c_w\cdot\fftn\{f(\mathbf{x})\cdot w(\mathbf{x})\}|^2}{\prod{\overrightarrow{N}\cdot\overrightarrow{f_s}}} \textrm{,}
  \label{eqn:04_sxxn}
 \end{equation}
 where $\mathbf{S_{xx}}$ is the $n$-dimensional power spectra array or dispersion array, $f(\mathbf{x})$ is a $n$-dimensional set of data, $w(\mathbf{x})$ is a $n$-dimensional windowing function, $\overrightarrow{N}$ is a vector denoting the number of elements in each dimension, $\overrightarrow{f_s}$ is a vector denoting the sample rate in each dimension, and
@@ -108,7 +109,7 @@ The signal energy conservation relationship becomes
   \label{eqn:04_fftn_energy_conservation}
 \end{equation}
 where $\overrightarrow{\Delta f_s}$ is a vector representing the frequency step sizes in each dimension.
-A simple MATLAB code for calculating the dispersion of $x$ with an arbitrary windowing function is shown in Listing \ref{code:sc_simpleSXXn}.
+A simple MATLAB code for calculating the dispersion of $x$ with an arbitrary windowing function is shown in Appendix \ref{code:sc_simpleSXXn}.
 
 \section{Non-Rectangular Spatial Windows}
 For n-dimensional data sets that fill a rectangular array, a windowing function can easily be created by multiplying together a series of one-dimensional windowing functions created in the direction of each dimension.
@@ -119,7 +120,7 @@ In cases when the spatial measurement locations are constant throughout time, th
  \label{eqn:04_window_sep}
 \end{equation}
 the temporal windowing function, $w_t(t)$, and the spatial windowing function, $w_s(x,y)$.
-This paper uses a Hann window for the temporal windowing function and a modified Hann window for the spatial windowing function.
+This dissertation uses a Hann window for the temporal windowing function and a modified Hann window for the spatial windowing function.
 For the case of a circular aperture, the Hann window can be reformulated to be based normalized radius, $\rho_N$, of the aperture,
 \begin{equation}
  w_s(\rho_N) =
@@ -131,8 +132,8 @@ For the case of a circular aperture, the Hann window can be reformulated to be b
 \end{equation}
 This modified Hann window is two-dimensional with a value of one at the center of the aperture and decreases to zero at the edge of the aperture in the same manor as a Hann windows decreases from the center to either end.
 
-Because the wavefronts used often had a clipped edge or other obscuration a different method was actually employed.
-For an arbitrary shaped aperture, the minimum distance from any given measurement location to the edge of the aperture is used to create the spatial windows.
+Because the wavefronts measurements often had a clipped edge or some other obscuration, a different method was employed.
+For an arbitrary shaped aperture, the minimum distance from any given measurement location to the edge of the aperture was used to create the spatial windows.
 The minimum distance can be computed given the a set of points ($x$ and $y$) that spans the measurement range and the set of points outside of the aperture ($x_O$ and $y_O$),
 \begin{equation}
  d_{min}(x,y) = \min\left\{\sqrt{(x-x_{O})^2+(y-y_{O})^2}\right\} \textrm{.}

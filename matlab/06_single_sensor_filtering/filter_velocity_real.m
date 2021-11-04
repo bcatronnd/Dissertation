@@ -1,10 +1,10 @@
 close all; clc; clearvars;
 
-directory = '/media/briancatron/ResearchData/ProcessedWavefronts/';
-filename = '20180104022';
-[WF,CineInfo,RunLog,WFInfo] = loadWF([directory filename '_WF.mat'],'Permute',[2 1 3],'Scale',1e6);
+directory = '/media/briancatron/ResearchData/2021-Spectral-Wavefront-Filtering/';
+testPoint = '20210901003';
+[WF,CineInfo,RunLog,WFInfo] = loadWF([directory testPoint '_WF.mat'],'Scale',1e6);
 
-BlockSize = 2^10;
+BlockSize = 2^12;
 WF = WF(:,:,1:floor(size(WF,3)/BlockSize)*BlockSize);
 WF = cat(1,WF,NaN*zeros(2^nextpow2(size(WF,1))-size(WF,1),size(WF,2),size(WF,3)));
 WF = cat(2,WF,NaN*zeros(size(WF,1),2^nextpow2(size(WF,2))-size(WF,2),size(WF,3)));
@@ -17,10 +17,11 @@ Frequency.x = reshape(-1/2:1/BlockSize(2):1/2-1/BlockSize(2),1,[]);
 Frequency.t = reshape(-1/2:1/BlockSize(3):1/2-1/BlockSize(3),1,1,[]);
 Frequency.rho = sqrt(Frequency.x.^2+Frequency.y.^2);
 
+blockageRatio = 34.462/36^2;
+RunLog.u = RunLog.u*(1+blockageRatio);
 
-
-u = 190:1:220;
-v = -25:1:-10;
+u = 150:1:155;
+v = 0:1:5;
 
 width = 0.025;
 order = 2;
@@ -50,10 +51,15 @@ view(45,45);
 grid on;
 xlabel('v (m/s)','interpreter','latex');
 ylabel('u (m/s)','interpreter','latex');
-zlabel('Normalized Energy','interpreter','latex');
+zlabel('Normalized Power','interpreter','latex');
 f1.Children(1).TickLabelInterpreter = 'latex';
 
-disp(['u: ' num2str(u(idr))]);
-disp(['v: ' num2str(v(idc))]);
+diary filter_velocity_real.txt;
+diary on;
+disp(['u: ' num2str(u(idr)) 'm/s - ' num2str(u(idr)/RunLog.u,'%0.2f') 'u' char(8734)]);
+disp(['v: ' num2str(v(idc)) 'm/s - ' num2str(v(idc)/RunLog.u,'%0.2f') 'u' char(8734)]);
+disp(['Flow Angle: ' num2str(atand(v(idc)/u(idr)),'%0.1f') char(176)]);
+diary off;
 
 saveas(f1,'filter_velocity_real.eps','epsc');
+saveas(f1,'filter_velocity_real.png','png');

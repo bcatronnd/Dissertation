@@ -76,3 +76,4 @@ f1.Units = 'inches';
 f1.Position = [1 1 5.5 5];
 
 % saveas(f1,'dispersion_supersample.eps','epsc');
+saveas(f1,'dispersion_supersample.png','png');

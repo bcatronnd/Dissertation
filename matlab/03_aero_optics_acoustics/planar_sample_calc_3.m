@@ -24,7 +24,7 @@ axes('ColorOrder',brewermap(10,'Set1'),'NextPlot','replacechildren')
 semilogy(Lp,results*1e6,'linewidth',1.5)
 grid on
 xlabel('SPL (dB)')
-ylabel('$\overline {OPD_{rms}}/m$ ($\mu m/m$)')
+ylabel('$OPD_{RMS}/m$ ($\mu m/m$)')
 for aa=1:length(LAMBDA)
     s_legend{aa} = ['$\Lambda/Ap=' num2str(LAMBDA(aa)) '$'];
 end

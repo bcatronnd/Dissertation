@@ -48,6 +48,6 @@ f1.Units = 'inches';
 f1.Position = [1 1 5.5 7.5];
 
 saveas(f1,'dispersion_slices.eps','epsc');
-
+saveas(f1,'dispersion_slices.png','png');
 
 

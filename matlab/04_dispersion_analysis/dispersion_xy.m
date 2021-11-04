@@ -22,15 +22,16 @@ fPoints = [0 2.5e4];
 clim = [-17 -7];
 subplot(2,1,1);
 % plot(fPoints,fPoints/RunLog.u/lowerRatio,'k:',fPoints,fPoints/RunLog.u,'k-',fPoints,fPoints/(RunLog.u+RunLog.c),'k--',fPoints,fPoints/(RunLog.u-RunLog.c),'k-.');
-plot(fPoints,fPoints/RunLog.u,'k-',fPoints,fPoints/(RunLog.u+RunLog.c),'k--',fPoints,fPoints/(RunLog.u-RunLog.c),'k-.');
+plot(fPoints,fPoints/RunLog.u,'k-',fPoints,fPoints/(RunLog.u+RunLog.c),'k--',fPoints,fPoints/(RunLog.u-RunLog.c),'k-.',fPoints,fPoints/RunLog.u/lowerRatio,'k:');
 hold on;
 surf(squeeze(freq{3}),squeeze(freq{2}),squeeze(WF(end/2+1,:,:)),'linestyle','none','facecolor','interp');
 view(2);
+grid on;
 colorbar;
 xlim([0 2e4]);
 ylim(125*[-1 1]);
 caxis(clim);
-ylabel('X-Spatial Frequency, $\xi_x$ ($1/m$)','interpreter','latex');
+ylabel('X-Spatial Frequency, $\xi_x$ ($m^{-1}$)','interpreter','latex');
 % legend(['$' num2str(lowerRatio) 'u$'],'$u$','$u+c$','$u-c$','interpreter','latex','location','northwest');
 legend('$u$','$u+c$','$u-c$','interpreter','latex','location','northwest');
 title('Horizontal Moving Disturbances','interpreter','latex');
@@ -39,11 +40,12 @@ plot(fPoints,fPoints/(+RunLog.c),'k--',fPoints,fPoints/(-RunLog.c),'k-.');
 hold on;
 surf(squeeze(freq{3}),squeeze(freq{1}),squeeze(WF(:,end/2+1,:)),'linestyle','none','facecolor','interp');
 view(2);
+grid on;
 xlim([0 2e4]);
 ylim(125*[-1 1]);
 caxis(clim);
 xlabel('Temporal Frequency, $f$ ($Hz$)','interpreter','latex');
-ylabel('Y-Spatial Frequency, $\xi_y$ ($1/m$)','interpreter','latex');
+ylabel('Y-Spatial Frequency, $\xi_y$ ($m^{-1}$)','interpreter','latex');
 legend('$+c$','$-c$','interpreter','latex','location','northwest');
 title('Vertical Moving Disturbances','interpreter','latex');
 f1.Children(5).Position(3) = f1.Children(5).Position(3);
@@ -64,7 +66,7 @@ f1.Units = 'inches';
 f1.Position = [1 1 5.5 5];
 
 saveas(f1,'dispersion_xy.eps','epsc');
-
+saveas(f1,'dispersion_xy.png','png');
 
 
 
