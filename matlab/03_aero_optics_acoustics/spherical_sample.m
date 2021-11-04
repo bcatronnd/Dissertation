@@ -48,11 +48,14 @@ end
 %%
 close all;
 
+a = 1e-3;
+b = -0.5;
+
 f1 = figure(1);
-plot(lambda/AP,OPDrms*1e6);
+plot(lambda/AP,OPDrms*1e6.*sqrt(dist/AP));
 grid on;
 xlabel('$\Lambda/Ap$','interpreter','latex');
-ylabel('$OPD_{RMS}/A_O\ (\mu m/(kg/s^2))$','interpreter','latex');
+ylabel('$\frac{OPD_{RMS}\sqrt{R/Ap}}{A_O}\ (\frac{\mu m}{kg/s^2})$','interpreter','latex','fontsize',14);
 for aa=1:length(dist)
     sLegend{aa} = ['R/Ap = ' num2str(dist(aa)/AP)];
 end
@@ -61,7 +64,20 @@ f1.Children(2).TickLabelInterpreter = 'latex';
 f1.Units = 'inches';
 f1.Position = [1 1 5.5 3.5];
 
-% saveas(f1,'spherical_sample.eps','epsc');
+saveas(f1,'spherical_sample.eps','epsc');
 
 X = lambda/AP;
-Y = OPDrms(:,1)'*1e6;
+Y = mean(OPDrms*1e6.*sqrt(dist/AP),2);
+% f(x) = (p1*x^3 + p2*x^2 + p3*x + p4) / 
+%        (x^2 + q1*x + q2)
+% p1 =  -2.205e-05  (-2.763e-05, -1.647e-05)
+% p2 =   0.0001551  (0.0001131, 0.000197)
+% p3 =   0.0002423  (0.0001491, 0.0003355)
+% p4 =   0.0003664  (0.0003376, 0.0003952)
+% q1 =      -1.161  (-1.206, -1.116)
+% q2 =      0.8607  (0.8365, 0.885)
+% Goodness of fit:
+%   SSE: 1.475e-08
+%   R-square: 0.9993
+%   Adjusted R-square: 0.9992
+%   RMSE: 8.93e-06
