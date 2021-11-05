@@ -1,0 +1,28 @@
+     General model Rat22:
+     fitresult(x) = (p1*x^2 + p2*x + p3) / (x^2 + q1*x + q2)
+     Coefficients (with 95% confidence bounds):
+       p1 =  -2.078e-05  (-2.27e-05, -1.885e-05)
+       p2 =   0.0006366  (0.0006231, 0.0006501)
+       p3 =   0.0002798  (0.0002668, 0.0002928)
+       q1 =     -0.9924  (-1.007, -0.9783)
+       q2 =      0.8424  (0.8281, 0.8567)
+ 
+           sse: 3.2255e-07
+       rsquare: 0.9982
+           dfe: 1950
+    adjrsquare: 0.9982
+          rmse: 1.2861e-05
+     General model Rat22:
+     fitresult(x) = (p1*x^2 + p2*x + p3) / (x^2 + q1*x + q2)
+     Coefficients (with 95% confidence bounds):
+       p1 =  -2.078e-05  (-2.27e-05, -1.885e-05)
+       p2 =   0.0006366  (0.0006231, 0.0006501)
+       p3 =   0.0002798  (0.0002668, 0.0002928)
+       q1 =     -0.9924  (-1.007, -0.9783)
+       q2 =      0.8424  (0.8281, 0.8567)
+ 
+           sse: 3.2255e-07
+       rsquare: 0.9982
+           dfe: 1950
+    adjrsquare: 0.9982
+          rmse: 1.2861e-05

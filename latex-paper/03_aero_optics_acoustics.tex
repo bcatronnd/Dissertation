@@ -112,18 +112,43 @@ However, the upstream-traveling wave goes through several zero points so the dow
 The acoustic field from an speaker maybe assumed to be a spherical wave from a pulsating sphere if the frequency is sufficiently low and measurement region is far enough away from the source \cite{Randall-1951-9NtPPXPq}.
 
 \begin{equation}
-  \hat{p}(r,t) = \frac{A_0}{r}\exp\left\{-j(kr-\omega t+\phi_0)\right\}
+  \hat{p}(r,t) = \frac{A_0}{r}\exp\left\{-j(kr-\omega t)\right\}
   \label{eqn:03_spherical_pressure}
 \end{equation}
-
 % 3-16 pg61
+
+\begin{equation}
+  p_{rms} = \frac{|A_0|}{r\sqrt{2}}
+  \label{eqn:03_spherical_pressure_rms}
+\end{equation}
 
 \begin{figure}
   \centering
   \includegraphics{../matlab/03_aero_optics_acoustics/spherical_sample.eps}
-  \caption{Theoretical time-averaged $\opdrms$ for a spherical acoustic wave.}
+  \caption{Theoretical time-averaged $\opdrms$ for a spherical acoustic wave. There are oscillations not captured by the curve fit that are a function of aperture size.}
   \label{fig:03_spherical_sample}
 \end{figure}
+
+\begin{equation}
+  \frac{\opdrms\sqrt{R/Ap}}{|A_0|} \approx \frac{p_1(\Lambda/Ap)^2+p_2(\Lambda/Ap)+p_3}{(\Lambda/Ap)^2+q_1(\Lambda/Ap)+q_2}
+  \label{eqn:03_spherical_sample_fit}
+\end{equation}
+
+
+\begin{table}
+\centering
+\caption{Curve fit values for Figure \ref{fig:03_spherical_sample} and Equation \ref{eqn:03_spherical_sample_fit}}
+\input{../matlab/03_aero_optics_acoustics/spherical_sample.txt}
+\label{tab:03_speherical_sample_coeff}
+\end{table}
+
+\begin{table}
+\centering
+\caption{Comparison of microphone and wavefront computation of $|A_0|$}
+\input{../matlab/03_aero_optics_acoustics/spherical_measurement.txt}
+\label{tab:03_speherical_measurement}
+\end{table}
+
 
 
 \section{Estimating the Acoustic Field Inside the Test-Section}

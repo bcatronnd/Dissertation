@@ -1,7 +1,7 @@
 close all; clc; clearvars;
 
 nLenslets = 32;
-lambda = 0.25:0.025:5;
+lambda = 0.25:0.025:10;
 dist = 5:5:25;
 zMax = 5;
 dz = 0.05;
@@ -48,36 +48,63 @@ end
 %%
 close all;
 
-a = 1e-3;
-b = -0.5;
+%fit
+X = repmat(lambda'/AP,1,5);
+Y = OPDrms*1e6.*sqrt(dist/AP);
+[fitresult, gof] = createFit(X, Y);
 
 f1 = figure(1);
-plot(lambda/AP,OPDrms*1e6.*sqrt(dist/AP));
+plot(lambda/AP,OPDrms*1e6.*sqrt(dist/AP),'o');
+hold on;
+plot(lambda/AP,fitresult(lambda/AP),'k-');
+hold off;
 grid on;
 xlabel('$\Lambda/Ap$','interpreter','latex');
-ylabel('$\frac{OPD_{RMS}\sqrt{R/Ap}}{A_O}\ (\frac{\mu m}{kg/s^2})$','interpreter','latex','fontsize',14);
+ylabel('$\frac{OPD_{RMS}\sqrt{R/Ap}}{|A_O|}\ (\frac{\mu m}{kg/s^2})$','interpreter','latex','fontsize',14);
 for aa=1:length(dist)
-    sLegend{aa} = ['R/Ap = ' num2str(dist(aa)/AP)];
+    sLegend{aa} = ['R/Ap = ' num2str(dist(aa)/AP)]; %#ok<SAGROW>
 end
+sLegend{aa+1} = 'Fitted Curve';
 legend(sLegend,'interpreter','latex');
 f1.Children(2).TickLabelInterpreter = 'latex';
 f1.Units = 'inches';
 f1.Position = [1 1 5.5 3.5];
 
 saveas(f1,'spherical_sample.eps','epsc');
+% save('spherical_sample.mat','fitresult');
 
-X = lambda/AP;
-Y = mean(OPDrms*1e6.*sqrt(dist/AP),2);
-% f(x) = (p1*x^3 + p2*x^2 + p3*x + p4) / 
-%        (x^2 + q1*x + q2)
-% p1 =  -2.205e-05  (-2.763e-05, -1.647e-05)
-% p2 =   0.0001551  (0.0001131, 0.000197)
-% p3 =   0.0002423  (0.0001491, 0.0003355)
-% p4 =   0.0003664  (0.0003376, 0.0003952)
-% q1 =      -1.161  (-1.206, -1.116)
-% q2 =      0.8607  (0.8365, 0.885)
-% Goodness of fit:
-%   SSE: 1.475e-08
-%   R-square: 0.9993
-%   Adjusted R-square: 0.9992
-%   RMSE: 8.93e-06
+% fileID = fopen('spherical_sample.txt','w');
+% fprintf(fileID,'\\begin{tabular}{c r}\n');
+% fprintf(fileID,'\\hline \n');
+% fprintf(fileID,'Coefficent & Value \\\\ \n');
+% fprintf(fileID,'\\hline \n');
+% coeffs = coeffnames(fitresult);
+% for aa=1:length(coeffs)
+%     fprintf(fileID,['$' coeffs{aa}(1) '_' coeffs{aa}(2) '$ & ' num2str(fitresult.(coeffs{aa}),'%0.3e') ' \\\\ \n']);
+% end
+% fprintf(fileID,'\\hline \n');
+% fprintf(fileID,'\\end{tabular}\n');
+% 
+% diary spherical_sample_disp.txt;
+% diary on;
+% disp(fitresult);
+% disp(' ');
+% disp(gof);
+% diary off;
+
+
+function [fitresult, gof] = createFit(X, Y)
+[xData, yData] = prepareCurveData( X, Y );
+
+% Set up fittype and options.
+ft = fittype( 'rat22' );
+opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
+opts.Display = 'Off';
+opts.StartPoint = [0.49809429119639 0.900852488532005 0.574661219130188 0.845178185054037 0.738640291995402];
+
+% Fit model to data.
+[fitresult, gof] = fit( xData, yData, ft, opts );
+end
+
+
+

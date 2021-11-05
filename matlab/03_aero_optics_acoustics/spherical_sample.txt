@@ -1,0 +1,11 @@
+\begin{tabular}{c r}
+\hline 
+Coefficent & Value \\ 
+\hline 
+$p_1$ & -2.078e-05 \\ 
+$p_2$ & 6.366e-04 \\ 
+$p_3$ & 2.798e-04 \\ 
+$q_1$ & -9.924e-01 \\ 
+$q_2$ & 8.424e-01 \\ 
+\hline 
+\end{tabular}
