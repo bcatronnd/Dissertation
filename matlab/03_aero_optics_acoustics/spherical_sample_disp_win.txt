@@ -1,0 +1,71 @@
+     General model Rat22:
+     fitresult(x) = (p1*x^2 + p2*x + p3) / (x^2 + q1*x + q2)
+     Coefficients (with 95% confidence bounds):
+       p1 =  -5.442e-05  (-5.821e-05, -5.063e-05)
+       p2 =   0.0009047  (0.0008792, 0.0009302)
+       p3 =    0.000252  (0.0002349, 0.0002692)
+       q1 =     -0.7634  (-0.7917, -0.7352)
+       q2 =      0.8268  (0.8047, 0.8488)
+ 
+           sse: 1.2265e-06
+       rsquare: 0.9933
+           dfe: 1980
+    adjrsquare: 0.9933
+          rmse: 2.4888e-05
+     General model Rat22:
+     fitresult(x) = (p1*x^2 + p2*x + p3) / (x^2 + q1*x + q2)
+     Coefficients (with 95% confidence bounds):
+       p1 =  -2.465e-05  (-2.719e-05, -2.211e-05)
+       p2 =   0.0007428  (0.0007262, 0.0007595)
+       p3 =    0.000229  (0.000218, 0.00024)
+       q1 =     -0.8442  (-0.8628, -0.8257)
+       q2 =      0.7632  (0.749, 0.7774)
+ 
+           sse: 6.7238e-07
+       rsquare: 0.9962
+           dfe: 1980
+    adjrsquare: 0.9962
+          rmse: 1.8428e-05
+     General model Rat12:
+     fitresult(x) = (p1*x + p2) / (x^2 + q1*x + q2)
+     Coefficients (with 95% confidence bounds):
+       p1 =   0.0006364  (0.0006286, 0.0006442)
+       p2 =   0.0002488  (0.0002387, 0.0002589)
+       q1 =     -0.9443  (-0.957, -0.9316)
+       q2 =       0.775  (0.7618, 0.7881)
+ 
+           sse: 6.5255e-08
+       rsquare: 0.9940
+           dfe: 1981
+    adjrsquare: 0.9940
+          rmse: 5.7394e-06
+     General model Rat12:
+     fitresult(x) = (p1*x + p2) / (x^2 + q1*x + q2)
+     Coefficients (with 95% confidence bounds):
+       p1 =   0.0005367  (0.0004527, 0.0006208)
+       p2 =    0.001855  (0.001482, 0.002227)
+       q1 =     -0.3047  (-0.3986, -0.2107)
+       q2 =       1.931  (1.603, 2.259)
+ 
+           sse: 1.0536e-06
+       rsquare: 0.9066
+           dfe: 1981
+    adjrsquare: 0.9065
+          rmse: 2.3062e-05
+     General model Rat33:
+     fitresult(x) = (p1*x^3 + p2*x^2 + p3*x + p4) /
+               (x^3 + q1*x^2 + q2*x + q3)
+     Coefficients (with 95% confidence bounds):
+       p1 =  -1.845e-05  (-4.526e-05, 8.368e-06)
+       p2 =   0.0004769  (-0.001143, 0.002097)
+       p3 =     0.00452  (-0.03559, 0.04463)
+       p4 =    0.001435  (-0.01207, 0.01494)
+       q1 =       5.399  (-54.2, 65)
+       q2 =      -5.145  (-60.82, 50.53)
+       q3 =       4.869  (-40.88, 50.62)
+ 
+           sse: 1.0479e-08
+       rsquare: 0.9991
+           dfe: 1978
+    adjrsquare: 0.9991
+          rmse: 2.3017e-06

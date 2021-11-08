@@ -2,6 +2,7 @@ close all; clc; clearvars;
 
 nLenslets = 32;
 lambda = 0.1:0.025:10;
+% dist = [2 2.5 5 10 25];
 dist = 5:5:25;
 zMax = 5;
 dz = 0.005;
@@ -20,6 +21,7 @@ t = atan2(y(:,:,1),x(:,:,1));
 mask = ones(nLenslets);
 mask(r>0.5*AP) = NaN;
 phase = (0:phaseSteps-1)/phaseSteps*2*pi;
+win = reshape(tukeywin(size(z,3)),1,1,[]);
 
 OPDrms = zeros(length(lambda),length(dist));
 OPDrmsMax = OPDrms;
@@ -29,7 +31,7 @@ for aa=1:length(lambda)
     k = 2*pi/lambda(aa);
     for bb=1:length(dist)
         R = sqrt((x+dist(bb)).^2+y.^2+z.^2);
-        OPD = kgd/c0^2*sum(1./R.*exp(-1i*k*R),3)*dz;
+        OPD = kgd/c0^2*sum(win./R.*exp(-1i*k*R),3)*dz;
         stats = zeros(1,phaseSteps);
         for cc=1:phaseSteps
             wf = mask.*real(OPD.*exp(1i*phase(cc)));
@@ -49,9 +51,10 @@ end
 close all;
 
 %fit
-X = repmat(lambda'/AP,1,5);
+X = repmat(lambda'/AP,1,length(dist));
 Y = OPDrms*1e6.*sqrt(dist/AP);
-[fitresult, gof] = createFit(X, Y);
+W = pdf('Normal',X,0.75,5);
+[fitresult, gof] = createFit(X,Y,W);
 
 f1 = figure(1);
 plot(lambda/AP,OPDrms*1e6.*sqrt(dist/AP),'o');
@@ -59,7 +62,6 @@ hold on;
 plot(lambda/AP,fitresult(lambda/AP),'k-');
 hold off;
 grid on;
-ylim([0 1.2e-3]);
 xlabel('$\Lambda/Ap$','interpreter','latex');
 ylabel('$\frac{OPD_{RMS}\sqrt{R/Ap}}{|A_O|}\ (\frac{\mu m}{kg/s^2})$','interpreter','latex','fontsize',14);
 for aa=1:length(dist)
@@ -71,38 +73,37 @@ f1.Children(2).TickLabelInterpreter = 'latex';
 f1.Units = 'inches';
 f1.Position = [1 1 5.5 2.5];
 
-saveas(f1,'spherical_sample.eps','epsc');
-save('spherical_sample.mat','fitresult');
+% saveas(f1,'spherical_sample_win.eps','epsc');
+% save('spherical_sample_win.mat','fitresult');
+% 
+% fileID = fopen('spherical_sample_win.txt','w');
+% fprintf(fileID,'\\begin{tabular}{c r}\n');
+% fprintf(fileID,'\\hline \n');
+% fprintf(fileID,'Coefficent & Value \\\\ \n');
+% fprintf(fileID,'\\hline \n');
+% coeffs = coeffnames(fitresult);
+% for aa=1:length(coeffs)
+%     fprintf(fileID,['$' coeffs{aa}(1) '_' coeffs{aa}(2) '$ & ' num2str(fitresult.(coeffs{aa}),'%0.3e') ' \\\\ \n']);
+% end
+% fprintf(fileID,'\\hline \n');
+% fprintf(fileID,'\\end{tabular}\n');
+% 
+% diary spherical_sample_disp_win.txt;
+% diary on;
+% disp(fitresult);
+% disp(' ');
+% disp(gof);
+% diary off;
 
-fileID = fopen('spherical_sample.txt','w');
-fprintf(fileID,'\\begin{tabular}{c r}\n');
-fprintf(fileID,'\\hline \n');
-fprintf(fileID,'Coefficent & Value \\\\ \n');
-fprintf(fileID,'\\hline \n');
-coeffs = coeffnames(fitresult);
-for aa=1:length(coeffs)
-    fprintf(fileID,['$' coeffs{aa}(1) '_' coeffs{aa}(2) '$ & ' num2str(fitresult.(coeffs{aa}),'%0.3e') ' \\\\ \n']);
-end
-fprintf(fileID,'\\hline \n');
-fprintf(fileID,'\\end{tabular}\n');
 
-diary spherical_sample_disp.txt;
-diary on;
-disp(fitresult);
-disp(' ');
-disp(gof);
-diary off;
-
-
-function [fitresult, gof] = createFit(X, Y)
-[xData, yData] = prepareCurveData( X, Y );
-
+function [fitresult, gof] = createFit(X,Y,W)
+[xData,yData,weights] = prepareCurveData(X,Y,W);
 % Set up fittype and options.
-ft = fittype( 'rat22' );
+ft = fittype('rat33');
 opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
 opts.Display = 'Off';
-opts.StartPoint = [0.49809429119639 0.900852488532005 0.574661219130188 0.845178185054037 0.738640291995402];
-
+opts.StartPoint = [0.737858095516997 0.269119426398556 0.422835615008808 0.547870901214845 0.942736984276934 0.417744104316662 0.983052466469856];
+opts.Weights = weights;
 % Fit model to data.
 [fitresult, gof] = fit( xData, yData, ft, opts );
 end

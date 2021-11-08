@@ -2,12 +2,12 @@
 \epstopdfsetup{outdir=./images/03_aero_optics_acoustics/}
 
 \chapter{Aero-Optical and Acoustical Coupling}
+\label{chap:03}
 
 \begin{itemize}
   \color{red}
-  \item Update plots to have constant nomenclature with the rest of the document
-  \item Coordinate transform between beam and duct geometry
   \item Spherical solutions and measurements
+  \item Double check microphone and preamp models and settings
   \item Mode marching method
 \end{itemize}
 
@@ -37,18 +37,65 @@ This can be combined with Equation \ref{eqn:03_speed_sound},
 \end{equation}
 to provide a way of computing the optical path difference of a pressure field.
 
-When the pressure field is known in complex quantities (magnitude and phase), a complex optical path difference can calculated,
+% When the pressure field is known in complex quantities (magnitude and phase), a complex optical path difference can calculated,
+
+% Here the complex pressure field was assumed to be seperable in time and space.
+% The measurable $\opd$ is
+
+% This can greatly reduce the computational cost of simulating a beam passing through a pressue or density field that is separable in time and space by only performing the spatial integration once for each temporal frequency component.
+
+\section{Simulating an Optical Wavefront Measurement from an Acoustic Field Function}
+\label{chap:03_simulated_beam}
+An optical wavefront can be simulated from a complex pressure field by applying Equation \ref{eqn:03_opd_pressure}.
+To accomplish this, two separate coordinate systems will need to be defined.
+The first is the beam coordinate system, $\mathbf{x}_B $, that will have a measurement aperture, which is typically circular, defined in the xy-plane and propagates in the z-direction.
+The second is the acoustic coordinate system, $\mathbf{x}_A$, that will be defined based on the source location or the geometry that the acoustic waves are propagating through.
+These to coordinate systems will have a function representing a transform from one to the other
 \begin{equation}
-  \widehat{\opd}(x,y) = \frac{K_{GD}}{c_0^2}\int_{z_1}^{z_2} \hat{p}(x,y,z)dz \textrm{.}
+  \mathbf{x}_A = R\mathbf{x}_B+T \textrm{,}
+  \label{eqn:03_coord_transform}
+\end{equation}
+where $R$ is a matrix which represents the rotation and $T$ is a vector that represents the translation.
+
+The important parameters for defining the aperture which the beam coordinate system is based are the aperture size, $Ap$, and the number of lenslets or sub-apertures, $N_{lenslets}$.
+Assuming that the aperture is either circular or square and the lenslet size and sub-aperture size is approximately $Ap/N_{lenslets}$, the x locations of the center of the sub-apertures go from $-Ap/2(1-1/N_{lenslets})$ to $Ap/2(1-1/N_{lenslets})$ by steps of $Ap/N_{lenslets}$ with the y locations having the same values.
+This gives a matrix representing both $x_{Ap}$ and $y_{Ap}$ that is $N_{lenslets}$ by $N_{lenslets}$.
+For the purpose of removing piston, tip, and tilt and creating a mask that represents the beam aperture, the radial coordinates, $\rho_{Ap}$ and $\theta_{Ap}$, of the aperture should also be calculated.
+A circular beam will have a mask defined by,
+\begin{equation}
+  Mask_{Ap} =
+  \begin{cases}
+    1, & \text{if } \rho_{Ap}\leq Ap/2 \\
+    0, & \text{otherwise.}
+  \end{cases}
+\end{equation}
+The beam coordinate frame is the aperture coordinates extruded in the z-direction over the range of desired z-values.
+
+After the beam coordinates are transformed into the acoustic coordinates using Equation \ref{eqn:03_coord_transform}, the complex pressure field, $\hat{p}(x,y,z,t)$ can be calculated at the points that are within the optical beam.
+If the pressure field is separable into spatial and temporal components, than the integration along the beam length only needs to be done once for each temporal frequency,
+\begin{equation}
+  \widehat{\opd}(x,y) = \frac{K_{GD}}{c_0^2}\int_{z_1}^{z_2} \hat{p}(x,y,z)_{Ap}dz \textrm{,}
   \label{eqn:03_opd_complex}
 \end{equation}
-Here the complex pressure field was assumed to be seperable in time and space.
-The measurable $\opd$ is
+where $\widehat{\opd}(x,y)$ is the complex optical path difference as measured in the aperture plane.
+If a complex density field is known instead, than Equation \ref{eqn:03_opd_complex} becomes
 \begin{equation}
-  \opd(x,y) = \real\left[\sum\widehat{\opd}(x,y)\exp\{j\omega t\}\right] \textrm{.}
+  \widehat{\opd}(x,y) = K_{GD}\int_{z_1}^{z_2} \hat{\rho}(x,y,z)_{Ap}dz \textrm{.}
+  \label{eqn:03_opd_complex_density}
+\end{equation}
+For the purposes of calculating temporally mean optical properties of simulated beam passing through a known complex pressure or density field a phase vector was defined,  $\phi = [0, 2\pi)$.
+The measurable component as a function of phase is
+\begin{equation}
+  \opd(x,y,\phi) = \real\left[\widehat{\opd}(x,y)\exp\{-j\phi\}\right] \textrm{,}
+  \label{eqn:03_opd_real_phase}
+\end{equation}
+or as a function of time for all temporal frequencies,
+\begin{equation}
+  \opd(x,y,t) = \real\left[\sum\widehat{\opd}(x,y)\exp\{-j\omega t\}\right] \textrm{,}
   \label{eqn:03_opd_real}
 \end{equation}
-This can greatly reduce the computational cost of simulating a beam passing through a pressue or density field that is separable in time and space by only performing the spatial integration once for each temporal frequency component.
+where there is a separate $\widehat{\opd}(x,y)$ computed for each temporal frequency.
+One of the more important measurements that can be calculated from $\opd$ is the spatial RMS, $\opdrms$, which is calculated at each time or phase step at the points where the aperture mask equals one.
 
 \section{Simple Examples of Acoustic-Optical Coupling}
 Two basic acoustic pressure fields will be numerically examined for their optical properties.
@@ -109,45 +156,103 @@ However, the upstream-traveling wave goes through several zero points so the dow
 % In summary, Figures \ref{fig:03_planar_sample_calc_3} to \ref{fig:03_planar_sample_calc_2} give an example of how planar acoustic waves are expected to affect a beam traveling a finite distance $l_n$ at an angle $\theta$ through the acoustic field.
 
 \subsection{Spherical Acoustic Waves}
-The acoustic field from an speaker maybe assumed to be a spherical wave from a pulsating sphere if the frequency is sufficiently low and measurement region is far enough away from the source \cite{Randall-1951-9NtPPXPq}.
-
+The acoustic field from an speaker maybe assumed to be a spherical wave from a pulsating point if the frequency is sufficiently low and measurement region is far enough away from the source \cite{Randall-1951-9NtPPXPq}.
+This pressure field when converted to complex pressure is represented by
 \begin{equation}
-  \hat{p}(r,t) = \frac{A_0}{r}\exp\left\{-j(kr-\omega t)\right\}
+  \hat{p}(r,t) = \frac{A_0}{r}\exp\left\{-j(kr-\omega t)\right\} \textrm{,}
   \label{eqn:03_spherical_pressure}
 \end{equation}
-% 3-16 pg61
-
+where $A_0$ is the fluctuating pressure strength and $r$ is the distance from the source to the measurement point.
+The RMS pressure of this field can be represented by
 \begin{equation}
-  p_{rms} = \frac{|A_0|}{r\sqrt{2}}
+  p_{rms} = \frac{|A_0|}{r\sqrt{2}} \textrm{.}
   \label{eqn:03_spherical_pressure_rms}
 \end{equation}
 
+\subsubsection{Theoretical OPD Measurements}
+A set of optical properties where calculated for a beam passing through a spherical acoustic field as defined by a point source using the process discribed previously in Chapter \ref{chap:03_simulated_beam}.
+These calculations used an circular aperture size of 0.25-m in diameter consisting of 32x32 sub-apertures, an acoustic wavelength, $\Lambda$, of $Ap/4$ to $10Ap$, and a distance from the point source to the center of the aperture, $R$, of $5Ap$ to $25Ap$.
+The beam was integrated over $\pm5$-m from the plane of the point source with 25 phase step used to calculate mean values.
+
+The result of these simulated acoustic fields is shown in Figure \ref{fig:03_spherical_sample}.
 \begin{figure}
   \centering
   \includegraphics{../matlab/03_aero_optics_acoustics/spherical_sample.eps}
-  \caption{Theoretical time-averaged $\opdrms$ for a spherical acoustic wave. There are oscillations not captured by the curve fit that are a function of aperture size.}
+  \includegraphics{../matlab/03_aero_optics_acoustics/spherical_sample_win.eps}
+  \caption{Theoretical time-averaged $\opdrms$ for a spherical acoustic wave. The top plot shows a perfect spherical acoustic signal integrated over $\pm$5-m. The bottom plot shows has a Tukey window applied along the beam length to partially emulate source directivity which significantly reduces the measured oscillations.}
   \label{fig:03_spherical_sample}
 \end{figure}
+The top plots shows the expected optical disturbance ratio, $\opdrms/|A_0|$, for a perfectly spherical acoustic field measured over the beam length.
+With the exception of some oscillations that are caused by end effects in the integration.
+The oscillations can be greatly reduced by using a windowing function in the z-direction such as a Hanning or Tukey window which also can be used to roughly model directivity of the speaker's acoustic emission as shown in the bottom plot.
+While this plot was calculated with a single aperture diameter, the general trend holds for all other aperture diameters that were tested, the only effect was the size and width of the oscillations.
 
+The peak of the optical disturbance ratio, $\opdrms/|A_0|$, is located at $\Lambda/Ap\approx0.75$ for a circular aperture.
+The signal is reduced above this value due to aperture filtering and below this value because the shorter wavelength have a reduced distance before alternating high and low index-of-refraction regions reduce the optical path difference.
+When the acoustic source point is sufficiently far enough away from the measurement beam, $R/Ap\geq2$, the optical disturbance ratio, $\opdrms/|A_0|$ when multiplied by $\sqrt{R/Ap}$, can be collapsed onto a single curve for a range of $\Lambda/Ap$ of 0.1 to 10.
+Above $\Lambda/Ap=10$ the curves start to diverge away from one another.
+An approximate function fit to this data is
 \begin{equation}
-  \frac{\opdrms\sqrt{R/Ap}}{|A_0|} \approx \frac{p_1(\Lambda/Ap)^2+p_2(\Lambda/Ap)+p_3}{(\Lambda/Ap)^2+q_1(\Lambda/Ap)+q_2}
+  \frac{\opdrms\sqrt{R/Ap}}{|A_0|} \approx \frac{p_1(\Lambda/Ap)^3+p_2(\Lambda/Ap)^2+p_3(\Lambda/Ap)+p_4}{(\Lambda/Ap)^3+q_1(\Lambda/Ap)^2+q_2(\Lambda/Ap)+q_3}
   \label{eqn:03_spherical_sample_fit}
 \end{equation}
-
-
+with coefficient values shown Table \ref{tab:03_speherical_sample_coeff}.
+This functional fit has a $R^2$ value of 0.9991.
 \begin{table}
 \centering
 \caption{Curve fit values for Figure \ref{fig:03_spherical_sample} and Equation \ref{eqn:03_spherical_sample_fit}}
-\input{../matlab/03_aero_optics_acoustics/spherical_sample.txt}
+\input{../matlab/03_aero_optics_acoustics/spherical_sample_win.txt}
 \label{tab:03_speherical_sample_coeff}
 \end{table}
 
+
+\subsubsection{Measurement of a Spherical Acoustic Wave with an Optical Beam}
+A small benchtop experiment was used to compare the simultaious optical and microphone measurements of an acoustic field from a speaker as shown in the measurement plane in Figure \ref{fig:03_speaker_test}.
+\begin{figure}
+  \centering
+  \includegraphics[width=3.5in,clip,trim=100 100 100 100]{../cad/speak_test.pdf}
+  \caption{Spherical acoustic wave measurement test.}
+  \label{fig:03_speaker_test}
+\end{figure}
+The distance from center of the beam to the speaker was 102-mm with a beam diameter of 28-mm.
+A Br\"uel \& Kj\ae r model 7016B microphone was placed directly over the speaker at a distance of 158-mm.
+The speaker in use was Peerless model XT25SC90-04 \cite{Peerless-XT25SC90-04-1} which has a fairly flat on-axis response from 1-kHz to 40kHz.
+\cite{Bruel-Kjaer-2690}
+
+The wavefront measurements system utilized in these measurements is similar to that shown in Figure \ref{fig:02_typical_wavefront_system} except there was no primary telescope.
+The speaker was located in the center of the measurement region which was about 2-feet in length and the reimaging telescope reduced the beam diameter by a factor of two and reimaged the return mirror.
+Optical wavefronts and microphone measurements were taken at 49-kHz.
+The speaker was sinusoidally excited at three different frequencies (9, 14, and 18-kHz) at a variety of voltages.
+
+The absolute value of the pulsating field strength, $|A_0|$, was calculated two different ways.
+The power spectra of the microphone data was used to calculate the average $p_{rms}$ at the excitation frequency and the pulsating field strength using Equation \ref{eqn:03_spherical_pressure_rms}.
+The optical wavefront was bandpass filtered at the excitation frequency using a process that will be disscussed in Chapter \ref{chap:06}.
+The time averaged $\opdrms$ was used to calclate the pulsating field strength using Equation \ref{eqn:03_spherical_sample_fit}.
+
+The results of these measurements of the pulsating field strength is shown in Table \ref{tab:03_speherical_measurement}.
+The differences between the two techniques for measuring the pulsating field strength were typically with 9-11\%, with one case being at 15.5\%.
+With the exception of the highest excitation case at 9-kHz, the differences between the to techniques was fairly constant for each frequency group.
+For the 9-kHz cases, the wavefront estimated the pulsating field strength to be higher than the microphone estimated value.
+While for the 14 and 18-kHz cases the microphone estimated the value to be higher.
+Some of these differences maybe attributed to the frequency response of the microphone.
 \begin{table}
-\centering
-\caption{Comparison of microphone and wavefront computation of $|A_0|$}
-\input{../matlab/03_aero_optics_acoustics/spherical_measurement.txt}
-\label{tab:03_speherical_measurement}
+  \centering
+  \caption{Comparison of microphone and wavefront computation of $|A_0|$}
+  \input{../matlab/03_aero_optics_acoustics/spherical_measurement.txt}
+  \label{tab:03_speherical_measurement}
 \end{table}
+
+Measured and simulated wavefronts for the highest excitation cases at each frequency are shown in Figure \ref{fig:03_spherical_plot}.
+\begin{figure}
+  \centering
+  \includegraphics{../matlab/03_aero_optics_acoustics/spherical_plot_measured.eps}
+  \includegraphics{../matlab/03_aero_optics_acoustics/spherical_plot_simulated.eps}
+  \caption{Comparison of some of the measured wavefronts and simulated ones.}
+  \label{fig:03_spherical_plot}
+\end{figure}
+The 9-kHz case shows some anomalies on the measured wavefront on the right side, diviating from spherical wave significantly likely contributing the significantly higher estimated pulsating field strength value when compared to the microphone estimate.
+The 14 and 18-kHz cases show some remarkable agreement between the measured and simulated images.
+Optical wavefront measurements can be utilized for making non-intrusive acoustic field measurements espically when the acoustic field is simple.
 
 
 

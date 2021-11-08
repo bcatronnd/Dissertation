@@ -26,3 +26,17 @@
            dfe: 1950
     adjrsquare: 0.9982
           rmse: 1.2861e-05
+     General model Rat22:
+     fitresult(x) = (p1*x^2 + p2*x + p3) / (x^2 + q1*x + q2)
+     Coefficients (with 95% confidence bounds):
+       p1 =  -2.024e-05  (-2.19e-05, -1.858e-05)
+       p2 =   0.0006271  (0.0006164, 0.0006378)
+       p3 =   0.0002854  (0.0002776, 0.0002933)
+       q1 =     -0.9907  (-1.003, -0.9788)
+       q2 =      0.8417  (0.8318, 0.8515)
+ 
+           sse: 3.1069e-07
+       rsquare: 0.9983
+           dfe: 1980
+    adjrsquare: 0.9983
+          rmse: 1.2526e-05
