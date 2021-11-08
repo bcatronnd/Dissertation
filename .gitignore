@@ -4,8 +4,9 @@
 # ignore .gifs
 *.gif
 
-# ignore .mats
+# ignore some Matlab files
 *.mat
+*.asv
 
 # ignore temporary latex files
 *.aux
@@ -19,3 +20,6 @@
 *.out
 *.synctex.gz
 *.toc
+
+# ignore Rennie's comment files
+*_MR.docx
