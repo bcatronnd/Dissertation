@@ -1,0 +1,2526 @@
+---
+abstract: Abstract Goes Here
+author:
+- Brian Lowell Catron
+bibliography:
+- '99\_references.bib'
+title: 'Filtering of Acoustic Information from Aero-Optical Measurements'
+---
+
+To my wife Karen & our son Arthur
+
+Introduction {#chap:01_intro}
+============
+
+Directed-energy systems have a variety of uses but typically fall into
+one of two categories: communications and weapons. The primary benefits
+of directed-energy communications is the ability to have secure
+point-to-point data transfer that is high unlikely to intercept or be
+interfered with [@crs-2021-RwNjGeZD]. Directed-energy weapons are likely
+to have a lower cost per shot and a deeper magazine when compared to
+traditional munitions [@crs-2021-hyCUE868]. As ground based
+directed-energy systems are slowly rolled out, most prominently aboard
+the USS Ponce [@crs-2021-Atxb7GDv], there is a desire to field a system
+aboard an aircraft.
+
+There have been two major attempts to field a directed-energy system
+aboard an aircraft to date [@Jumper-2013-8KtN3pue]. The first was the
+Airborne Laser Laboratory (ALL) which took place in the late 1970's and
+early 1980's which used a CO$_2$ laser at 10.6-$\mu$m. The second was
+the Airborne Laser (ABL) program which operated in the 2000's and used a
+COIL laser at 1.315-$\mu$m. Airborne optical systems have to deal with a
+phenomenon know as "aero-optics," which is optical distortions caused by
+various aero-dynamic flow features. These optical distortions were first
+noticed due to image degradation in wind tunnel measurements in the
+1950's [@Stine-1956-UaRzVZCe] as well as in photo-reconnaissance
+missions in the 1960's [@Kyrazis-2013-vwKeEBym].
+
+The intensity of that makes through an optical disturbance to a target,
+$I$, divided by the diffraction-limited performance, $I_0$, is known as
+the Strehl ratio [@Mahajan-1982-kkXM4eaB], $\sr$,
+$$\sr = \frac{I}{I_0} \textrm{.}
+  \label{eqn:01_strehl_ratio_definition}$$ The diffraction-limited
+performance is the intensity that would make it to the same target if
+not for a disturbance. The Airborne Laser Laboratory had an estimated
+Strehl ratio of 95%[@Jumper-2013-8KtN3pue] meaning the "aero-optics
+problem" effectively did not apply. After the Airborne Laser Laboratory
+program there was a desire to move toward shorter wavelengths in order
+to take advantage of improved diffraction-limited performance
+[@Jumper-2001-6QDh7zDy],
+$$\frac{I_0}{P} = \frac{1}{\pi}\left(\frac{Ap}{\lambda z}\right)^2 \textrm{,}
+  \label{eqn:01_farfield_intensity}$$ where $P$ is the laser output
+power, $Ap$ is the aperture size, and $z$ is the propagation distance.
+This improved diffraction-limited performance is shown in Figure
+[\[fig:01\_farfield\_intensity\]](#fig:01_farfield_intensity){reference-type="ref"
+reference="fig:01_farfield_intensity"}.
+
+![Diffraction-limited far-field intensity of a beam normalized by the
+performance at
+1-$\mu$m.](../matlab/01_introduction/farfield_intensity.eps)
+
+[\[fig:01\_farfield\_intensity\]]{#fig:01_farfield_intensity
+label="fig:01_farfield_intensity"}
+
+By only changing the laser source from a 10-$\mu$m to 1-$\mu$m
+wavelength the diffraction-limited performance can be increased 100
+times.
+
+Aero-optical issues start to become apparent as the wavelength is
+decreased as is evident by the Maréchal approximation
+[@Mahajan-1983-hg7ahvJM] which relates the Strehl ratio to wavelength,
+$$\sr \approx \exp\left\{-\left[\frac{2\pi \opdrms}{\lambda}\right]^2\right\} \textrm{,}
+  \label{eqn:01_strehl_ratio}$$ where $\opdrms$ is the spatial
+root-mean-square of the optical path difference over the aperture and is
+a way to quantify the optical disturbance that will be discussed in
+Chapter [2](#chap:02_lit_review){reference-type="ref"
+reference="chap:02_lit_review"}. If the ALL system's laser was swapped
+with another laser of a lower wavelength, the Strehl ratio would
+significantly decrease as shown by Figure
+[\[fig:01\_strehl\_ratio\]](#fig:01_strehl_ratio){reference-type="ref"
+reference="fig:01_strehl_ratio"}.
+
+![Strehl ratio due to the $\opdrms$ of the Airborne Laser Laboratory
+(ALL) at various laser wavelengths. ALL had an estimated Strehl ratio of
+95% with its 10.6-$\mu$m
+laser.](../matlab/01_introduction/strehl_ratio.eps)
+
+[\[fig:01\_strehl\_ratio\]]{#fig:01_strehl_ratio
+label="fig:01_strehl_ratio"}
+
+While the hypothetical case of going from 10 to 1-$\mu$m resulted in a
+100-fold increase in diffraction-limited performance, the actual
+on-target intensity that this hypothetical system obtains would be
+essentially zero. This means that the aero-optical problem can no longer
+be ignored and was recognized as one of the main developmental risks of
+the ABL program [@DOTE-1999-HnkadUEw].
+
+As the next generation of airborne directed-energy systems are developed
+some amount of ground testing of those systems will need to occur. In
+order to understand the aero-optical environment that these systems will
+experience in the air wind tunnel tests will need to be employed. These
+tests are far cheaper to perform and allow for quicker iteration of
+design parameters. Wind tunnel tests will however include some
+additional optical contamination including but not limited to the
+boundary layer present on the wall and the acoustic environment
+generated by the wind tunnel fan [@Gordeyev-2014-jcJndkHM]. Assuming
+that the optical disturbances system model are statistically independent
+from the optical disturbances from the testing environment, we can
+estimate the total optical disturbance from
+$$\opdrms_{TOTAL}^2 = \opdrms_{MODEL}^2+\opdrms_{ENVIRONMENT}^2 \textrm{.}
+  \label{eqn:01_combined_opd}$$
+
+This combination of optical disturbances is shown in Figure
+[\[fig:01\_design\_iteration\]](#fig:01_design_iteration){reference-type="ref"
+reference="fig:01_design_iteration"} along with a hypothetical iterative
+design process.
+
+![Hypothetical iterative design process of an airborne directed-energy
+system. The required performance level is shown by the red line and the
+testing environment's contamination is shown by the blue
+line.](../matlab/01_introduction/design_iteration.eps)
+
+[\[fig:01\_design\_iteration\]]{#fig:01_design_iteration
+label="fig:01_design_iteration"}
+
+This process seeks to obtain a design that meets a required level of
+performance shown in red. If only the measured data is used to assess
+the system's performance three additional iterative changes are needed
+to achieve a usable design which can add significantly to the
+development time and costs. If the environmental contamination is
+greater than the design requirement, the measured performance will never
+reach the required performance criteria. When the true performance of a
+system is significantly higher than the environmental contamination, the
+measured performance is not significantly greater than the true
+performance. The measured performance becomes significantly greater that
+the true performance when the true performance is less than the
+environmental contamination.
+
+This dissertation will primary examine the environmental contamination
+due to acoustic noise within the wind tunnel. In Chapter
+[3](#chap:03_optical_acoustics){reference-type="ref"
+reference="chap:03_optical_acoustics"} it will look at the optical
+disturbances caused by acoustic waves from some simple plane and
+spherical waves to a process for estimating the acoustic environment
+within the test section of a wind tunnel. The strength of an spherical
+acoustic wave will be assessed with both microphone and optical
+measurements. Multi-dimensional spectral techniques will be used to
+analyze optical wavefronts in Chapter
+[4](#chap:04_dispersion){reference-type="ref"
+reference="chap:04_dispersion"} and filter optical wavefronts in Chapter
+[6](#chap:06_single_filter){reference-type="ref"
+reference="chap:06_single_filter"}. These filtering techniques will
+contain some optical contamination particularly in regions where the
+various signal components interfere with one another. In order to
+further reduce the optical contamination, Chapter
+[7](#chap:07_multiple_filter){reference-type="ref"
+reference="chap:07_multiple_filter"} will utilize additional sensor
+information from both microphones and accelerators to remove some of the
+overlapping contamination to obtain a better picture of the actual
+optical performance of an airborne directed-energy system from ground
+test measurements.
+
+Literature Review {#chap:02_lit_review}
+=================
+
+The literature review will consist of primarily two sections. The first
+section will examine aero-optics while the second will look at acoustics
+inside of ducts.
+
+Aero-Optics
+-----------
+
+Optical communication and directed energy systems require a tightly
+focused beam on target in order to meet system performance objectives.
+The farfield performance of airborne optical systems can be degraded by
+the nearfield flow that becomes optically active at compressible flow
+speeds. "Aero-optics" is the study of the optical effect of these
+nearfield flow disturbances. Examples of important aero-optical flows
+that have been studied extensively include boundary layers
+[@Gordeyev-2014-jcJndkHM; @Smith-2013-VXArwwux; @Wang-2012-gJ7rttg7],
+shear layers [@Fitzgerald-2004-DgAgbreK; @Rennie-2008-Wku6NheG], shock
+waves [@Jumper-2013-8KtN3pue], and even tip vortices
+[@Porter-2013-pQcNWHJ6]. The effect of acoustic disturbances on
+aero-optical measurements has also been shown in both flight testing
+[@DeLucca-2018-gBQdjTmT] and ground testing
+[@Catron-2018-DdVp6VZf; @Catron-2020-x8njYmmu].
+
+In these optically active flows the index-of-refraction, $n$, varies
+locally as does the other fluid properties. Gladstone and Dale
+[@Gladstone-1863-ND4wtDT9] found that the index-of-refraction is
+primarily a function of density with a loose dependence on the
+wavelength of light. Gladstone and Dale proposed a "specific refractive
+energy" now known as the Gladstone-Dale constant, $K_{GD}$,
+$$K_{GD} = \frac{n-1}{\rho}\textrm{.}
+  \label{eqn:02_gladstone_dale_constant}$$ For air the refractive index
+can be related to state quantities [@Valley-1965-F3k3cmv6]
+$$n-1 = 77.6\times 10^{-6}\frac{P}{T}\left(1+\frac{7.53\times10^{-3}}{\lambda^2}\right)\textrm{,}
+  \label{eqn:02_refractive_index_ptlambda}$$ where $P$ is in mbar, $T$
+is in K, and $\lambda$ is in $\mu$m. By combining this relationship with
+the ideal gas law, the Gladstone-Dale constant can be determined as a
+function of light wavelength,
+$$K_{GD} = 2.23\times10^{-4}\left(1+\frac{7.53\times10^{-3}}{\lambda_{\mu m}^2}\right) \: \left[\frac{m^3}{kg}\right]\textrm{.}
+  \label{eqn:02_gladstone_dale_wavelength}$$ The Gladstone-Dale constant
+for air over the visible range is shown in Figure
+[\[fig:02\_gladstone\_dale\_wavelength\]](#fig:02_gladstone_dale_wavelength){reference-type="ref"
+reference="fig:02_gladstone_dale_wavelength"}.
+
+![Gladstone-Dale constant for air over the visible wavelength
+range.](../matlab/02_background/gladstone_dale_wavelength.eps)
+
+[\[fig:02\_gladstone\_dale\_wavelength\]]{#fig:02_gladstone_dale_wavelength
+label="fig:02_gladstone_dale_wavelength"}
+
+While the value for $K_{GD}$ does vary over the visible range, it is
+only a few percent, and many sources use an average value of
+2.27$\times10^{-4}$ m$^3$/kg for the visible and near-infrared
+[@Gardiner-1980-reW8xrCb]. The Gladstone-Dale relationship is typically
+presented as $$n = 1+K_{GD}\rho
+  \label{eqn:02_gladstone_dale_relation}$$ but when applied to
+situations where there are significant fluctuations in the flow an
+alternate form is often more useful $$n'=K_{GD}\rho'
+  \label{eqn:02_gladstone_dale_relation_fluctuating}$$ where $'$ denotes
+the quantity represents the fluctuating component ($n' = n-\bar{n}$).
+
+When a beam with an initially planar wave front passes through a region
+of optical active flow its wave front aberrated The optical path length
+($\opl$) at any point in the beam can be obtained by integrating the
+index of refraction along the propagation of an optical ray
+[@Klein-1986-8Vx29RfE]. $$\opl (x,y,t) = \int^{s_2}_{s_1} n(x,y,z,t)ds
+  \label{eqn:02_opl}$$ The optical path difference ($\opd$), is then the
+spatially-averaged $\textrm{OPL}$ over an aperture removed from the OPL.
+$$\opd(x,y,t) = \opl(x,y,t)-\langle\opl(x,y,t)\rangle
+  \label{eqn:02_opd}$$ When working with fluctuating components, the
+$\opd$ can be calculated directly
+$$\opd(x,y,t) = \int^{s_2}_{s_1} n'(x,y,z,t)ds \textrm{.}
+  \label{eqn:02_opd_n}$$
+
+When $\opd$ is combined with the beam intensity profile, one can compute
+the farfield complex amplitude distribution using the Fraunhofer
+approximation [@Goodman-1968-zPUmuuzx].
+$$U(x_0,y_0,t)\propto\iint_{Ap}\exp\left\{\frac{2\pi j}{\lambda}\left[\opd(x_1,y_1,t)-\frac{(x_0x_1+y_0y_1)}{z}\right]\right\}dx_1dy_1
+  \label{eqn:02_fraunhofer}$$ where $U$ is the complex amplitude, the
+subscripts 0 and 1 represent the coordinates of the farfield and
+nearfield respectively. The intensity can be computed from the complex
+amplitude via: $I = UU^\ast$. For cases in which optical aberrations are
+nonexistent (i.e. $\opd(x,y,t)=0$), the farfield irradiance pattern that
+results from Equation
+[\[eqn:02\_fraunhofer\]](#eqn:02_fraunhofer){reference-type="ref"
+reference="eqn:02_fraunhofer"} is caused entirely by diffraction from
+the optical aperture, and is referred to as the "diffraction-limited"
+irradiance pattern. For a beam with a flat wave front and circular
+aperture, the farfield irradiance pattern is the Airy's disk, and the
+peak irradiance at the center of the disk, $I_0$ , is the maximum
+irradiance that can be achieved by the optical system:
+$$I_0 = \left(\frac{kAp^2}{8z}\right)^2
+  \label{eqn:02_airy_pattern}$$ where $k$ is the wavenumber
+($k=2\pi /\lambda$), $Ap$ is the aperture diameter, and $z$ is the
+distance from the aperture. In the presence of aero-optical aberrations,
+$\opd(x,y,t)$ is non-zero, and the farfield irradiance pattern in this
+case tends to be more spread out and diffuse than the
+diffraction-limited case; furthermore, the beam may be shifted off
+target by optical tip/tilt imposed by the aberrations.
+
+The Strehl ratio ($\sr$), is the ratio of intensity on target ($I$) to
+the diffraction-limited on target intensity ($I_0$): $$\sr=\frac{I}{I_0}
+  \label{eqn:02_strehl_simple}$$ The Strehl ratio can be computed
+accurately by applying Equation
+[\[eqn:02\_fraunhofer\]](#eqn:02_fraunhofer){reference-type="ref"
+reference="eqn:02_fraunhofer"} twice, once for the diffraction-limited
+case to obtain $I_0$, and a second time with the $\opd$ field due to
+aero-optical aberrations included to obtain $I$. The farfield
+performance, can also be estimated via the Maréchal approximation:
+$$\sr(t) \equiv \frac{I(t)}{I_0} \approx \exp \left\{-\left[\frac{2\pi \opdrms(t)}{\lambda}\right]^2\right\}
+  \label{eqn:02_strehl_ratio}$$ where $\opdrms$ is the spatial rms of
+the wave front and $\lambda$ is the wavelength of the beam.
+
+![](../matlab/02_background/farfield_intensity.eps)
+
+[\[fig:02\_farfield\_intensity\]]{#fig:02_farfield_intensity
+label="fig:02_farfield_intensity"}
+
+ 
+
+![](../matlab/02_background/all_strehl_ratio.eps)
+
+[\[fig:02\_all\_strehl\_ratio\]]{#fig:02_all_strehl_ratio
+label="fig:02_all_strehl_ratio"}
+
+Equation
+[\[eqn:02\_strehl\_ratio\]](#eqn:02_strehl_ratio){reference-type="ref"
+reference="eqn:02_strehl_ratio"} shows a key relationship between
+$\opd$, wavelength, and the farfield performance, plotted in Figure
+[\[fig:02\_all\_strehl\_ratio\]](#fig:02_all_strehl_ratio){reference-type="ref"
+reference="fig:02_all_strehl_ratio"}. On the other hand, Equation
+[\[eqn:02\_airy\_pattern\]](#eqn:02_airy_pattern){reference-type="ref"
+reference="eqn:02_airy_pattern"} shows that the diffraction-limited
+farfield irradiance increases as the wavelength is shortened, plotted in
+Figure
+[\[fig:02\_farfield\_intensity\]](#fig:02_farfield_intensity){reference-type="ref"
+reference="fig:02_farfield_intensity"}. Together, Figure
+[\[fig:02\_farfield\_intensity\]](#fig:02_farfield_intensity){reference-type="ref"
+reference="fig:02_farfield_intensity"} and
+[\[fig:02\_all\_strehl\_ratio\]](#fig:02_all_strehl_ratio){reference-type="ref"
+reference="fig:02_all_strehl_ratio"} show that as modern optical systems
+move to shorter wavelengths to increase $I_0$, aero-optical aberrations
+cause a much more serious degradation of the Strehl ratio, illustrating
+why aero-optical considerations are critical in the development of any
+airborne optical system.
+
+Figure
+[\[fig:02\_necessary\_opd\]](#fig:02_necessary_opd){reference-type="ref"
+reference="fig:02_necessary_opd"} shows the $\opdrms$ necessary to
+achieve various Strehl ratios over a range of wavelengths.
+
+![$\opdrms$ values necessary to obtain Strehl ratios of 0.9, 0.7, and
+0.5 over a range of
+wavelengths.](../matlab/02_background/necessary_opd.eps)
+
+[\[fig:02\_necessary\_opd\]]{#fig:02_necessary_opd
+label="fig:02_necessary_opd"}
+
+As the wavelength of light decreases the required $\opdrms$ decreases
+linearly for a fixed Strehl ratio.
+
+### Typical Optical Wavefront Measurement System
+
+![Typical double-pass optical wavefront measurement
+setup.](../cad/wavefront_setup.pdf "fig:"){width="2.5in"} (-72,62)
+(-145,78) (-135,65) (-150,200) (-130,400) (-112,427) (-95,160) (-80,155)
+(-10,245) (5,260)
+
+[\[fig:02\_typical\_wavefront\_system\]]{#fig:02_typical_wavefront_system
+label="fig:02_typical_wavefront_system"}
+
+### A Brief History of Aero-Optics
+
+The field of aero-optics began with an investigation by Liepmann
+[@Liepmann-1952-89GQ7wyA] into the limits of sensitivity of schlieren
+systems when used in high-speed flow analysis. Liepmann used geometric
+optics to analyze a small-diameter beam and derive its mean-squared
+fluctuating deflection angle, $\left<\theta^2\right>$. Liepmann
+propagated the beam in the $y$ direction and assumed the index of
+refraction changes in the $x-z$ plane were statistically similar.
+Liepmann's analysis for a boundary layer of thickness $\delta$ resulted
+in
+$$\left<\theta^2\right> = \frac{1}{[n_0(\delta)]^2}\int_0^\delta\int_0^\delta n_0(y)n_0(\zeta)\left<\left(\frac{\partial\nu}{\partial y}\right)^2\right>R_v(|y-\zeta|)dyd\zeta
+  \label{eqn:02_liepmann_deflection_angle}$$ where the index of
+refraction is determined from $n=n_0(y)(1+\nu)$ and $R_v(|y-\zeta|)$ is
+the correlation function for the index variation. This analysis
+introduced the concept of a linking equation that allows one to predict
+time-averaged optical degradation to turbulent flow statistical
+measurements.
+
+Acoustics
+---------
+
+### Basic Acoustics
+
+Starting with the conservation of mass,
+$$\frac{\partial\rho}{\partial t}+\nabla\cdot\left(\rho\mathbf{u}\right)=0  \textrm{,}
+  \label{eqn:02_cons_of_mass}$$ and separating the density into a
+time-averaged ($\rho_0$) and fluctuating portion ($\rho'$),
+$\rho = \rho_0+\rho'$. The fluctuating conservation of mass equation is
+obtained by separating the density ($\rho = \rho_0+\rho'$) into a
+temporally averaged density, $\rho_0$, and a
+
+$$\frac{\mathbf{D}\rho'}{\mathbf{Dt}}+\nabla\cdot\left(\rho_0\mathbf{u}\right)=0
+  \label{eqn:02_cons_of_mass_fluc}$$
+
+For acoustics waves of frequency less than $10^9$ Hz the compression of
+the fluid can be assumed to be adiabatic [@Morse-1968-yygEdQZf].
+
+$$\left.\frac{\partial p}{\partial\rho}\right|_s = c_0^2
+  \label{eqn:02_speed_of_sound}$$
+
+### Duct Acoustics
+
+Acoustic waves are often enclosed inside of somesort of structure. This
+section will look at acoustics when confined to a duct in which the
+acoustic waves primarily travel along one-axis and have walls confining
+the acoustics along the other two axes as is the case inside of a wind
+tunnel. Figure
+[\[fig:02\_duct\_drawing\]](#fig:02_duct_drawing){reference-type="ref"
+reference="fig:02_duct_drawing"} shows the diagram used for deriving the
+acoustic properties inside of a constant area duct.
+
+![Duct with a rectangular
+cross-section.](../autocad/02_background/duct_drawing.eps "fig:"){width="4.5in"}
+(-155,62) (-227,113) (-103,119)$\mathbf{x}$ (-198,220)$\mathbf{y}$
+(-26,4)$\mathbf{z}$
+
+[\[fig:02\_duct\_drawing\]]{#fig:02_duct_drawing
+label="fig:02_duct_drawing"}
+
+This derivation is primarily influenced from Munjal
+[@Munjal-2014-w28y4EyP] along with Jacobsen and Juhl
+[@Jacobsen-2013-PHD3v3YZ]. The primary assumption used in this
+derivation is that the duct is of constant cross-section. This means
+that all mean quantities ($\rho_0$, $\mathbf{u_0}$, \...) a constant
+throughout space and time. Starting with the linearized inviscid forms
+of the conservation of mass,
+$$\frac{\mathbf{D}\rho}{\mathbf{Dt}} + \rho_0\nabla\cdot\mathbf{u} = 0 \textrm{,}
+  % \frac{\partial\rho}{\partial t} + \mathbf{u}\cdot\nabla\rho + \rho_0(\nabla\cdot\mathbf{u}) = 0 \textrm{,}
+  \label{eqn:02_cons_mass}$$ and conservation of momentum,
+$$\rho_0\frac{\mathbf{Du}}{\mathbf{Dt}} + \nabla p = 0 \textrm{.}
+  % \rho_0\frac{\partial\mathbf{u}}{\partial t} + \rho_0(\mathbf{u_0}\cdot\nabla)\mathbf{u} + \nabla p = 0 \textrm{.}
+  \label{eqn:02_cons_mom}$$ The definition of the speed of sound
+(Equation
+[\[eqn:02\_speed\_of\_sound\]](#eqn:02_speed_of_sound){reference-type="ref"
+reference="eqn:02_speed_of_sound"}) is then substituted into Equation
+[\[eqn:02\_cons\_mass\]](#eqn:02_cons_mass){reference-type="ref"
+reference="eqn:02_cons_mass"},
+$$\frac{1}{c_0^2}\frac{\mathbf{D}p}{\mathbf{Dt}} + \rho_0\nabla\cdot\mathbf{u} = 0 \textrm{,}
+  % \frac{1}{c_0^2}\frac{\partial p}{\partial t} + \frac{1}{c_0^2}(\mathbf{u}\cdot\nabla p) + \rho_0(\nabla\cdot\mathbf{u}) = 0 \textrm{,}
+  \label{eqn:02_cons_mass_p}$$ where $c_0$ is the speed of sound at
+average fluid properties ($\rho_0$, $p_0$, $T_0$, \...). Next the
+difference between the material derivative ($\mathbf{D}/\mathbf{Dt}$) of
+Equation
+[\[eqn:02\_cons\_mass\_p\]](#eqn:02_cons_mass_p){reference-type="ref"
+reference="eqn:02_cons_mass_p"} and the partial derivative
+($\partial/\partial\mathbf{x}$) of Equation
+[\[eqn:02\_cons\_mom\]](#eqn:02_cons_mom){reference-type="ref"
+reference="eqn:02_cons_mom"} with respect to space is taken which
+results in the convected 3-D wave equation,
+$$\left(\frac{\mathbf{D}^2}{\mathbf{Dt}^2}-c_0^2\nabla^2\right)p=0\textrm{.}
+  \label{eqn:02_wave_conv_3_c}$$ Expanding the material derivative and
+dividing by $c_0^2$,
+$$\left(\frac{1}{c_0^2}\frac{\partial^2}{\partial t^2} + \frac{2\mathbf{M}}{c_0}\frac{\partial^2}{\partial t\partial\mathbf{x}} - (1-\mathbf{M}^2)\nabla^2\right)p = 0 \textrm{,}
+  \label{eqn:02_wave_conv_expand}$$ where
+$\mathbf{M} = \mathbf{u_0}/c_0$. By using the fact that
+$c_0=\omega/k_0$, Equation
+[\[eqn:02\_wave\_conv\_3\_c\]](#eqn:02_wave_conv_3_c){reference-type="ref"
+reference="eqn:02_wave_conv_3_c"} can be written in a more convent form,
+$$\left(\frac{1}{\omega^2}\frac{\partial^2}{\partial t^2} + \frac{2\mathbf{M}}{\omega k_0}\frac{\partial^2}{\partial t\partial\mathbf{x}} - \frac{1-\mathbf{M}^2}{k_0^2}\nabla^2\right)p = 0 \textrm{,}
+  \label{eqn:02_wave_conv_3}$$ where $\omega$ is the angular frequency
+and $k_0$ is the total wavenumber.
+
+At this point the pressure field is going to written in a complex form
+and assumed to be separable in both time and space such that
+$\hat{p}(\mathbf{x},t) = \hat{p}(x,y)\hat{p}(z)\hat{p}(t)$. The temporal
+solution is assumed to take the form
+$$\hat{p}(t) = \exp\left\{j\omega t\right\} \textrm{.}
+  \label{eqn:02_pressure_solution_time}$$ This results in the spatial
+component of the convecting wave equation
+$$\left((1-\mathbf{M}^2)\nabla^2-2jk_0\mathbf{M}\nabla+k_0^2\right)\hat{p}(x,y)\hat{p}(z) = 0 \textrm{.}
+  \label{eqn:02_wave_conv_space}$$ This can be further split into axial
+and cross-sectional components by splitting $k_0$ into components,
+$$k_0 = \sqrt{k_{xy}^2+k_z^2} \textrm{,}
+  \label{eqn:02_k0}$$ and because the mean flow is only in the axial
+direction ($\mathbf{M} = M\mathbf{\hat{k}}$). The cross-sectional
+component is a typical Helmholtz equation
+$$\left(\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}\right)\hat{p}_{xy}(x,y)+k_{xy}^2\hat{p}(x,y) = 0 \textrm{,}
+  \label{eqn:02_wave_xy}$$ whos solution,
+$$\hat{p}(x,y) = \Psi_m(x,y) \textrm{,}
+  \label{eqn:02_pressure_solution_xy}$$ is one of infinity many
+eigen-function solutions with discrete wavenumbers, $k_m$. The axial
+component of the convecting wave equation,
+$$(1-M^2)\frac{\partial^2\hat{p}(z)}{\partial z^2} - 2jk_0M\frac{\partial\hat{p}(z)}{\partial z} + k_z^2\hat{p}(z) = 0 \textrm{,}
+  \label{eqn:02_wave_z}$$ retains the total wavenumber in second term
+which means its solution will depend on the cross-sectional wavenumber
+value at cross-sectional mode. The solution to the axial convecting wave
+equation,
+$$\hat{p}(z) = p^+_m\exp{\left\{-jk^+_{zm}z\right\}}+p^-_m\exp{\left\{+jk^-_{zm}z\right\}} \textrm{,}
+  \label{eqn:02_pressure_solution_z}$$ has waves traveling in both
+directions with the axial wavenumber in each direction for a given mode
+$$k^\pm_{zm} = \frac{\mp Mk_0+\sqrt{k_0^2-(1-M^2)k_m^2}}{1-M^2} \textrm{.}
+  \label{eqn:02_kzm}$$
+
+The solution for a three-dimensional acoustic wave in a duct with a
+constant but arbitrary cross-section in complex pressure is the
+combination of the component solutions presented in Equations
+[\[eqn:02\_pressure\_solution\_time\]](#eqn:02_pressure_solution_time){reference-type="ref"
+reference="eqn:02_pressure_solution_time"},
+[\[eqn:02\_pressure\_solution\_xy\]](#eqn:02_pressure_solution_xy){reference-type="ref"
+reference="eqn:02_pressure_solution_xy"}, and
+[\[eqn:02\_pressure\_solution\_z\]](#eqn:02_pressure_solution_z){reference-type="ref"
+reference="eqn:02_pressure_solution_z"},
+$$\hat{p}(x,y,z,t) = \Psi_m(x,y)\left(p^+_m\exp{\left\{-jk^+_{zm}z\right\}}+p^-_m\exp{\left\{+jk^-_{zm}z\right\}}\right)\exp\left\{j\omega t\right\} \textrm{.}
+  \label{eqn:02_pressure_solution_duct}$$ The two solutions for a plane
+wave ($\Psi_m=1$, $k_m=0$) traveling in a duct have a characteristic
+speed of $u\pm c_0$. Acoustic modes will travel indefinitly if
+$k_0^2-(1-M^2)k_m^2>0$ (the quantity inside of the square-root of
+Equation [\[eqn:02\_kzm\]](#eqn:02_kzm){reference-type="ref"
+reference="eqn:02_kzm"}). This presents a frequency at which a given
+mode will cut-on,
+$$f_{cuton} = \frac{c_0}{2\pi}\sqrt{(1-M^2)k_m^2} \textrm{.}
+  \label{eqn:02_cuton_freq}$$ Below this frequency, an acoustic mode
+will be exponentially attenuated as it travels throught the duct.
+
+#### Characteristic Equations of Cross-Sections
+
+In order to determine the characteristic equations of an acoustic field
+within a cross-section the solution to Equation
+[\[eqn:02\_wave\_xy\]](#eqn:02_wave_xy){reference-type="ref"
+reference="eqn:02_wave_xy"} needs to be determined. A typical boundary
+condition that is used in the solution of this 2-D Helmholtz equation is
+using the assumption that the walls are rigid.
+$$\nabla p_{x,y}(x,y)\cdot\mathbf{n}_{wall} = 0
+  \label{eqn:02_bc_rigig_wall}$$ This boundary condition results in the
+acoustic waves being perfectly reflected off of the duct walls. There
+are several known empirical solution sets of the characteristic
+equations for specific geometry with the rigid wall assumption.
+
+The first of these solutions is for a rectangular cross-section,
+$$\Psi_{m,n}(x,y) = \cos(k_xx)\cos(k_yy) \textrm{,}
+  \label{eqn:02_psi_rect}$$ where the wave numbers along each axis are
+$k_x = m\pi/l_x$ and $k_y = n\pi/l_y$. The duct has a width of $l_x$ and
+a height of $l_y$. The total cross-sectional wave number for use in
+determining the axial wave numbers is $$k_m^2 = k_x^2+k_y^2 \textrm{.}
+  \label{eqn:02_wave_number_crosssection}$$ Figure
+[\[fig:02\_cross\_section\_rect\]](#fig:02_cross_section_rect){reference-type="ref"
+reference="fig:02_cross_section_rect"} shows the characteristic
+functions when m=0:2 and n=0:3 for a rectangular cross-section of width
+of $l_x$ and height of $l_y$.
+
+![Characteristic solutions to Equation
+[\[eqn:02\_wave\_xy\]](#eqn:02_wave_xy){reference-type="ref"
+reference="eqn:02_wave_xy"} with rigid wall in a rectangular
+cross-section where m=0:2 and n=0:3. Nodal lines are depicted by the
+dot-dash lines. The cross-sectional wave numbers, $k_m$, listed are for
+a duct of unit length and
+height.](../matlab/02_background/cross_section_rect.eps)
+
+[\[fig:02\_cross\_section\_rect\]]{#fig:02_cross_section_rect
+label="fig:02_cross_section_rect"}
+
+The lines depicted in the figure are nodal lines and represent locations
+where there is zero pressure fluctuations for that acoustic mode.
+
+The second set of known empirical solutions is for a circular
+cross-section with radius $R$,
+$$\Psi_{m,n}(r,\theta) = J_m(k_{mn}r)\exp\left\{\pm jm\theta\right\} \textrm{,}
+  \label{eqn:02_psi_circ}$$ where $J_m$ is the $m^\textrm{th}$ Bessel
+function of the first kind and the $\pm$ indicates the direction of
+spin. If the left and right spin coefficients are equal in magnitude
+then a non-spinning mode is created. In order to satisfy the solid wall
+boundary condition $J_m'(k_{mn}R) = 0$ which determines a set of
+discrete values for the cross-sectional wave number at the
+$n^\textrm{th}$ zero for the $m^\textrm{th}$ Bessel function. Figure
+[\[fig:02\_cross\_section\_circ\]](#fig:02_cross_section_circ){reference-type="ref"
+reference="fig:02_cross_section_circ"} shows the characteristic
+functions for a circular duct.
+
+![Characteristic solutions to Equation
+[\[eqn:02\_wave\_xy\]](#eqn:02_wave_xy){reference-type="ref"
+reference="eqn:02_wave_xy"} with rigid wall in a circular cross-section
+where m=0:2 and n=0:3. Nodal lines are depicted by the dot-dash lines.
+The cross-sectional wave numbers, $k_m$, listed are for a duct of unit
+radius.](../matlab/02_background/cross_section_circ.eps)
+
+[\[fig:02\_cross\_section\_circ\]]{#fig:02_cross_section_circ
+label="fig:02_cross_section_circ"}
+
+Aero-Optical and Acoustical Coupling {#chap:03_optical_acoustics}
+====================================
+
+-   Spherical solutions and measurements
+
+-   Double check microphone and preamp models and settings
+
+-   Mode marching method
+
+Acoustic waves are isentropic compression waves with the fluctuating
+pressure, $p'$, determining the strength of the wave. This fluctuating
+pressure is related to the sound pressure level, $\spl$ by
+$$\spl = 20\log_{10}\left(\frac{p_{rms}}{p_0}\right)
+  \label{eqn:03_spl}$$ where $p_{rms}$ is the root mean square of the
+pressure fluctuation, and $p_0$ is the reference pressure (20 $\mu$Pa
+for air). The pressure fluctuations can be converted to the density
+fluctuations via the definition of the speed of sound:
+$$c_0^2 = \left(\frac{\partial p}{\partial \rho}\right)_s=\frac{p'}{\rho'}
+  \label{eqn:03_speed_sound}$$ where $c_0$ is the speed of sound at mean
+fluid properties and the subscript $s$ denotes constant entropy. It can
+be shown by combining Equations
+[\[eqn:02\_gladstone\_dale\_relation\_fluctuating\]](#eqn:02_gladstone_dale_relation_fluctuating){reference-type="ref"
+reference="eqn:02_gladstone_dale_relation_fluctuating"} and
+[\[eqn:02\_opd\]](#eqn:02_opd){reference-type="ref"
+reference="eqn:02_opd"} that the fluctuating density can be related to
+the $\opd$, $$\opd = K_{GD}\int_{s_1}^{s_2}{\rho'}ds \textrm{.}
+  \label{eqn:03_opd_fluct}$$ This can be combined with Equation
+[\[eqn:03\_speed\_sound\]](#eqn:03_speed_sound){reference-type="ref"
+reference="eqn:03_speed_sound"},
+$$\opd = \frac{K_{GD}}{c_0^2}\int_{s_1}^{s_2}{p'}ds \textrm{,}
+  \label{eqn:03_opd_pressure}$$ to provide a way of computing the
+optical path difference of a pressure field.
+
+Simulating an Optical Wavefront Measurement from an Acoustic Field Function {#chap:03_simulated_beam}
+---------------------------------------------------------------------------
+
+An optical wavefront can be simulated from a complex pressure field by
+applying Equation
+[\[eqn:03\_opd\_pressure\]](#eqn:03_opd_pressure){reference-type="ref"
+reference="eqn:03_opd_pressure"}. To accomplish this, two separate
+coordinate systems will need to be defined. The first is the beam
+coordinate system, $\mathbf{x}_B$, that will have a measurement
+aperture, which is typically circular, defined in the xy-plane and
+propagates in the z-direction. The second is the acoustic coordinate
+system, $\mathbf{x}_A$, that will be defined based on the source
+location or the geometry that the acoustic waves are propagating
+through. These to coordinate systems will have a function representing a
+transform from one to the other
+$$\mathbf{x}_A = R\mathbf{x}_B+T \textrm{,}
+  \label{eqn:03_coord_transform}$$ where $R$ is a matrix which
+represents the rotation and $T$ is a vector that represents the
+translation.
+
+The important parameters for defining the aperture which the beam
+coordinate system is based are the aperture size, $Ap$, and the number
+of lenslets or sub-apertures, $N_{lenslets}$. Assuming that the aperture
+is either circular or square and the lenslet size and sub-aperture size
+is approximately $Ap/N_{lenslets}$, the x locations of the center of the
+sub-apertures go from $-Ap/2(1-1/N_{lenslets})$ to
+$Ap/2(1-1/N_{lenslets})$ by steps of $Ap/N_{lenslets}$ with the y
+locations having the same values. This gives a matrix representing both
+$x_{Ap}$ and $y_{Ap}$ that is $N_{lenslets}$ by $N_{lenslets}$. For the
+purpose of removing piston, tip, and tilt and creating a mask that
+represents the beam aperture, the radial coordinates, $\rho_{Ap}$ and
+$\theta_{Ap}$, of the aperture should also be calculated. A circular
+beam will have a mask defined by, $$Mask_{Ap} =
+  \begin{cases}
+    1, & \text{if } \rho_{Ap}\leq Ap/2 \\
+    0, & \text{otherwise.}
+  \end{cases}$$ The beam coordinate frame is the aperture coordinates
+extruded in the z-direction over the range of desired z-values.
+
+After the beam coordinates are transformed into the acoustic coordinates
+using Equation
+[\[eqn:03\_coord\_transform\]](#eqn:03_coord_transform){reference-type="ref"
+reference="eqn:03_coord_transform"}, the complex pressure field,
+$\hat{p}(x,y,z,t)$ can be calculated at the points that are within the
+optical beam. If the pressure field is separable into spatial and
+temporal components, than the integration along the beam length only
+needs to be done once for each temporal frequency,
+$$\widehat{\opd}(x,y) = \frac{K_{GD}}{c_0^2}\int_{z_1}^{z_2} \hat{p}(x,y,z)_{Ap}dz \textrm{,}
+  \label{eqn:03_opd_complex}$$ where $\widehat{\opd}(x,y)$ is the
+complex optical path difference as measured in the aperture plane. If a
+complex density field is known instead, than Equation
+[\[eqn:03\_opd\_complex\]](#eqn:03_opd_complex){reference-type="ref"
+reference="eqn:03_opd_complex"} becomes
+$$\widehat{\opd}(x,y) = K_{GD}\int_{z_1}^{z_2} \hat{\rho}(x,y,z)_{Ap}dz \textrm{.}
+  \label{eqn:03_opd_complex_density}$$ For the purposes of calculating
+temporally mean optical properties of simulated beam passing through a
+known complex pressure or density field a phase vector was defined,
+$\phi = [0, 2\pi)$. The measurable component as a function of phase is
+$$\opd(x,y,\phi) = \real\left[\widehat{\opd}(x,y)\exp\{-j\phi\}\right] \textrm{,}
+  \label{eqn:03_opd_real_phase}$$ or as a function of time for all
+temporal frequencies,
+$$\opd(x,y,t) = \real\left[\sum\widehat{\opd}(x,y)\exp\{-j\omega t\}\right] \textrm{,}
+  \label{eqn:03_opd_real}$$ where there is a separate
+$\widehat{\opd}(x,y)$ computed for each temporal frequency. One of the
+more important measurements that can be calculated from $\opd$ is the
+spatial RMS, $\opdrms$, which is calculated at each time or phase step
+at the points where the aperture mask equals one.
+
+Simple Examples of Acoustic-Optical Coupling
+--------------------------------------------
+
+Two basic acoustic pressure fields will be numerically examined for
+their optical properties. The first will be a planar acoustic wave that
+will be numerically simulated over a variety of conditions. The second
+will be a spherical acoustic wave that will be both numerically
+simulated and validated experimentally.
+
+### Planar Acoustic Waves
+
+A planar wave is the simplest solution to the wave equation and varies
+only in time and the direction of travel. A planar wave can be
+calculated from the set of solutions for duct acoustics, Equation
+[\[eqn:02\_pressure\_solution\_duct\]](#eqn:02_pressure_solution_duct){reference-type="ref"
+reference="eqn:02_pressure_solution_duct"}, given that $\Psi_m(x,y)=1$,
+$$\hat{p}(z,t) = p_m\exp\left\{j(\omega t \mp k_{zm}^\pm z)\right\} \textrm{.}
+  \label{eqn:03_plane_wave}$$ This section will show several plots to
+show the effect that acoustic waves have on the optical wavefront of a
+planar wave with the general geometry shown in Figure
+[\[fig:03\_planar\_sample\_domain\]](#fig:03_planar_sample_domain){reference-type="ref"
+reference="fig:03_planar_sample_domain"}.
+
+![General geometry for various sample calculations for showing the
+acoustic-optical coupling
+effect.](../matlab/03_aero_optics_acoustics/planar_sample_domain.eps)
+
+[\[fig:03\_planar\_sample\_domain\]]{#fig:03_planar_sample_domain
+label="fig:03_planar_sample_domain"}
+
+For the following example, $l_n$ is the width of the acoustic
+disturbance (for example, the width of the wind tunnel), $\theta$ is the
+angle between the planar acoustic wave and the beam direction, $A_p$ is
+the aperture diameter of the beam, and $\Lambda$ is the wavelength of
+the acoustic wave.
+
+Figure
+[\[fig:03\_planar\_sample\_calc\_3\]](#fig:03_planar_sample_calc_3){reference-type="ref"
+reference="fig:03_planar_sample_calc_3"} shows the time averaged
+$\opdrms$ per meter of beam propagation when the beam path is parallel
+($\theta=0$) to the peaks and troughs of the planar acoustic wave as
+$\spl$ is varied.
+
+![Theoretical time-averaged $\opdrms$ per meter of beam propagation as a
+function of sound pressure level, $\spl$, for several $\Lambda/Ap$
+ratios and
+$\theta=0$.](../matlab/03_aero_optics_acoustics/planar_sample_calc_3.eps)
+
+[\[fig:03\_planar\_sample\_calc\_3\]]{#fig:03_planar_sample_calc_3
+label="fig:03_planar_sample_calc_3"}
+
+As the sound pressure level increases the time averaged $\opdrms$ also
+increases and can easily reach the point of being a significant factor
+in the measured optical disturbance. There is little difference between
+0.1 and 1 $\Lambda/Ap$, but as the wavelength gets much larger compared
+to the beam diameter, then the optical effect of the noise is greatly
+reduced, this effect is known as aperture filtering
+[@Siegenthaler-2005-KQ2HGmfp].
+
+Aperture filtering is more clearly shown in Figure
+[\[fig:03\_planar\_sample\_calc\_1\]](#fig:03_planar_sample_calc_1){reference-type="ref"
+reference="fig:03_planar_sample_calc_1"}.
+
+![Theoretical time-averaged $\opdrms$ for a rms sound pressure of 1 Pa
+($\spl$ of 94 dB), $l_n$ of 1 m, and various angles and $\Lambda/Ap$
+ratios.](../matlab/03_aero_optics_acoustics/planar_sample_calc_1.eps)
+
+[\[fig:03\_planar\_sample\_calc\_1\]]{#fig:03_planar_sample_calc_1
+label="fig:03_planar_sample_calc_1"}
+
+As the $\Lambda/Ap$ ratio increases from 0.1, time-averaged $\opdrms$
+remains fairly constant until it starts to drop around $\Lambda/Ap$ of
+0.7 and starts to asymptotically approach zero which it basically
+reaches by $\Lambda/Ap$ of 10. Figure
+[\[fig:03\_planar\_sample\_calc\_1\]](#fig:03_planar_sample_calc_1){reference-type="ref"
+reference="fig:03_planar_sample_calc_1"} also shows the effect of
+changing the beam angle, $\theta$, through the acoustic field. For
+nonzero $\theta$, the beam encounters alternating high and low index of
+refraction as it passes through the test region, so that the
+time-averaged $\opdrms$ begins to decrease compared to the
+$\theta = 0^\circ$ case below $\Lambda/Ap=1$. There are also points of
+zero optical disturbance that occur at
+$\theta_{zero}=\tan^{-1}(n\Lambda/l_n)$ for $n\neq0$; these points occur
+because the peaks and valleys of the optical disturbance caused by the
+sound wave effectively cancel out over the length of the integration
+path, $l_n/\cos\theta$.
+
+Figures
+[\[fig:03\_planar\_sample\_calc\_3\]](#fig:03_planar_sample_calc_3){reference-type="ref"
+reference="fig:03_planar_sample_calc_3"} and
+[\[fig:03\_planar\_sample\_calc\_1\]](#fig:03_planar_sample_calc_1){reference-type="ref"
+reference="fig:03_planar_sample_calc_1"} show the optical effect of
+plane acoustic waves in a no-flow environment. The effect of wind-tunnel
+flow is to stretch (downstream-traveling waves) or compress
+(upstream-traveling waves) the wavelength of the acoustic noise thereby
+altering the filtering effect of the beam aperture. Figure
+[\[fig:03\_planar\_sample\_calc\_2\]](#fig:03_planar_sample_calc_2){reference-type="ref"
+reference="fig:03_planar_sample_calc_2"} shows a typical optical
+disturbance from the two transverse acoustic waves (u+c and u-c) present
+in a wind tunnel at Mach 0.6.
+
+![Theoretical time-averaged $\opdrms$ for the two acoustic waves (u+c
+and u-c) for the blade pass frequency (534 Hz) at Mach 0.6 with a RMS
+sound pressure of 1 Pa ($\spl$ of 94 dB), $l_n$ of 1 m, and $Ap$ of 15
+cm.](../matlab/03_aero_optics_acoustics/planar_sample_calc_2.eps)
+
+[\[fig:03\_planar\_sample\_calc\_2\]]{#fig:03_planar_sample_calc_2
+label="fig:03_planar_sample_calc_2"}
+
+Both waves have a RMS sound pressure of 1 Pa and the beam has an
+aperture of 15 cm and propagates through a 1 m acoustic field inside the
+tunnel. Over a vast majority of the look back angles the
+upstream-traveling acoustic wave has a much greater effect on the
+optical disturbance compared to the downstream-traveling acoustic wave,
+due to the much shorter wavelength of the upstream-traveling waves which
+is less affected by aperture filtering. However, the upstream-traveling
+wave goes through several zero points so the downstream-traveling wave
+dominates at some look back angles.
+
+### Spherical Acoustic Waves
+
+The acoustic field from an speaker maybe assumed to be a spherical wave
+from a pulsating point if the frequency is sufficiently low and
+measurement region is far enough away from the source
+[@Randall-1951-9NtPPXPq]. This pressure field when converted to complex
+pressure is represented by
+$$\hat{p}(r,t) = \frac{A_0}{r}\exp\left\{-j(kr-\omega t)\right\} \textrm{,}
+  \label{eqn:03_spherical_pressure}$$ where $A_0$ is the fluctuating
+pressure strength and $r$ is the distance from the source to the
+measurement point. The RMS pressure of this field can be represented by
+$$p_{rms} = \frac{|A_0|}{r\sqrt{2}} \textrm{.}
+  \label{eqn:03_spherical_pressure_rms}$$
+
+#### Theoretical OPD Measurements
+
+A set of optical properties where calculated for a beam passing through
+a spherical acoustic field as defined by a point source using the
+process described previously in Chapter
+[3.1](#chap:03_simulated_beam){reference-type="ref"
+reference="chap:03_simulated_beam"}. These calculations used an circular
+aperture size of 0.25-m in diameter consisting of 32x32 sub-apertures,
+an acoustic wavelength, $\Lambda$, of $Ap/4$ to $10Ap$, and a distance
+from the point source to the center of the aperture, $R$, of $5Ap$ to
+$25Ap$. The beam was integrated over $\pm5$-m from the plane of the
+point source with 25 phase step used to calculate mean values.
+
+The result of these simulated acoustic fields is shown in Figure
+[\[fig:03\_spherical\_sample\]](#fig:03_spherical_sample){reference-type="ref"
+reference="fig:03_spherical_sample"}.
+
+![Theoretical time-averaged $\opdrms$ for a spherical acoustic wave. The
+top plot shows a perfect spherical acoustic signal integrated over
+$\pm$5-m. The bottom plot shows has a Tukey window applied along the
+beam length to partially emulate source directivity which significantly
+reduces the measured
+oscillations.](../matlab/03_aero_optics_acoustics/spherical_sample.eps "fig:")
+![Theoretical time-averaged $\opdrms$ for a spherical acoustic wave. The
+top plot shows a perfect spherical acoustic signal integrated over
+$\pm$5-m. The bottom plot shows has a Tukey window applied along the
+beam length to partially emulate source directivity which significantly
+reduces the measured
+oscillations.](../matlab/03_aero_optics_acoustics/spherical_sample_win.eps "fig:")
+
+[\[fig:03\_spherical\_sample\]]{#fig:03_spherical_sample
+label="fig:03_spherical_sample"}
+
+The top plots shows the expected optical disturbance ratio,
+$\opdrms/|A_0|$, for a perfectly spherical acoustic field measured over
+the beam length. With the exception of some oscillations that are caused
+by end effects in the integration. The oscillations can be greatly
+reduced by using a windowing function in the z-direction such as a
+Hanning or Tukey window which also can be used to roughly model
+directivity of the speaker's acoustic emission as shown in the bottom
+plot. While this plot was calculated with a single aperture diameter,
+the general trend holds for all other aperture diameters that were
+tested, the only effect was the size and width of the oscillations.
+
+The peak of the optical disturbance ratio, $\opdrms/|A_0|$, is located
+at $\Lambda/Ap\approx0.75$ for a circular aperture. The signal is
+reduced above this value due to aperture filtering and below this value
+because the shorter wavelength have a reduced distance before
+alternating high and low index-of-refraction regions reduce the optical
+path difference. When the acoustic source point is sufficiently far
+enough away from the measurement beam, $R/Ap\geq2$, the optical
+disturbance ratio, $\opdrms/|A_0|$ when multiplied by $\sqrt{R/Ap}$, can
+be collapsed onto a single curve for a range of $\Lambda/Ap$ of 0.1 to
+10. Above $\Lambda/Ap=10$ the curves start to diverge away from one
+another. An approximate function fit to this data is
+$$\frac{\opdrms\sqrt{R/Ap}}{|A_0|} \approx \frac{p_1(\Lambda/Ap)^3+p_2(\Lambda/Ap)^2+p_3(\Lambda/Ap)+p_4}{(\Lambda/Ap)^3+q_1(\Lambda/Ap)^2+q_2(\Lambda/Ap)+q_3}
+  \label{eqn:03_spherical_sample_fit}$$ with coefficient values shown
+Table
+[\[tab:03\_spherical\_sample\_coeff\]](#tab:03_spherical_sample_coeff){reference-type="ref"
+reference="tab:03_spherical_sample_coeff"}. This functional fit has a
+$R^2$ value of 0.9991.
+
+   Coefficent         Value
+  ------------ ------------
+     $p_1$       -1.845e-05
+     $p_2$        4.769e-04
+     $p_3$        4.520e-03
+     $p_4$        1.435e-03
+     $q_1$        5.399e+00
+     $q_2$       -5.145e+00
+     $q_3$        4.869e+00
+
+  : Curve fit values for Figure
+  [\[fig:03\_spherical\_sample\]](#fig:03_spherical_sample){reference-type="ref"
+  reference="fig:03_spherical_sample"} and Equation
+  [\[eqn:03\_spherical\_sample\_fit\]](#eqn:03_spherical_sample_fit){reference-type="ref"
+  reference="eqn:03_spherical_sample_fit"}
+
+[\[tab:03\_spherical\_sample\_coeff\]]{#tab:03_spherical_sample_coeff
+label="tab:03_spherical_sample_coeff"}
+
+#### Measurement of a Spherical Acoustic Wave with an Optical Beam
+
+A small bench top experiment was used to compare the simultaneous
+optical and microphone measurements of an acoustic field from a speaker
+as shown in the measurement plane in Figure
+[\[fig:03\_speaker\_test\]](#fig:03_speaker_test){reference-type="ref"
+reference="fig:03_speaker_test"}.
+
+![Spherical acoustic wave measurement
+test.](../cad/speak_test.pdf){width="3.5in"}
+
+[\[fig:03\_speaker\_test\]]{#fig:03_speaker_test
+label="fig:03_speaker_test"}
+
+The distance from center of the beam to the speaker was 102-mm with a
+beam diameter of 28-mm. An ACO model 7016B microphone [@ACO-Microphones]
+was placed directly over the speaker at a distance of 158-mm and was
+used with a Brüel & Kjær model 2670 preamplifier [@Bruel-Kjaer-2670].
+The speaker in use was Peerless model XT25SC90-04
+[@Peerless-XT25SC90-04-1] which has a fairly flat on-axis response from
+1-kHz to 40kHz.
+
+The wavefront measurements system utilized in these measurements is
+similar to that shown in Figure
+[\[fig:02\_typical\_wavefront\_system\]](#fig:02_typical_wavefront_system){reference-type="ref"
+reference="fig:02_typical_wavefront_system"} except there was no primary
+telescope. The speaker was located in the center of the measurement
+region which was about 2-feet in length and the re-imaging telescope
+reduced the beam diameter by a factor of two and re-imaged the return
+mirror. Optical wavefronts and microphone measurements were taken at
+49-kHz. The speaker was sinusoidally excited at three different
+frequencies (9, 14, and 18-kHz) at a variety of voltages.
+
+The absolute value of the fluctuating pressure strength, $|A_0|$, was
+calculated two different ways. The power spectra of the microphone data
+was used to calculate the average $p_{rms}$ at the excitation frequency
+and the fluctuating pressure strength using Equation
+[\[eqn:03\_spherical\_pressure\_rms\]](#eqn:03_spherical_pressure_rms){reference-type="ref"
+reference="eqn:03_spherical_pressure_rms"}. The optical wavefront was
+band-pass filtered at the excitation frequency using a process that will
+be discussed in Chapter [\[chap:06\]](#chap:06){reference-type="ref"
+reference="chap:06"}. The time averaged $\opdrms$ was used to calculate
+the fluctuating pressure strength using Equation
+[\[eqn:03\_spherical\_sample\_fit\]](#eqn:03_spherical_sample_fit){reference-type="ref"
+reference="eqn:03_spherical_sample_fit"}.
+
+The results of these measurements of the fluctuating pressure strength
+is shown in Table
+[\[tab:03\_speherical\_measurement\]](#tab:03_speherical_measurement){reference-type="ref"
+reference="tab:03_speherical_measurement"}. The differences between the
+two techniques for measuring the fluctuating pressure strength fell into
+two groups. For the 9-kHz cases, the differences ranged from 20-26%
+while the higher frequency cases the differences were between 1.1-1.5%
+and in all cases the wavefront measurement reported a higher fluctuating
+pressure strength. With the exception of the highest excitation case at
+9-kHz, the differences between the to techniques was fairly constant for
+each frequency group. Some of these differences maybe attributable to
+the frequency response of the microphone.
+
+  --------------- --------------- ----------- ------------- --------------- -------------- -------
+   $f_{speaker}$   $V_{speaker}$   $p_{rms}$   OPD$_{RMS}$   $|A_0|_{mic}$   $|A_0|_{wf}$   Diff
+       (Hz)            (mV)          (Pa)       ($\mu m$)     ($kg/s^2$)      ($kg/s^2$)     (%)
+       9000             100          5.65       6.545e-04        1.26            1.55       20.38
+       9000             250          12.23      1.421e-03        2.73            3.36       20.56
+       9000             500          19.52      2.386e-03        4.36            5.64       25.62
+       14000           1250          5.20       6.831e-04        1.16            1.18       1.24
+       14000            250          9.33       1.230e-03        2.09            2.12       1.50
+       14000            375          9.68       1.272e-03        2.16            2.19       1.16
+       18000            125          3.73       4.987e-04        0.83            0.84       1.10
+  --------------- --------------- ----------- ------------- --------------- -------------- -------
+
+  : Comparison of microphone and wavefront computation of $|A_0|$
+
+[\[tab:03\_speherical\_measurement\]]{#tab:03_speherical_measurement
+label="tab:03_speherical_measurement"}
+
+Measured and simulated wavefronts for the highest excitation cases at
+each frequency are shown in Figure
+[\[fig:03\_spherical\_plot\]](#fig:03_spherical_plot){reference-type="ref"
+reference="fig:03_spherical_plot"}.
+
+![Comparison of some of the measured wavefronts and simulated
+ones.](../matlab/03_aero_optics_acoustics/spherical_plot_measured.eps "fig:")
+![Comparison of some of the measured wavefronts and simulated
+ones.](../matlab/03_aero_optics_acoustics/spherical_plot_simulated.eps "fig:")
+
+[\[fig:03\_spherical\_plot\]]{#fig:03_spherical_plot
+label="fig:03_spherical_plot"}
+
+The 9-kHz case shows some anomalies on the measured wavefront on the
+right side, diviating from spherical wave significantly likely
+contributing the significantly higher estimated pulsating field strength
+value when compared to the microphone estimate. The 14 and 18-kHz cases
+show some remarkable agreement between the measured and simulated
+images. Optical wavefront measurements can be utilized for making
+non-intrusive acoustic field measurements espically when the acoustic
+field is simple.
+
+Estimating the Acoustic Field Inside the Test-Section
+-----------------------------------------------------
+
+### Mode Marching Process
+
+1.  Start with a known or assumed source acoustic field, $p^n(x,y)$
+
+2.  Calculate the transmitted pressure ratio
+
+    -   Traveling with subsonic flow
+        $$\frac{p^t}{p^i} = \left(\frac{1+M_n}{1+M_{n+1}}\right)\left(\frac{2M_{n+1}}{M_n+M_{n+1}}\right)\left(\frac{X_{n,n}}{X_{n,n+1}}\right)\left(\frac{X_{n,n}}{X_{n+1,n+1}}\right)^{1/(\gamma-1)}$$
+
+    -   Traveling against subsonic flow
+        $$\frac{p^t}{p^i} = \left(\frac{1-M_n}{1-M_{n+1}}\right)\left(\frac{2M_{n+1}}{M_n+M_{n+1}}\right)\left(\frac{X_{n,n}}{X_{n,n+1}}\right)\left(\frac{X_{n,n}}{X_{n+1,n+1}}\right)^{1/(\gamma-1)}$$
+
+    -   Where $$X_{a,b} = 1+\frac{\gamma-1}{2}M_aM_b$$
+
+3.  March acoustic field to next axial step,
+    $$p^{n+1}(x,y) = p^{n}(x,y)\frac{p^t}{p^i}\exp\{j(\omega t\mp k_{zm}^\pm z)\}$$
+
+4.  Best-fit set of local duct modes coefficients, $C_m$, to acoustic
+    field $p^{n+1}(x,y)$
+
+5.  Calculate new acoustic field from duct mode and repeat from step 2
+    $$p^n(x,y) = \sum_{m=0}^{M} C_m\cdot p_m(x,y)$$
+
+6.  When the end point is reached, step inlet acoustic field (rotate
+    fan) and repeat
+
+Dispersion Analysis {#chap:04_dispersion}
+===================
+
+[I think an analytical solution maybe needed for the n-dimensional case.
+Either a n-dimensional tophat function or dirac delta function. I also
+plan on adding a little analysis on viewing angle in the
+test-section.]{style="color: red"}
+
+Dispersion analysis is an expansion of power spectra analysis from
+one-dimension to $n$-dimensions. The technique allows a signal that is
+measured in both time and space to be separated into not only
+temporal-frequency components but also spacial-frequency components.
+This allows not only the direction of travel that a particular wave to
+be determined but also the velocity of which that the wave travels. The
+benefits of using a dispersion analysis are shown in Figure
+[\[fig:04\_dispersion\_demo\]](#fig:04_dispersion_demo){reference-type="ref"
+reference="fig:04_dispersion_demo"}.
+
+![Dispersion plot example and comparison to traditional power spectra
+measurements. A single row of a wavefront measurement was used in this
+example. The top plot shows the typical power spectra measurement
+averaged over the entire row of data. Both the middle and bottom plots
+show the dispersion plot with the y-axis as spacial-frequency in the
+middle and velocity in the bottom assuming
+$u=f/\xi_x$.](../matlab/04_dispersion_analysis/dispersion_demo.eps)
+
+[\[fig:04\_dispersion\_demo\]]{#fig:04_dispersion_demo
+label="fig:04_dispersion_demo"}
+
+The single row of sub-apertures from a wavefront measurement conducted
+with a 5-inch diameter beam propagating normally through two boundary
+layers with a free-stream Mach number of 0.5. This measurement was
+preformed in the University of Notre Dame Whitefield Wind Tunnel in a
+test section that contained a model representing the fuselage of the
+AAOL aircraft [@Jumper-2013-8KtN3pue] with window that was flat and
+flush to the outer mold line of the fuselage. The top plot shows a
+traditional power spectra representation averaged over the row of data.
+Both the blade-passing frequency (517-Hz) and its sub-harmonic had
+similar power levels with an additional five harmonics showing
+significant spikes above the local baseline measurement. There are three
+additional strong peaks at approximately 3100, 4850, and 5850 Hz that do
+not have an easily identifiable source or explanation.
+
+Both the middle and bottom plots show a dispersion plot or
+two-dimensional power spectra measurement. The colorbars were
+intentionally not shown in order to allow for all three plots to be
+aligned in the temporal frequency axis and the color space is
+representative of the power spectra in log-space. The middle plot shows
+horizontally moving waves with the y-axis representing the spatial
+frequency, $\xi_x$, with units of inverse meters. Waves with positive
+spatial frequencies are moving in the direction of flow. All of the
+temporal frequency below 2000-Hz, where there is an obvious separation
+between the upstream and downstream traveling optical disturbances, are
+significantly more on the upstream traveling side. The blade-passing
+frequency and its various harmonics show some significant broadband
+spatial frequency signals. The three signals of unknown origin are
+clearly moving upstream but also show some significant broadband spatial
+signal that is indicative of a source producing optical disturbances
+that travel in both directions around the tunnel similar to the
+blade-passing frequency disturbances coming off of the wind tunnel fan.
+In addition to optical disturbances branching off in the upstream and
+downstream moving directions there is a significant disturbances along
+zero spatial frequency representing a collection of standing waves.
+
+The bottom plot shows the same dispersion plot as the middle one but
+with the y-axis representing an assumed velocity, $u_{assumed}$, where
+$$u_{assumed} = \frac{f}{\xi_x} \textrm{.}
+  \label{eqn:04_velocity_assumed}$$ The actual velocity, $u$, of a
+disturbance in the dispersion plot would be
+$$u = \frac{\partial f}{\partial \xi_x} \textrm{.}
+  \label{eqn:04_velocity_actual}$$ The assumed velocity measurement is
+in effect a average of the actual velocity assuming a zero-zero
+intercept in frequency space. As there was no discernible separation
+between disturbance the upstream and downstream moving disturbances in
+the middle plot below 2000-Hz, there is no discernible velocity below
+that point. The primary optical disturbance moving in the direction of
+flow is moving at the free-stream velocity of approximately 175-m/s. The
+upstream traveling disturbance is traveling at the same speed but due to
+the signal being broader is more difficult to measure this way. When the
+middle plot is shown with all linear axis, the slope of any given line
+through the origin is the inverse of the assumed velocity. This is why
+the disturbances along the zero-spatial frequency line are a collection
+of standing waves and not some structure with broadband temporal content
+as it would be traveling at near infinite speed. More discussion will
+follow a derivation of the dispersion analysis technique which is the
+n-dimensional power spectra.
+
+One-Dimensional Power Spectra Calculation
+-----------------------------------------
+
+The typical power spectrum calculation on a set of data that is only in
+one dimension, typically over the temporal dimension. A typical example
+would be a single sensor measurement over time but a sensor array used
+to take data at one moment in time could used to measure the power
+spectrum in terms of spatial frequencies. For a typical single-point
+measurement that varies in time, $x(t)$, the power spectra calculation
+is $$S_{xx} = \frac{|\fft(x(t))|^2}{N\cdot f_{s}} \textrm{,}
+ \label{eqn:04_basic_sxx}$$ where $\fft$ is the Fast Fourier Transform,
+$N$ is the number of samples, and $f_{s}$ is the sample rate
+[@Blackman-1958-4QtKgDb8]. For data that has only a real component the
+Fast Fourier Transform function produces magnitude and phase relations
+at each frequency step, $f_{s}/N$, over the range from zero-frequency up
+to but not including the Nyquist frequency, $f_s/w$, with a mirrored set
+of data that can be represented either below (starting at $-f_s/2$) or
+above (ending just below $f_s$) this range. The Nyquist frequency not
+being included and the mirrored data is due to an assumption that is
+integral to the Fourier Transform, that being the signal is assumed to
+be periodic.
+
+The total energy, $\sigma^2$, of the signal must be preserved through
+the transform from physical space-time to frequency space
+$$\sigma^2 = \frac{\sum x^2(t)}{N} = \Delta f\sum S_{xx}(f) \textrm{.}
+  \label{eqn:04_fft_energy_conservation}$$ Additionally, because of the
+periodic nature of the Fourier Transform and a finite sample length of
+discrete data, spectral leakage can cause the power in one frequency bin
+to leak into adjacent frequency bins. To minimize this spectral leakage,
+windowing functions are employed which typically force the end points of
+the signal to zero. The Hann window,
+$$w(t) = 1/2\left[1-\cos\left(\frac{2\pi t}{T}\right)\right] \textrm{,}
+ \label{eqn:04_hann_window}$$ is one of the more commonly used windowing
+functions where $w(t)$ is the window function, $t$ is the time at a
+given sample, and $T$ is the total sample time. Since the windowing of a
+data set changes the signal energy some correction is needed to be
+applied. For an arbitrary windowing function the correction factor,
+$c_w$, can be obtained by substituting the windowing function in place
+of $x(t)$ in Equation
+[\[eqn:04\_fft\_energy\_conservation\]](#eqn:04_fft_energy_conservation){reference-type="ref"
+reference="eqn:04_fft_energy_conservation"},
+$$c_w = \frac{1}{\sqrt{\sum w^2(t)/N}} \textrm{.}
+ \label{eqn:04_window_correction}$$ For a Hann window this correction
+factor approaches $\sqrt{8/3}$ as $N$ goes to infinity. When Equation
+[\[eqn:04\_basic\_sxx\]](#eqn:04_basic_sxx){reference-type="ref"
+reference="eqn:04_basic_sxx"} is combined with a windowing function and
+associated correction the double sided power spectra equation in one
+dimension becomes
+$$S_{xx} = \cdot\frac{|c_w\cdot\fft\{x(t)\cdot w(t)\}|^2}{N\cdot f_{s}} \textrm{.}
+ \label{eqn:04_windowed_sxx}$$ A simple MATLAB function for computing
+the power spectrum of a one-dimensional signal with an arbitrary
+windowing function is shown in Appendix
+[\[code:sc\_simpleSXX\]](#code:sc_simpleSXX){reference-type="ref"
+reference="code:sc_simpleSXX"}.
+
+N-Dimensional Power Spectra Calculation
+---------------------------------------
+
+For measurements with multiple spatial and temporal dimensions the Fast
+Fourier Transform is applied $n$-times where $n$ is the total number of
+dimensions, with each application in a different dimension,
+$$\fftn(x) = \fft(\fft(\cdots\fft(\fft(x,1),2)\cdots,n-1),n) \textrm{,}
+ \label{eqn:04_fftn}$$ where $\fft(x,n)$ is the Fast Fourier Transform
+of $x$ in the $n^{th}$ dimension. For a $n$-dimensional array the
+operation becomes,
+$$\mathbf{S_{xx}} =\frac{|c_w\cdot\fftn\{f(\mathbf{x})\cdot w(\mathbf{x})\}|^2}{\prod{\overrightarrow{N}\cdot\overrightarrow{f_s}}} \textrm{,}
+ \label{eqn:04_sxxn}$$ where $\mathbf{S_{xx}}$ is the $n$-dimensional
+power spectra array or dispersion array, $f(\mathbf{x})$ is a
+$n$-dimensional set of data, $w(\mathbf{x})$ is a $n$-dimensional
+windowing function, $\overrightarrow{N}$ is a vector denoting the number
+of elements in each dimension, $\overrightarrow{f_s}$ is a vector
+denoting the sample rate in each dimension, and
+$$c_w = \frac{1}{\sqrt{\sum w^2(\mathbf{x})/\prod{\overrightarrow{N}}}} \textrm{.}
+ \label{eqn:04_windown}$$ The signal energy conservation relationship
+becomes
+$$\sigma^2=\frac{\sum\mathbf{x}}{\prod{\overrightarrow{N}}} = \prod{\overrightarrow{\Delta f_s}}\sum\mathbf{S_{xx}} \textrm{,}
+  \label{eqn:04_fftn_energy_conservation}$$ where
+$\overrightarrow{\Delta f_s}$ is a vector representing the frequency
+step sizes in each dimension. A simple MATLAB code for calculating the
+dispersion of $x$ with an arbitrary windowing function is shown in
+Appendix
+[\[code:sc\_simpleSXXn\]](#code:sc_simpleSXXn){reference-type="ref"
+reference="code:sc_simpleSXXn"}.
+
+Non-Rectangular Spatial Windows
+-------------------------------
+
+For n-dimensional data sets that fill a rectangular array, a windowing
+function can easily be created by multiplying together a series of
+one-dimensional windowing functions created in the direction of each
+dimension. For non-rectangular data sets, such as is often the case with
+optical wavefront measurement, windowing functions take some additional
+steps in there construction. In cases when the spatial measurement
+locations are constant throughout time, the windowing function can be
+split into two separate components,
+$$w(\mathbf{x}) = w_t(t)\cdot w_s(x,y) \textrm{,}
+ \label{eqn:04_window_sep}$$ the temporal windowing function, $w_t(t)$,
+and the spatial windowing function, $w_s(x,y)$. This dissertation uses a
+Hann window for the temporal windowing function and a modified Hann
+window for the spatial windowing function. For the case of a circular
+aperture, the Hann window can be reformulated to be based normalized
+radius, $\rho_N$, of the aperture, $$w_s(\rho_N) =
+ \begin{cases}
+  \frac{1+\cos(\pi\cdot\rho_N)}{2} & \textrm{if } \rho_N < 1 \\
+  0                                & \textrm{otherwise.}
+ \end{cases}
+ \label{eqn:04_window_space}$$ This modified Hann window is
+two-dimensional with a value of one at the center of the aperture and
+decreases to zero at the edge of the aperture in the same manor as a
+Hann windows decreases from the center to either end.
+
+Because the wavefronts measurements often had a clipped edge or some
+other obscuration, a different method was employed. For an arbitrary
+shaped aperture, the minimum distance from any given measurement
+location to the edge of the aperture was used to create the spatial
+windows. The minimum distance can be computed given the a set of points
+($x$ and $y$) that spans the measurement range and the set of points
+outside of the aperture ($x_O$ and $y_O$),
+$$d_{min}(x,y) = \min\left\{\sqrt{(x-x_{O})^2+(y-y_{O})^2}\right\} \textrm{.}
+ \label{eqn:04_window_space_arb_dist}$$ This distance is then normalized
+by the maximum value and the resulting spatial window given a modified
+Hann window,
+$$w_s(x,y) = \frac{1+\cos\left\{\pi\cdot\left(1-d_{min}^{norm}(x,y)\right)\right\}}{2} \textrm{.}
+ \label{eqn:04_window_space_arb}$$ This same basic process can be
+extended to data sets where the locations of measurements in space vary
+with time.
+
+Dispersion Analysis {#dispersion-analysis}
+-------------------
+
+At the beginning of this chapter a dispersion plot was shown along with
+a typical power spectra plot in Figure
+[\[fig:04\_dispersion\_demo\]](#fig:04_dispersion_demo){reference-type="ref"
+reference="fig:04_dispersion_demo"}. This was for the purpose of doing a
+simple discussion of on some of the benefits of using a dispersion
+analysis on optical wavefronts. That simple analysis was using only a
+single row of a wavefront and provided an incite into the disturbances
+that were moving in the horizontal direction only. When a dispersion
+analysis is performed over all dimensions of a wavefront, as will be
+done for the remained of the chapter additional detail is available,
+additional detail as well as determination of optical disturbances
+moving vertically or any direction in between. Figure
+[\[fig:04\_dispersion\_comparison\]](#fig:04_dispersion_comparison){reference-type="ref"
+reference="fig:04_dispersion_comparison"} shows a comparison between the
+two-dimensional single row dispersion and a three-dimensional dispersion
+showing the just the horizontal moving optical disturbances at both
+zero-vertical spatial frequency and the maximum value through all
+vertical spatial frequencies.
+
+![Horizontal moving optical disturbances comparison. The top plot shows
+a two-dimensional dispersion analysis over a single row of data. The
+middle plot shows a three-dimensional dispersion analysis at $\xi_y=0$.
+The bottom plot shows the same three-dimensional dispersion analysis but
+showing the maximum value through the vertical
+axis.](../matlab/04_dispersion_analysis/dispersion_comparison.eps)
+
+[\[fig:04\_dispersion\_comparison\]]{#fig:04_dispersion_comparison
+label="fig:04_dispersion_comparison"}
+
+The top plots shows the two-dimensional dispersion plot that was
+previously shown in Figure
+[\[fig:04\_dispersion\_demo\]](#fig:04_dispersion_demo){reference-type="ref"
+reference="fig:04_dispersion_demo"} but this time with a linear temporal
+frequency axis. The middle plot shows the three-dimensional dispersion
+plot at $\xi_y=0\ m^{-1}$, which shows a significant amount of
+additional data. The two-dimensional dispersion shows a wide swath of
+signal that is generally traveling upstream from a line that goes
+through the origin and has a slight amount of positive slope downward to
+a line with a significant amount of negative slope. This discussion of
+slopes is of the relative visible slope in the plots due and not actual
+slope calculation as the temporal frequency axis is several orders of
+magnitude larger than the spatial frequency axes
+([footnote?]{style="color: red"}).
+
+The slice of the full three-dimensional dispersion shows signal at the
+same limits for the two-dimensional swath of signal with some signal
+laying along the temporal frequency axis at $\xi_y=0\ m^{-1}$. This
+signal represents a collection of stationary modes at each temporal
+frequency. If this were to be some flow related phenomenon the velocity
+the disturbance would be nearing infinity. On the three-dimensional
+dispersion plot there are easily observable signals that run parallel to
+the strongest signals but do not emanate from the origin. These are
+signals that have been aliased due to the sample rate, either spatial or
+temporal, being to low. This has some interesting implications in the
+possibility of being able to artificially increase the sample rate as
+will be discussed later.
+
+The bottom plot of Figure
+[\[fig:04\_dispersion\_comparison\]](#fig:04_dispersion_comparison){reference-type="ref"
+reference="fig:04_dispersion_comparison"} shows the maximum value at
+each $f-\xi_x$ location through the range of $\xi_y$ values. This
+effectively recreates the two-dimensional dispersion plot is a higher
+signal to noise ratio. The aliased data is far more noticeable in this
+plot an in the two-dimensional one. This indicates that a
+two-dimensional dispersion analysis is approximately the maximum value
+of the three-dimensional dispersion in a given dimension. A reduced
+order dispersion can be calculated by
+$$S_{xx}^{n-1} = \max(S_{xx}^n,m)\cdot f_s^m \textrm{,}$$ where
+$S_{xx}^n$ is the n-dimensional dispersion, $\max(x,m)$ is the maximum
+value of $x$ in the $m$-th dimension, and $f_s^m$ is the sample rate in
+the $m$-th dimension. This can be shown in Figure
+[\[fig:04\_dispersion\_max\]](#fig:04_dispersion_max){reference-type="ref"
+reference="fig:04_dispersion_max"}. The recovered power spectra from the
+two-dimensional dispersion analysis is a good estimation at the center
+of the frequency range but has some diversion near the edges. It stays
+within half an order of magnitude below 1000-Hz with the signal peaks
+being a much closer approximation. On the high end, the recovered power
+spectra has a decay rate that runs even with the direct computation up
+to about 10,000-Hz at which point the decay rate increases.
+
+![Recovery of time-based power spectra from two-dimensional dispersion
+analysis.](../matlab/04_dispersion_analysis/dispersion_max.eps)
+
+[\[fig:04\_dispersion\_max\]]{#fig:04_dispersion_max
+label="fig:04_dispersion_max"}
+
+### 2-D Slices of Full Dispersion
+
+The full dispersion analysis contains information of flow features not
+only moving in the horizontal direction as the two-dimensional
+dispersion showed but also in the vertical direction and the
+combinations of the two. Figure
+[\[fig:04\_dispersion\_xy\]](#fig:04_dispersion_xy){reference-type="ref"
+reference="fig:04_dispersion_xy"} shows slices of the full dispersion in
+both the horizontal and vertical directions along with lines
+representing critical velocities. Each of these plots is shown when the
+other spatial frequency is equal to zero, meaning that the disturbances
+shown are moving solely in that direction.
+
+![Horizontal and vertical moving optical disturbances. This is the same
+data as presented in Figure
+[\[fig:04\_dispersion\_demo\]](#fig:04_dispersion_demo){reference-type="ref"
+reference="fig:04_dispersion_demo"} but after calculating the full
+three-dimensional power spectra. The horizontal disturbances are shown
+at zero vertical spatial frequency and likewise the vertical
+disturbances are shown at zero horizontal spatial
+frequency.](../matlab/04_dispersion_analysis/dispersion_xy.eps)
+
+[\[fig:04\_dispersion\_xy\]]{#fig:04_dispersion_xy
+label="fig:04_dispersion_xy"}
+
+The top plot shows the horizontally moving optical disturbances that has
+been shown previously. There are three major flow related structures
+that can be observed. The top most flow related structure is the
+boundary layers on both sides of the wind tunnel. It can be seen that
+the boundary signal has a sharp drop off at the free-stream velocity,
+$u$, and has a slight decay as the velocity decreases (increasing
+slope). Figure
+[\[fig:04\_dispersion\_speed\]](#fig:04_dispersion_speed){reference-type="ref"
+reference="fig:04_dispersion_speed"} shows the boundary layer velocity
+at a few cuts a little more clearly.
+
+![Assumed boundary speed at various temporal
+frequencies.](../matlab/04_dispersion_analysis/dispersion_speed.eps)
+
+[\[fig:04\_dispersion\_speed\]]{#fig:04_dispersion_speed
+label="fig:04_dispersion_speed"}
+
+The boundary layer velocity has typically be reported as approximately
+0.83$u$ [@Gordeyev-2014-jcJndkHM]. This data shows the boundary layer
+velocity has a range of velocities at each given frequency in which the
+peak velocity component has some dependence on the temporal frequency.
+The lower frequencies tend to have a lower velocity of around 0.9$u$
+which is higher than has typically been reported while the higher
+frequencies approach the free-stream velocity. When placing a lower
+bounding line on the boundary layer line in terms of speed in Figure
+[\[fig:04\_dispersion\_xy\]](#fig:04_dispersion_xy){reference-type="ref"
+reference="fig:04_dispersion_xy"}, a value of approximately 0.7$u$ seems
+to do a good job at bounding most of the boundary layer signal along
+with the free-stream velocity line.
+
+The next two major flow related structures deal with acoustic signals
+traveling in both directions through the wind-tunnel. The downstream
+traveling acoustic wave, $u+c$, typically has a low signal strength than
+the upstream traveling acoustic wave, $u-c$, due to the downstream
+traveling wave having a longer wavelength and thus more signal being
+filtered out due to aperture filtering [@Siegenthaler-2008-9Yutbt6c]. At
+the low frequencies, the blade-passing frequency and its associated
+harmonics can be seen with regular spacing. There also appears to be
+some constructive interference with the BPF and some of the aliased data
+around $\xi_x = \pm100\ m^{-1}$.
+
+In both the horizontal and vertical moving plots the stationary modes
+are a prominent feature. The two main features on the vertical moving
+disturbance plot is the signal at the speed of sound as well as some
+significant aliasing. These to lines represent acoustic waves that are
+traversing either straight up or down. Some of the high frequency spikes
+( 3, 5, and 6-kHz) seems to be laying along these speed of sound lines
+in the vertical direction and stationary in the horizontal direction.
+These spikes maybe something in the test-section itself, along the top
+and bottom walls that is being excited and resonating.
+
+### 3-D Representations of Full Dispersion
+
+While the two-dimensional slices are fairly informative, particularly
+when it comes to signal strength of various flow structures and their
+velocities, a three-dimensional plot allows better visualization of the
+overall flow structures but some details are lost. The same data that
+has been previously shown in slice form, is depicted in Figure
+[\[fig:04\_dispersion\_3d\]](#fig:04_dispersion_3d){reference-type="ref"
+reference="fig:04_dispersion_3d"} as an isosurface with a power of
+$10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$ and shown from four different
+views.
+
+![Three-dimensional view of the dispersion plot showing an isosurface at
+a power of $10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$. The isosurface
+encompasses 99.9% of the power of the
+wavefront.](../matlab/04_dispersion_analysis/dispersion_3d.eps)
+
+[\[fig:04\_dispersion\_3d\]]{#fig:04_dispersion_3d
+label="fig:04_dispersion_3d"}
+
+This particular isosurface encompasses approximately 99.9% of the power
+of the optical disturbances with little aliased information represented.
+The largest feature is the boundary layer which resembles an ellipsoid
+or elliptical wing. The other main feature is the acoustic signal which
+appears as a cone which has been tilted over a little bit. The acoustic
+signal has several predominate spikes which form at high temporal
+frequencies indicating that there may be a small number of dominate duct
+modes. The last feature is the stationary modes which have a near
+constant shape and magnitude through all frequency ranges.
+
+Figure
+[\[fig:04\_dispersion\_mach\]](#fig:04_dispersion_mach){reference-type="ref"
+reference="fig:04_dispersion_mach"} shows two views of this
+three-dimensional dispersion but over a range of Mach numbers.
+
+![Three-dimensional view of dispersion plots as the Mach number
+increased from 0.3 to 0.5. The isosurfaces are all shown at a power of
+$10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$ and all encompass 99.9% of the
+wavefront
+power.](../matlab/04_dispersion_analysis/dispersion_mach_0.3.eps "fig:")
+![Three-dimensional view of dispersion plots as the Mach number
+increased from 0.3 to 0.5. The isosurfaces are all shown at a power of
+$10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$ and all encompass 99.9% of the
+wavefront
+power.](../matlab/04_dispersion_analysis/dispersion_mach_0.4.eps "fig:")
+![Three-dimensional view of dispersion plots as the Mach number
+increased from 0.3 to 0.5. The isosurfaces are all shown at a power of
+$10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$ and all encompass 99.9% of the
+wavefront
+power.](../matlab/04_dispersion_analysis/dispersion_mach_0.5.eps "fig:")
+
+[\[fig:04\_dispersion\_mach\]]{#fig:04_dispersion_mach
+label="fig:04_dispersion_mach"}
+
+All of these plots are of an isosurface with the same strength as used
+in Figure
+[\[fig:04\_dispersion\_3d\]](#fig:04_dispersion_3d){reference-type="ref"
+reference="fig:04_dispersion_3d"}. For a Mach number of 0.3, top plot,
+the most noticeable feature is the stationary modes which do not seem to
+change much as the Mach number is increase. This indicates that the
+stationary waves are mostly as measurement artifact that could be from
+either laser or camera noise. The boundary layer signal increases in
+power significantly as Mach number is increased but also the slope is
+significantly increased as well. The acoustic signal sees some
+interesting evolution as well. Along with the strength greatly
+increasing with Mach number, the slope of the upstream traveling
+disturbances decreases significantly while the downstream moving
+acoustic disturbances do not see much change other than an increase in
+signal strength.
+
+While the three-dimensional views offer some significant incite,
+sometimes the insides need a close look a shown in Figure
+[\[fig:04\_dispersion\_slices\]](#fig:04_dispersion_slices){reference-type="ref"
+reference="fig:04_dispersion_slices"}.
+
+![Additional dispersion slices at various temporal
+frequencies.](../matlab/04_dispersion_analysis/dispersion_slices.eps)
+
+[\[fig:04\_dispersion\_slices\]]{#fig:04_dispersion_slices
+label="fig:04_dispersion_slices"}
+
+This figure shows slices of the dispersion array at several different
+temporal frequencies: a mean lensing slice at 0-Hz, the blade-passing
+frequency at 517-Hz, the second harmonic of the blade-passing frequency
+at 1551-Hz, and additional slices at 5, 10, and 20-kHz. The mean lensing
+slice at 0-Hz shows a mostly axisymmetric pattern that is strongest in
+the center and dies out as the distance from the origin increases. There
+appear to be the occasional spike radiating out from the center, most
+noticeably in line with the boundary layer signal.
+
+The next four slices show boundary layers structure slowly moving
+towards positive x-spatial frequencies. It does appear to be rotated
+slightly counter-clockwise indicating that the interrogation beam is
+slightly rotated between the test section and the wavefront sensor. The
+boundary layers signal at the lower frequencies appears to be more
+elliptically shaped while the higher frequencies appear to have a sharp
+drop in signal strength going towards the origin and are slightly more
+feathered going away. This could be indicative of lower frequency
+disturbances in the boundary layer typically traveling at a more uniform
+speed very near the free-stream velocity likely being either in the
+outer boundary layer or free-stream tunnel turbulence. The higher
+frequency disturbances seem to have a wide range of velocities that
+approach the free-stream velocity and are likely small structures that
+span some significant portion of the boundary layer.
+
+The acoustic disturbances show an interesting evolution as the frequency
+increase from fairly compact and strong signal just on the upstream
+traveling side of things around the blade-passing frequency to
+elliptical shaped rings at the higher frequencies. At 20-kHz, there are
+two elliptical shapes that are easily identifiable, the smaller one is
+the signal that is actually present at that frequency while the other
+one is some aliased data due to a limited temporal sample rate. The
+10-kHz slice shows a little bit of acoustic aliasing Both the 10 and
+20-kHz acoustic rings show some favorable spatial frequencies which
+could also be seen in the three-dimensional view as spikes. These two
+slices also show the center stationary modes that appear to be nearly
+identical.
+
+### Artificially Increased Sample Rate
+
+Aliased data has been partially discussed previously. When a signal
+crosses a plane represented by one of the Nyquist frequencies (positive
+or negative) it transposed to the conjugate Nyquist frequency plane and
+continues on with the same gradient as before, which is shown in Figure
+[\[fig:04\_dispersion\_supersample\]](#fig:04_dispersion_supersample){reference-type="ref"
+reference="fig:04_dispersion_supersample"} using the horizontal and
+vertical dispersion slices.
+
+![Artificially increased temporal sample rate using a dispersion
+analysis. The black box represents original dispersion
+plot.](../matlab/04_dispersion_analysis/dispersion_supersample.eps)
+
+[\[fig:04\_dispersion\_supersample\]]{#fig:04_dispersion_supersample
+label="fig:04_dispersion_supersample"}
+
+Here the black box represents the original dispersion plot, while
+outside of that box is data that has an artificially increased sample
+rate. This process can be accomplished by simply tiling the entire
+dispersion array in the desired dimension. In this case the dispersion
+array was tiled in a three-by-three grid for each of the horizontal and
+vertical slices. Along the spatial Nyquist frequency edges, there is a
+significant dip in the signal strength which would result in a spatial
+super sampling to have a significant loss of signal at these
+frequencies.
+
+On the upstream moving disturbance side there is some noticeable
+aliasing that is present including a significant spike at 18-kHz
+(-80-$m^{-1}$) while aliased and about 31-kHz (-200-$m^{-1}$) when it
+has been unaliased. As that upstream moving acoustic disturbance crosses
+the spatial Nyquist frequency, the signal strength drops significantly
+to local background levels. The boundary layer signal is unfortunately
+to well aligned with its tiled self for any aliased data to be
+noticeable. The vertically moving disturbances have some significant
+temporal aliasing but little to no spatial aliasing.
+
+Just as the aliased signal is unaliased into the higher frequencies,
+non-aliased data is aliased into higher frequencies. This means that
+some sort of filtering technique will need to be employed. These filters
+should not only be designed to remove the aliased data from actual
+sample but also the aliased data from the super sampled frequencies.
+
+Synthetic Wavefront
+===================
+
+In order to best understand how some basic filters preform on a set of
+data, a fully known synthetic wavefront was generated such that all of
+the various components could be generated separately with the combined
+product filtered and compared to the synthetic wavefront containing only
+relevant aero-optical data. This is done by creating an input dispersion
+plot where each source component is separately generated with parameters
+that can be modified to alter the output signal as necessary. Signals
+that are assumed to be statistically independent are converted into
+dimensional space separately and then summed together. While signals
+that are assumed to be related to one another (such as the sound and
+vibration components) are summed together in frequency space. Figure
+[\[fig:05\_synthetic\_dispersion\_input\]](#fig:05_synthetic_dispersion_input){reference-type="ref"
+reference="fig:05_synthetic_dispersion_input"} shows the input
+dispersion plot with each signal component separately colored.
+
+![Synthetic wavefront input dispersion plot of an aero-optical signal
+and various signal corruption components. The aero-optical signal is
+shown in red, the stationary modes in blue, duct acoustics in magenta,
+blade-passing frequency related corruption in green, slowly varying
+mean-lensing in yellow, and background in
+cyan.](../matlab/05_synthetic_wavefront/synthetic_wavefront.eps)
+
+[\[fig:05\_synthetic\_dispersion\_input\]]{#fig:05_synthetic_dispersion_input
+label="fig:05_synthetic_dispersion_input"}
+
+The aero-optical signal is shown in red, the stationary modes in blue,
+duct acoustics in magenta, blade-passing frequency related corruption in
+green, slowly varying mean-lensing in yellow, and background in cyan.
+
+Wavefronts were generated to approximate the sample conditions in that
+the data presented in Figure
+[\[fig:04\_dispersion\_3d\]](#fig:04_dispersion_3d){reference-type="ref"
+reference="fig:04_dispersion_3d"} were measured with. The sample rate
+was 200 m$^{-1}$ with 64 ($2^6$) samples in the spatial dimensions and
+30,000 Hz with 8192 ($2^{13}$) samples in the temporal dimension. The
+speed of sound was chosen to be 340 m/s, with a Mach number of 0.6, and
+a boundary layer velocity of 163.2 m/s ($0.8U_\infty$).
+
+The general process of developing most of the component signals was to
+determine an approximate shape, normalize it in the appropriate
+dimensions, and scale the result by using a function derived from a
+hyperbola,
+$$\frac{\log_{10}(WF)-b}{b^2}-\frac{\xi_{\rho_N}^2}{a^2} = 1 \textrm{,}
+ \label{eqn:05_scaling_hyperbola}$$ such that the signal strength at
+unity of the normalized radial frequency,
+$\log_{10}(WF(\xi_{\rho_N}=1))$, and the limiting slope, $a/b$, are
+inputs. This results in the signal strength of the wavefront being
+$$\log_{10}(WF) = b-\sqrt{\frac{\xi_{\rho_N}^2}{m^2}+b^2} \textrm{,}
+ \label{eqn:05_wavefront_strength}$$ where
+$$b = \frac{1}{2\log_{10}(WF(\xi_{\rho_N}=1))}\cdot\left(\log_{10}(WF(\xi_{\rho_N}=1))^2-\frac{1}{m^2}\right) \textrm{.}
+ \label{eqn:05_wavefront_strength_b}$$ The code used to generate the
+synthetic wavefront used in this section is shown in Listing
+[\[code:sc\_synthetic\_wavefront\]](#code:sc_synthetic_wavefront){reference-type="ref"
+reference="code:sc_synthetic_wavefront"}.
+
+Aero-Optical Signal
+-------------------
+
+The aero-optical signal which is approximating an optical beam passing
+through a boundary layers normal to each of the test section walls. This
+signal was approximated by creating an ellipsoid in the plane of the
+feature's velocity and normalizing the radius by some arbitrary factors
+to roughly match the shape of the measured dispersion plot shown in
+Figure
+[\[fig:04\_dispersion\_3d\]](#fig:04_dispersion_3d){reference-type="ref"
+reference="fig:04_dispersion_3d"}. The dispersion magnitude was then
+calculated by applying Equation
+[\[eqn:05\_wavefront\_strength\]](#eqn:05_wavefront_strength){reference-type="ref"
+reference="eqn:05_wavefront_strength"}, with relevant code shown on
+Lines 19-30 of Listing
+[\[code:sc\_synthetic\_wavefront\]](#code:sc_synthetic_wavefront){reference-type="ref"
+reference="code:sc_synthetic_wavefront"}. In Figure
+[\[fig:05\_synthetic\_dispersion\_input\]](#fig:05_synthetic_dispersion_input){reference-type="ref"
+reference="fig:05_synthetic_dispersion_input"} the aero-optical signal
+is shown in red.
+
+Stationary Mode Signals
+-----------------------
+
+The stationary modes in Figure
+[\[fig:04\_dispersion\_3d\]](#fig:04_dispersion_3d){reference-type="ref"
+reference="fig:04_dispersion_3d"} appear to be temporally white-noise
+with the spatial frequencies forming an epicycloid of $k=2$. This shape
+was further simplified using a single trigonometric function to
+represent the normalization function of the radial spatial frequency,
+$$\xi_{\rho_N} = \frac{\xi_\rho}{\xi_{\rho_0}\sqrt{10-6\cos{(2\xi_\theta)}}} \textrm{,}$$
+this makes an epicycloidal like shape which has a smooth derivative.
+This dispersion component is shown in blue in Figure
+[\[fig:05\_synthetic\_dispersion\_input\]](#fig:05_synthetic_dispersion_input){reference-type="ref"
+reference="fig:05_synthetic_dispersion_input"} and the relevant code
+shown in Lines 61-66 of Listing
+[\[code:sc\_synthetic\_wavefront\]](#code:sc_synthetic_wavefront){reference-type="ref"
+reference="code:sc_synthetic_wavefront"}.
+
+Sound & Vibration Signals
+-------------------------
+
+The sound & vibrating component signals are comprised of two parts. The
+first of these is the blade-passing frequency and its harmonic
+disturbances (shown in green in Figure
+[\[fig:05\_synthetic\_dispersion\_input\]](#fig:05_synthetic_dispersion_input){reference-type="ref"
+reference="fig:05_synthetic_dispersion_input"}) and the second is the
+acoustic duct modes (shown in magenta). Like the stationary modes, the
+blade-passing frequency disturbances were modeled with the simplified
+epicycloid narrow-band disc and each harmonic was modulated by using a
+low-pass filter offset to the blade-passing frequency. The code for the
+blade-passing frequency disturbances is shown in Lines 97-113 of Listing
+[\[code:sc\_synthetic\_wavefront\]](#code:sc_synthetic_wavefront){reference-type="ref"
+reference="code:sc_synthetic_wavefront"}.
+
+The acoustic duct mode disturbances form a cone which in the $f-\xi_x$
+plane is defined by the lines $u\pm c$, while in the $f-\xi_y$ plane is
+defined by the speed of sound. At each temporal frequency step an
+ellipse was defined based on the constraining lines and the distance to
+that ellipse used to calculate a normalized radial frequency. The
+strength of the disturbance was decreased logarithmically in temporal
+frequency as shown in the code in Lines 183-200 of Listing
+[\[code:sc\_synthetic\_wavefront\]](#code:sc_synthetic_wavefront){reference-type="ref"
+reference="code:sc_synthetic_wavefront"}.
+
+Mean Lensing Signal
+-------------------
+
+The mean-lensing signal (shown in yellow in Figure
+[\[fig:05\_synthetic\_dispersion\_input\]](#fig:05_synthetic_dispersion_input){reference-type="ref"
+reference="fig:05_synthetic_dispersion_input"}) uses a stretched version
+of the simplified epicycloid and represents the slowly varying spatial
+disturbance. The relevant code is shown on Lines 144-152 of Listing
+[\[code:sc\_synthetic\_wavefront\]](#code:sc_synthetic_wavefront){reference-type="ref"
+reference="code:sc_synthetic_wavefront"}.
+
+Background Noise Signal
+-----------------------
+
+The background noise disturbance (with a few small spots shown in cyan
+in Figure
+[\[fig:05\_synthetic\_dispersion\_input\]](#fig:05_synthetic_dispersion_input){reference-type="ref"
+reference="fig:05_synthetic_dispersion_input"}) was the only component
+that did not use the hyperbola to scale the signal but instead was just
+normally distributed random noise with a mean noise level and deviation
+as inputs. The relevant code is shown in Lines 230-234 of Listing
+[\[code:sc\_synthetic\_wavefront\]](#code:sc_synthetic_wavefront){reference-type="ref"
+reference="code:sc_synthetic_wavefront"}.
+
+Synthetic Wavefront Creation
+----------------------------
+
+A synthetic signal can be created from a power spectra by solving for
+$x$ in Equation
+[\[eqn:05\_basic\_sxx\]](#eqn:05_basic_sxx){reference-type="ref"
+reference="eqn:05_basic_sxx"} and using the Inverse Fast Fourier
+Transform,
+$$x(t) = \real\left[\ifft\left\{\sqrt{S_{xx}\cdot N\cdot f_{samp}}\cdot\exp{i\phi}\right\}\right] \textrm{,}
+ \label{eqn:05_ifft}$$ where $\real$ is the real component and $\phi$ is
+a random set of phases for each point in the measurement space. As shown
+previously this relation can be extended into $n$-dimensions,
+$$f(\mathbf{x}) = \real\left[\ifftn\left\{\sqrt{\mathbf{S_{xx}}\cdot\prod{\overrightarrow{N}\cdot \overrightarrow{f}_{samp}}}\cdot\exp{i\mathbf{\phi}}\right\}\right] \textrm{.}
+ \label{eqn:05_ifftn}$$ Care should be taken when constructing the
+random set of phases, as the zero-frequency component has zero phase and
+the phases on either side of it are conjugates of one another. The code
+for creating a wavefront from a dispersion plot is shown in Lines
+336-340 of Listing
+[\[code:sc\_synthetic\_wavefront\]](#code:sc_synthetic_wavefront){reference-type="ref"
+reference="code:sc_synthetic_wavefront"} and is specifically creating
+the wavefront for the aero-optical signal but other signals are
+generated using the same basic code. Note that the first three lines are
+to get the set of phases properly configured that creates conjugate
+phases rotated about the origin.
+
+It was assumed that the aero-optical signal, the stationary modes, and
+the background noise were statistically independent of one another and
+the sound and vibration combination of modes and as such could be
+separately transformed into physical space. While the components of the
+sound and vibration sources, the blade-passing frequency, the acoustic
+cone, and the mean-lensing, were assumed to be related to one another
+and thus were summed together in frequency space prior to being
+transformed into physical space. Once the separate components were in
+physical space the total wavefront was obtained by summing up the
+separate components with the aero-optical signal being a separately
+saved along side the total wavefront. Some frames from the synthetic
+wavefront are shown in Figure
+[\[fig:05\_synthetic\_frames\]](#fig:05_synthetic_frames){reference-type="ref"
+reference="fig:05_synthetic_frames"} with the total wavefront shown on
+top and the aero-optical only signal shown on the bottom.
+
+![Sample frames from the synthetic wavefront with the total wavefront
+signal on top and the aero-optical only signal bottom. Flow is from
+right to
+left.](../matlab/05_synthetic_wavefront/synthetic_frames_total.eps "fig:")
+![Sample frames from the synthetic wavefront with the total wavefront
+signal on top and the aero-optical only signal bottom. Flow is from
+right to
+left.](../matlab/05_synthetic_wavefront/synthetic_frames_ao.eps "fig:")
+
+[\[fig:05\_synthetic\_frames\]]{#fig:05_synthetic_frames
+label="fig:05_synthetic_frames"}
+
+Flow is from right to left. The aero-optical signal is often times
+noticeable in the total wavefront signal, but can be easily overpowered
+by the various contamination sources.
+
+Comparison to Measured Data
+---------------------------
+
+A dispersion plot of the total synthetic wavefront is shown in Figure
+[\[fig:05\_dispersion\_synthetic\]](#fig:05_dispersion_synthetic){reference-type="ref"
+reference="fig:05_dispersion_synthetic"}.
+
+![Synthetic wavefront output dispersion plot of an aero-optical signal
+and various signal corruption
+components.](../matlab/05_synthetic_wavefront/dispersion_synthetic.eps)
+
+[\[fig:05\_dispersion\_synthetic\]]{#fig:05_dispersion_synthetic
+label="fig:05_dispersion_synthetic"}
+
+In this view the aero-optical signal is more noticeable but there still
+remains some significant overlap with the various contamination sources.
+While the mean-lensing component is not as visible in this isosurface,
+the rest of the dispersion plot in a good representation of the input
+dispersion plot shown in Figure
+[\[fig:05\_synthetic\_dispersion\_input\]](#fig:05_synthetic_dispersion_input){reference-type="ref"
+reference="fig:05_synthetic_dispersion_input"}. The blade-passing
+frequency was depicted as symmetric in the synthetic wavefront while
+measured data (shown in Figure
+[\[fig:04\_dispersion\_3d\]](#fig:04_dispersion_3d){reference-type="ref"
+reference="fig:04_dispersion_3d"}) shows more signal on the side
+traveling in the direction of flow. The harmonics of the BPF are more on
+the upstream traveling side of the dispersion and are a little less
+pronounced in the measured data. The total synthetic wavefront has a
+spatial time-averaged RMS of $0.0112\pm0.0006\mu m$ with the
+aero-optical only signal having a spatial time-averaged RMS of
+$0.0073\pm0.0003\mu m$. The measured wavefront presented in Figure
+[\[fig:04\_dispersion\_3d\]](#fig:04_dispersion_3d){reference-type="ref"
+reference="fig:04_dispersion_3d"} had a spatial time-averaged RMS of
+$0.0874\pm0.0263\mu m$. The overall spatial RMS of the synthetic
+wavefront was $12.8\%$ when compared to the measured wavefront
+indicating that the algorithms used to generate the wavefront are not
+representative of reality and can provide a future path of research in
+order to produce more realistic synthetic wavefronts. [Double Check line
+numbers for the Listings.]{style="color: red"}
+
+Single Sensor Filtering Techniques {#chap:06_single_filter}
+==================================
+
+[Show some dispersions of POD modes and discuss whether or not POD
+filtering maybe a viable option.]{style="color: red"}
+
+A filter is a function, $G(\mathbf{\omega})$, that describes the gain a
+signal will experience in frequency space. In the simplest case, the
+filtered signal is the inverse Fourier transform of the gain multiplied
+by the Fourier transform of the signal. Additionally, a windowing
+function, $W(\mathbf{x})$, can be used to help suppress finite sampling
+effects,
+$$f_F(\mathbf{x}) = \real\left(\frac{\ifftn[G(\mathbf{\omega})\cdot\fftn\{f(\mathbf{x})\cdot W(\mathbf{x})\}]}{W(\mathbf{x})}\right) \textrm{,}
+ \label{eqn:06_filter_function}$$ where $f$ is the signal function and
+$f_F$ is the filtered signal. Depending on the windowing function some
+data could be destroyed during this process if there is a zero present
+due to the possibility of dividing by zero.
+
+A basic MATLAB code for applying a filter to a wavefront using a
+separate function for both generating and applying the gain function
+which is presented in Listing
+[\[code:sc\_basic\_wavefront\_filters\]](#code:sc_basic_wavefront_filters){reference-type="ref"
+reference="code:sc_basic_wavefront_filters"}. This code generates a
+windowing function as described by Equations
+[\[eqn:04\_hann\_window\]](#eqn:04_hann_window){reference-type="ref"
+reference="eqn:04_hann_window"},
+[\[eqn:04\_window\_sep\]](#eqn:04_window_sep){reference-type="ref"
+reference="eqn:04_window_sep"}, and
+[\[eqn:04\_window\_space\_arb\]](#eqn:04_window_space_arb){reference-type="ref"
+reference="eqn:04_window_space_arb"}. The temporal windowing function
+was generated with an additional two terms such that the end points
+which are equal to zero could be removed to prevent the first and last
+frames from being destroyed. Likewise, the spatial window used the
+arbitrary aperture function which ensures that all of the points inside
+of the aperture are non-zero. In some cases, a windowing function was
+not used due to filtered wavefront having a far greater magnitude in
+some places despite the precautions used. The filter presented in this
+code sample is a second order temporal high-pass filter with a cut-off
+frequency of 2000 Hz. The function `WFfilter` takes input based on a
+normalized cut-point in reference to the sample rate.
+
+Temporal Filter Methods
+-----------------------
+
+The methods presented in this section are based on Butterworth filters
+[@Butterworth-1930-DvDrjKha] but could easily be extended to other types
+of filters. The basic gain function,
+$$G(f) = \frac{1}{\sqrt{1+\left(\frac{f}{f_c}\right)^{\pm2n}}} \textrm{,}
+ \label{eqn:06_butterworth}$$ where $f_c$ is the cut-off frequency, $n$
+is the filter order (number of filters in a series), and $\pm$
+represents either a low-pass ($+$) or high-pass ($-$) filter. In this
+particular formulation, only the magnitude is attenuated, circuit based
+Butterworth filters or their digital copies will have some variable
+phase attenuation as well. Additionally, a band-pass filter can be
+constructed by placing a low-pass in series with a high-pass filter and
+a band-stop by placing the two types in parallel.
+
+As a large portion of the wavefront contamination is at low frequencies,
+a high-pass filter is the most useful in temporal space for removing
+unwanted contamination, as shown in Figure
+[\[fig:06\_filter\_temporal\]](#fig:06_filter_temporal){reference-type="ref"
+reference="fig:06_filter_temporal"}.
+
+![OPD time-averaged spatial-RMS of high-pass temporal filters relative
+to the aero-optical only unfiltered
+wavefront.](../matlab/06_single_sensor_filtering/filter_temporal.eps)
+
+[\[fig:06\_filter\_temporal\]]{#fig:06_filter_temporal
+label="fig:06_filter_temporal"}
+
+This figure shows the time-averaged spatial-RMS of both the total and
+aero-optical only wavefronts with various cut-off high-pass filters
+relative to that of the aero-optical only wavefront unfiltered. The
+total wavefront ratio crosses unity around 1200 Hz, which is about
+halfway between the second and third harmonic of the blade-passing
+frequency in this simulated wavefront. While approximately 75% of the
+aero-optical signal remains at this cut-off frequency, that difference
+is made up by the remaining contamination. This can provide a
+computationally cheap way estimating the aero-optical portion of the
+wavefront for calculations that rely on the spatial-RMS of a wavefront.
+While it is easy to determine a cut-off frequency for this synthetic
+wavefront, a measured wavefront will likely take some knowledge or
+expectation of the contamination that is present in the measurement.
+
+An example of band-pass and band-stop filtering is shown if Figure
+[\[fig:06\_filter\_temporal\_bandpass\]](#fig:06_filter_temporal_bandpass){reference-type="ref"
+reference="fig:06_filter_temporal_bandpass"}.
+
+![Measured wavefronts filtered at the blade-passing frequency
+(532$\pm$10 Hz). The left column is band-stop filtered while the right
+is band-pass
+filtered.](../matlab/06_single_sensor_filtering/filter_temporal_bandpass.eps)
+
+[\[fig:06\_filter\_temporal\_bandpass\]]{#fig:06_filter_temporal_bandpass
+label="fig:06_filter_temporal_bandpass"}
+
+The figure shows measured data that is band-stop filtered in the left
+column and band-pass filtered in the right column in several different
+frames. The flow is from right-to-left and the band-pass filtered
+wavefront clearly shows upstream-moving optical disturbances associated
+with acoustic duct modes traveling upstream from the fan. The band-stop
+shows a much slower moving optical disturbance that is in general moving
+in the direction of the flow, but it still possess the optical
+disturbances of the blade-pass frequency harmonics.
+
+One thing of note, MATLAB's builtin filter functions only work in
+one-dimension of frequency space and are unable to determine the
+direction that a signal is traveling. They also only apply the filter to
+the positive frequencies and zero-out the negative ones which both
+reduces the signal by two and also switches all disturbances to moving
+in the same direction. So even for a filter that operates in
+one-dimension, it is best to apply the filter over both positive and
+negative frequencies to the n-dimensional Fourier transform in order to
+preserve the direction of travel of a signal. This additionally allows
+several filters to be applied in series with one another without having
+to perform a Fourier and inverse Fourier transform for each successive
+filter. [I should maybe show this matlab filter issue in an
+appendix.]{style="color: red"}
+
+Some additional uses of temporal filters would be in sizing and/or
+designing an adaptive optics system. A low-pass filter with a cut-off at
+the bandwidth of either a fast-steering or deformable mirror would help
+determine the signal that a system would need to reject. A control
+system may need to have the bandwidth reduced in order to keep a
+mirror's travel within limits. While a high-pass filter would inform
+designers of the remaining optical aberrations that cannot be corrected.
+
+Upstream/Downstream Moving
+--------------------------
+
+For the filtering of upstream and downstream moving optical disturbances
+a logistic function was chosen,
+$$f(x) = \frac{1}{1+\exp\{-kx\}} \textrm{.}
+ \label{eqn:06_logistic}$$ This function needs to be expanded into
+two-dimensions ($x$ and $t$) with the filter ideally returning a value
+of one in both the first and third quadrants and zero otherwise for a
+filter outputs disturbances moving in the direction of flow. To
+accomplish this the logistic curve in each dimension is scaled and
+offset to output values between negative one and positive one,
+$$G_t(f) = \frac{2}{1+\exp\{-k_tf\}}-1
+ \label{eqn:06_logistic_time}$$ and
+$$G_x(\xi_x) = \frac{2}{1+\exp\{\pm k_x\xi_x\}}-1 \textrm{,}
+ \label{eqn:06_logistic_space}$$ where $\pm$ determines whether the
+filter is obtaining upstream traveling disturbances ($+$) or downstream
+traveling ($-$). These two gain functions are then multiplied together
+and scaled to output values between zero and one,
+$$G(\xi_x,f) = \frac{(G_t\cdot G_x)+1}{2} \textrm{.}
+ \label{eqn:06_up_down_filter}$$ As the values of $k_x$ and $k_t$ go to
+infinity an ideal case is obtained. Downstream traveling disturbances
+have a gain of one in the first and third quadrants, zero in the second
+and forth quadrants, and a value of $1/2$ when either frequency is zero.
+
+The dispersion analysis using an ideal downstream moving filter on the
+synthetic wavefront is shown in Figure
+[\[fig:06\_filter\_downstream\]](#fig:06_filter_downstream){reference-type="ref"
+reference="fig:06_filter_downstream"} along side the dispersion of the
+unfiltered wavefront.
+
+![Dispersion isosurface of the synthetic wavefront with a downstream
+filter in
+place.](../matlab/06_single_sensor_filtering/filter_downstream.eps)
+
+[\[fig:06\_filter\_downstream\]]{#fig:06_filter_downstream
+label="fig:06_filter_downstream"}
+
+All of the upstream traveling disturbances are removed and the
+disturbances at $\xi_x=0$ m$^{-1}$ are significantly reduced. Some of
+the stationary modes remain while only the acoustic and vibration
+signals that are propagating in the direction of flow remain. The
+aero-optical signal is clipped slightly at $\xi_x=0$ due to the spatial
+width of the signal. The ratio of the time-averaged spatial-RMS of the
+filtered signal when compared to the aero-optic only signal was 1.24
+while the unfiltered ratio was 1.53. When the filter was applied to only
+the aero-optic signal the ratio was 0.96. This filter method will retain
+any disturbance that is traveling in the direction of flow. Even with an
+ideal filter there is some slight attenuation of the aero-optical signal
+due to signal having some spectral width that crosses into
+upstream-moving portion of the dispersion plot.
+
+Velocity Filtering
+------------------
+
+The dispersion plot shows flow structures that are traveling at a given
+speed as having a constant slope. A plane in the dispersion plot can be
+used to measure a flow structure's velocity in both $x$ and
+$y$-directions. The distance from any given point in the dispersion plot
+to a plane described by the velocities $v_x$ and $v_y$ can be computed
+by $$d = \frac{|v_x\xi_x+v_y\xi_y-f|}{\sqrt{v_x^2+v_y^2+1}} \textrm{.}
+ \label{eqn:06_dist_point_2_plane}$$ A low-pass or high-pass filter can
+then be used to retain only disturbances that are traveling at that
+velocity, or to exclude those disturbances respectively.
+
+A low-pass velocity-filter of the synthetic wavefront is shown in Figure
+[\[fig:06\_filter\_velocity\]](#fig:06_filter_velocity){reference-type="ref"
+reference="fig:06_filter_velocity"}.
+
+![Dispersion isosurface of the synthetic wavefront with a low-pass
+velocity-filter in
+place.](../matlab/06_single_sensor_filtering/filter_velocity.eps)
+
+[\[fig:06\_filter\_velocity\]]{#fig:06_filter_velocity
+label="fig:06_filter_velocity"}
+
+The filtered dispersion plot shows primarily only the aero-optic signal
+remains with some additional low-frequency content from the
+blade-passing frequency and harmonic disturbances as well as some
+stationary and acoustic disturbances. The ratio of the time-averaged
+spatial-RMS relative to that of the aero-optical only signal went from
+1.53 in the unfiltered case to 1.01 in the filtered case. This method
+can provide a very effective way in quickly estimating the clean
+spatial-RMS of a contaminated wavefront.
+
+Another use of the synthetic wavefront is measuring the speed of a
+broadband disturbance such as the aero-optical signal of a boundary
+layer. This is done by finding the velocity that maximizes the output
+spatial-RMS of the velocity filter, see Figure
+[\[fig:06\_filter\_velocity\_measure\]](#fig:06_filter_velocity_measure){reference-type="ref"
+reference="fig:06_filter_velocity_measure"}.
+
+![Velocity low-pass filter used to determine the mean disturbance
+velocity. The maximum value corresponds with the actual value used in
+the creation of the synthetic
+wavefront.](../matlab/06_single_sensor_filtering/filter_velocity_measure.eps)
+
+[\[fig:06\_filter\_velocity\_measure\]]{#fig:06_filter_velocity_measure
+label="fig:06_filter_velocity_measure"}
+
+In this case boundary layer speed was determined to be 163 m/s which
+corresponds to the design velocity of the synthetic signal of $0.8U$. If
+the velocity range used is to large, a false result can be obtained due
+to the inclusion of disturbance structures not related to the
+aero-optical signal. For signals that have a mean-velocity component
+that is not aligned with an axis both velocity components can be varied
+as shown in Figure
+[\[fig:06\_filter\_velocity\_real\]](#fig:06_filter_velocity_real){reference-type="ref"
+reference="fig:06_filter_velocity_real"}.
+
+![Velocity low-pass filter used to determine the mean disturbance
+velocity of measured data presented in Figure
+[\[fig:06\_dispersion\_real\]](#fig:06_dispersion_real){reference-type="ref"
+reference="fig:06_dispersion_real"}. The velocity in the x-direction was
+measured to be 207 m/s and -17 m/s in the
+y-direction.](../matlab/06_single_sensor_filtering/filter_velocity_real.eps)
+
+[\[fig:06\_filter\_velocity\_real\]]{#fig:06_filter_velocity_real
+label="fig:06_filter_velocity_real"}
+
+In this case a variable low-pass velocity filter was employed with a
+high-pass spatial filter operating in the radial direction. This helped
+eliminate some of the low-frequency stationary disturbances as well as
+some of the disturbances related to the blade-passing frequency. The
+velocity was measured using the optical disturbances in the dispersion
+plot to be approximately 207 m/s in the x-direction and -17 m/s in the
+y-direction.
+
+Basic Filter Summary
+--------------------
+
+Three different basic wavefront filters were shown and discussed in this
+chapter. The temporal filter is most useful when separating an optical
+wavefront into frequency bands. Adaptive optics system performance can
+be evaluated by using both high-pass and low-pass temporal filters.
+High-pass filters can be used to determine a systems performance that
+cannot be corrected while low-pass filters can be used to sizing the
+travel of active optical components. Band-pass filters are helpful in
+analyzing a wavefront over a narrow-band to examine the optical
+aberrations at specific frequencies that significantly contribute to the
+overall optical disturbance.
+
+Filters that separate upstream and downstream-moving disturbances are
+useful as most of the optical contamination comes from acoustic signals
+that are traveling upstream form a wind-tunnel fan. These filters would
+also be useful for separating out an aero-optical signal that has a
+broad range of velocities that can occur in a span wise measurement of a
+boundary layer. [Use some of sontag's data and site his
+dissertation.]{style="color: red"}
+
+The velocity filter is the most useful for isolating the aero-optical
+portion of a wavefront measurement given the aero-optical signal has a
+fairly narrow and constant velocity range. By using this filter to
+maximize the power over a range of velocities it can be used to measure
+the speed in both x and y-directions of an optical disturbance.
+
+Multiple Sensor Filtering Techniques {#chap:07_multiple_filter}
+====================================
+
+Sample Code
+===========
+
+``` {#code:sc_simpleSXX .matlab label="code:sc_simpleSXX" caption="A simple function for computing the power spectra for vector \lstinline{x} given an arbitrary windowing function." language="Matlab"}
+function [sxx,freq] = simpleSXX(x,fsamp,window)
+N = length(x);
+x = reshape(x,1,N);
+switch nargin
+    case 1
+        window = reshape(hann(N),1,N);
+        fsamp = 1;
+    case 2
+        window = reshape(hann(N),1,N);
+end
+if isempty(fsamp)
+    fsamp = 1;
+end
+if isa(window,'function_handle')
+    window = reshape(window(N),1,N);
+end
+cw = 1/sqrt(sum(window.^2,'all')/N);
+sxx = fftshift((abs(cw*fft(x.*window))).^2)/N/fsamp;
+freq = (-0.5:1/N:0.5-1/N)*fsamp;
+end
+```
+
+``` {#code:sc_simpleSXXn .matlab label="code:sc_simpleSXXn" caption="A simple function for computing the dispersion or n-dimensional power spectra of \lstinline{x} given an arbitrary windowing function." language="Matlab"}
+function [sxx,frequency] = simpleSXXn(x,sampleRate,window)
+% Check Number of Inputs - Select Default Options
+switch nargin
+    case 1
+        window = 1;
+        sampleRate = ones(1,ndims(x));
+    case 2
+        window = 1;
+end
+% Check if 'sampleRate' is Empty
+if isempty(sampleRate)
+    sampleRate = ones(1,ndims(x));
+end
+% Check if 'window' is a Function Handle
+N = size(x);
+if isa(window,'function_handle')
+    wfun = window;
+    window = wfun(N(1));
+    for aa=2:ndims(x)
+        window = window.*permute(wfun(N(aa)),aa:-1:1);
+    end
+end
+% Calculate Window Correction
+if window==1
+    cw = 1;
+else
+    cw = 1/sqrt(sum(window.^2,'all')/numel(x));
+end
+% Calculate Power Spectra
+sxx = fftshift((abs(cw*fftn(x.*window))).^2)/numel(x)/prod(sampleRate);
+% Calculate Frequency Ranges
+frequency{1} = (-0.5:1/N(1):0.5-1/N(1))'*sampleRate(1);
+for aa=2:ndims(x)
+    frequency{aa} = permute((-0.5:1/N(aa):0.5-1/N(aa))'*sampleRate(aa),aa:-1:1);
+end
+end
+```
+
+``` {#code:sc_synthetic_wavefront .matlab label="code:sc_synthetic_wavefront" caption="MATLAB code used to generate the synthetic wavefront used in Chapter \ref{chap:wavefront_filtering}." language="Matlab"}
+close all; clc; clearvars; %#ok<*UNRCH>
+
+sampleRate = [200*[1 1] 30000];
+nSamples = 2.^[6 6 13];
+c = 340;
+M = 0.6;
+uBL_u = 0.8;
+surfaceStrength = -14.5;
+nMakePlots = 0;     % 0: off, 1: plot, 2: plot and save, 3: Combo Only
+
+% Frequency Space
+freq.x = (-0.5:1/nSamples(2):0.5-1/nSamples(2))*sampleRate(2);
+freq.y = reshape((-0.5:1/nSamples(1):0.5-1/nSamples(1))*sampleRate(1),nSamples(1),1,1);
+freq.t = reshape((-0.5:1/nSamples(3):0.5-1/nSamples(3))*sampleRate(3),1,1,nSamples(3));
+freq.rho = sqrt(freq.x.^2+freq.y.^2);
+freq.theta = atan2(freq.y,freq.x);
+
+%%%%% Aero-Optics Signal
+AO.ellipsoid = [8 90 175];
+AO.strength = -14.5;
+AO.slope = -0.13;
+% Calculations
+AO.speed = c*M*uBL_u;
+b = 1/2/AO.strength*(AO.strength^2-1/AO.slope^2);
+AO.WF = zeros(nSamples);
+XR = freq.x*cos(atan(-1/AO.speed))+freq.t*sin(atan(-1/AO.speed));
+YR = freq.y;
+TR = -freq.t*sin(atan(-1/AO.speed))+freq.x*cos(atan(-1/AO.speed));
+R = sqrt((XR/AO.ellipsoid(1)).^2+(YR/AO.ellipsoid(2)).^2+(TR/AO.ellipsoid(3)).^2);
+AO.WF = 10.^(b-sqrt(R.^2/AO.slope^2+b^2));
+clear b XR YR TR R;
+
+%%%%% White-Noise Stationary Signal
+SN.rho0 = 5;
+SN.strength = -14.5;
+SN.slope = -0.175;
+% Calculations
+b = 1/2/SN.strength*(SN.strength^2-1/SN.slope^2);
+SN.WF = 10.^(b-sqrt(repmat((freq.rho./(SN.rho0.*sqrt(10-6*cos(2*freq.theta+pi)))).^2,1,1,nSamples(3))/SN.slope^2+b^2));
+clear b;
+
+%%%%% Blade Pass Frequency Contamination
+BPF.freq = 500;
+BPF.harmonic = 0.5:0.5:5;
+BPF.rho0 = 20;
+BPF.tThickness = 100;
+BPF.strength = -14;
+BPF.slope = -0.13;
+BPF.cutoff = 500;
+BPF.aspectRatio = 1;
+% Calculations
+b = 1/2/BPF.strength*(BPF.strength^2-1/BPF.slope^2);
+BPF.WF = zeros(nSamples);
+for aa=1:length(BPF.harmonic)
+    R = sqrt((sqrt(freq.x.^2+(BPF.aspectRatio*freq.y).^2)./(BPF.rho0/sqrt(1+((BPF.freq*BPF.harmonic(aa)-BPF.freq)/BPF.cutoff).^2)*sqrt(10-6*cos(2*freq.theta+pi)))).^2+((freq.t-BPF.freq*BPF.harmonic(aa))/BPF.tThickness).^2);
+    BPF.WF = BPF.WF+10.^(b-sqrt(R.^2/BPF.slope^2+b^2));
+    R = sqrt((sqrt(freq.x.^2+(BPF.aspectRatio*freq.y).^2)./(BPF.rho0/sqrt(1+((BPF.freq*BPF.harmonic(aa)-BPF.freq)/BPF.cutoff).^2)*sqrt(10-6*cos(2*freq.theta+pi)))).^2+((freq.t+BPF.freq*BPF.harmonic(aa))/BPF.tThickness).^2);
+    BPF.WF = BPF.WF+10.^(b-sqrt(R.^2/BPF.slope^2+b^2));
+end
+clear b R;
+
+%%%%% Zero Frequency Contamination
+ZERO.rho0 = 25;
+ZERO.tThickness = 50;
+ZERO.strength = -14.5;
+ZERO.slope = -0.5;
+ZERO.aspectRatio = 0.55;
+% Calculations
+b = 1/2/ZERO.strength*(ZERO.strength^2-1/ZERO.slope^2);
+R = sqrt((sqrt(freq.x.^2+(ZERO.aspectRatio*freq.y).^2)./(ZERO.rho0*sqrt(10-6*cos(2*freq.theta+pi)))).^2+(freq.t/ZERO.tThickness).^2);
+ZERO.WF = 10.^(b-sqrt(R.^2/ZERO.slope^2+b^2));
+clear b R;
+
+%%%%% Acoustic Cone Signal
+CONE.strength = [-13 -16];
+CONE.slope = -0.3;
+CONE.thickness = 8;
+CONE.lowPassRho = 200;
+CONE.lowPassX = 115;
+% Calculations
+freqMod.x0 = sin(0.5*atan(1/c/(M+1))+0.5*atan(1/c/(M-1)))*freq.t;
+freqMod.y0 = 0;
+freqMod.ax = sin(0.5*atan(1/c/(M+1))-0.5*atan(1/c/(M-1)))*freq.t;
+freqMod.ay = sin(atan(1/c))*freq.t;
+freqMod.theta = atan2(freq.y-freqMod.y0,freq.x-freqMod.x0);
+freqMod.rho = (sqrt((freq.x-freqMod.x0).^2+(freq.y-freqMod.y0).^2)./sqrt((freqMod.ax.*cos(freqMod.theta)).^2+(freqMod.ay.*sin(freqMod.theta)).^2)-1).*sqrt((freqMod.ax.*cos(freqMod.theta)).^2+(freqMod.ay.*sin(freqMod.theta)).^2)/CONE.thickness;
+freqMod.rho(:,:,end/2+1) = freq.rho(:,:)/CONE.thickness;
+b1 = ((CONE.strength(2)-CONE.strength(1))/(sampleRate(3)/2)*abs(freq.t)+CONE.strength(1));
+b = 1/2./b1.*(b1.^2-1/CONE.slope^2);
+CONE.WF = 10.^(b-sqrt(freqMod.rho.^2/CONE.slope^2+b.^2));
+CONE.WF = CONE.WF.*sqrt(1./(1+(freqMod.rho/CONE.lowPassRho).^2));
+CONE.WF = CONE.WF.*sqrt(1./(1+(freq.x/CONE.lowPassX).^2));
+clear freqMod b b1;
+
+%%%%% Background Noise
+BACK.strength = -18;
+BACK.deviation = 0.75;
+% Calculations
+BACK.WF = 10.^(randn(nSamples)*BACK.deviation+BACK.strength);
+BACK.WF(2:nSamples(1),2:nSamples(2),nSamples(3)/2+2:nSamples(3)) = flip(flip(flip(BACK.WF(2:nSamples(1),2:nSamples(2),2:nSamples(3)/2),1),2),3);
+
+%%%%% Sound and Vibration
+SV.WF = BPF.WF+ZERO.WF+CONE.WF;
+
+%%%%% Plot
+views = [-125 25; -55 25; 180 0; 270 0];
+f1 = figure(1);
+for aa=1:4
+    subplot(2,2,aa)
+    patch(isosurface(freq.x,freq.y,freq.t,AO.WF,10^surfaceStrength),'edgecolor','none','facecolor','red','facelighting','gouraud');
+    patch(isosurface(freq.x,freq.y,freq.t,SN.WF,10^surfaceStrength),'edgecolor','none','facecolor','blue','facelighting','gouraud');
+    patch(isosurface(freq.x,freq.y,freq.t,BPF.WF,10^surfaceStrength),'edgecolor','none','facecolor','green','facelighting','gouraud');
+    patch(isosurface(freq.x,freq.y,freq.t,ZERO.WF,10^surfaceStrength),'edgecolor','none','facecolor','yellow','facelighting','gouraud');
+    patch(isosurface(freq.x,freq.y,freq.t,CONE.WF,10^surfaceStrength),'edgecolor','none','facecolor','magenta','facelighting','gouraud');
+    patch(isosurface(freq.x,freq.y,freq.t,BACK.WF,10^surfaceStrength),'edgecolor','none','facecolor','cyan','facelighting','gouraud');
+    grid on;
+    hold on;
+    daspect([1 1 sampleRate(3)/sampleRate(1)/3]);
+    xlim(sampleRate(1)/2*[-1 1]);
+    ylim(sampleRate(2)/2*[-1 1]);
+    zlim(sampleRate(3)/2*[0 1]);
+    camlight;
+    xlabel('$\xi_x\ (m^{-1})$','Interpreter','Latex');
+    ylabel('$\xi_y\ (m^{-1})$','Interpreter','Latex');
+    zlabel('$f\ (Hz)$','Interpreter','Latex');
+%     title('Synthetic Signal','Interpreter','Latex');
+    f1.Children(1).TickLabelInterpreter = 'latex';
+    view(views(aa,:));
+    camlight;
+end
+f1.Units = 'inches';
+f1.Position = [1 1 6 8];
+% Save Plot
+saveas(f1,'synthetic_wavefront.eps','epsc');
+
+%%%%% Animation
+nFrames = 150;
+theta = (0:nFrames-1)/(nFrames)*4*pi;
+az = rad2deg(theta);
+el = 25*sin(theta/2);
+
+f2 = figure(2);
+scolor = parula(2);
+patch(isosurface(freq.x,freq.y,freq.t(end/2+1:end),AO.WF(:,:,end/2+1:end),10^surfaceStrength),'edgecolor','none','facecolor','red','facelighting','gouraud');
+patch(isocaps(freq.x,freq.y,freq.t(end/2+1:end),AO.WF(:,:,end/2+1:end),10^surfaceStrength,'all'),'edgecolor','none','facecolor','red','facelighting','gouraud');
+patch(isosurface(freq.x,freq.y,freq.t(end/2+1:end),SN.WF(:,:,end/2+1:end),10^surfaceStrength),'edgecolor','none','facecolor','blue','facelighting','gouraud');
+patch(isocaps(freq.x,freq.y,freq.t(end/2+1:end),SN.WF(:,:,end/2+1:end),10^surfaceStrength,'all'),'edgecolor','none','facecolor','blue','facelighting','gouraud');
+patch(isosurface(freq.x,freq.y,freq.t(end/2+1:end),BPF.WF(:,:,end/2+1:end),10^surfaceStrength),'edgecolor','none','facecolor','green','facelighting','gouraud');
+patch(isocaps(freq.x,freq.y,freq.t(end/2+1:end),BPF.WF(:,:,end/2+1:end),10^surfaceStrength,'all'),'edgecolor','none','facecolor','green','facelighting','gouraud');
+patch(isosurface(freq.x,freq.y,freq.t(end/2+1:end),ZERO.WF(:,:,end/2+1:end),10^surfaceStrength),'edgecolor','none','facecolor','yellow','facelighting','gouraud');
+patch(isocaps(freq.x,freq.y,freq.t(end/2+1:end),ZERO.WF(:,:,end/2+1:end),10^surfaceStrength,'all'),'edgecolor','none','facecolor','yellow','facelighting','gouraud');
+patch(isosurface(freq.x,freq.y,freq.t(end/2+1:end),CONE.WF(:,:,end/2+1:end),10^surfaceStrength),'edgecolor','none','facecolor','magenta','facelighting','gouraud');
+patch(isocaps(freq.x,freq.y,freq.t(end/2+1:end),CONE.WF(:,:,end/2+1:end),10^surfaceStrength,'all'),'edgecolor','none','facecolor','magenta','facelighting','gouraud');
+patch(isosurface(freq.x,freq.y,freq.t(end/2+1:end),BACK.WF(:,:,end/2+1:end),10^surfaceStrength),'edgecolor','none','facecolor','cyan','facelighting','gouraud');
+patch(isocaps(freq.x,freq.y,freq.t(end/2+1:end),BACK.WF(:,:,end/2+1:end),10^surfaceStrength,'all'),'edgecolor','none','facecolor','cyan','facelighting','gouraud');
+grid on;
+daspect([1 1 50]);
+xlim(sampleRate(1)/2*[-1 1]);
+ylim(sampleRate(2)/2*[-1 1]);
+zlim(sampleRate(3)/2*[0 1]);
+xlabel('$\xi_x\ (m^{-1})$','Interpreter','Latex');
+ylabel('$\xi_y\ (m^{-1})$','Interpreter','Latex');
+zlabel('$f\ (Hz)$','Interpreter','Latex');
+f2.Children(1).TickLabelInterpreter = 'latex';
+f2.Units = 'inches';
+f2.Position = [1 1 5.5 6.25];
+cl = camlight;
+
+filename = 'synthetic_wavefront.gif';
+frameRate = 15;
+for aa=1:nFrames-1
+    view(az(aa),el(aa));
+    camlight(cl);
+    drawnow;
+    frame = getframe(f2);
+    im = frame2im(frame);
+    [imind,cm] = rgb2ind(im,256);
+    if aa==1
+        imwrite(imind,cm,filename,'gif','Loopcount',inf,'DelayTime',1/frameRate);
+    else
+        imwrite(imind,cm,filename,'gif','WriteMode','append','DelayTime',1/frameRate);
+    end
+end
+
+%%%%% Make Wavefronts
+[wf.x,wf.y] = meshgrid(0.975*(-1:2/(nSamples(1)-1):1),0.975*(-1:2/(nSamples(2)-1):1));
+wf.rho = sqrt(wf.x.^2+wf.y.^2);
+wf.theta = atan2(wf.y,wf.x);
+wf.mask = ones(size(wf.x));
+wf.mask(wf.rho>1) = NaN;
+wf.x = wf.x.*wf.mask;
+wf.y = wf.y.*wf.mask;
+wf.rho = wf.rho.*wf.mask;
+wf.theta = wf.theta.*wf.mask;
+wf.sampleRate = sampleRate;
+% Aero-Optics Signal
+phase = pi*(2*rand(nSamples)-1);
+phase(nSamples(1)/2+1,nSamples(2)/2+1,nSamples(3)/2+1) = 0;
+phase(2:nSamples(1),2:nSamples(2),nSamples(3)/2+2:nSamples(3)) = -flip(flip(flip(phase(2:nSamples(1),2:nSamples(2),2:nSamples(3)/2),1),2),3);
+wf.AO = real(ifftn(ifftshift(sqrt((AO.WF)*prod(sampleRate)*numel(AO.WF)).*exp(1i*phase))));
+wf.AO = wf.AO.*wf.mask;
+clear phase;
+% White-Noise Stationary Signal
+phase = pi*(2*rand(nSamples)-1);
+phase(nSamples(1)/2+1,nSamples(2)/2+1,nSamples(3)/2+1) = 0;
+phase(2:nSamples(1),2:nSamples(2),nSamples(3)/2+2:nSamples(3)) = -flip(flip(flip(phase(2:nSamples(1),2:nSamples(2),2:nSamples(3)/2),1),2),3);
+wft.SN = real(ifftn(ifftshift(sqrt((SN.WF)*prod(sampleRate)*numel(SN.WF)).*exp(1i*phase))));
+wft.SN = wft.SN.*wf.mask;
+clear phase;
+% Background Noise
+phase = pi*(2*rand(nSamples)-1);
+phase(nSamples(1)/2+1,nSamples(2)/2+1,nSamples(3)/2+1) = 0;
+phase(2:nSamples(1),2:nSamples(2),nSamples(3)/2+2:nSamples(3)) = -flip(flip(flip(phase(2:nSamples(1),2:nSamples(2),2:nSamples(3)/2),1),2),3);
+wft.BACK = real(ifftn(ifftshift(sqrt((BACK.WF)*prod(sampleRate)*numel(BACK.WF)).*exp(1i*phase))));
+wft.BACK = wft.BACK.*wf.mask;
+clear phase;
+% Sound and Vibration
+phase = pi*(2*rand(nSamples)-1);
+phase(nSamples(1)/2+1,nSamples(2)/2+1,nSamples(3)/2+1) = 0;
+phase(2:nSamples(1),2:nSamples(2),nSamples(3)/2+2:nSamples(3)) = -flip(flip(flip(phase(2:nSamples(1),2:nSamples(2),2:nSamples(3)/2),1),2),3);
+wft.SV = real(ifftn(ifftshift(sqrt((SV.WF)*prod(sampleRate)*numel(SV.WF)).*exp(1i*phase))));
+wft.SV = wft.SV.*wf.mask;
+clear phase;
+% Total
+wf.wf = wf.AO+wft.SN+wft.BACK+wft.SV;
+% Save
+% save('synthetic_wavefront.mat','wf');
+% disp('File Saved');
+```
+
+``` {#code:sc_basic_wavefront_filters .matlab label="code:sc_basic_wavefront_filters" caption="MATLAB code used to filter wavefronts in Chapter \ref{chap:wavefront_filtering}." language="Matlab"}
+function [wf] = WFfilter(wf,varargin)
+%WFFILTER Summary of this function goes here
+%   Detailed explanation goes here
+
+% Check Number of Inputs
+if mod(nargin,2)==0 || nargin<3
+    error('Invalid Number of Inputs');
+end
+% Zero-Out NaN Values
+mask = double(~isnan(wf(:,:,1)));
+mask(mask==0) = NaN;
+% disp(mask);
+wf(isnan(wf)) = 0;
+% 3D-FFT
+wf = fftshift(fftn(wf));
+% Calculate Frequency
+BlockSize = size(wf);
+Frequency.y = reshape(-1/2:1/BlockSize(1):1/2-1/BlockSize(1),[],1);
+Frequency.x = reshape(-1/2:1/BlockSize(2):1/2-1/BlockSize(2),1,[]);
+Frequency.t = reshape(-1/2:1/BlockSize(3):1/2-1/BlockSize(3),1,1,[]);
+Frequency.rho = sqrt(Frequency.x.^2+Frequency.y.^2);
+% Filters
+for aa=1:length(varargin)/2
+    switch lower(varargin{2*aa-1})
+        case 'time-highpass'
+            if length(varargin{2*aa})==1
+                n = 1;
+            else
+                n = varargin{2*aa}(2);
+            end
+            [b,a] = butter(n,varargin{2*aa}(1),'high','s');
+            gain = abs(reshape(freqs(b,a,reshape(Frequency.t,1,[])),1,1,[]));
+            clear b a;
+        case 'time-lowpass'
+            if length(varargin{2*aa})==1
+                n = 1;
+            else
+                n = varargin{2*aa}(2);
+            end
+            [b,a] = butter(n,varargin{2*aa}(1),'low','s');
+            gain = abs(reshape(freqs(b,a,reshape(Frequency.t,1,[])),1,1,[]));
+            clear b a;
+        case {'time-passband' 'time-bandpass'}
+            if length(varargin{2*aa})==2
+                n = 1;
+            else
+                n = varargin{2*aa}(3);
+            end
+            [b,a] = butter(n,varargin{2*aa}(1:2),'bandpass','s');
+            gain = abs(reshape(freqs(b,a,reshape(Frequency.t,1,[])),1,1,[]));
+            clear b a;
+        case {'time-bandstop' 'time-stop'}
+            if length(varargin{2*aa})==2
+                n = 1;
+            else
+                n = varargin{2*aa}(3);
+            end
+            [b,a] = butter(n,varargin{2*aa}(1:2),'stop','s');
+            gain = abs(reshape(freqs(b,a,reshape(Frequency.t,1,[])),1,1,[])); 
+            clear b a;
+        case 'space-highpass'
+            if length(varargin{2*aa})==1
+                n = 1;
+            else
+                n = varargin{2*aa}(2);
+            end
+            gain = sqrt(1./(1+(Frequency.rho/varargin{2*aa}(1)).^(-2*n)));
+        case 'space-lowpass'
+            if length(varargin{2*aa})==1
+                n = 1;
+            else
+                n = varargin{2*aa}(2);
+            end
+            gain = sqrt(1./(1+(Frequency.rho/varargin{2*aa}(1)).^(+2*n)));
+        case 'velocity-highpass'
+            if length(varargin{2*aa})==3
+                n = 1;
+            else
+                n = varargin{2*aa}(4);
+            end
+            dist = abs(varargin{2*aa}(1)*Frequency.x+varargin{2*aa}(2)*Frequency.y-Frequency.t)/sqrt((varargin{2*aa}(1))^2+(varargin{2*aa}(2))^2+1);
+            gain = sqrt(1./(1+(dist/varargin{2*aa}(3)).^(-2*n)));
+        case 'velocity-lowpass'
+            if length(varargin{2*aa})==3
+                n = 1;
+            else
+                n = varargin{2*aa}(4);
+            end
+            dist = abs(varargin{2*aa}(1)*Frequency.x+varargin{2*aa}(2)*Frequency.y-Frequency.t)/sqrt((varargin{2*aa}(1))^2+(varargin{2*aa}(2))^2+1);
+            gain = sqrt(1./(1+(dist/varargin{2*aa}(3)).^(+2*n)));
+        case 'x-space'
+            switch length(varargin{2*aa})==1
+                case 1
+                    n = 1;
+                    threeDB = 0;
+                case 2
+                    n = varargin{2*aa}(2);
+                    threeDB = 0;
+                case 3
+                    n = varargin{2*aa}(2);
+                    threeDB = varargin{2*aa}(3);
+            end
+            if isempty(n)
+                n = 1;
+            end
+            if threeDB
+                gain = 1./(1+exp(-n*(Frequency.x-varargin{2*aa}(1)-log(sqrt(2)-1)/n)));
+            else
+                gain = 1./(1+exp(-n*(Frequency.x-varargin{2*aa}(1))));
+            end
+        case 'y-space'
+            switch length(varargin{2*aa})==1
+                case 1
+                    n = 1;
+                    threeDB = 0;
+                case 2
+                    n = varargin{2*aa}(2);
+                    threeDB = 0;
+                case 3
+                    n = varargin{2*aa}(2);
+                    threeDB = varargin{2*aa}(3);
+            end
+            if isempty(n)
+                n = 1;
+            end
+            if threeDB
+                gain = 1./(1+exp(-n*(Frequency.y-varargin{2*aa}(1)-log(sqrt(2)-1)/n)));
+            else
+                gain = 1./(1+exp(-n*(Frequency.y-varargin{2*aa}(1))));
+            end
+        case 'forward-moving'
+            kx = BlockSize(2);
+            kt = BlockSize(3);
+            if ~isempty(varargin{2*aa})
+                kx = kx*varargin{2*aa}(1);
+                kt = kt*varargin{2*aa}(2);
+            end
+            gain = (2./(1+exp(-kx*Frequency.x))-1).*(2./(1+exp(-kt*Frequency.t))-1)/2+0.5;
+        case 'backward-moving'
+            kx = BlockSize(2);
+            kt = BlockSize(3);
+            if ~isempty(varargin{2*aa})
+                kx = kx*varargin{2*aa}(1);
+                kt = kt*varargin{2*aa}(2);
+            end
+            gain = (2./(1+exp(kx*Frequency.x))-1).*(2./(1+exp(-kt*Frequency.t))-1)/2+0.5;
+        case 'forward-moving-ideal'
+            gain = sign(Frequency.x.*Frequency.t)/2+0.5;
+        case 'backward-moving-ideal'
+            gain = -sign(Frequency.x.*Frequency.t)/2+0.5;
+        case {'unity' 'no-filter'}
+            gain = 1;
+        otherwise
+            warning('Invalid Filter Type.  Setting Gain to Unity.');
+            gain = 1;
+    end
+%     disp(max(gain,[],'all'));
+%     disp(min(gain,[],'all'));
+    wf = wf.*gain;
+    clear gain n;
+end
+% 3D-iFFT
+wf = real(ifftn(ifftshift(wf))).*mask;
+end
+```
