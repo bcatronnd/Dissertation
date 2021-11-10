@@ -6,6 +6,7 @@ testPoint = {'20210417002' '20210417003' '20210417004' '20210417005' '2021041700
 load([directory '20210417009' '_RL.mat']);
 MicHeight = str2double(extract(RunLog.notes{3},digitsPattern))/1e3;
 BeamHeight = str2double(extract(RunLog.notes{4},digitsPattern))/1e3;
+micCal = 3.16/3.5;
 
 fileID = fopen('spherical_measurement.txt','w');
 fprintf(fileID,'\\begin{tabular}{c c c c c c c}\n');
@@ -22,7 +23,7 @@ for aa=1:length(testPoint)
     Lambda = RunLog.c/runStats(1);
     
     % Mic
-    [MicSxx,MicFreq] = computeSXX(1e3*data(:,2)','blocksize',2^12,'positiveonly',1,'samplerate',1/timeStamps(2),'window',@hann);
+    [MicSxx,MicFreq] = computeSXX(1e3*micCal*data(:,2)','blocksize',2^12,'positiveonly',1,'samplerate',1/timeStamps(2),'window',@hann);
     [~,MicInd] = min(abs(MicFreq-runStats(1)));
     MicMax = MicSxx(MicInd);
     prms = sqrt(MicMax*diff(MicFreq(1:2)));

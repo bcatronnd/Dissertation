@@ -170,7 +170,7 @@ The RMS pressure of this field can be represented by
 \end{equation}
 
 \subsubsection{Theoretical OPD Measurements}
-A set of optical properties where calculated for a beam passing through a spherical acoustic field as defined by a point source using the process discribed previously in Chapter \ref{chap:03_simulated_beam}.
+A set of optical properties where calculated for a beam passing through a spherical acoustic field as defined by a point source using the process described previously in Chapter \ref{chap:03_simulated_beam}.
 These calculations used an circular aperture size of 0.25-m in diameter consisting of 32x32 sub-apertures, an acoustic wavelength, $\Lambda$, of $Ap/4$ to $10Ap$, and a distance from the point source to the center of the aperture, $R$, of $5Ap$ to $25Ap$.
 The beam was integrated over $\pm5$-m from the plane of the point source with 25 phase step used to calculate mean values.
 
@@ -196,18 +196,18 @@ An approximate function fit to this data is
   \frac{\opdrms\sqrt{R/Ap}}{|A_0|} \approx \frac{p_1(\Lambda/Ap)^3+p_2(\Lambda/Ap)^2+p_3(\Lambda/Ap)+p_4}{(\Lambda/Ap)^3+q_1(\Lambda/Ap)^2+q_2(\Lambda/Ap)+q_3}
   \label{eqn:03_spherical_sample_fit}
 \end{equation}
-with coefficient values shown Table \ref{tab:03_speherical_sample_coeff}.
+with coefficient values shown Table \ref{tab:03_spherical_sample_coeff}.
 This functional fit has a $R^2$ value of 0.9991.
 \begin{table}
 \centering
 \caption{Curve fit values for Figure \ref{fig:03_spherical_sample} and Equation \ref{eqn:03_spherical_sample_fit}}
 \input{../matlab/03_aero_optics_acoustics/spherical_sample_win.txt}
-\label{tab:03_speherical_sample_coeff}
+\label{tab:03_spherical_sample_coeff}
 \end{table}
 
 
 \subsubsection{Measurement of a Spherical Acoustic Wave with an Optical Beam}
-A small benchtop experiment was used to compare the simultaious optical and microphone measurements of an acoustic field from a speaker as shown in the measurement plane in Figure \ref{fig:03_speaker_test}.
+A small bench top experiment was used to compare the simultaneous optical and microphone measurements of an acoustic field from a speaker as shown in the measurement plane in Figure \ref{fig:03_speaker_test}.
 \begin{figure}
   \centering
   \includegraphics[width=3.5in,clip,trim=100 100 100 100]{../cad/speak_test.pdf}
@@ -215,26 +215,25 @@ A small benchtop experiment was used to compare the simultaious optical and micr
   \label{fig:03_speaker_test}
 \end{figure}
 The distance from center of the beam to the speaker was 102-mm with a beam diameter of 28-mm.
-A Br\"uel \& Kj\ae r model 7016B microphone was placed directly over the speaker at a distance of 158-mm.
+An ACO model 7016B microphone \cite{ACO-Microphones} was placed directly over the speaker at a distance of 158-mm and was used with a Br\"uel \& Kj\ae r model 2670 preamplifier \cite{Bruel-Kjaer-2670}.
 The speaker in use was Peerless model XT25SC90-04 \cite{Peerless-XT25SC90-04-1} which has a fairly flat on-axis response from 1-kHz to 40kHz.
-\cite{Bruel-Kjaer-2690}
+% A Br\"uel \& Kj\ae r model 2690 \cite{Bruel-Kjaer-2690} signal conditioner was used as part of the data aquiztion system
 
 The wavefront measurements system utilized in these measurements is similar to that shown in Figure \ref{fig:02_typical_wavefront_system} except there was no primary telescope.
-The speaker was located in the center of the measurement region which was about 2-feet in length and the reimaging telescope reduced the beam diameter by a factor of two and reimaged the return mirror.
+The speaker was located in the center of the measurement region which was about 2-feet in length and the re-imaging telescope reduced the beam diameter by a factor of two and re-imaged the return mirror.
 Optical wavefronts and microphone measurements were taken at 49-kHz.
 The speaker was sinusoidally excited at three different frequencies (9, 14, and 18-kHz) at a variety of voltages.
 
-The absolute value of the pulsating field strength, $|A_0|$, was calculated two different ways.
-The power spectra of the microphone data was used to calculate the average $p_{rms}$ at the excitation frequency and the pulsating field strength using Equation \ref{eqn:03_spherical_pressure_rms}.
-The optical wavefront was bandpass filtered at the excitation frequency using a process that will be disscussed in Chapter \ref{chap:06}.
-The time averaged $\opdrms$ was used to calclate the pulsating field strength using Equation \ref{eqn:03_spherical_sample_fit}.
+The absolute value of the fluctuating pressure strength, $|A_0|$, was calculated two different ways.
+The power spectra of the microphone data was used to calculate the average $p_{rms}$ at the excitation frequency and the fluctuating pressure strength using Equation \ref{eqn:03_spherical_pressure_rms}.
+The optical wavefront was band-pass filtered at the excitation frequency using a process that will be discussed in Chapter \ref{chap:06}.
+The time averaged $\opdrms$ was used to calculate the fluctuating pressure strength using Equation \ref{eqn:03_spherical_sample_fit}.
 
-The results of these measurements of the pulsating field strength is shown in Table \ref{tab:03_speherical_measurement}.
-The differences between the two techniques for measuring the pulsating field strength were typically with 9-11\%, with one case being at 15.5\%.
+The results of these measurements of the fluctuating pressure strength is shown in Table \ref{tab:03_speherical_measurement}.
+The differences between the two techniques for measuring the fluctuating pressure strength fell into two groups.
+For the 9-kHz cases, the differences ranged from 20-26\% while the higher frequency cases the differences were between 1.1-1.5\% and in all cases the wavefront measurement reported a higher fluctuating pressure strength.
 With the exception of the highest excitation case at 9-kHz, the differences between the to techniques was fairly constant for each frequency group.
-For the 9-kHz cases, the wavefront estimated the pulsating field strength to be higher than the microphone estimated value.
-While for the 14 and 18-kHz cases the microphone estimated the value to be higher.
-Some of these differences maybe attributed to the frequency response of the microphone.
+Some of these differences maybe attributable to the frequency response of the microphone.
 \begin{table}
   \centering
   \caption{Comparison of microphone and wavefront computation of $|A_0|$}

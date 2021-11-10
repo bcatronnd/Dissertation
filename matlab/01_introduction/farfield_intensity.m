@@ -11,7 +11,7 @@ f1 = figure;
 plot(lambda*1e6,I/I(1),'k','linewidth',1.25); grid on;
 xlabel('$\lambda$ ($\mu m$)','interpreter','latex');
 ylabel('$I_0(\lambda)/I_0(1 \mu m)$','interpreter','latex');
-title('Diffraction Limited Far-Field Performance','interpreter','latex');
+% title('Diffraction Limited Far-Field Performance','interpreter','latex');
 xlim([0 10]);
 f1.Children(1).Layer = 'top';
 f1.Children(1).TickLabelInterpreter = 'latex';
