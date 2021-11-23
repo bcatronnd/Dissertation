@@ -6,6 +6,7 @@ testPoint = '20210901003';
 load([directory testPoint '_CDAQ.mat'],'scanData');
 
 BlockSize = 2^12;
+BlockSizeTF = 2^8;
 % Wavefront Dispersion and POD
 WF = WF(:,:,1:floor(size(WF,3)/BlockSize)*BlockSize);
 WF = cat(1,WF,NaN*zeros(2^nextpow2(size(WF,1))-size(WF,1),size(WF,2),size(WF,3)));
@@ -14,12 +15,13 @@ WF = cat(2,WF,NaN*zeros(size(WF,1),2^nextpow2(size(WF,2))-size(WF,2),size(WF,3))
 [Phi,a,M,N] = computePOD(WF,3);
 aSign = sign(a);
 % DAQ PSD
-sxx = computeSXX(scanData,'blocksize',BlockSize,'dim',1,'window',@hann);
-sxx = sxx./(1+(squeeze(freq{3})/2e3).^(2*5))./(1+(squeeze(freq{3})/1e2).^(-2*5));
+tf = estimateTF(computeSXX(scanData,'blocksize',BlockSizeTF,'dim',1,'window',@hann),squeeze(computeSXX(WF,'blocksize',BlockSizeTF,'dim',3,'window',@hann,'average',[1 2])),BlockSize);
+sxx = tf.*computeSXX(scanData,'blocksize',BlockSize,'dim',1,'window',@hann);
+% sxx = sxx./(1+(squeeze(freq{3})/2e3).^(2*5))./(1+(squeeze(freq{3})/1e2).^(-2*5));
 
 %%
 % LSE
-channels = 1:16;
+channels = 7:16;
 fRange = [1e2 1e4];
 fPoints = ones(BlockSize,1);
 fPoints(squeeze(abs(freq{3}))<fRange(1)) = 0;
