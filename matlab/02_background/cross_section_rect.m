@@ -30,4 +30,7 @@ for aa=1:length(m)
 end
 f1.Units = 'inches';
 f1.Position = [1 1 5 4];
-saveas(f1,'cross_section_rect.eps','epsc')
+% saveas(f1,'cross_section_rect.eps','epsc')
+
+f1.Position = [1 1 4 4];
+saveas(f1,'cross_section_rect.png','png')
