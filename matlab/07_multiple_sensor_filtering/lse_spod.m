@@ -36,14 +36,14 @@ Window.y.w = reshape(hann(BlockLength),1,BlockLength);
 Window.y.cw = 1/sqrt(sum(Window.y.w.^2,'all')/numel(Window.y.w));
 
 % Wavefront PSD In Time
-wf = wf(:,:,1:BlockIndex(2,end));
+wf = reshape(wf(:,:,1:BlockIndex(2,end)),prod(BlockSize(1:2)),BlockIndex(2,end));
 wf(isnan(wf)) = 0;
-WF = complex(zeros([BlockSize,BlockNumber]));
+WF = complex(zeros([LensletNumber,BlockLength,BlockNumber]));
 for aa=1:BlockNumber
-    WF(:,:,:,aa) = fftshift(fftn(Window.wf.w.*wf(:,:,BlockIndex(1,aa):BlockIndex(2,aa))));
+    WF(:,:,aa) = fftshift(fft(permute(Window.wf.t,[1 3 2]).*wf(:,BlockIndex(1,aa):BlockIndex(2,aa)),BlockLength,2),2);
 end
-WF = reshape(WF,prod(BlockSize(1:2)),BlockSize(3),BlockNumber);
 WF = permute(WF,[1 3 2]);
+% WF = WF(DataLocation,:,:);
 clear aa wf;
 
 % Sensor PSD
@@ -53,36 +53,36 @@ for aa=1:BlockNumber
     Y(:,:,aa) = fftshift(fft(Window.y.w.*scanData(:,BlockIndex(1,aa):BlockIndex(2,aa)),BlockLength,2),2);
 end
 Y = permute(Y,[1 3 2]);
-% Y = reshape(permute(Y,[1 3 2]),length(SensorSelection)*BlockNumber,BlockLength);
-% [filter.b,filter.a] = butter(SensorFilterLP(2),SensorFilterLP(1),'low','s');
-% gain = reshape(freqs(filter.b,filter.a,reshape(Frequency.t,1,[])),1,[]);
-% Y = Y.*gain;
-clear aa scanData filter gain;
+clear aa scanData;
 
 
-%%
-close all;
-wf = complex(zeros(size(WF)));
+WFao = complex(zeros(length(DataLocation),BlockNumber,BlockLength));
 for aa=1:BlockLength
     if abs(Frequency.t(aa))>fMax
-        wf(:,:,aa) = WF(:,:,aa);
+        WFao(DataLocation,:,aa) = WF(DataLocation,:,aa);
     else
-        Q = WF(:,:,aa);
+        Q = WF(DataLocation,:,aa);
         y = Y(:,:,aa);
         [PSI,LAMBDA] = eig(Q'*Q,'vector');
         PHI = Q*PSI;
         L = (PSI*y')/(y*y');
         PSIlse = L*y;
         PSIao = PSI-PSIlse;
-        wf(:,:,aa) = (PSIao*PHI')';
+        WFao(DataLocation,:,aa) = (PSIao*PHI')';
     end
 end
+clear aa PSI PHI PSIao PSIlse Q y;
 
-WF1 = reshape(squeeze(mean(abs(Window.wf.cw*WF).^2,2)/prod(BlockSize)/prod(RunLog.samplerate)),BlockSize);
-wf1 = reshape(squeeze(mean(abs(Window.wf.cw*wf).^2,2)/prod(BlockSize)/prod(RunLog.samplerate)),BlockSize);
+% Multi-Dimensional Power Spectra - Spatial
+WF = reshape(ipermute(WF,[1 3 2]),[BlockSize BlockNumber]);
+WF = fftshift(fftshift(fft(fft(Window.wf.s.*WF,BlockSize(1),1),BlockSize(2),2),1),2);
+WF = mean(abs(Window.wf.cw*WF).^2/prod(BlockSize)/prod(RunLog.samplerate),4);
+WFao = reshape(ipermute(WFao,[1 3 2]),[BlockSize BlockNumber]);
+WFao = fftshift(fftshift(fft(fft(Window.wf.s.*WFao,BlockSize(1),1),BlockSize(2),2),1),2);
+WFao = mean(abs(Window.wf.cw*WFao).^2/prod(BlockSize)/prod(RunLog.samplerate),4);
 
-disp(rms(sqrt(WF1*prod(RunLog.samplerate)),'all'));
-disp(rms(sqrt(wf1*prod(RunLog.samplerate)),'all'));
+disp(sqrt(mean(WF,'all')*prod(RunLog.samplerate)));
+disp(sqrt(mean(WFao,'all')*prod(RunLog.samplerate)));
 
 %%
 close all;
@@ -91,8 +91,8 @@ scolor = parula(2);
 
 f1 = figure(1);
 subplot(1,2,1);
-patch(isocaps(Frequency.x,Frequency.y(end/2+1:end),Frequency.t(end/2+1:end),log10(WF1(end/2+1:end,:,end/2+1:end)),log_range,'all'),'facecolor','interp','edgecolor','none','facelighting','none');
-patch(isosurface(Frequency.x,Frequency.y(end/2+1:end),Frequency.t(end/2+1:end),log10(WF1(end/2+1:end,:,end/2+1:end)),log_range(1)),'edgecolor','none','facecolor',scolor(1,:),'facelighting','gouraud');%,'specularstrength',0.375);
+patch(isocaps(Frequency.x,Frequency.y(end/2+1:end),Frequency.t(end/2+1:end),log10(WF(end/2+1:end,:,end/2+1:end)),log_range,'all'),'facecolor','interp','edgecolor','none','facelighting','none');
+patch(isosurface(Frequency.x,Frequency.y(end/2+1:end),Frequency.t(end/2+1:end),log10(WF(end/2+1:end,:,end/2+1:end)),log_range(1)),'edgecolor','none','facecolor',scolor(1,:),'facelighting','gouraud');%,'specularstrength',0.375);
 grid on;
 daspect([1 1 50]);
 xlim(RunLog.samplerate(1)/2*[-1 1]);
@@ -108,8 +108,8 @@ camlight;
 f1.Children(1).TickLabelInterpreter = 'latex';
 
 subplot(1,2,2);
-patch(isocaps(Frequency.x,Frequency.y(end/2+1:end),Frequency.t(end/2+1:end),log10(wf1(end/2+1:end,:,end/2+1:end)),log_range,'all'),'facecolor','interp','edgecolor','none','facelighting','none');
-patch(isosurface(Frequency.x,Frequency.y(end/2+1:end),Frequency.t(end/2+1:end),log10(wf1(end/2+1:end,:,end/2+1:end)),log_range(1)),'edgecolor','none','facecolor',scolor(1,:),'facelighting','gouraud');%,'specularstrength',0.375);
+patch(isocaps(Frequency.x,Frequency.y(end/2+1:end),Frequency.t(end/2+1:end),log10(WFao(end/2+1:end,:,end/2+1:end)),log_range,'all'),'facecolor','interp','edgecolor','none','facelighting','none');
+patch(isosurface(Frequency.x,Frequency.y(end/2+1:end),Frequency.t(end/2+1:end),log10(WFao(end/2+1:end,:,end/2+1:end)),log_range(1)),'edgecolor','none','facecolor',scolor(1,:),'facelighting','gouraud');%,'specularstrength',0.375);
 grid on;
 daspect([1 1 50]);
 xlim(RunLog.samplerate(1)/2*[-1 1]);
@@ -128,7 +128,7 @@ f1.Children(1).TickLabelInterpreter = 'latex';
 f1.Units = 'inches';
 f1.Position = [1 1 5.5 3.5];
 
-saveas(f1,'lse_mspod.eps','epsc');
+saveas(f1,'lse_spod.eps','epsc');
 
 
 
