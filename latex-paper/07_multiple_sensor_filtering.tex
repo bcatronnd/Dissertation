@@ -5,9 +5,7 @@
 \label{chap:07_multiple_filter}
 \textcolor{red}{
   \begin{itemize}
-    \item Add some plot of the accels and mics
     \item Maybe combine Figures \ref{fig:07_lse_spod} and \ref{fig:07_lse_mspod}
-    \item Plot the rms of the opd drop as a function of frequency
   \end{itemize}
 }
 
@@ -171,6 +169,18 @@ There were six accelerometers attached to the test-section windows, with three b
 The locations of the three accelerometers on the model side can be seen in Figure \ref{fig:07_sensor placement}, the three accelerometers on the other window used the opposite pattern (two high and one low).
 One accelerometer was placed on the primary lens (also shown) and one was placed in the center of the optics bench.
 The last two accelerometers were located on the return mirror and oriented in a way to measure the tip and tilt of the return beam.
+
+The power-spectra of all of the sensors at the three Mach numbers are shown in Figure \ref{fig:07_sensor_spectra}.
+\begin{figure}
+  \centering
+  \includegraphics{../matlab/07_multiple_sensor_filtering/sensor_spectra.eps}
+  \caption{Power-spectra of the additional sensor measurements at the three Mach numbers tested. The x-axis is in Strouhal number per characteristic length ($St/l$).}
+  \label{fig:07_sensor_spectra}
+\end{figure}
+These plots are presented as Strouhal number per characteristic length with the different groups of sensors shown together.
+The blade-passing frequency for these data sets is at a $St/l$ of approximately 3-$m^{-1}$ with a clear and consistant narrow-band signal at for but the $M=0.3$ run which has a slight increase in signal for some of the sensors.
+For the $M=0.5$ case there is an additional strong narrow-band signal at 20-$m^{-1}$ for all sensors and a slightly broader signal at 38-$m^{-1}$ that is only present in the test-section mounted sensors that may be due to extra fan vibration which is currently limiting the top speed of the wind-tunnel.
+The test-section mounted microphones are picking up boundary layer accoustic noise above $St/l$ of approximately 20-$m^{-1}$.
 
 Two variants of this filtering technique were tried.
 The first was a standard LSE-SPOD technique in which the spectral POD was performed on the data set that was Fourier transformed in time only.
