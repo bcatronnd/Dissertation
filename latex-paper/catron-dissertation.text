@@ -12,45 +12,37 @@ To my wife Karen & our son Arthur
 Introduction {#chap:01_intro}
 ============
 
-Directed-energy systems have a variety of uses but typically fall into
-one of two categories: communications and weapons. The primary benefits
-of directed-energy communications is the ability to have secure
-point-to-point data transfer that is high unlikely to intercept or be
-interfered with [@crs-2021-RwNjGeZD]. Directed-energy weapons are likely
-to have a lower cost per shot and a deeper magazine when compared to
-traditional munitions [@crs-2021-hyCUE868]. As ground based
-directed-energy systems are slowly rolled out, most prominently aboard
-the USS Ponce [@crs-2021-Atxb7GDv], there is a desire to field a system
-aboard an aircraft.
-
 There have been two major attempts to field a directed-energy system
 aboard an aircraft to date [@Jumper-2013-8KtN3pue]. The first was the
 Airborne Laser Laboratory (ALL) which took place in the late 1970's and
-early 1980's which used a CO$_2$ laser at 10.6-$\mu$m. The second was
-the Airborne Laser (ABL) program which operated in the 2000's and used a
-COIL laser at 1.315-$\mu$m. Airborne optical systems have to deal with a
-phenomenon know as "aero-optics," which is optical distortions caused by
-various aero-dynamic flow features. These optical distortions were first
-noticed due to image degradation in wind tunnel measurements in the
-1950's [@Stine-1956-UaRzVZCe] as well as in photo-reconnaissance
-missions in the 1960's [@Kyrazis-2013-vwKeEBym].
+early 1980's which used a CO$_2$ laser with a wavelength of 10.6-$\mu$m.
+The second was the Airborne Laser (ABL) program which operated in the
+2000's and used a COIL laser at 1.315-$\mu$m. Airborne optical systems
+have to deal with a phenomenon know as "aero-optics," which is optical
+distortions caused by compressible aero-dynamic flow features that pass
+through the outgoing beam. These optical distortions were first noticed
+due to image degradation in wind tunnel measurements in the 1950's
+[@Stine-1956-UaRzVZCe] as well as in photo-reconnaissance missions in
+the 1960's [@Kyrazis-2013-vwKeEBym].
 
-The intensity of that makes through an optical disturbance to a target,
-$I$, divided by the diffraction-limited performance, $I_0$, is known as
-the Strehl ratio [@Mahajan-1982-kkXM4eaB], $\sr$,
+The peak intensity of a beam passing through an optical disturbance to a
+target, $I$, divided by the diffraction-limited performance, $I_0$, is
+known as the Strehl ratio [@Mahajan-1982-kkXM4eaB], $\sr$,
 $$\sr = \frac{I}{I_0} \textrm{.}
   \label{eqn:01_strehl_ratio_definition}$$ The diffraction-limited
 performance is the intensity that would make it to the same target if
 not for a disturbance. The Airborne Laser Laboratory had an estimated
-Strehl ratio of 95%[@Jumper-2013-8KtN3pue] meaning the "aero-optics
+Strehl ratio of 95%[@Jumper-2013-8KtN3pue] so that the "aero-optics
 problem" effectively did not apply. After the Airborne Laser Laboratory
 program there was a desire to move toward shorter wavelengths in order
-to take advantage of improved diffraction-limited performance
-[@Jumper-2001-6QDh7zDy],
+to take advantage of improved diffraction-limited performance, leading
+to a smaller-diameter focused spot on traget with a higher irradiance
+$I_0$: [@Jumper-2001-6QDh7zDy],
 $$\frac{I_0}{P} = \frac{1}{\pi}\left(\frac{Ap}{\lambda z}\right)^2 \textrm{,}
   \label{eqn:01_farfield_intensity}$$ where $P$ is the laser output
 power, $Ap$ is the aperture size, and $z$ is the propagation distance.
-This improved diffraction-limited performance is shown in Figure
+The improvement in diffraction-limited performance as the laser
+wavelength is decreased is shown in Figure
 [\[fig:01\_farfield\_intensity\]](#fig:01_farfield_intensity){reference-type="ref"
 reference="fig:01_farfield_intensity"}.
 
@@ -66,15 +58,16 @@ wavelength the diffraction-limited performance can be increased 100
 times.
 
 Aero-optical issues start to become apparent as the wavelength is
-decreased as is evident by the Maréchal approximation
+decreased as is evident from the Maréchal approximation
 [@Mahajan-1983-hg7ahvJM] which relates the Strehl ratio to wavelength,
 $$\sr \approx \exp\left\{-\left[\frac{2\pi \opdrms}{\lambda}\right]^2\right\} \textrm{,}
   \label{eqn:01_strehl_ratio}$$ where $\opdrms$ is the spatial
 root-mean-square of the optical path difference over the aperture and is
-a way to quantify the optical disturbance that will be discussed in
-Chapter [2](#chap:02_lit_review){reference-type="ref"
-reference="chap:02_lit_review"}. If the ALL system's laser was swapped
-with another laser of a lower wavelength, the Strehl ratio would
+a way to quantify the optical disturbance as will be discussed further
+in Chapter [2](#chap:02_lit_review){reference-type="ref"
+reference="chap:02_lit_review"}. As stated above, the ALL had a Strehl
+ratio of 95%; however, if the ALL system's laser was swapped with
+another laser of a lower wavelength, the Strehl ratio would
 significantly decrease as shown by Figure
 [\[fig:01\_strehl\_ratio\]](#fig:01_strehl_ratio){reference-type="ref"
 reference="fig:01_strehl_ratio"}.
@@ -87,32 +80,51 @@ laser.](../matlab/01_introduction/strehl_ratio.eps)
 [\[fig:01\_strehl\_ratio\]]{#fig:01_strehl_ratio
 label="fig:01_strehl_ratio"}
 
-While the hypothetical case of going from 10 to 1-$\mu$m resulted in a
-100-fold increase in diffraction-limited performance, the actual
-on-target intensity that this hypothetical system obtains would be
-essentially zero. This means that the aero-optical problem can no longer
-be ignored and was recognized as one of the main developmental risks of
-the ABL program [@DOTE-1999-HnkadUEw].
+While going from 10 to 1-$\mu$m hypothetically resulted in a 100-fold
+increase in diffraction-limited performance, the actual on-target
+intensity that this hypothetical system obtains would be essentially
+zero due to the much larger effect that aero-optical aberrations have on
+the outgoing beam as the wavelength is reduced. This means that the
+aero-optical problem can no longer be ignored and was recognized as one
+of the main developmental risks of the ABL program
+[@DOTE-1999-HnkadUEw].
 
 As the next generation of airborne directed-energy systems are developed
 some amount of ground testing of those systems will need to occur. In
 order to understand the aero-optical environment that these systems will
-experience in the air wind tunnel tests will need to be employed. These
-tests are far cheaper to perform and allow for quicker iteration of
-design parameters. Wind tunnel tests will however include some
-additional optical contamination including but not limited to the
-boundary layer present on the wall and the acoustic environment
-generated by the wind tunnel fan [@Gordeyev-2014-jcJndkHM]. Assuming
-that the optical disturbances system model are statistically independent
-from the optical disturbances from the testing environment, we can
-estimate the total optical disturbance from
+experience in the air, wind tunnel tests will need to be employed. These
+tests are cheaper to perform than, for example, flight testing, and
+allow for quicker iteration of design parameters. However, as will be
+described in further detail in Chapter
+[2](#chap:02_lit_review){reference-type="ref"
+reference="chap:02_lit_review"}, wind-tunnel measurements of
+aero-optical effects typically require passing a test beam into and
+throught the test-section, so that the test beam is susceptible to
+acquiring additional optical contamination including but not limited to
+the boundary layer present on the wall and the acoustic environment
+generated by the wind tunnel fan [@Gordeyev-2014-jcJndkHM]. Note that it
+is common in signal-processing terminology to use the word "noise" to
+describe unwanted interference that appears in addition to the "signal"
+that is the objective of the measurement; however, in this dissertation,
+the word "contamination" is used to describe any optical noise sources
+that are unrelated to the aero-optical signal, in order to avoid
+confusion with use of the word "noise" to describe acoustic noise which,
+as will be shown, is also a source of optical contamination. Assuming
+that the optical disturbances from aero-optical effects are
+statistically independent from the contaminating optical disturbances
+from the testing environment, we can estimate the total optical
+disturbance as
 $$\opdrms_{TOTAL}^2 = \opdrms_{MODEL}^2+\opdrms_{ENVIRONMENT}^2 \textrm{.}
   \label{eqn:01_combined_opd}$$
 
-This combination of optical disturbances is shown in Figure
+As an example of the effect that optical contamination may have on
+system design, Figure
 [\[fig:01\_design\_iteration\]](#fig:01_design_iteration){reference-type="ref"
-reference="fig:01_design_iteration"} along with a hypothetical iterative
-design process.
+reference="fig:01_design_iteration"} illustrates a hypothetical
+iterative design process, where the design objective is to obtain a
+design that meets a required level of performance shown in red, in the
+presence of a level of environmental optical contamination shown in
+blue.
 
 ![Hypothetical iterative design process of an airborne directed-energy
 system. The required performance level is shown by the red line and the
@@ -122,40 +134,48 @@ line.](../matlab/01_introduction/design_iteration.eps)
 [\[fig:01\_design\_iteration\]]{#fig:01_design_iteration
 label="fig:01_design_iteration"}
 
-This process seeks to obtain a design that meets a required level of
-performance shown in red. If only the measured data is used to assess
-the system's performance three additional iterative changes are needed
-to achieve a usable design which can add significantly to the
-development time and costs. If the environmental contamination is
-greater than the design requirement, the measured performance will never
-reach the required performance criteria. When the true performance of a
-system is significantly higher than the environmental contamination, the
-measured performance is not significantly greater than the true
-performance. The measured performance becomes significantly greater that
-the true performance when the true performance is less than the
-environmental contamination.
+The design process was simulated by an initial aero-optical $\opdrms$
+shown on the left of the plot, and the improvement in system performance
+achieved with each design iteration was simulated as a nearly linear
+reduction in $\opdrms$ combined with 15% random noise. If only the
+measured data, that is, including the effect of environmental
+contamination using Equation
+[\[eqn:01\_combined\_opd\]](#eqn:01_combined_opd){reference-type="ref"
+reference="eqn:01_combined_opd"}, is used to assess the system's
+performance then three additional design iterations are needed to
+achieve a usable design, which can add significantly to the development
+time and costs. If the environmental contamination is greater than the
+design requirement, the measured performance will never reach the
+required performance criteria. However, if the environmental
+contamination can be estimated, mitigated and/or removed, then the
+measured performance is a more accurate evaluation of the true
+aero-optical performance, and design convergence can be achieved more
+quickly and with more accurate results.
 
-This dissertation will primary examine the environmental contamination
-due to acoustic noise within the wind tunnel. In Chapter
+This dissertation will examine the environmental contamination of
+aero-optical measurements in wind tunnels, with a particular focus on
+the contamination due to acoustic noise within the wind tunnel. A review
+of the available literature and important concepts in given in Chapter
+[2](#chap:02_lit_review){reference-type="ref"
+reference="chap:02_lit_review"}. In Chapter
 [3](#chap:03_optical_acoustics){reference-type="ref"
-reference="chap:03_optical_acoustics"} it will look at the optical
-disturbances caused by acoustic waves from some simple plane and
-spherical waves to a process for estimating the acoustic environment
-within the test section of a wind tunnel. The strength of an spherical
-acoustic wave will be assessed with both microphone and optical
-measurements. Multi-dimensional spectral techniques will be used to
-analyze optical wavefronts in Chapter
-[4](#chap:04_dispersion){reference-type="ref"
-reference="chap:04_dispersion"} and filter optical wavefronts in Chapter
-[6](#chap:06_single_filter){reference-type="ref"
+reference="chap:03_optical_acoustics"}, the optical disturbances caused
+by acoustic waves from simple plane and spherical waves are presented,
+leading to a process for estimating the acoustical environment within
+the test section of a wind tunnel. The strength of an spherical acoustic
+wave will be assessed with both microphone and optical measurements.
+Multi-dimensional spectral techniques will be used to analyze optical
+wavefronts in Chapter [4](#chap:04_dispersion){reference-type="ref"
+reference="chap:04_dispersion"} and to filter optical wavefronts in
+Chapter [6](#chap:06_single_filter){reference-type="ref"
 reference="chap:06_single_filter"}. These filtering techniques will
 contain some optical contamination particularly in regions where the
 various signal components interfere with one another. In order to
 further reduce the optical contamination, Chapter
 [7](#chap:07_multiple_filter){reference-type="ref"
 reference="chap:07_multiple_filter"} will utilize additional sensor
-information from both microphones and accelerators to remove some of the
-overlapping contamination to obtain a better picture of the actual
+information from both microphones and accelerometers to remove some of
+the overlapping contamination to obtain a better picture of the actual
 optical performance of an airborne directed-energy system from ground
 test measurements.
 
@@ -913,8 +933,8 @@ reference="eqn:03_spherical_sample_fit"}.
 
 The results of these measurements of the fluctuating pressure strength
 is shown in Table
-[\[tab:03\_speherical\_measurement\]](#tab:03_speherical_measurement){reference-type="ref"
-reference="tab:03_speherical_measurement"}. The differences between the
+[\[tab:03\_spherical\_measurement\]](#tab:03_spherical_measurement){reference-type="ref"
+reference="tab:03_spherical_measurement"}. The differences between the
 two techniques for measuring the fluctuating pressure strength fell into
 two groups. For the 9-kHz cases, the differences ranged from 20-26%
 while the higher frequency cases the differences were between 1.1-1.5%
@@ -938,8 +958,8 @@ the frequency response of the microphone.
 
   : Comparison of microphone and wavefront computation of $|A_0|$
 
-[\[tab:03\_speherical\_measurement\]]{#tab:03_speherical_measurement
-label="tab:03_speherical_measurement"}
+[\[tab:03\_spherical\_measurement\]]{#tab:03_spherical_measurement
+label="tab:03_spherical_measurement"}
 
 Measured and simulated wavefronts for the highest excitation cases at
 each frequency are shown in Figure
@@ -955,7 +975,7 @@ ones.](../matlab/03_aero_optics_acoustics/spherical_plot_simulated.eps "fig:")
 label="fig:03_spherical_plot"}
 
 The 9-kHz case shows some anomalies on the measured wavefront on the
-right side, diviating from spherical wave significantly likely
+right side, deviating from spherical wave significantly likely
 contributing the significantly higher estimated pulsating field strength
 value when compared to the microphone estimate. The 14 and 18-kHz cases
 show some remarkable agreement between the measured and simulated
@@ -2061,6 +2081,318 @@ the speed in both x and y-directions of an optical disturbance.
 
 Multiple Sensor Filtering Techniques {#chap:07_multiple_filter}
 ====================================
+
+::: {style="color: red"}
+-   Maybe combine Figures
+    [\[fig:07\_lse\_spod\]](#fig:07_lse_spod){reference-type="ref"
+    reference="fig:07_lse_spod"} and
+    [\[fig:07\_lse\_mspod\]](#fig:07_lse_mspod){reference-type="ref"
+    reference="fig:07_lse_mspod"}
+:::
+
+The previous chapter investigated filtering optical wavefront corruption
+by applying a variety of filters to the wavefront in the
+multi-dimensional spectral domain. These techniques involve only data
+from the optical wavefront itself and user knowledge and experience to
+obtain filtered data. When additional data streams are available, such
+as from microphones or accelerators, a targeted filter mechanisms become
+available.
+
+A previous study [@DeLucca-2014-RAJvGdv7] focused on using the
+combination of linear stochastic estimation (LSE) and spectral proper
+orthogonal decomposition (SPOD) to remove vibration related
+contamination from aero-optical wind-tunnel measurements. This process
+along with optical tip and tilt removal showed approximately an 85%
+reduction in the measured $\opdrms$ by combining accelerator
+measurements with optical wavefront measurements.
+
+Optical Tip and Tilt
+--------------------
+
+Zernike polynomials are traditionally used for describing optical
+aberrations of a optical system [@Born-1965-HHGYgjdH]. These polynomials
+are defined on the unit circle and form a set of orthogonal functions,
+$$Z_n^m(\rho,\theta) = R_n^m(\rho)\cos(m\theta)
+  \label{eqn:07_zernike}$$ where $R_n^m(\rho)$ is the radial basis
+function and $\cos(m\theta)$ is the angular basis function. For values
+of $-m$ the angular basis function becomes $\sin(m\theta)$. The radial
+basis function are developed from Jacobi polynomials but for purposes in
+this study, only a few simple ones will be used. An optical wavefront
+can be approximated by a summation of Zernike polynomials multiplied by
+their corresponding coefficients $$\wf \approx \sum Z_ja_j \textrm{.}
+  \label{eqn:07_zernike_coeff}$$
+
+The Noll naming scheme is an method of organizing the Zernike
+polynomials into a single notation of $Z_j$, along with normalizing each
+polynomial to have a spatial RMS equal to one [@Noll-1976-HHKzd88f]. The
+first three of these using the Noll naming scheme are piston, tip, and
+tilt. Piston is simply the average $\opd$ value of the single wavefront
+frame $$Z_1 = 1 \textrm{.}
+  \label{eqn:07_zernike_1}$$ Tip and tilt are the best planar fit to the
+$\opd$ along the x-axis and y-axis respectively where tip is
+$$Z_2 = 2\rho\cos\theta \textrm{,}
+  \label{eqn:07_zernike_2}$$ and tilt is
+$$Z_3 = 2\rho\sin\theta \textrm{.}
+  \label{eqn:07_zernike_3}$$ Once the coefficients for these modes are
+solved for they can be filtered out $$WF^F = WF-\sum Z_ja_j \textrm{.}$$
+
+LSE-SPOD
+--------
+
+The LSE-SPOD technique starts with performing SPOD on the primary data
+set and then using the Fourier transforms of the additional sensor data
+to perform a filtering operation. The spectral proper orthogonal
+decomposition technique is described in detail by Schmidt and Colonius
+[@Schmidt-2020-m2emACkX]. A schematic of the SPOD algorithm is shown in
+Figure
+[\[fig:07\_spod\_algorithm\]](#fig:07_spod_algorithm){reference-type="ref"
+reference="fig:07_spod_algorithm"}.
+
+![Schematic of the SPOD algorithm (taken from [@Schmidt-2020-m2emACkX]).
+The numbers in parentheses denote the equations
+used.](../other-sources/schmidt_2020_figure_01.jpeg "fig:") (-20,235)
+(-230,210) (-20,102) (-231,69)
+
+[\[fig:07\_spod\_algorithm\]]{#fig:07_spod_algorithm
+label="fig:07_spod_algorithm"}
+
+The algorithm begins by separating the original data set, $Q$, into a
+number of smaller blocks, $$Q = \left[
+  \begin{matrix}
+    \mid & \mid & & \mid \\
+    q^{(1)} & q^{(2)} & \cdots & q^{(N)} \\
+    \mid & \mid & & \mid
+  \end{matrix}
+  \right]\textrm{,}\quad Q\in\mathbb{C}^{M\times N}
+  \label{eqn:07_data_block}$$ where $M$ is the total number of degrees
+of freedom (number of spatial points times the block length in time) and
+$N$ is the number of blocks. Each block is then Fourier Transformed in
+the temporal dimension or through all dimensions. Once in the frequency
+domain the data blocks are then reorganized by creating new blocks of
+identical temporal-frequencies, $$\hat{Q} = \left[
+  \begin{matrix}
+    \mid & \mid & & \mid \\
+    \hat{q}^{(1)} & \hat{q}^{(2)} & \cdots & \hat{q}^{(N)} \\
+    \mid & \mid & & \mid
+  \end{matrix}
+  \right]\textrm{,}\quad \hat{Q}\in\mathbb{C}^{M\times N}
+  \label{eqn:07_frequency_block}$$ where $M$ is now the number of
+spatial points times the number of blocks and $N$ is block length in
+time. Proper orthogonal decomposition is then performed separately on
+each temporal-frequency block via either traditional POD
+$$\hat{C} = \frac{1}{N-1}\hat{Q}\hat{Q}^H \textrm{,}
+  \label{eqn:07_pod_01}$$
+$$\hat{C}W\hat{\Phi}=\hat{\Phi}\hat{\Lambda} \textrm{,}
+  \label{eqn:07_pod_02}$$ or the method of snapshots,
+$$\hat{Q}^HW\hat{Q}\hat{\Psi}=\hat{\Psi}\hat{\Lambda} \textrm{,}
+  \label{eqn:07_pod_03}$$ $$\hat{\Phi}=\hat{Q}\hat{\Psi} \textrm{,}
+  \label{eqn:07_pod_04}$$ where $H$ denotes the Hermitian transpose, $W$
+is a weighting matrix, $\Phi$ is the set of deterministic spatial
+functions, $\Lambda$ is the eigen-values, and $\Psi$ is the coefficient
+matrix.
+
+The linear stochastic estimation portion of the technique is described
+by Adrian [@Adrian-1975-VenaZyuv]. This process uses a linear sum,
+$L_{ij}$, of additional measurements, $y_j$, to approximate a measured
+signal, $x_i$, $$x_i^{LSE}=L_{ij}y_j \textrm{,}
+  \label{eqn:07_lse_01}$$ where
+$$L_{ij} = \langle x_iy_k\rangle\langle y_jy_k\rangle^{-1} \textrm{.}
+  \label{eqn:07_lse_02}$$ When combined with SPOD, the estimation
+matrix, $L$, becomes
+$$L=(\hat{\Psi}\hat{y}^H)(\hat{y}\hat{y}^H)^{-1} \textrm{,}
+  \label{eqn:07_lse_spod_01}$$ which allows for an estimated version of
+the coefficient matrix to be calculated
+$$\hat{\Psi}^E=L\hat{y} \textrm{.}
+  \label{eqn:07_lse_spod_02}$$ The estimated coefficient matrix contains
+portions of the original signal that best resemble the additional sensor
+data. Assuming that the additional sensor data represents signal
+contamination of the original signal, a filtered coefficient matrix can
+be computed from the difference between the original and estimated
+coefficient matrix. $$\hat{\Psi}^F=\hat{\Psi}-\hat{\Psi}^E \textrm{.}
+  \label{eqn:07_lse_spod_03}$$ A filtered signal, $Q^F$ can be
+constructed by using the filtered coefficient matrix and the spatial
+functions, $$\hat{Q} = \hat{\Psi}^F\hat{\Phi}^H \textrm{.}$$
+
+Filtering Experimental Data
+---------------------------
+
+This filtering technique was tried with the same data sets that were
+shown in Figure
+[\[fig:04\_dispersion\_mach\]](#fig:04_dispersion_mach){reference-type="ref"
+reference="fig:04_dispersion_mach"}. Both simultaneous accelerometer and
+microphone were made along side the optical wavefront measurements. The
+locations of some of the additional sensors are shown in Figure
+[\[fig:07\_sensor placement\]](#fig:07_sensor placement){reference-type="ref"
+reference="fig:07_sensor placement"}.
+
+![The locations of some of the additional sensors used in the LSE-SPOD
+filtering.](../photos/IMG_9655.jpeg){width="90%"}
+
+[\[fig:07\_sensor placement\]]{#fig:07_sensor placement
+label="fig:07_sensor placement"}
+
+Two microphones were used for ambient measurement (a ACO 7016B
+[@ACO-Microphones] and a Brüel & Kjær 4939 [@Bruel-Kjaer-4939]), four
+microphones were used for test-section noise measurement (PCB 103B02
+[@PCB-103B02-C]), and ten accelerometers were located throughout the
+setup (PCB 352C33 [@PCB-352C33-H]). One of the ambient microphones was
+mounted to the top of the optics bench facing the test-section and can
+be seen in Figure
+[\[fig:07\_sensor placement\]](#fig:07_sensor placement){reference-type="ref"
+reference="fig:07_sensor placement"} just to the right of the primary
+lens and the other ambient microphone was hanging below the optics bench
+end towards the test-section.
+
+The test-sections microphones were in groups of two either upstream or
+downstream from the optical beam by about 20-inches, with the upstream
+microphone locations viewable in Figure
+[\[fig:07\_sensor placement\]](#fig:07_sensor placement){reference-type="ref"
+reference="fig:07_sensor placement"}. The model installed in the
+test-section represents the outside of an aircraft fuselage with a
+5-foot diameter and is angled to account for the aircraft's
+angle-of-attack for steady-level-flight at cruise. This results in the
+fuselage model being shifted approximately 2-inches higher from the
+test-section centerline upsteam at the microphone location. The duct
+microphones were placed about 2.75-inches from the model centerline.
+
+There were six accelerometers attached to the test-section windows, with
+three being on each side. The locations of the three accelerometers on
+the model side can be seen in Figure
+[\[fig:07\_sensor placement\]](#fig:07_sensor placement){reference-type="ref"
+reference="fig:07_sensor placement"}, the three accelerometers on the
+other window used the opposite pattern (two high and one low). One
+accelerometer was placed on the primary lens (also shown) and one was
+placed in the center of the optics bench. The last two accelerometers
+were located on the return mirror and oriented in a way to measure the
+tip and tilt of the return beam.
+
+The power-spectra of all of the sensors at the three Mach numbers are
+shown in Figure
+[\[fig:07\_sensor\_spectra\]](#fig:07_sensor_spectra){reference-type="ref"
+reference="fig:07_sensor_spectra"}.
+
+![Power-spectra of the additional sensor measurements at the three Mach
+numbers tested. The x-axis is in Strouhal number per characteristic
+length
+($St/l$).](../matlab/07_multiple_sensor_filtering/sensor_spectra.eps)
+
+[\[fig:07\_sensor\_spectra\]]{#fig:07_sensor_spectra
+label="fig:07_sensor_spectra"}
+
+These plots are presented as Strouhal number per characteristic length
+with the different groups of sensors shown together. The blade-passing
+frequency for these data sets is at a $St/l$ of approximately 3-$m^{-1}$
+with a clear and consistant narrow-band signal at for but the $M=0.3$
+run which has a slight increase in signal for some of the sensors. For
+the $M=0.5$ case there is an additional strong narrow-band signal at
+20-$m^{-1}$ for all sensors and a slightly broader signal at 38-$m^{-1}$
+that is only present in the test-section mounted sensors that may be due
+to extra fan vibration which is currently limiting the top speed of the
+wind-tunnel. The test-section mounted microphones are picking up
+boundary layer accoustic noise above $St/l$ of approximately
+20-$m^{-1}$.
+
+Two variants of this filtering technique were tried. The first was a
+standard LSE-SPOD technique in which the spectral POD was performed on
+the data set that was Fourier transformed in time only. The second will
+be referred to here as LSE-MSPOD, in which the spectral POD was applied
+to a data set in which the Fourier transformed was performed in all
+dimensions of space and time. Figures
+[\[fig:07\_lse\_spod\]](#fig:07_lse_spod){reference-type="ref"
+reference="fig:07_lse_spod"} and
+[\[fig:07\_lse\_mspod\]](#fig:07_lse_mspod){reference-type="ref"
+reference="fig:07_lse_mspod"} show multi-dimensional power spectrum
+plots at a temporal block length of $2^{10}$ with no overlap.
+
+![A multi-dimensional power spectrum of an unfiltered wavefront and the
+same wavefront filtered with the LSE-SPOD method using all 16 additional
+microphone or accelerometer measurements.
+](../matlab/07_multiple_sensor_filtering/lse_spod.eps)
+
+[\[fig:07\_lse\_spod\]]{#fig:07_lse_spod label="fig:07_lse_spod"}
+
+![A multi-dimensional power spectrum of an unfiltered wavefront and the
+same wavefront filtered with the LSE-MSPOD method using all 16
+additional microphone or accelerometer measurements.
+](../matlab/07_multiple_sensor_filtering/lse_mspod.eps)
+
+[\[fig:07\_lse\_mspod\]]{#fig:07_lse_mspod label="fig:07_lse_mspod"}
+
+These plots show a combination of the isosurface and horizontal moving
+plane-wave slice. Both of these methods preformed effectively identical
+to one another with a drop of 14.2% drop in overall RMS value of the
+filtered wavefront (both time and space). There is a significant drop in
+the signal at the blade-passing frequency and its harmonics, especially
+at the higher spatial frequencies. The stationary signal information is
+also significantly reduced along with the high temporal-frequency
+acoustic signal. The aero-optical boundary layer signal is also
+partially reduced, which is most noticeable at higher
+temporal-frequencies. Some of this lost signal can be restored by
+increasing the overlap of the temporal frequency blocks, but this also
+restores some of the unwanted high temporal-frequency contamination.
+
+                              M=0.3           M=0.4           M=0.5
+  ---------------------- --------------- --------------- ---------------
+         Original            0.0561          0.0521          0.0824
+     Tip/Tilt Removal     0.0120(78.6%)   0.0195(62.6%)   0.0291(64.7%)
+      Accelerometers      0.0102(81.8%)   0.0168(67.7%)   0.0251(69.5%)
+   Ambient Microphones    0.0103(81.7%)   0.0170(67.3%)   0.0254(69.1%)
+     Duct Microphones     0.0103(81.6%)   0.0170(67.3%)   0.0255(69.0%)
+   Test-Section Sensors   0.0103(81.6%)   0.0168(67.8%)   0.0252(69.4%)
+       All Sensors        0.0099(82.3%)   0.0163(68.8%)   0.0242(70.6%)
+     Velocity Filter      0.0090(83.9%)   0.0146(72.1%)   0.0217(73.7%)
+       +All Sensors       0.0075(86.7%)   0.0122(76.7%)   0.0181(78.0%)
+
+  : $\opdrms$ ($\mu m$) comparison using different combinations of
+  additional sensor information in the LSE-MSPOD filtering process.
+
+[\[tab:07\_lse\_mspod\_table\]]{#tab:07_lse_mspod_table
+label="tab:07_lse_mspod_table"}
+
+Table
+[\[tab:07\_lse\_mspod\_table\]](#tab:07_lse_mspod_table){reference-type="ref"
+reference="tab:07_lse_mspod_table"} shows the time averaged $\opdrms$ of
+three different data sets at a beam angle through the test-section of
+$90^\circ$. The data sets were at Mach numbers of 0.3, 0.4 and 0.5 that
+had an unfiltered $\opdrms$ of 0.0561, 0.0521, and 0.0824 $\mu m$
+respectively. Note that in the raw processed wavefronts for the Mach
+number of 0.3 was higher than the 0.4 case. There was a significant drop
+of between 62.6 and 78.6% in the $\opdrms$ by removing the Zernike modes
+corresponding to tip and tilt. It is at this point the Mach number of
+0.4 case has a higher $\opdrms$ than the 0.3 case as would be expected .
+
+Five different combinations of additional sensors were examined for
+filtering with the LSE-MSPOD process. The first set was all of the
+accelerometers which resulted in an additional drop in $\opdrms$ of
+between 3 and 5%. The second and third sets used either the ambient or
+duct microphones and those sets had slightly less reduction than the
+accelerometers resulted in. The forth set was the test-section sensors
+that was comprised of six window mounted accelerometers and four duct
+mounted microphones. This set of sensors preformed the same as all of
+the accelerometers, while the use of all of the additional sensors in
+the last set performed the best, with an additional reduction in
+$\opdrms$ of 4 to 6% from the tip/tilt removal cases.
+
+A velocity filter was also tried in addition to just the tip/tilt
+removal or in conjunction with tip/tilt and all the sensors being used
+in the LSE-MSPOD process. The velocity filter performed better than the
+all sensors removal case by an additional 1.5 to 3%. When all sensors
+were used with LSE-MSPOD on the velocity filtered wavefronts an
+additional 3 to 4% of the $\opdrms$ was removed from just the velocity
+filtered case or an additional 8.1% reduction for only doing tip/tilt
+removal on the Mach number of 0.3 case or 14.1 and 13.3% reduction for
+the 0.4 and 0.5 Mach number cases.
+
+Using either the temporal or multi-dimensional version of the LSE-SPOD
+filtering technique can help remove some of the narrow-band acoustic and
+vibration reduction in an optical wavefront. This additional reduction
+does seem to be somewhat tied to the number of sensors used with more
+sensors having a greater impact on the signal reduction. Since the
+vibrations and acoustics have the same primary source, the wind-tunnel
+fan, they seems to do a relatively equivalent job at filtering the
+optical contamination. Accelerometers have a benefit easier installation
+but the microphones do not necessary have to be installed inside of the
+wind-tunnel.
 
 Sample Code
 ===========
