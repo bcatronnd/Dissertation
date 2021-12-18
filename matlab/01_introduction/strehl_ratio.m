@@ -6,7 +6,8 @@ SR = exp(-1*(2*pi*OPD./lambda).^2);
 
 %%%%% Plot
 f1 = figure;
-plot(lambda*1e6,SR,'k','linewidth',1.25); grid on;
+plot(lambda*1e6,SR,'linewidth',1.25,'color',linspecer(1));
+grid on;
 xlabel('$\lambda$ ($\mu m$)','interpreter','latex');
 ylabel('Strehl Ratio, SR ($I/I_0$)','interpreter','latex');
 xlim([0 10]);

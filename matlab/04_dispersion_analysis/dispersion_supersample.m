@@ -39,10 +39,11 @@ plot(max(freq{3},[],'all')*[0 1 1 0],max(freq{2},[],'all')*[-1 -1 1 1],'k-','lin
 colorbar;
 grid on;
 xlim([0 4e4]);
-ylim(200*[-1 1]);
+ylim(250*[-1 1]);
 caxis(clim);
 ylabel('X-Spatial Frequency, $\xi_x$ ($m^{-1}$)','interpreter','latex');
 title('Horizontal Moving Disturbances','interpreter','latex');
+legend('$u$','$u+c$','$u-c$','interpreter','latex','location','northwest');
 
 subplot(2,1,2);
 plot(fPoints,fPoints/(+RunLog.c),'k--',fPoints,fPoints/(-RunLog.c),'k-.');
@@ -52,28 +53,29 @@ view(2);
 plot(max(freq{3},[],'all')*[0 1 1 0],max(freq{2},[],'all')*[-1 -1 1 1],'k-','linewidth',2);
 grid on;
 xlim([0 4e4]);
-ylim(200*[-1 1]);
+ylim(250*[-1 1]);
 caxis(clim);
 xlabel('Temporal Frequency, $f$ ($Hz$)','interpreter','latex');
-ylabel('Y-Spatial Frequency, $\xi_y$ ($1/m$)','interpreter','latex');
+ylabel('Y-Spatial Frequency, $\xi_y$ ($m^{-1}$)','interpreter','latex');
 title('Vertical Moving Disturbances','interpreter','latex');
+legend('$+c$','$-c$','interpreter','latex','location','northwest');
 
-f1.Children(3).Position(3) = f1.Children(3).Position(3);
-f1.Children(1).Position(3) = f1.Children(3).Position(3);
-f1.Children(2).Position(2) = f1.Children(1).Position(2);
-f1.Children(2).Position(4) = f1.Children(3).Position(4)+f1.Children(3).Position(2)-f1.Children(1).Position(2);
-f1.Children(1).TickLabelInterpreter = 'latex';
+f1.Children(5).Position(3) = f1.Children(5).Position(3);
+f1.Children(2).Position(3) = f1.Children(5).Position(3);
+f1.Children(4).Position(2) = f1.Children(2).Position(2);
+f1.Children(4).Position(4) = f1.Children(5).Position(4)+f1.Children(5).Position(2)-f1.Children(2).Position(2);
 f1.Children(2).TickLabelInterpreter = 'latex';
-f1.Children(3).TickLabelInterpreter = 'latex';
-f1.Children(1).Layer = 'top';
-f1.Children(3).Layer = 'top';
-f1.Children(2).Label.String = '$S_{xx}$ ($\mu m^2/Hz/m^{-1}/m^{-1}$)';
-f1.Children(2).Label.Interpreter = 'latex';
-for aa=1:length(f1.Children(2).TickLabels)
-    f1.Children(2).TickLabels{aa} = ['$10^{' f1.Children(2).TickLabels{aa} '}$'];
+f1.Children(4).TickLabelInterpreter = 'latex';
+f1.Children(5).TickLabelInterpreter = 'latex';
+f1.Children(2).Layer = 'top';
+f1.Children(5).Layer = 'top';
+f1.Children(4).Label.String = '$S_{xx}$ ($\mu m^2/Hz/m^{-2}$)';
+f1.Children(4).Label.Interpreter = 'latex';
+for aa=1:length(f1.Children(4).TickLabels)
+    f1.Children(4).TickLabels{aa} = ['$10^{' f1.Children(4).TickLabels{aa} '}$'];
 end
 f1.Units = 'inches';
 f1.Position = [1 1 5.5 5];
 
-% saveas(f1,'dispersion_supersample.eps','epsc');
+saveas(f1,'dispersion_supersample.eps','epsc');
 saveas(f1,'dispersion_supersample.png','png');

@@ -8,7 +8,8 @@ I = (k*l/8/z).^2;
 
 %%%%% Plot
 f1 = figure;
-plot(lambda*1e6,I/I(1),'k','linewidth',1.25); grid on;
+plot(lambda*1e6,I/I(1),'linewidth',1.25,'color',linspecer(1));
+grid on;
 xlabel('$\lambda$ ($\mu m$)','interpreter','latex');
 ylabel('$I_0(\lambda)/I_0(1 \mu m)$','interpreter','latex');
 % title('Diffraction Limited Far-Field Performance','interpreter','latex');
