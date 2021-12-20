@@ -17,6 +17,14 @@
 % \usepackage{fdsymbol}
 % \usepackage{physics}
 % \usepackage{mathtools}
+\usepackage[export]{adjustbox}
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+    \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\newcommand*\circledfill[1]{\tikz[baseline=(char.base)]{
+    \node[shape=circle,draw,inner sep=2pt,fill=white] (char) {#1};}}
+\newcommand*\squared[1]{\tikz[baseline=(char.base)]{
+    \node[shape=rectangle,draw,inner sep=2pt] (char) {#1};}}
 
 \lstset
 { %Formatting for code in appendix
@@ -45,6 +53,7 @@
 \DeclareMathOperator{\sr}{SR}
 \DeclareMathOperator{\spl}{SPL}
 \DeclareMathOperator{\real}{REAL}
+
 
 \begin{document}
   \frontmatter
@@ -83,6 +92,7 @@
     \include{05_synthetic_wavefront}
     \include{06_single_sensor_filtering}
     \include{07_multiple_sensor_filtering}
+    \include{08_conclusion}
 
   \appendix
     \include{90_code_samples}

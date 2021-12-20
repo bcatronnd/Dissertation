@@ -3,23 +3,23 @@
 
 \chapter{Multiple Sensor Filtering Techniques}
 \label{chap:07_multiple_filter}
-\textcolor{red}{
-  \begin{itemize}
-    \item Maybe combine Figures \ref{fig:07_lse_spod} and \ref{fig:07_lse_mspod}
-  \end{itemize}
-}
+% \textcolor{red}{
+%   \begin{itemize}
+%     \item
+%   \end{itemize}
+% }
 
 
-The previous chapter investigated filtering optical wavefront corruption by applying a variety of filters to the wavefront in the multi-dimensional spectral domain.
+The previous chapter investigated filtering optical wavefront corruption by applying a variety of filters to the wavefront in the multidimensional spectral domain.
 These techniques involve only data from the optical wavefront itself and user knowledge and experience to obtain filtered data.
-When additional data streams are available, such as from microphones or accelerators, a targeted filter mechanisms become available.
+When additional data is available, such as from microphones or accelerators, a targeted filter approach becomes possilbe.
 
 
-A previous study \cite{DeLucca-2014-RAJvGdv7} focused on using the combination of linear stochastic estimation (LSE) and spectral proper orthogonal decomposition (SPOD) to remove vibration related contamination from aero-optical wind-tunnel measurements.
-This process along with optical tip and tilt removal showed approximately an 85\% reduction in the measured $\opdrms$ by combining accelerator measurements with optical wavefront measurements.
+This kind of approach is described in a previous study \cite{DeLucca-2014-RAJvGdv7} in which a combination of linear stochastic estimation (LSE) and spectral proper orthogonal decomposition (SPOD) was used to remove vibration related contamination from aero-optical wind-tunnel measurements.
+This process along with optical tip and tilt removal showed approximately an 85\% reduction in the measured $\opdrms$ by using accelerometer measurements to remove vibration effects from optical wavefront measurements.
 
 \section{Optical Tip and Tilt}
-Zernike polynomials are traditionally used for describing optical aberrations of a optical system \cite{Born-1965-HHGYgjdH}.
+lthough they are usually not employed in areo-optical investigations, Zernike polynomials have been traditionally used for modal decomposition of the optical aberrations of a optical system \cite{Born-1965-HHGYgjdH}.
 These polynomials are defined on the unit circle and form a set of orthogonal functions,
 \begin{equation}
   Z_n^m(\rho,\theta) = R_n^m(\rho)\cos(m\theta)
@@ -28,7 +28,7 @@ These polynomials are defined on the unit circle and form a set of orthogonal fu
 where $R_n^m(\rho)$ is the radial basis function and $\cos(m\theta)$ is the angular basis function.
 For values of $-m$ the angular basis function becomes $\sin(m\theta)$.
 The radial basis function are developed from Jacobi polynomials but for purposes in this study, only a few simple ones will be used.
-An optical wavefront can be approximated by a summation of Zernike polynomials multiplied by their corresponding coefficients
+An optical wavefront can be represented by a summation of Zernike polynomials multiplied by their corresponding coefficients
 \begin{equation}
   \wf \approx \sum Z_ja_j \textrm{.}
   \label{eqn:07_zernike_coeff}
@@ -36,7 +36,7 @@ An optical wavefront can be approximated by a summation of Zernike polynomials m
 
 The Noll naming scheme is an method of organizing the Zernike polynomials into a single notation of $Z_j$, along with normalizing each polynomial to have a spatial RMS equal to one \cite{Noll-1976-HHKzd88f}.
 The first three of these using the Noll naming scheme are piston, tip, and tilt.
-Piston is simply the average $\opd$ value of the single wavefront frame
+Piston is simply the average $\opd$ value of the wavefront
 \begin{equation}
   Z_1 = 1 \textrm{.}
   \label{eqn:07_zernike_1}
@@ -137,7 +137,7 @@ which allows for an estimated version of the coefficient matrix to be calculated
   \label{eqn:07_lse_spod_02}
 \end{equation}
 The estimated coefficient matrix contains portions of the original signal that best resemble the additional sensor data.
-Assuming that the additional sensor data represents signal contamination of the original signal, a filtered coefficient matrix can be computed from the difference between the original and estimated coefficient matrix.
+Assuming that the additional sensor data represents signal contamination of the original signal, a filtered coefficient matrix can be computed from the difference between the original and estimated coefficient matrices.
 \begin{equation}
   \hat{\Psi}^F=\hat{\Psi}-\hat{\Psi}^E \textrm{.}
   \label{eqn:07_lse_spod_03}
@@ -148,26 +148,82 @@ A filtered signal, $Q^F$ can be constructed by using the filtered coefficient ma
 \end{equation}
 
 \section{Filtering Experimental Data}
-This filtering technique was tried with the same data sets that were shown in Figure \ref{fig:04_dispersion_mach}.
-Both simultaneous accelerometer and microphone were made along side the optical wavefront measurements.
-The locations of some of the additional sensors are shown in Figure \ref{fig:07_sensor placement}.
+The filtering technique described in the preceding section was applied to the same data sets that were shown in Figure \ref{fig:04_dispersion_mach}.
+Simultaneous accelerometer and microphone measurements were made alongside the optical wavefront measurements.
+The locations of some of the additional sensors are shown in Figure \ref{fig:07_sensor placement} with a CAD drawing of the test section in Figure \ref{fig:07_test_section_mic_accel}.
+Table \ref{tab:07_sensor_list} shows a list of the additional sensors including the number designation used in Figures \ref{fig:07_sensor placement} and \ref{fig:07_test_section_mic_accel}, the model of the sensor and preamplifier used as well as a sensor grouping designation.
 \begin{figure}
   \centering
   \includegraphics[trim={0 0 5in 3in},clip,width=0.9\textwidth]{../photos/IMG_9655.jpeg}
-  \caption{The locations of some of the additional sensors used in the LSE-SPOD filtering.}
+  \put(-65,120){\circledfill{\large 1}}
+  \put(-40,220){\circledfill{\large 3}}
+  \put(-50,165){\circledfill{\large 4}}
+  \put(-125,40){\circledfill{\large 7}}
+  \put(-243,240){\circledfill{\large 8}}
+  \put(-180,120){\circledfill{\large 9}}
+  \put(-320,110){\circledfill{\large 10}}
+  \caption{The locations of some of the additional sensors used in the LSE-SPOD filtering. The sensors are labeled with the sensor numbers, see Table \ref{tab:07_sensor_list}.}
   \label{fig:07_sensor placement}
 \end{figure}
+\begin{figure}
+  \centering
+  \includegraphics[trim={1in 2.75in 1in 2.75in},clip,width=0.9\textwidth]{../cad/test_section_mic_accel.pdf}
+  \put(-272,77){\circled{\large 3}}
+  \put(-274,60){\circled{\large 4}}
+  \put(-131,61){\circled{\large 5}}
+  \put(-133,45){\circled{\large 6}}
+  \put(-203,82){\circled{\large 8}}
+  \put(-220,46){\circled{\large 9}}
+  \put(-188,46){\circled{\large 10}}
+  \put(-188,12){\squared{\large 11}}
+  \put(-243,100){\squared{\large 12}}
+  \put(-140,100){\squared{\large 13}}
+  \put(-350,10){\Large Flow $\Longrightarrow$}
+  \caption{CAD drawing view of the inside of the test-section with some of the sensor locations labeled. Flow is from left to right. The numbers in the circles are the sensor numbers on the model side of the test-section. The numbers in the square are the sensor numbers opposite of the model side. The dashed line represents the optics window opposite of the model for the beam angle of $90^\circ$. The window was moved up and downstream depending on the beam angle.}
+  \label{fig:07_test_section_mic_accel}
+\end{figure}
+\begin{table}
+  \centering
+  \caption{Additional sensors used the the LSE-SPOD filtering.}
+  \begin{tabular}{c c c c c}
+    Channel & Sensor Type & Model & Preamp & Group\\
+    \hline \hline
+    1 & Microphone & ACO 7016B & B\&K 2690 & Ambient \\
+    2 & Microphone & B\&K 4939 & B\&K 2690 & Ambient \\
+    3 & Microphone & PCB 103B02 & PCB 483C & Test Section \\
+    4 & Microphone & PCB 103B02 & PCB 483C & Test Section \\
+    5 & Microphone & PCB 103B02 & PCB 483C & Test Section \\
+    6 & Microphone & PCB 103B02 & PCB 483C & Test Section \\
+    7 & Accelerometer & PCB 352C33 & PCB 483C & Primary Lens \\
+    8 & Accelerometer & PCB 352C33 & PCB 483C & Test Section \\
+    9 & Accelerometer & PCB 352C33 & PCB 483C & Test Section \\
+    10 & Accelerometer & PCB 352C33 & PCB 483C & Test Section \\
+    11 & Accelerometer & PCB 352C33 & PCB 482A22 & Test Section \\
+    12 & Accelerometer & PCB 352C33 & PCB 482A22 & Test Section \\
+    13 & Accelerometer & PCB 352C33 & PCB 482A22 & Test Section \\
+    14 & Accelerometer & PCB 352C33 & PCB 482A22 & Optics Bench \\
+    15 & Accelerometer & PCB 352C33 & PCB 482A22 & Return Mirror \\
+    16 & Accelerometer & PCB 352C33 & PCB 482A22 & Return Mirror \\
+  \end{tabular}
+  \label{tab:07_sensor_list}
+\end{table}
+All of the test-section mounted sensors are shown in their approximate locations in Figure \ref{fig:07_test_section_mic_accel} in a view that is looking at the wind-tunnel model from inside of the test-section with the flow moving from left-to-right.
+The dashed box represent the optical window on the opposite side of the tunnel from the model which was moved up or downstream depending on the beam angle relative to the flow.
+Sensors 11-13 were attached to this optical window and moved with it.
+The picture in Figure \ref{fig:07_sensor placement} was taken from the opposite side of the test-section and model that is shown in Figure \ref{fig:07_test_section_mic_accel} and as such the flow goes from right-to-left.
+
 Two microphones were used for ambient measurement (a ACO 7016B \cite{ACO-Microphones} and a Br\"uel \& Kj\ae r 4939 \cite{Bruel-Kjaer-4939}), four microphones were used for test-section noise measurement (PCB 103B02 \cite{PCB-103B02-C}), and ten accelerometers were located throughout the setup (PCB 352C33 \cite{PCB-352C33-H}).
 One of the ambient microphones was mounted to the top of the optics bench facing the test-section and can be seen in Figure \ref{fig:07_sensor placement} just to the right of the primary lens and the other ambient microphone was hanging below the optics bench end towards the test-section.
 
-The test-sections microphones were in groups of two either upstream or downstream from the optical beam by about 20-inches, with the upstream microphone locations viewable in Figure \ref{fig:07_sensor placement}.
-The model installed in the test-section represents the outside of an aircraft fuselage with a 5-foot diameter and is angled to account for the aircraft's angle-of-attack for steady-level-flight at cruise.
+The test-sections microphones were in groups of two either upstream or downstream from the optical beam by about 20-inches, with the upstream microphone locations viewable in Figure \ref{fig:07_sensor placement} (sensors 3 and 4) and shown in Figure \ref{fig:07_test_section_mic_accel}.
+The model installed in the test-section represents the outside of an aircraft fuselage with a 5-foot diameter and is angled to account for the aircraft's angle-of-attack (~6$^\circ$) for steady-level-flight at cruise.
 This results in the fuselage model being shifted approximately 2-inches higher from the test-section centerline upsteam at the microphone location.
 The duct microphones were placed about 2.75-inches from the model centerline.
 
-There were six accelerometers attached to the test-section windows, with three being on each side.
-The locations of the three accelerometers on the model side can be seen in Figure \ref{fig:07_sensor placement}, the three accelerometers on the other window used the opposite pattern (two high and one low).
-One accelerometer was placed on the primary lens (also shown) and one was placed in the center of the optics bench.
+There were six accelerometers attached to the test-section windows, with three being on each side as shown in Figure \ref{fig:07_test_section_mic_accel}.
+The locations of the three accelerometers (sensors 8-10) on the model side can be seen in Figure \ref{fig:07_sensor placement}, the three accelerometers on the other window used the opposite pattern (two high and one low).
+The optical window on the far side of the test-section was moved laterally depending on the angle of the beam relative to the flow.
+One accelerometer was placed on the primary lens (also shown, sensor 7) and one was placed in the center of the optics bench.
 The last two accelerometers were located on the return mirror and oriented in a way to measure the tip and tilt of the return beam.
 
 The power-spectra of all of the sensors at the three Mach numbers are shown in Figure \ref{fig:07_sensor_spectra}.
@@ -177,29 +233,29 @@ The power-spectra of all of the sensors at the three Mach numbers are shown in F
   \caption{Power-spectra of the additional sensor measurements at the three Mach numbers tested. The x-axis is in Strouhal number per characteristic length ($St/l$).}
   \label{fig:07_sensor_spectra}
 \end{figure}
-These plots are presented as Strouhal number per characteristic length with the different groups of sensors shown together.
-The blade-passing frequency for these data sets is at a $St/l$ of approximately 3-$m^{-1}$ with a clear and consistant narrow-band signal at for but the $M=0.3$ run which has a slight increase in signal for some of the sensors.
-For the $M=0.5$ case there is an additional strong narrow-band signal at 20-$m^{-1}$ for all sensors and a slightly broader signal at 38-$m^{-1}$ that is only present in the test-section mounted sensors that may be due to extra fan vibration which is currently limiting the top speed of the wind-tunnel.
-The test-section mounted microphones are picking up boundary layer accoustic noise above $St/l$ of approximately 20-$m^{-1}$.
+These plots are presented as Strouhal number per unit characteristic length with the different groups of sensors shown together.
+The blade-passing frequency for these data sets is at a $St/l$ of approximately 3 $m^{-1}$ with a clear and consistent narrow-band signal at that $St/l$ for all but the $M=0.3$ run, which has a slight increase in signal for some of the sensors.
+For the $M=0.5$ case there is an additional strong narrow-band signal at 20 $m^{-1}$ for all sensors and a slightly broader signal at 38 $m^{-1}$ that is only present in the test-section mounted sensors that may be due to extra fan vibration which was limiting the top speed of the wind-tunnel.
+The test-section mounted microphones are picking up boundary layer acoustic noise above $St/l$ of approximately 20 $m^{-1}$.
 
-Two variants of this filtering technique were tried.
+Two variants of the filtering technique were tried.
 The first was a standard LSE-SPOD technique in which the spectral POD was performed on the data set that was Fourier transformed in time only.
-The second will be referred to here as LSE-MSPOD, in which the spectral POD was applied to a data set in which the Fourier transformed was performed in all dimensions of space and time.
-Figures \ref{fig:07_lse_spod} and \ref{fig:07_lse_mspod} show multi-dimensional power spectrum plots at a temporal block length of $2^{10}$ with no overlap.
+For the second technique, which will be referred to here as LSE-MSPOD, the spectral POD was applied to a data set in which the Fourier transform was performed in all dimensions of space and time, which is a portion of the computation for the multidimensional spectral estimation.
+Figures \ref{fig:07_lse_spod} and \ref{fig:07_lse_mspod} show multidimensional power spectrum plots at a temporal block length of $2^{10}$ with no overlap.
 \begin{figure}
   \centering
   \includegraphics{../matlab/07_multiple_sensor_filtering/lse_spod.eps}
-  \caption{A multi-dimensional power spectrum of an unfiltered wavefront and the same wavefront filtered with the LSE-SPOD method using all 16 additional microphone or accelerometer measurements.  }
+  \caption{A multidimensional power spectrum of an unfiltered wavefront and the same wavefront filtered with the LSE-SPOD method using all 16 additional microphone or accelerometer measurements.  }
   \label{fig:07_lse_spod}
 \end{figure}
 \begin{figure}
   \centering
   \includegraphics{../matlab/07_multiple_sensor_filtering/lse_mspod.eps}
-  \caption{A multi-dimensional power spectrum of an unfiltered wavefront and the same wavefront filtered with the LSE-MSPOD method using all 16 additional microphone or accelerometer measurements.  }
+  \caption{A multidimensional power spectrum of an unfiltered wavefront and the same wavefront filtered with the LSE-MSPOD method using all 16 additional microphone or accelerometer measurements.  }
   \label{fig:07_lse_mspod}
 \end{figure}
-These plots show a combination of the isosurface and horizontal moving plane-wave slice.
-Both of these methods preformed effectively identical to one another with a drop of 14.2\% drop in overall RMS value of the filtered wavefront (both time and space).
+These plots show the $f$-$\xi_x$ plane of the multidimensional spectrum that captures horizontally-moving plane waves with a portion of the acoustic cone isosurface wrapping behind it.
+Both of these methods performed effectively identically to one another with a 14.2\% drop in overall RMS value of the filtered wavefront (both time and space).
 There is a significant drop in the signal at the blade-passing frequency and its harmonics, especially at the higher spatial frequencies.
 The stationary signal information is also significantly reduced along with the high temporal-frequency acoustic signal.
 The aero-optical boundary layer signal is also partially reduced, which is most noticeable at higher temporal-frequencies.
@@ -207,28 +263,29 @@ Some of this lost signal can be restored by increasing the overlap of the tempor
 
 \begin{table}
   \centering
-  \caption{$\opdrms$ ($\mu m$) comparison using different combinations of additional sensor information in the LSE-MSPOD filtering process.}
+  \caption{$\opdrms$ ($\mu m$) comparison of using different combinations of additional sensor information in the LSE-MSPOD filtering process.}
   \input{../matlab/07_multiple_sensor_filtering/lse_mspod_table.txt}
   \label{tab:07_lse_mspod_table}
 \end{table}
 
 Table \ref{tab:07_lse_mspod_table} shows the time averaged $\opdrms$ of three different data sets at a beam angle through the test-section of $90^\circ$.
 The data sets were at Mach numbers of 0.3, 0.4 and 0.5 that had an unfiltered $\opdrms$ of 0.0561, 0.0521, and 0.0824 $\mu m$ respectively.
-Note that in the raw processed wavefronts for the Mach number of 0.3 was higher than the 0.4 case.
+Note that in the raw processed wavefronts, the $\opdrms$ at a Mach number of 0.3 was higher than the 0.4 case.
 There was a significant drop of between 62.6 and 78.6\% in the $\opdrms$ by removing the Zernike modes corresponding to tip and tilt.
-It is at this point the Mach number of 0.4 case has a higher $\opdrms$ than the 0.3 case as would be expected {\color{red}{Reference an equation or source (probably a non-dimensionalization equation)}}.
+It is at this point the Mach number of 0.4 case has a higher $\opdrms$ than the 0.3 case as would be expected \cite{Gordeyev-2014-jcJndkHM}.
+Note that it is standard practice to remove optical tip/tilt from wavefront measurements, since tip/tilt is largely imposed by the measurement optics rather than the actual aero-optical flow.
 
-Five different combinations of additional sensors were examined for filtering with the LSE-MSPOD process.
+Table \ref{tab:07_lse_mspod_table} also shows the effect of five different combinations of additional sensors that were used for filtering with the LSE-MSPOD process.
 The first set was all of the accelerometers which resulted in an additional drop in $\opdrms$ of between 3 and 5\%.
-The second and third sets used either the ambient or duct microphones and those sets had slightly less reduction than the accelerometers resulted in.
-The forth set was the test-section sensors that was comprised of six window mounted accelerometers and four duct mounted microphones.
-This set of sensors preformed the same as all of the accelerometers, while the use of all of the additional sensors in the last set performed the best, with an additional reduction in $\opdrms$ of 4 to 6\% from the tip/tilt removal cases.
+The second and third sets used either the ambient or duct microphones and those sets had slightly less reduction than the accelerometers.
+The fourth set was the test-section sensors comprised of six window mounted accelerometers and four duct mounted microphones.
+This set of sensors performed the same as all of the accelerometers, while the use of all of the additional sensors in the last set performed the best, with an additional reduction in $\opdrms$ of 4 to 6\% from the tip/tilt removal cases.
 
 A velocity filter was also tried in addition to just the tip/tilt removal or in conjunction with tip/tilt and all the sensors being used in the LSE-MSPOD process.
-The velocity filter performed better than the all sensors removal case by an additional 1.5 to 3\%.
-When all sensors were used with LSE-MSPOD on the velocity filtered wavefronts an additional 3 to 4\% of the $\opdrms$ was removed from just the velocity filtered case or an additional 8.1\% reduction for only doing tip/tilt removal on the Mach number of 0.3 case or 14.1 and 13.3\% reduction for the 0.4 and 0.5 Mach number cases.
+The velocity filter performed better than the all-sensors removal case by an additional 1.5 to 3\%.
+When all sensors were used with LSE-MSPOD on the velocity filtered wavefronts an additional 3 to 4\% of the $\opdrms$ was removed compared to just the velocity-filtered case or an additional 8.1\% reduction for only doing tip/tilt removal on the Mach number of 0.3 case or 14.1 and 13.3\% reduction for the 0.4 and 0.5 Mach number cases.
 
-Using either the temporal or multi-dimensional version of the LSE-SPOD filtering technique can help remove some of the narrow-band acoustic and vibration reduction in an optical wavefront.
+In summary, Table \ref{tab:07_lse_mspod_table} shows that using either the temporal or multidimensional version of the LSE-SPOD filtering technique can help remove some of the narrow-band acoustic and vibration reduction in an optical wavefront.
 This additional reduction does seem to be somewhat tied to the number of sensors used with more sensors having a greater impact on the signal reduction.
 Since the vibrations and acoustics have the same primary source, the wind-tunnel fan, they seems to do a relatively equivalent job at filtering the optical contamination.
-Accelerometers have a benefit easier installation but the microphones do not necessary have to be installed inside of the wind-tunnel.
+Accelerometers have the benefit of easier installation but the microphones do not necessarily have to be installed inside of the wind-tunnel.
