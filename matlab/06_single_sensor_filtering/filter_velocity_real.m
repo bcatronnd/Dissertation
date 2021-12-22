@@ -24,7 +24,7 @@ u = 150:1:155;
 v = 0:1:5;
 
 width = 0.025;
-order = 2;
+order = 1;
 % High-Pass Rho
 gain = sqrt(1./(1+(Frequency.rho/0.1).^(-2*2)));
 WF = WF.*gain.^2;

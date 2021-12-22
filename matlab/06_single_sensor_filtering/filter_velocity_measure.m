@@ -1,6 +1,6 @@
 close all; clc; clearvars;
 
-load('synthetic_wavefront.mat');
+load('../05_synthetic_wavefront/synthetic_wavefront.mat');
 
 c = 340;
 M = 0.6;
@@ -18,8 +18,8 @@ Frequency.rho = sqrt(Frequency.x.^2+Frequency.y.^2);
 u = c*M*uBL_u;
 v = 0;
 
-width = 0.025;
-order = 2;
+width = 0.0125;
+order = 1;
 % High-Pass Rho
 gain = sqrt(1./(1+(Frequency.rho/0.1).^(-2*2)));
 WF = WF.*gain.^2;
@@ -42,7 +42,7 @@ f1 = figure(1);
 plot(uBL_u,wf_f/wfm,'k-o');
 grid on;
 xlabel('$u_{BL}/U$','interpreter','latex');
-ylabel('Normalized Energy','interpreter','latex');
+ylabel('Normalized Power','interpreter','latex');
 xlim([0.7 0.9]);
 f1.Children(1).TickLabelInterpreter = 'latex';
 f1.Units = 'inches';

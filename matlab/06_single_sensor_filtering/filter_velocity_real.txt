@@ -4,3 +4,9 @@ Flow Angle: 1.1°
 u: 152m/s - 0.85u∞
 v: 3m/s - 0.02u∞
 Flow Angle: 1.1°
+u: 155m/s - 0.87u∞
+v: 2m/s - 0.01u∞
+Flow Angle: 0.7°
+u: 152m/s - 0.85u∞
+v: 3m/s - 0.02u∞
+Flow Angle: 1.1°
