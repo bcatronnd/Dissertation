@@ -199,25 +199,34 @@ The velocity was measured using the boundary-layer optical disturbances in the m
 The boundary-layer velocity was approximately $0.85U$ when compared to the pitot probe measurement of the free-stream velocity and the overall flow angle of the boundary-layer was approximately $1.1^\circ$.
 
 \section{Baseline Spectrum}
-
-
+If all of the narrow-band temporal signals could be assumed to be measurement contamination that need to be filtered out, a method for calculating the baseline of the spectrum would provide a simple way of filtering a portion of the signal contamination.
+For analysis of Raman spectra, the baseline spectra must often be removed \cite{Schulze-2012-GmyAqzC7}.
+This task is often performed manually which has which has brought a number of attempts to create automated technique estimate the baseline spectra \cite{Mosier-Boss-1995-keK3ckUN, Schulze-2005-QkUeywxD, Schulze-2012-GmyAqzC7, Zhao-2007-HAc6j8Wb}.
+One of those techniques \cite{Schulze-2012-GmyAqzC7}, a small-window moving average-based fully automated baseline estimation method was used in this research.
+At each spatial frequency location the baseline spectra was computed along the temporal axis.
+Figure \ref{fig:06_filter_baseline}, shows the multidimensional spectra of an unfiltered measurement (top left) and its estimated baseline spectra (top right).
 \begin{figure}
   \centering
   \includegraphics{../matlab/06_single_sensor_filtering/filter_baseline.eps}
-  \caption{Baseline spectrum estimation.}
+  \caption{Baseline spectrum estimation. The top left plot shows the unfiltered multidimensional spectrum and the baseline spectrum on the top right. The green line in each of these plots represents the location at which the spectra in the bottom plot is shown.}
   \label{fig:06_filter_baseline}
 \end{figure}
-
-
-
+The bottom plot of the figure shows the spectra along the green line in the two multidimensional spectral plots.
+The total power of the signal has been reduced by $~71\%$ with all of the narrow-band signals removed.
+A large portion of this signal removal is the very low temporal-frequency components.
+The blade-passing frequency and harmonics are completely removed but the broadband acoustic duct-modes remain intact.
+The peak of the boundary-layer signal is reduced slightly as well as the high frequency fluctuations.
 
 \section{Basic Filter Summary}
 Three different basic wavefront filters were shown and discussed in this chapter.
 The temporal filter is most useful when filtering out a frequency band of optical noise.
 Besides filtering out optical noise, band-pass filters can be used to analyze a wavefront over a narrow-band to examine the optical aberrations at specific frequencies that significantly contribute to the overall optical disturbance; for example, as was shown in Chapter \ref{chap:03_optical_acoustics}, band-pass filters along with an implementation of an acoustic mode-marching method can help determine with some confidence that a narrow-band signal is likely to have been created by the wind-tunnel fan and can be removed.
 
-
 Filters that separate upstream and downstream-moving disturbances are useful to filter out the optical contamination that comes from acoustic signals that are traveling upstream from a wind-tunnel fan.
 These filters would also be useful for separating out an aero-optical signal that has a broad range of velocities that can occur in a span wise measurement of a boundary layer.
 The velocity filter is the most useful for isolating the aero-optical portion of a wavefront measurement given the aero-optical signal has a fairly narrow and constant velocity range.
 This filter also can be used to measure the speed associated with an optical disturbance in both x and y-directions.
+
+The spectral baseline provides an simple way of removing all of the narrow-band signals with slight attenuation to the broadband signals.
+The broadband acoustic and stationary modes remain but could be filtered with via other techniques such as using a velocity filter.
+Narrow-band features that are not likely to be environmental contamination could be easily added back in.
