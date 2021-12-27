@@ -7,7 +7,7 @@ fanMode.m = 8;
 fanMode.n = 0;
 fanMaxDp = 1;
 phaseSteps = 50;
-showPlots = 1;
+showPlots = 0;
 nPointsRect = 51;
 filename = ['tunnel_acoustic_against_' num2str(tsMach) '_' num2str(fanMode.m) '_' num2str(fanMode.n) '_tsMid.gif'];
 frameRate = 15;
@@ -181,6 +181,7 @@ phase = cat(2,phase,2*pi);
 
 
 %%
+close all;
 tol = 1e-2;
 pModes = any(abs(tsCoeff)>tol,[1 3]);
 mModes = rectangle_mode.m(pModes);
@@ -189,9 +190,14 @@ legString = cell(1,3);
 for aa=1:sum(pModes)
     legString{aa} = ['m=' num2str(mModes(aa)) '  n=' num2str(nModes(aa))];
 end
+PlotColors = linspecer(length(legString));
+pModes = find(pModes);
 
 f2 = figure(2);
-plot(phase/pi,squeeze(real(tsCoeff(6,pModes,:)))');
+for aa=1:length(legString)
+    plot(abs(phase)/pi,squeeze(real(tsCoeff(6,pModes(aa),:)))','linewidth',1.25,'color',PlotColors(aa,:));
+    hold on;
+end
 grid on;
 xlabel('Initial Phase ($\pi$ rad)','interpreter','latex');
 ylabel('$C_m$','interpreter','latex');
@@ -202,7 +208,7 @@ f2.Position = [1 1 5 3];
 % f2.Color = 'none';
 saveas(f2,['tunnel_acoustic_against_' num2str(tsMach) '_' num2str(fanMode.m) '_' num2str(fanMode.n) '.eps'],'epsc')
 % saveas(f2,['tunnel_acoustic_against_' num2str(tsMach) '_' num2str(fanMode.m) '_' num2str(fanMode.n) '.png'],'png')
-exportgraphics(f2,['tunnel_acoustic_against_' num2str(tsMach) '_' num2str(fanMode.m) '_' num2str(fanMode.n) '.png'],'BackgroundColor','none');
+% exportgraphics(f2,['tunnel_acoustic_against_' num2str(tsMach) '_' num2str(fanMode.m) '_' num2str(fanMode.n) '.png'],'BackgroundColor','none');
 
 % f2 = figure(2);
 % subplot(2,1,1);

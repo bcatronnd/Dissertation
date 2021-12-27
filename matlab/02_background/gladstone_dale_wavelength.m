@@ -3,10 +3,11 @@ close all; clc; clearvars;
 lambda = (350:840)/1e3;
 R = 287.058;
 kgd = 0.776*R*(1+0.00753./lambda.^2)*1e-6;
+PlotColors = linspecer(1);
 
 %%%%% Plot
 f1 = figure(1);
-plot(lambda,kgd,'k','linewidth',1.25); 
+plot(lambda,kgd,'linewidth',1.25,'color',PlotColors); 
 xlim([360 830]/1e3); grid on; axis manual;
 ylabel({'Gladstone-Dale Constant';'$K_{GD}$ (m$^3$/kg)'},'interpreter','latex');
 spectrumLabel(gca);

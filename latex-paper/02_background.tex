@@ -124,42 +124,63 @@ As the wavelength of light decreases the required $\opdrms$ decreases linearly f
 
 
 \subsection{Typical Optical Wavefront Measurement System}
-
-
-
-
-
+A diagram of a typical double-pass Shack-Hartmann wavefront front sensor setup is shown in Figure \ref{fig:02_typical_wavefront_system}.
 \begin{figure}
   \centering
-  \includegraphics[width=2.5in,clip,trim=200 75 200 75]{../cad/wavefront_setup.pdf}
+  \includegraphics[width=3.25in,clip,trim=170 75 170 75]{../cad/wavefront_setup.pdf}
   \put(-72,62){\rotatebox{90}{\Large LASER}}
   \put(-145,78){\rotatebox{90}{BEAM}}
   \put(-135,65){\rotatebox{90}{EXPANDER}}
   \put(-150,200){\rotatebox{90}{\Large PRIMARY TELESCOPE}}
-  \put(-130,400){\rotatebox{90}{\Large MEASUREMENT}}
-  \put(-112,427){\rotatebox{90}{\Large REGION}}
+  \put(-130,405){\rotatebox{90}{\Large MEASUREMENT}}
+  \put(-112,432){\rotatebox{90}{\Large REGION}}
   \put(-95,160){\rotatebox{60}{\Large REIMAGING}}
   \put(-80,155){\rotatebox{60}{\Large TELESCOPE}}
   \put(-10,245){\rotatebox{90}{\Large WAVEFRONT}}
   \put(5,260){\rotatebox{90}{\Large SENSOR}}
+  \put(-59,441){\fcolorbox{white}{white}{\Large $\gamma$}}
+  \put(-90,480){\fcolorbox{white}{white}{\Large $\Longleftarrow$ Flow Direction}}
   \caption{Typical double-pass optical wavefront measurement setup.}
   \label{fig:02_typical_wavefront_system}
 \end{figure}
+The system starts with the laser in the bottom of the plot, which is then expanded to a larger diameter.
+The beam expander used in this research increased the diameter of the beam to approximately 1-inch.
+The larger diameter beam then passes through a beam splitter where half of the intensity is discarded and the other half proceeds to the primary telescope.
+The primary telescope expands the beam to the desired size for the first passage through the measurement region.
+For measurements made in a wind-tunnel, the beam angle, $\gamma$, is typically defined based on the flow direction \cite{Gordeyev-2014-jcJndkHM} with $0^\circ$ being looking straight into the flow and $180^\circ$ looking downstream.
 
+A large mirror is used to return the beam along the same path for a second passage through the measurement region where the primary telescope shrinks the beam back down to a 1-inch diameter.
+On the return path, the beam splitter sends half of the intensity back through the beam expander to the laser and half to the reimaging telescope.
+The reimaging telescope servers to purposes, the first is to create an image plane for the wavefront sensor at the desired object plane location, typically the return mirror for a double-pass setup.
+The second is the reduce the beam diameter for the wavefront sensor to a size that depends on the resolution and frame rate needed for a measurement.
 
-
-
-\subsection{A Brief History of Aero-Optics}
-The field of aero-optics began with an investigation by Liepmann \cite{Liepmann-1952-89GQ7wyA} into the limits of sensitivity of schlieren systems when used in high-speed flow analysis.
-Liepmann used geometric optics to analyze a small-diameter beam and derive its mean-squared fluctuating deflection angle, $\left<\theta^2\right>$.
-Liepmann propagated the beam in the $y$ direction and assumed the index of refraction changes in the $x-z$ plane were statistically similar.
-Liepmann's analysis for a boundary layer of thickness $\delta$ resulted in
+The Shack-Hartmann wavefront sensor is comprised of a lenslet array and a camera \cite{Geary-1995-TQXWWFW2}.
+A diagram of how the wavefront sensor functions can be seen in Figure \ref{fig:02_lenslet_array}.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{../other-sources/Shack_Hartmann_WFS_lensletarray.png}
+  \caption{Diagram of a Shack-Hartmann wavefront sensor comprised of four lenslets. The black line represents the perturbed wavefront and the red line the mean slope over each lenslet. The focal point of the wavefront is shifted by $\Delta x$ from the center-line of the lenslet based on the mean slope of the wavefront. \cite{Shack-Hartman-Diagram-Wikipedia}}
+  \label{fig:02_lenslet_array}
+\end{figure}
+The perturbed wavefront is represented by the black lines on the top with the measurable component shown in red which is the mean slope over each lenslet.
+By measuring the linear displacement from of the focal dot from its normal position, the average slope, $\theta_x$ and $\theta_y$, of the wavefront over a lenslet can be measured,
 \begin{equation}
-  \left<\theta^2\right> = \frac{1}{[n_0(\delta)]^2}\int_0^\delta\int_0^\delta n_0(y)n_0(\zeta)\left<\left(\frac{\partial\nu}{\partial y}\right)^2\right>R_v(|y-\zeta|)dyd\zeta
-  \label{eqn:02_liepmann_deflection_angle}
+  \theta_x = \tan^{-1}{\frac{\Delta x}{f}} \approx\frac{\Delta x}{f} \textrm{,}
 \end{equation}
-where the index of refraction is determined from $n=n_0(y)(1+\nu)$ and $R_v(|y-\zeta|)$ is the correlation function for the index variation.
-This analysis introduced the concept of a linking equation that allows one to predict time-averaged optical degradation to turbulent flow statistical measurements.
+where $f$ is the focal length of the lenslet.
+With an array of gradient data, the optical path difference at each lenslet can be calculated using a number of integration methods \cite{Huang-2015-W29DqPyp}.
+
+% \subsection{A Brief History of Aero-Optics}
+% The field of aero-optics began with an investigation by Liepmann \cite{Liepmann-1952-89GQ7wyA} into the limits of sensitivity of schlieren systems when used in high-speed flow analysis.
+% Liepmann used geometric optics to analyze a small-diameter beam and derive its mean-squared fluctuating deflection angle, $\left<\theta^2\right>$.
+% Liepmann propagated the beam in the $y$ direction and assumed the index of refraction changes in the $x-z$ plane were statistically similar.
+% Liepmann's analysis for a boundary layer of thickness $\delta$ resulted in
+% \begin{equation}
+%   \left<\theta^2\right> = \frac{1}{[n_0(\delta)]^2}\int_0^\delta\int_0^\delta n_0(y)n_0(\zeta)\left<\left(\frac{\partial\nu}{\partial y}\right)^2\right>R_v(|y-\zeta|)dyd\zeta
+%   \label{eqn:02_liepmann_deflection_angle}
+% \end{equation}
+% where the index of refraction is determined from $n=n_0(y)(1+\nu)$ and $R_v(|y-\zeta|)$ is the correlation function for the index variation.
+% This analysis introduced the concept of a linking equation that allows one to predict time-averaged optical degradation to turbulent flow statistical measurements.
 
 \section{Acoustics}
 

@@ -574,8 +574,6 @@ label="fig:02_cross_section_circ"}
 Aero-Optical and Acoustical Coupling {#chap:03_optical_acoustics}
 ====================================
 
--   Mode marching method
-
 Acoustic waves are isentropic compression waves with the fluctuating
 pressure, $p'$, determining the strength of the wave. This fluctuating
 pressure is related to the sound pressure level, $\spl$ by
@@ -598,10 +596,17 @@ the $\opd$, $$\opd = K_{GD}\int_{s_1}^{s_2}{\rho'}ds \textrm{.}
 reference="eqn:03_speed_sound"},
 $$\opd = \frac{K_{GD}}{c_0^2}\int_{s_1}^{s_2}{p'}ds \textrm{,}
   \label{eqn:03_opd_pressure}$$ to provide a way of computing the
-optical path difference of a pressure field.
+optical path difference of a sound pressure field.
 
 Simulating an Optical Wavefront Measurement from an Acoustic Field Function {#chap:03_simulated_beam}
 ---------------------------------------------------------------------------
+
+The following analysis is presented for the case of a measurement field
+subject to acoustic excitation at a discrete frequency. Parameter values
+at each point in the field oscillate at the frequency of the acoustic
+field, with a magnitude and phase relationship to the acoustic field
+that can be represented by complex notation and that depends on the
+physics of the interaction with the acoustic field.
 
 An optical wavefront can be simulated from a complex pressure field by
 applying Equation
@@ -613,26 +618,27 @@ aperture, which is typically circular, defined in the xy-plane and
 propagates in the z-direction. The second is the acoustic coordinate
 system, $\mathbf{x}_A$, that will be defined based on the source
 location or the geometry that the acoustic waves are propagating
-through. These to coordinate systems will have a function representing a
-transform from one to the other
+through. These two coordinate systems will have a function representing
+a transform from one to the other
 $$\mathbf{x}_A = R\mathbf{x}_B+T \textrm{,}
   \label{eqn:03_coord_transform}$$ where $R$ is a matrix which
 represents the rotation and $T$ is a vector that represents the
 translation.
 
-The important parameters for defining the aperture which the beam
+The important parameters for defining the aperture on which the beam
 coordinate system is based are the aperture size, $Ap$, and the number
-of lenslets or sub-apertures, $N_{lenslets}$. Assuming that the aperture
-is either circular or square and the lenslet size and sub-aperture size
-is approximately $Ap/N_{lenslets}$, the x locations of the center of the
-sub-apertures go from $-Ap/2(1-1/N_{lenslets})$ to
-$Ap/2(1-1/N_{lenslets})$ by steps of $Ap/N_{lenslets}$ with the y
-locations having the same values. This gives a matrix representing both
-$x_{Ap}$ and $y_{Ap}$ that is $N_{lenslets}$ by $N_{lenslets}$. For the
-purpose of removing piston, tip, and tilt and creating a mask that
-represents the beam aperture, the radial coordinates, $\rho_{Ap}$ and
-$\theta_{Ap}$, of the aperture should also be calculated. A circular
-beam will have a mask defined by, $$Mask_{Ap} =
+of lenslets or sub-apertures in the wavefront sensor, $N_{lenslets}$.
+Assuming that the aperture is either circular or square and the lenslet
+size and sub-aperture size is approximately $Ap/N_{lenslets}$, the x
+locations of the center of the sub-apertures go from
+$-Ap/2(1-1/N_{lenslets})$ to $Ap/2(1-1/N_{lenslets})$ by steps of
+$Ap/N_{lenslets}$ with the y locations having the same values. This
+gives a matrix representing both $x_{Ap}$ and $y_{Ap}$ that is
+$N_{lenslets}$ by $N_{lenslets}$. For the purpose of removing piston,
+tip, and tilt and creating a mask that represents the beam aperture, the
+radial coordinates, $\rho_{Ap}$ and $\theta_{Ap}$, of the aperture
+should also be calculated. A circular beam will have a mask defined by,
+$$Mask_{Ap} =
   \begin{cases}
     1, & \text{if } \rho_{Ap}\leq Ap/2 \\
     0, & \text{otherwise.}
@@ -645,7 +651,7 @@ using Equation
 reference="eqn:03_coord_transform"}, the complex pressure field,
 $\hat{p}(x,y,z,t)$ can be calculated at the points that are within the
 optical beam. If the pressure field is separable into spatial and
-temporal components, than the integration along the beam length only
+temporal components, then the integration along the beam length only
 needs to be done once for each temporal frequency,
 $$\widehat{\opd}(x,y) = \frac{K_{GD}}{c_0^2}\int_{z_1}^{z_2} \hat{p}(x,y,z)_{Ap}dz \textrm{,}
   \label{eqn:03_opd_complex}$$ where $\widehat{\opd}(x,y)$ is the
@@ -655,7 +661,7 @@ complex density field is known instead, than Equation
 reference="eqn:03_opd_complex"} becomes
 $$\widehat{\opd}(x,y) = K_{GD}\int_{z_1}^{z_2} \hat{\rho}(x,y,z)_{Ap}dz \textrm{.}
   \label{eqn:03_opd_complex_density}$$ For the purposes of calculating
-temporally mean optical properties of simulated beam passing through a
+time-averaged optical properties of simulated beam passing through a
 known complex pressure or density field a phase vector was defined,
 $\phi = [0, 2\pi)$. The measurable component as a function of phase is
 $$\opd(x,y,\phi) = \real\left[\widehat{\opd}(x,y)\exp\{-j\phi\}\right] \textrm{,}
@@ -664,7 +670,7 @@ temporal frequencies,
 $$\opd(x,y,t) = \real\left[\sum\widehat{\opd}(x,y)\exp\{-j\omega t\}\right] \textrm{,}
   \label{eqn:03_opd_real}$$ where there is a separate
 $\widehat{\opd}(x,y)$ computed for each temporal frequency. One of the
-more important measurements that can be calculated from $\opd$ is the
+more important parameters that can be calculated from $\opd$ is the
 spatial RMS, $\opdrms$, which is calculated at each time or phase step
 at the points where the aperture mask equals one.
 
@@ -685,9 +691,9 @@ calculated from the set of solutions for duct acoustics, Equation
 [\[eqn:02\_pressure\_solution\_duct\]](#eqn:02_pressure_solution_duct){reference-type="ref"
 reference="eqn:02_pressure_solution_duct"}, given that $\Psi_m(x,y)=1$,
 $$\hat{p}(z,t) = p_m\exp\left\{j(\omega t \mp k_{zm}^\pm z)\right\} \textrm{.}
-  \label{eqn:03_plane_wave}$$ This section will show several plots to
-show the effect that acoustic waves have on the optical wavefront of a
-planar wave with the general geometry shown in Figure
+  \label{eqn:03_plane_wave}$$ This section will show the effect that
+acoustic waves have on the optical wavefront of a planar wave with the
+general geometry shown in Figure
 [\[fig:03\_planar\_sample\_domain\]](#fig:03_planar_sample_domain){reference-type="ref"
 reference="fig:03_planar_sample_domain"}.
 
@@ -724,10 +730,13 @@ increases and can easily reach the point of being a significant factor
 in the measured optical disturbance. There is little difference between
 0.1 and 1 $\Lambda/Ap$, but as the wavelength gets much larger compared
 to the beam diameter, then the optical effect of the noise is greatly
-reduced, this effect is known as aperture filtering
+reduced, this effect is known as "aperture filtering." Aperture
+filtering accounts for the fact that an aperture that is smaller than
+the wavelength of the optical disturbance only passes a portion of that
+optical disturbance, so that the measured $\opdrms$ is reduced
 [@Siegenthaler-2005-KQ2HGmfp].
 
-Aperture filtering is more clearly shown in Figure
+The effect of aperture filtering is more clearly shown in Figure
 [\[fig:03\_planar\_sample\_calc\_1\]](#fig:03_planar_sample_calc_1){reference-type="ref"
 reference="fig:03_planar_sample_calc_1"}.
 
@@ -777,20 +786,20 @@ cm.](../matlab/03_aero_optics_acoustics/planar_sample_calc_2.eps)
 [\[fig:03\_planar\_sample\_calc\_2\]]{#fig:03_planar_sample_calc_2
 label="fig:03_planar_sample_calc_2"}
 
-Both waves have a RMS sound pressure of 1 Pa and the beam has an
-aperture of 15 cm and propagates through a 1 m acoustic field inside the
-tunnel. Over a vast majority of the look back angles the
-upstream-traveling acoustic wave has a much greater effect on the
-optical disturbance compared to the downstream-traveling acoustic wave,
-due to the much shorter wavelength of the upstream-traveling waves which
-is less affected by aperture filtering. However, the upstream-traveling
-wave goes through several zero points so the downstream-traveling wave
-dominates at some look back angles.
+Both waves have an RMS sound pressure of 1 Pa and the beam has an
+aperture of 15 cm and propagates through an acoustic field inside the
+duct of width, $l_n$, of 1 m. Over a vast majority of the look back
+angles the upstream-traveling acoustic wave has a much greater effect on
+the optical disturbance compared to the downstream-traveling acoustic
+wave, due to the much shorter wavelength of the upstream-traveling waves
+which is less affected by aperture filtering. However, the
+upstream-traveling wave goes through several zero points so that the
+downstream-traveling wave dominates at some look back angles.
 
 ### Spherical Acoustic Waves
 
-The acoustic field from an speaker maybe assumed to be a spherical wave
-from a pulsating point if the frequency is sufficiently low and
+The acoustic field from a speaker maybe assumed to be a spherical wave
+from a pulsating point if the frequency is sufficiently low and the
 measurement region is far enough away from the source
 [@Randall-1951-9NtPPXPq]. This pressure field when converted to complex
 pressure is represented by
@@ -801,18 +810,33 @@ measurement point. The RMS pressure of this field can be represented by
 $$p_{rms} = \frac{|A_0|}{r\sqrt{2}} \textrm{.}
   \label{eqn:03_spherical_pressure_rms}$$
 
-#### Theoretical OPD Measurements
+#### Theoretical $\opd$ Calculations
 
-A set of optical properties where calculated for a beam passing through
-a spherical acoustic field as defined by a point source using the
-process described previously in Chapter
+A set of optical properties were calculated for a beam passing through a
+spherical acoustic field as defined by a point source using the process
+described previously in Section
 [3.1](#chap:03_simulated_beam){reference-type="ref"
-reference="chap:03_simulated_beam"}. These calculations used an circular
-aperture size of 0.25-m in diameter consisting of 32x32 sub-apertures,
-an acoustic wavelength, $\Lambda$, of $Ap/4$ to $10Ap$, and a distance
-from the point source to the center of the aperture, $R$, of $5Ap$ to
-$25Ap$. The beam was integrated over $\pm5$-m from the plane of the
-point source with 25 phase step used to calculate mean values.
+reference="chap:03_simulated_beam"} and shown in Figure
+[\[fig:03\_spherical\_simulation\]](#fig:03_spherical_simulation){reference-type="ref"
+reference="fig:03_spherical_simulation"}.
+
+![Diagram of the geometry used in the spherical wave
+simulation.](../cad/spherical_simulation.pdf "fig:"){width="80%"}
+(-140,130) (-140,155) (-95,43)
+
+[\[fig:03\_spherical\_simulation\]]{#fig:03_spherical_simulation
+label="fig:03_spherical_simulation"}
+
+These calculations used a circular aperture size of 0.25-m in diameter
+that was assumed to be measured using a Shack-Hartmann WFS with 32x32
+sub-apertures with a non-dimensional acoustic wavelength, $\Lambda$, of
+$Ap/4$ to $10Ap$. The normal vector from the point source to the axis of
+the measurement beam defined the coordinate system. This normal
+distance, $R$, was at a minimum $5Ap$ and a maximum $25Ap$, keeping the
+measurement beam away from the singularity at the origin of the acoustic
+source. The beam was integrated over $\pm5$-m from the plane of the
+point source. To calculate the time-averaged $\opdrms$ the phase of the
+source was varied from 0 to $2\pi$ with 25 total steps.
 
 The result of these simulated acoustic fields is shown in Figure
 [\[fig:03\_spherical\_sample\]](#fig:03_spherical_sample){reference-type="ref"
@@ -836,10 +860,10 @@ label="fig:03_spherical_sample"}
 
 The top plots shows the expected optical disturbance ratio,
 $\opdrms/|A_0|$, for a perfectly spherical acoustic field measured over
-the beam length. With the exception of some oscillations that are caused
-by end effects in the integration. The oscillations can be greatly
-reduced by using a windowing function in the z-direction such as a
-Hanning or Tukey window which also can be used to roughly model
+the beam length. The oscillations in the solutions for different $R/Ap$
+are caused by end effects in the integration. The oscillations can be
+greatly reduced by using a windowing function in the z-direction such as
+a Hanning or Tukey window which also can be used to roughly model
 directivity of the speaker's acoustic emission as shown in the bottom
 plot. While this plot was calculated with a single aperture diameter,
 the general trend holds for all other aperture diameters that were
@@ -848,14 +872,14 @@ tested, the only effect was the size and width of the oscillations.
 The peak of the optical disturbance ratio, $\opdrms/|A_0|$, is located
 at $\Lambda/Ap\approx0.75$ for a circular aperture. The signal is
 reduced above this value due to aperture filtering and below this value
-because the shorter wavelength have a reduced distance before
+because the shorter wavelengths have a reduced distance before
 alternating high and low index-of-refraction regions reduce the optical
 path difference. When the acoustic source point is sufficiently far
 enough away from the measurement beam, $R/Ap\geq2$, the optical
 disturbance ratio, $\opdrms/|A_0|$ when multiplied by $\sqrt{R/Ap}$, can
 be collapsed onto a single curve for a range of $\Lambda/Ap$ of 0.1 to
 10. Above $\Lambda/Ap=10$ the curves start to diverge away from one
-another. An approximate function fit to this data is
+another. An approximate function fit to these data is
 $$\frac{\opdrms\sqrt{R/Ap}}{|A_0|} \approx \frac{p_1(\Lambda/Ap)^3+p_2(\Lambda/Ap)^2+p_3(\Lambda/Ap)+p_4}{(\Lambda/Ap)^3+q_1(\Lambda/Ap)^2+q_2(\Lambda/Ap)+q_3}
   \label{eqn:03_spherical_sample_fit}$$ with coefficient values shown
 Table
@@ -900,7 +924,7 @@ The distance from center of the beam to the speaker was 102-mm with a
 beam diameter of 28-mm. An ACO model 7016B microphone [@ACO-Microphones]
 was placed directly over the speaker at a distance of 158-mm and was
 used with a Brüel & Kjær model 2670 preamplifier [@Bruel-Kjaer-2670].
-The speaker in use was Peerless model XT25SC90-04
+The speaker used was a Peerless model XT25SC90-04
 [@Peerless-XT25SC90-04-1] which has a fairly flat on-axis response from
 1-kHz to 40kHz.
 
@@ -916,15 +940,17 @@ mirror. Optical wavefronts and microphone measurements were taken at
 frequencies (9, 14, and 18-kHz) at a variety of voltages.
 
 The absolute value of the fluctuating pressure strength, $|A_0|$, was
-calculated two different ways. The power spectra of the microphone data
+calculated two different ways. The power spectrum of the microphone data
 was used to calculate the average $p_{rms}$ at the excitation frequency
 and the fluctuating pressure strength using Equation
 [\[eqn:03\_spherical\_pressure\_rms\]](#eqn:03_spherical_pressure_rms){reference-type="ref"
-reference="eqn:03_spherical_pressure_rms"}. The optical wavefront was
-band-pass filtered at the excitation frequency using a process that will
-be discussed in Chapter [\[chap:06\]](#chap:06){reference-type="ref"
-reference="chap:06"}. The time averaged $\opdrms$ was used to calculate
-the fluctuating pressure strength using Equation
+reference="eqn:03_spherical_pressure_rms"}. For the second method, the
+optical wavefront was band-pass filtered at the excitation frequency
+using a process that will be discussed in Chapter
+[6](#chap:06_single_filter){reference-type="ref"
+reference="chap:06_single_filter"}. The time averaged $\opdrms$ of the
+filtered wavefront data was then used to calculate the fluctuating
+pressure strength using Equation
 [\[eqn:03\_spherical\_sample\_fit\]](#eqn:03_spherical_sample_fit){reference-type="ref"
 reference="eqn:03_spherical_sample_fit"}.
 
@@ -934,12 +960,12 @@ is shown in Table
 reference="tab:03_spherical_measurement"}. The differences between the
 two techniques for measuring the fluctuating pressure strength fell into
 two groups. For the 9-kHz cases, the differences ranged from 20-26%
-while the higher frequency cases the differences were between 1.1-1.5%
-and in all cases the wavefront measurement reported a higher fluctuating
-pressure strength. With the exception of the highest excitation case at
-9-kHz, the differences between the to techniques was fairly constant for
-each frequency group. Some of these differences maybe attributable to
-the frequency response of the microphone.
+while for the higher frequency cases the differences were between
+1.1-1.5%. In all cases the wavefront measurement reported a higher
+fluctuating pressure strength. With the exception of the highest
+excitation case at 9-kHz, the differences between the to techniques was
+fairly constant for each frequency group. Some of these differences
+maybe attributable to the frequency response of the microphone.
 
   --------------- --------------- ----------- ------------- --------------- -------------- -------
    $f_{speaker}$   $V_{speaker}$   $p_{rms}$   OPD$_{RMS}$   $|A_0|_{mic}$   $|A_0|_{wf}$   Diff
@@ -958,10 +984,13 @@ the frequency response of the microphone.
 [\[tab:03\_spherical\_measurement\]]{#tab:03_spherical_measurement
 label="tab:03_spherical_measurement"}
 
-Measured and simulated wavefronts for the highest excitation cases at
-each frequency are shown in Figure
+Measured wavefronts are compared to the wavefronts simulated using the
+method described in Section
+[3.1](#chap:03_simulated_beam){reference-type="ref"
+reference="chap:03_simulated_beam"} in Figure
 [\[fig:03\_spherical\_plot\]](#fig:03_spherical_plot){reference-type="ref"
-reference="fig:03_spherical_plot"}.
+reference="fig:03_spherical_plot"} for the highest excitation cases at
+each frequency.
 
 ![Comparison of some of the measured wavefronts and simulated
 ones.](../matlab/03_aero_optics_acoustics/spherical_plot_measured.eps "fig:")
@@ -972,42 +1001,426 @@ ones.](../matlab/03_aero_optics_acoustics/spherical_plot_simulated.eps "fig:")
 label="fig:03_spherical_plot"}
 
 The 9-kHz case shows some anomalies on the measured wavefront on the
-right side, deviating from spherical wave significantly likely
-contributing the significantly higher estimated pulsating field strength
-value when compared to the microphone estimate. The 14 and 18-kHz cases
-show some remarkable agreement between the measured and simulated
-images. Optical wavefront measurements can be utilized for making
-non-intrusive acoustic field measurements espically when the acoustic
+right side, and deviates from a spherical wave significantly, likely
+contributing to the significantly higher estimated pulsating field
+strength value when compared to the microphone estimate in Table
+[\[tab:03\_spherical\_measurement\]](#tab:03_spherical_measurement){reference-type="ref"
+reference="tab:03_spherical_measurement"}. The 14 and 18-kHz cases show
+some remarkable agreement between the measured and simulated images.
+Optical wavefront measurements can therefore be used for making
+non-intrusive acoustic field measurements especially when the acoustic
 field is simple.
 
 Estimating the Acoustic Field Inside the Test-Section
 -----------------------------------------------------
 
-### Mode Marching Process
+Several mode-matching methods have been previously employed, from
+axially-segmented turbofan duct liner [@McAlpine-2006-NrCzhW4Z] to
+muffler modeling [@Ji-2013-agaCHhcP]. Both of these methods require the
+entire field to be solved simultaneously because there are duct modes
+traveling in both directions at each axial-spatial location. Using the
+turbofan duct liner version, a single azimuthal order, $m$, and only a
+few radial orders, $n$, need to be computed for the various boundary
+conditions with a constant mesh used through the four segments. In the
+muffler model version, step changes in the cross-section are employed,
+allowing for a constant mesh to be generated to account for all possible
+cross-sections.
 
-1.  Start with a known or assumed source acoustic field, $p^n(x,y)$
+For a wind-tunnel that has a numerous cross-sectional area changes, a
+square cross-section for the test-section, and a circular cross-section
+for the fan, the mode-matching method can become computational
+expensive. At each axial-location, all possible duct modes need to be
+calculated up to a value of $k_m$ necessary to fully resolve local duct
+modes. This will need to be at least high enough to resolve all of the
+cut-on modes [@Gabard-2008-H4mEEeVt]. In order to reduce the
+computational cost of simulating the acoustic environment inside of a
+wind tunnel, a mode marching method was employed where an initial
+cross-sectional pressure field was marched from the wind-tunnel fan in
+both directions around the wind-tunnel and through the test-section.
 
-2.  Calculate the transmitted pressure ratio
+For the circular to square transition on either side of the wind-tunnel
+fan, a deformable mesh was used such that there would be a one-to-one
+mapping of mesh points throughout the transition. An example of the
+deformable mesh is shown in Figure
+[\[fig:deformable\_mesh\]](#fig:deformable_mesh){reference-type="ref"
+reference="fig:deformable_mesh"} at both the square and circular limits
+and halfway in between.
 
-    -   Traveling with subsonic flow
-        $$\frac{p^t}{p^i} = \left(\frac{1+M_n}{1+M_{n+1}}\right)\left(\frac{2M_{n+1}}{M_n+M_{n+1}}\right)\left(\frac{X_{n,n}}{X_{n,n+1}}\right)\left(\frac{X_{n,n}}{X_{n+1,n+1}}\right)^{1/(\gamma-1)}$$
+![Deformable mesh for calculating the acoustic modes in the circular to
+square transitions at three
+stages.](../matlab/03_aero_optics_acoustics/deformable_mesh.eps)
 
-    -   Traveling against subsonic flow
-        $$\frac{p^t}{p^i} = \left(\frac{1-M_n}{1-M_{n+1}}\right)\left(\frac{2M_{n+1}}{M_n+M_{n+1}}\right)\left(\frac{X_{n,n}}{X_{n,n+1}}\right)\left(\frac{X_{n,n}}{X_{n+1,n+1}}\right)^{1/(\gamma-1)}$$
+[\[fig:deformable\_mesh\]]{#fig:deformable_mesh
+label="fig:deformable_mesh"}
 
-    -   Where $$X_{a,b} = 1+\frac{\gamma-1}{2}M_aM_b$$
+Because cross-sectional wavenumber scales with the area
+($k_m^2A=\textrm{const}$), all modes were solved for a cross-section of
+unit area. Modes in square cross-section were calculated with both the
+deformable mesh and a rectangular mesh in order to allow for easy
+transitions in the cruciform region of the wind-tunnel diffuser.
 
-3.  March acoustic field to next axial step,
-    $$p^{n+1}(x,y) = p^{n}(x,y)\frac{p^t}{p^i}\exp\{j(\omega t\mp k_{zm}^\pm z)\}$$
+### Mode-Marching Method Procedure
 
-4.  Best-fit set of local duct modes coefficients, $C_m$, to acoustic
-    field $p^{n+1}(x,y)$
+1.  *Starting Acoustic Pressure Disturbance*\
+    The method starts with an initial acoustic pressure disturbance that
+    could be either measured, computed, or assumed. $$\hat{p}^0(x,y)$$
 
-5.  Calculate new acoustic field from duct mode and repeat from step 2
-    $$p^n(x,y) = \sum_{m=0}^{M} C_m\cdot p_m(x,y)$$
+2.  *Modal Best Fit*\
+    The pressure disturbance at the current axial location is best fit
+    to the possible modes. $$\hat{p}^i(x,y)=\Psi_M^i(x,y)\cdot C_m^i$$
 
-6.  When the end point is reached, step inlet acoustic field (rotate
-    fan) and repeat
+3.  *Transmitted Pressure Ratio*\
+    The pressure attenuation due to Mach number change
+    [@Powell-1959-W7KVArvn] as a ratio of transmitted pressure to
+    incident pressure is computed for an acoustic wave traveling with
+    subsonic flow,
+    $$\frac{p_t}{p_i} = \left(\frac{1+M_n}{1+M_{n+1}}\right)\left(\frac{2M_{n+1}}{M_n+M_{n+1}}\right)\left(\frac{X_{n,n}}{X_{n,n+1}}\right)\left(\frac{X_{n,n}}{X_{n+1,n+1}}\right)^{1/(\gamma-1)} \textrm{,}
+        \label{eqn:03_pressure_ratio_with}$$ or traveling against
+    subsonic flow,
+    $$\frac{p_t}{p_i} = \left(\frac{1-M_n}{1-M_{n+1}}\right)\left(\frac{2M_{n+1}}{M_n+M_{n+1}}\right)\left(\frac{X_{n,n}}{X_{n,n+1}}\right)\left(\frac{X_{n,n}}{X_{n+1,n+1}}\right)^{1/(\gamma-1)} \textrm{,}
+        \label{eqn:03_pressure_ratio_against}$$ where
+    $$X_{a,b} = 1+\frac{\gamma-1}{2}M_aM_b \textrm{.}$$
+
+4.  *Reflected Pressure Ratio*\
+    The reflected pressure ratio is a useful quantity to keeping track
+    of, because one of the main assumptions of the mode marching method
+    is that the reflections are negligible. The pressure attenuation due
+    to Mach number change [@Powell-1959-W7KVArvn] as a ratio of
+    reflected pressure to incident pressure is computed for an acoustic
+    wave traveling with subsonic flow,
+    $$\frac{p_r}{p_i} = \left(\frac{1+M_n}{1-M_n}\right)\left(\frac{M_{n+1}-M_n}{M_{n+1}+M_n}\right)\frac{Y_{n,n+1}}{X_{m,n+1}} \textrm{,}
+        \label{eqn:03_pressure_ratio_with_reflected}$$ or traveling
+    against subsonic flow,
+    $$\frac{p_r}{p_i} = \left(\frac{1-M_n}{1+M_n}\right)\left(\frac{M_{n+1}-M_n}{M_{n+1}+M_n}\right)\frac{Y_{n,n+1}}{X_{m,n+1}} \textrm{,}
+        \label{eqn:03_pressure_ratio_against_reflected}$$ where
+    $$Y_{a,b} = 1-\frac{\gamma-1}{2}M_aM_b \textrm{.}$$
+
+5.  *March Modes Forward*\
+    March the acoustic modes forward to the next axial location.
+    $$\hat{p}_{i+1}(x,y) = \frac{p_t}{p_i}\sum\Psi_M^i(x,y)\cdot C_m^i\cdot\exp\{\mp j k_{zm}^\pm z\}$$
+
+6.  *Repeat*\
+    Repeat steps 2-4 until the desired location is reached. Different
+    starting pressure disturbances can also be checked.
+
+### University of Notre Dame White Field Wind-Tunnel Simulation
+
+The University of Notre Dame White Field wind-tunnel is capable of
+reaching speeds of Mach 0.6 in the 3-foot by 3-foot test-section. A CAD
+model of the wind-tunnel is shown in Figure
+[\[fig:03\_tunnel\_model\]](#fig:03_tunnel_model){reference-type="ref"
+reference="fig:03_tunnel_model"}.
+
+![CAD model of the University of Notre Dame Whitefield wind-tunnel. The
+specifications of the tunnel at the numbered cross-sections are shown in
+Table
+[\[tab:03\_wind\_tunnel\_specs\]](#tab:03_wind_tunnel_specs){reference-type="ref"
+reference="tab:03_wind_tunnel_specs"}.](../photos/whitefield_tunnel.png "fig:"){width="\textwidth"}
+(-360,140) (-415,135) (-440,45) (-395,15) (-320,0) (-250,20) (-180,38)
+(-132,48) (-80,32) (-60,40) (-25,135) (-50,165) (-180,190) (-315,155)
+
+[\[fig:03\_tunnel\_model\]]{#fig:03_tunnel_model
+label="fig:03_tunnel_model"}
+
+The cross-sectional area and distance from the wind-tunnel fan going
+upstream are presented in Table
+[\[tab:03\_wind\_tunnel\_specs\]](#tab:03_wind_tunnel_specs){reference-type="ref"
+reference="tab:03_wind_tunnel_specs"} along with some comments on the
+segments between some of the cross-sections.
+
+   Section   Area (m$^2$)   Z (m)  Comment
+  --------- -------------- ------- ---------
+      1          5.07       0.00   
+      2          4.68       2.42   
+      3          4.68       4.56   
+      4          3.57       8.65   
+      5          3.57       10.71  
+      6          1.97       14.33  
+      7          0.84       17.99  
+      8          0.84       20.73  
+      9          5.44       23.07  
+     10          5.44       24.30  
+     11          5.44       26.54  
+     12          8.04       29.65  
+     13          8.04       31.88  
+     14          4.67       39.25  
+
+  : Wind-tunnel cross-section specifications
+
+[\[tab:03\_wind\_tunnel\_specs\]]{#tab:03_wind_tunnel_specs
+label="tab:03_wind_tunnel_specs"}
+
+For the distances in Table
+[\[tab:03\_wind\_tunnel\_specs\]](#tab:03_wind_tunnel_specs){reference-type="ref"
+reference="tab:03_wind_tunnel_specs"} the corners have been straightened
+out and set to a length equal to the center-line arc from the entrance
+to the exit of that segment. The transition segments on either side of
+the wind-tunnel fan convert the circular cross-section to a square
+cross-section. Between cross-section 6 and 7 the diffuser has a
+cruciform splitting it into four separate segments in which the duct
+modes were independently marched. The test-section is 2.75-m long and
+the main contraction shape from section 8 to 9 follows a fifth-order
+polynomial. Acoustic reflections that would be due turning vains or
+other internal structures have been neglected along with the fan hub and
+motor shaft geometry.
+
+The wind-tunnel was discretized into smaller segments that were a
+maximum of 0.25-m in length. The speed throughout the wind-tunnel was
+determined via conservation of mass and steady-flow energy relations
+[@Sutcliff-2013-PMZyfvn7] and the pressure transmission ratios were
+computed using Equations
+[\[eqn:03\_pressure\_ratio\_with\]](#eqn:03_pressure_ratio_with){reference-type="ref"
+reference="eqn:03_pressure_ratio_with"} and
+[\[eqn:03\_pressure\_ratio\_against\]](#eqn:03_pressure_ratio_against){reference-type="ref"
+reference="eqn:03_pressure_ratio_against"}. Pressure reflection ratios
+calculated using Equations
+[\[eqn:03\_pressure\_ratio\_with\_reflected\]](#eqn:03_pressure_ratio_with_reflected){reference-type="ref"
+reference="eqn:03_pressure_ratio_with_reflected"} and
+[\[eqn:03\_pressure\_ratio\_against\_reflected\]](#eqn:03_pressure_ratio_against_reflected){reference-type="ref"
+reference="eqn:03_pressure_ratio_against_reflected"} and verified to be
+small. Figure
+[\[fig:03\_tunnel\_discretization\]](#fig:03_tunnel_discretization){reference-type="ref"
+reference="fig:03_tunnel_discretization"} shows these parameters for the
+tunnel at a Mach number of 0.6 in the test-section with flow going from
+right-to-left.
+
+![Wind-tunnel discretization at a Mach number of
+0.6.](../matlab/03_aero_optics_acoustics/tunnel_discretization_0.60.eps)
+
+[\[fig:03\_tunnel\_discretization\]]{#fig:03_tunnel_discretization
+label="fig:03_tunnel_discretization"}
+
+For most of the wind-tunnel the Mach number is around 0.1 with the
+transmission pressure ratio (solid lines) at effectively unity. In the
+regions of rapid Mach number change around the contraction and the
+test-section diffuser, the transmission pressure ratio can deviated
+significantly from unity, especially for sound waves traveling upstream.
+These regions also show some reflected pressure ratios (dotted lines)
+that are non-negligible. For acoustic waves traveling in both
+directions, the section on the opposite side of the test section
+produces reflected acoustic waves back into the test section.
+
+The wind-tunnel fan was modeled using a circular duct mode of $m=8$ and
+$n=0$ at a frequency of 520-Hz which corresponds to the blade-passing
+frequency of the Mach number 0.6 case. The duct mode of $m=8$ and $n=0$
+is the largest cut-on mode in which the azimuthal mode number is a
+factor of the total number of fan blades, 32. The peak-to-peak acoustic
+pressure of the fan was set to unity to allow the results to be easily
+scaled. To check for the possibility of some duct modes only being
+present at certain orientations of the fan blades, the initial acoustic
+pressure disturbance was rotated by replacing $\omega t$ in the temporal
+portion of Equation
+[\[eqn:02\_pressure\_solution\_duct\]](#eqn:02_pressure_solution_duct){reference-type="ref"
+reference="eqn:02_pressure_solution_duct"} with a phase offset that
+varied from 0 to 2$\pi$.
+
+Cross-sectional slices of the acoustic field as the waves march upstream
+from the fan through the circle to square transition are shown in Figure
+[\[fig:03\_transition\_acoustics\]](#fig:03_transition_acoustics){reference-type="ref"
+reference="fig:03_transition_acoustics"}.
+
+![Cross-sectional slices of the acoustic field through the circle to
+square transition for the acoustic waves traveling upstream. Left side
+are the waves traveling from the fan at a phase of 0-radians and the
+right side at a phase of $\pi$/2-radians. The top plots are the fan
+acoustic field, the middle plots are halfway through the transition, and
+the bottom plots are just into the square
+duct.](../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_0_001.eps "fig:")
+![Cross-sectional slices of the acoustic field through the circle to
+square transition for the acoustic waves traveling upstream. Left side
+are the waves traveling from the fan at a phase of 0-radians and the
+right side at a phase of $\pi$/2-radians. The top plots are the fan
+acoustic field, the middle plots are halfway through the transition, and
+the bottom plots are just into the square
+duct.](../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_1.5708_001.eps "fig:")\
+![Cross-sectional slices of the acoustic field through the circle to
+square transition for the acoustic waves traveling upstream. Left side
+are the waves traveling from the fan at a phase of 0-radians and the
+right side at a phase of $\pi$/2-radians. The top plots are the fan
+acoustic field, the middle plots are halfway through the transition, and
+the bottom plots are just into the square
+duct.](../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_0_006.eps "fig:")
+![Cross-sectional slices of the acoustic field through the circle to
+square transition for the acoustic waves traveling upstream. Left side
+are the waves traveling from the fan at a phase of 0-radians and the
+right side at a phase of $\pi$/2-radians. The top plots are the fan
+acoustic field, the middle plots are halfway through the transition, and
+the bottom plots are just into the square
+duct.](../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_1.5708_006.eps "fig:")\
+![Cross-sectional slices of the acoustic field through the circle to
+square transition for the acoustic waves traveling upstream. Left side
+are the waves traveling from the fan at a phase of 0-radians and the
+right side at a phase of $\pi$/2-radians. The top plots are the fan
+acoustic field, the middle plots are halfway through the transition, and
+the bottom plots are just into the square
+duct.](../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_0_012.eps "fig:")
+![Cross-sectional slices of the acoustic field through the circle to
+square transition for the acoustic waves traveling upstream. Left side
+are the waves traveling from the fan at a phase of 0-radians and the
+right side at a phase of $\pi$/2-radians. The top plots are the fan
+acoustic field, the middle plots are halfway through the transition, and
+the bottom plots are just into the square
+duct.](../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_1.5708_012.eps "fig:")
+
+[\[fig:03\_transition\_acoustics\]]{#fig:03_transition_acoustics
+label="fig:03_transition_acoustics"}
+
+The plots on the left side are at an initial phase angle of 0-radians
+and the right side are at a phase angle of $\pi$/2-radians. The top
+plots are the cross-sectional slices of the acoustic field directly
+upstream of the fan, the middle plots are halfway through the
+transition, and the bottom plots are just into the square duct. As an
+acoustic wave propagates upstream, a phase shift can be observed with
+the halfway transitioned cross-sectional slices having an opposite local
+phase. As the acoustic wave enters the square duct the 0-radian phase,
+left side, bears little resemblance to the original acoustic wave while
+the $\pi$/2-radian phase shows some significant similarities.
+
+The acoustic field cross-section at the center of the test-section is
+shown in Figure
+[\[fig:03\_test\_section\_acoustics\]](#fig:03_test_section_acoustics){reference-type="ref"
+reference="fig:03_test_section_acoustics"} for a variety of initial
+phase angles.
+
+![Cross-sectional acoustic field slices in the center of the
+test-section at various initial phase
+angles.](../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_0_081.eps "fig:")
+![Cross-sectional acoustic field slices in the center of the
+test-section at various initial phase
+angles.](../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_0.5236_081.eps "fig:")
+![Cross-sectional acoustic field slices in the center of the
+test-section at various initial phase
+angles.](../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_1.0472_081.eps "fig:")
+![Cross-sectional acoustic field slices in the center of the
+test-section at various initial phase
+angles.](../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_1.5708_081.eps "fig:")
+![Cross-sectional acoustic field slices in the center of the
+test-section at various initial phase
+angles.](../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_2.0944_081.eps "fig:")
+![Cross-sectional acoustic field slices in the center of the
+test-section at various initial phase
+angles.](../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_2.618_081.eps "fig:")
+
+[\[fig:03\_test\_section\_acoustics\]]{#fig:03_test_section_acoustics
+label="fig:03_test_section_acoustics"}
+
+As the fan blades rotate so too does the acoustic field within the
+test-section. The real component of the duct modes are shown in Figure
+[\[fig:03\_test\_section\_modes\]](#fig:03_test_section_modes){reference-type="ref"
+reference="fig:03_test_section_modes"} as a function of the initial
+phase angle. The primary duct mode in the test-section is the $m=2$,
+$n=2$ mode with contributions from in-sync pairs of modes $m=0,2$,
+$n=2,0$ and out-of-sync pairs $m=1,3$, $n=3,1$.
+
+![The real component of the acoustic mode coefficients making up the
+acoustic field in the middle of the test-section as a function of the
+initial phase
+angle.](../matlab/03_aero_optics_acoustics/tunnel_acoustic_against_0.6_8_0.eps)
+
+[\[fig:03\_test\_section\_modes\]]{#fig:03_test_section_modes
+label="fig:03_test_section_modes"}
+
+These five modes can be used to simulate the optical response of the fan
+driven acoustics inside of the test section by using the maximum value
+of the modal coefficient and a relative phase angle between the
+different modes by using Equation
+[\[eqn:02\_pressure\_solution\_duct\]](#eqn:02_pressure_solution_duct){reference-type="ref"
+reference="eqn:02_pressure_solution_duct"} and
+$$\widehat{\opd}(x,y) = \frac{K_{GD}}{c_0^2}\int_{z_1}^{z_2} \hat{p}(x,y,z)_{Ap}dz \textrm{,}
+  \label{eqn:03_opd_complex}$$ where $\widehat{\opd}$ is the complex
+optical path difference and $K_{GD}$ is the Gladstone-Dale constant. The
+temporal portion of Equation
+[\[eqn:02\_pressure\_solution\_duct\]](#eqn:02_pressure_solution_duct){reference-type="ref"
+reference="eqn:02_pressure_solution_duct"} can be applied after the
+integration process in Equation
+[\[eqn:03\_opd\_complex\]](#eqn:03_opd_complex){reference-type="ref"
+reference="eqn:03_opd_complex"} and just before taking the real
+component to simulate a measured value.
+
+The acoustic duct modes in the center of the test-section for the
+acoustic waves traveling in the direction of the flow are shown in
+Figure
+[\[fig:03\_test\_section\_modes\_with\]](#fig:03_test_section_modes_with){reference-type="ref"
+reference="fig:03_test_section_modes_with"}.
+
+![The real component of the acoustic mode coefficients making up the
+acoustic field in the middle of the test-section as a function of the
+initial phase
+angle.](../matlab/03_aero_optics_acoustics/tunnel_acoustic_with_0.6_8_0.eps)
+
+[\[fig:03\_test\_section\_modes\_with\]]{#fig:03_test_section_modes_with
+label="fig:03_test_section_modes_with"}
+
+The downstream-traveling acoustic field inside of the test-section is
+comprised of the same duct modes as the upstream-traveling acoustic
+field but the mode coefficient are approximately an order-of-magnitude
+lower. All of the phase offsets remained the same except for the $m=2$,
+$n=2$ mode which was offset by $\pi$ radians. When the
+downstream-traveling acoustic field enters the cruciform after the
+test-section a portion of it is reflected, see Figure
+[\[fig:03\_tunnel\_discretization\]](#fig:03_tunnel_discretization){reference-type="ref"
+reference="fig:03_tunnel_discretization"}. When the maximum reflected
+pressure ratio, approximately -0.25, is combined with the strength of
+the downstream-traveling acoustic field, the acoustic field reflected
+back into the test-section is 1-2 orders-of-magnitude lower than the
+upstream-traveling acoustic field from the fan. The reflected field from
+the upstream-traveling acoustic field after it leaves the test-section
+is on the same order-of-magnitude as the downstream-traveling acoustic
+field. Assuming there was a reflected pressure ratio of 0.25 on both
+ends of the test-section, the trapped acoustic field if there were
+perfect constructive interference, would be only 33% the strength of the
+original acoustic field, $$\sum_{n=1}^\infty 0.25^n = 1/3 \textrm{.}$$
+
+Summary
+-------
+
+Acoustic waves affect the transmission of light by causing the local
+index-of-refraction to change with the pressure fluctuations. When the
+acoustic field is well modeled, as was the case with a few of the
+spherical wave measurements, an optical wavefront measurement can
+provide an acurate measurement of the acoustic field strength
+non-intrusively.
+
+A comparison between a measured optical wavefront that has been
+band-pass filtered at the blade-passing frequency and a simulated
+optical wavefront that has been shot through the estimated acoustic
+field computed by the mode-marching method is shown in Figure
+[\[fig:03\_tunnel\_comparison\]](#fig:03_tunnel_comparison){reference-type="ref"
+reference="fig:03_tunnel_comparison"}.
+
+![Comparison of a measured optical wavefront and a simulated one passing
+through the estimated acoustic
+field.](../matlab/03_aero_optics_acoustics/tunnel_comparison.eps)
+
+[\[fig:03\_tunnel\_comparison\]]{#fig:03_tunnel_comparison
+label="fig:03_tunnel_comparison"}
+
+Qualitatively, there is some significant agreement between the two
+wavefronts. Since there was not a microphone installed in either the
+test-section or around the wind-tunnel fan, there cannot be a
+quantitative comparison made.
+
+The mode-marching method provides a computationally rapid way of
+estimating an acoustic signal as it travels through a duct system like a
+wind-tunnel. This method assumes that the reflected component will be
+minimal and can typically be ignored. A significant contribution of this
+work to the computational procedure of this method is computing the
+eigen-functions for the various geometries that are neither circular nor
+rectangular. These computations would become even more costly if the
+cross-section cannot be assumed to have a uniform flow speed
+[@Wilson-2019-VV2zh7Au]. This method has neglected the effect that the
+corners would have on the signal or other internal geometry such as the
+turning vanes or the turbulence screens.
+
+The main benefit to using a mode-marching method is to simulate
+narrow-band signals that appear in the optical wavefront spectra and to
+have some level of confidence that the source of that signal is the
+wind-tunnel fan. If the narrow-band signal does not match up with the
+simulated signal, it could have a source that may not be due to the
+testing environment and would likely need to be investigated further. If
+there is significant agreement between the measured and simulated
+signals, a simple stop-band filter could be used to eliminate the
+contamination.
 
 Multidimensional Spectral Estimation of Optical Wavefronts {#chap:04_dispersion}
 ==========================================================
@@ -1744,7 +2157,7 @@ and aliased signals. The upstream-traveling acoustic wave however is a
 fairly thin signal that is distinguishable from the aliased signal and
 it has a characteristic velocity of -173.0-m/s.
 
-Synthetic Wavefront
+Synthetic Wavefront {#chap:05_synthetic}
 ===================
 
 In order to best understand how some basic filters preform on a set of
@@ -1991,16 +2404,21 @@ numbers for the Listings.]{style="color: red"}
 Single Sensor Filtering Techniques {#chap:06_single_filter}
 ==================================
 
-[Show some dispersions of POD modes and discuss whether or not POD
-filtering maybe a viable option.]{style="color: red"}
+::: {style="color: red"}
+-   Work on the chapter intro
 
-A filter is a function, $G(\mathbf{\omega})$, that describes the gain a
-signal will experience in frequency space. In the simplest case, the
-filtered signal is the inverse Fourier transform of the gain multiplied
-by the Fourier transform of the signal. Additionally, a windowing
-function, $W(\mathbf{x})$, can be used to help suppress finite sampling
-effects,
-$$f_F(\mathbf{x}) = \real\left(\frac{\ifftn[G(\mathbf{\omega})\cdot\fftn\{f(\mathbf{x})\cdot W(\mathbf{x})\}]}{W(\mathbf{x})}\right) \textrm{,}
+-   Filter applied in Fourier space and multidimensional spectral space
+:::
+
+Transfer function, $H(j\omega) = H(s)$ Filter gain,
+$G(\omega) = |H(j\omega)|$ Filter phase,
+$\Phi(\omega) = \arg(H(j\omega))$ A filter is a function,
+$G(\mathbf{\omega})$, that describes the gain a signal will experience
+in frequency space. In the simplest case, the filtered signal is the
+inverse Fourier transform of the gain multiplied by the Fourier
+transform of the signal. Additionally, a windowing function,
+$W(\mathbf{x})$, can be used to help suppress finite sampling effects,
+$$f_F(\mathbf{x}) = \real\left(\ifftn[H(j\mathbf{\omega})\fftn\{\mathbf{x}\}]\right) \textrm{,}
  \label{eqn:06_filter_function}$$ where $f$ is the signal function and
 $f_F$ is the filtered signal. Depending on the windowing function some
 data could be destroyed during this process if there is a zero present
@@ -2025,7 +2443,7 @@ arbitrary aperture function which ensures that all of the points inside
 of the aperture are non-zero. In some cases, a windowing function was
 not used due to filtered wavefront having a far greater magnitude in
 some places despite the precautions used. The filter presented in this
-code sample is a second order temporal high-pass filter with a cut-off
+code sample is a second order temporal high-pass filter with a cutoff
 frequency of 2000 Hz. The function `WFfilter` takes input based on a
 normalized cut-point in reference to the sample rate.
 
@@ -2033,46 +2451,62 @@ Temporal Filter Methods
 -----------------------
 
 The methods presented in this section are based on Butterworth filters
-[@Butterworth-1930-DvDrjKha] but could easily be extended to other types
-of filters. The basic gain function,
-$$G(f) = \frac{1}{\sqrt{1+\left(\frac{f}{f_c}\right)^{\pm2n}}} \textrm{,}
- \label{eqn:06_butterworth}$$ where $f_c$ is the cut-off frequency, $n$
-is the filter order (number of filters in a series), and $\pm$
-represents either a low-pass ($+$) or high-pass ($-$) filter. In this
-particular formulation, only the magnitude is attenuated, circuit based
-Butterworth filters or their digital copies will have some variable
-phase attenuation as well. Additionally, a band-pass filter can be
+but could be extended to other types of filters. The square of the
+transfer function of a Butterworth filter is
+[@Butterworth-1930-DvDrjKha],
+$$|H(j\omega)|^2 = G^2(\omega) = \frac{G_0^2}{1+\left(\frac{j\omega}{j\omega_c}\right)^{\pm2n}} \textrm{,}
+ \label{eqn:06_butterworth}$$ where $G_0$ is the zero-frequency gain,
+$\omega_c$ is the cutoff angular frequency, $n$ is the filter order
+(number of filters in a series), and $\pm$ represents either a low-pass
+($+$) or high-pass ($-$) filter. The gain of this filter is
+$$G(\omega) = \frac{G_0}{\sqrt{1+\left(\frac{\omega}{\omega_c}\right)^{\pm2n}}} \textrm{.}
+  \label{eqn:06_butterworth_gain}$$ A band-pass filter can be
 constructed by placing a low-pass in series with a high-pass filter and
 a band-stop by placing the two types in parallel.
 
-As a large portion of the wavefront contamination is at low frequencies,
-a high-pass filter is the most useful in temporal space for removing
-unwanted contamination, as shown in Figure
+In many tests, a large portion of the wavefront noise is at low
+frequencies primarily caused by mechanical vibration. In general, a
+high-pass filter is useful in temporal space for removing this noise,
+since in many cases most of the power in the aero-optical signal occurs
+at higher frequency than the low-frequency mechanical vibration. as
+shown in Figure
 [\[fig:06\_filter\_temporal\]](#fig:06_filter_temporal){reference-type="ref"
 reference="fig:06_filter_temporal"}.
 
-![OPD time-averaged spatial-RMS of high-pass temporal filters relative
-to the aero-optical only unfiltered
-wavefront.](../matlab/06_single_sensor_filtering/filter_temporal.eps)
+![The $opdrms$ of high-pass temporal filtered wavefronts relative to the
+$opdrms$ of the aero-optical only unfiltered wavefront. Power spectra of
+both of the simulated wavefront
+versions.](../matlab/06_single_sensor_filtering/filter_temporal.eps)
 
 [\[fig:06\_filter\_temporal\]]{#fig:06_filter_temporal
 label="fig:06_filter_temporal"}
 
-This figure shows the time-averaged spatial-RMS of both the total and
-aero-optical only wavefronts with various cut-off high-pass filters
-relative to that of the aero-optical only wavefront unfiltered. The
-total wavefront ratio crosses unity around 1200 Hz, which is about
-halfway between the second and third harmonic of the blade-passing
-frequency in this simulated wavefront. While approximately 75% of the
-aero-optical signal remains at this cut-off frequency, that difference
-is made up by the remaining contamination. This can provide a
-computationally cheap way estimating the aero-optical portion of the
-wavefront for calculations that rely on the spatial-RMS of a wavefront.
-While it is easy to determine a cut-off frequency for this synthetic
-wavefront, a measured wavefront will likely take some knowledge or
-expectation of the contamination that is present in the measurement.
+This figure shows the high-pass filtered $\opdrms$ of both the total and
+aero-optical only wavefronts high-pass filters with various cutoff
+frequencies, relative to that of the unfiltered $\opdrms$ aero-optical
+only wavefront. Along with the filter performance plot is the power
+spectra of both of the simulated wavefront versions. The results in
+Figure
+[\[fig:06\_filter\_temporal\]](#fig:06_filter_temporal){reference-type="ref"
+reference="fig:06_filter_temporal"} were computed for the synthetic
+wavefront created in Chapter
+[5](#chap:05_synthetic){reference-type="ref"
+reference="chap:05_synthetic"}. The figure shows how a high-pass filter
+decreases the energy in the total wavefront and in the actual
+aero-optical wavefront, as the cutoff frequency increases. The total
+wavefront ratio crosses unity around 1200 Hz, which is around the third
+harmonic of the blade-passing frequency in this simulated wavefront. At
+this cutoff frequency  75% of the aero-optical signal remains and the
+remaining signal is made up by the remaining contamination. This
+approach can provide a computationally inexpensive way of estimating the
+aero-optical portion of the wavefront for calculations that rely on the
+$\opdrms$ of a wavefront. While it is more straightforward to determine
+a cutoff frequency for this synthetic wavefront since all of the signal
+components are fully known, a measured wavefront will likely take some
+knowledge or expectation of the contamination that is present in the
+measurement in order to select a high-pass filter cutoff frequency.
 
-An example of band-pass and band-stop filtering is shown if Figure
+An example of band-pass and band-stop filtering is shown in Figure
 [\[fig:06\_filter\_temporal\_bandpass\]](#fig:06_filter_temporal_bandpass){reference-type="ref"
 reference="fig:06_filter_temporal_bandpass"}.
 
@@ -2084,70 +2518,83 @@ filtered.](../matlab/06_single_sensor_filtering/filter_temporal_bandpass.eps)
 [\[fig:06\_filter\_temporal\_bandpass\]]{#fig:06_filter_temporal_bandpass
 label="fig:06_filter_temporal_bandpass"}
 
-The figure shows measured data that is band-stop filtered in the left
-column and band-pass filtered in the right column in several different
-frames. The flow is from right-to-left and the band-pass filtered
-wavefront clearly shows upstream-moving optical disturbances associated
-with acoustic duct modes traveling upstream from the fan. The band-stop
-shows a much slower moving optical disturbance that is in general moving
-in the direction of the flow, but it still possess the optical
-disturbances of the blade-pass frequency harmonics.
+The figure shows several wavefront frames of the measured data presented
+in Chapter [3](#chap:03_optical_acoustics){reference-type="ref"
+reference="chap:03_optical_acoustics"} in the Notre Dame White Field
+wind tunnel (see Figure
+[\[ADD\_REFERENCE\]](#ADD_REFERENCE){reference-type="ref"
+reference="ADD_REFERENCE"}) that is band-stop filtered in the left
+column and band-pass filtered in the right column. The flow is from
+right-to-left and the band-pass filtered wavefront clearly shows
+upstream-moving optical disturbances (moving left-to-right against the
+flow direction) associated with acoustic duct modes traveling upstream
+from the fan. On the other hand, the band-stop filtered wavefronts on
+the left of Figure
+[\[fig:06\_filter\_temporal\_bandpass\]](#fig:06_filter_temporal_bandpass){reference-type="ref"
+reference="fig:06_filter_temporal_bandpass"} show much slower-moving
+optical disturbances that are in general moving in the direction of the
+flow. In particular, the downstream-moving disturbances on the left side
+of Figure
+[\[fig:06\_filter\_temporal\_bandpass\]](#fig:06_filter_temporal_bandpass){reference-type="ref"
+reference="fig:06_filter_temporal_bandpass"} have the appearance of
+boundary-layer aero-optical disturbances, with a scale on the order of
+the boundary-layer thickness.
 
-One thing of note, MATLAB's builtin filter functions only work in
-one-dimension of frequency space and are unable to determine the
-direction that a signal is traveling. They also only apply the filter to
-the positive frequencies and zero-out the negative ones which both
-reduces the signal by two and also switches all disturbances to moving
-in the same direction. So even for a filter that operates in
-one-dimension, it is best to apply the filter over both positive and
-negative frequencies to the n-dimensional Fourier transform in order to
-preserve the direction of travel of a signal. This additionally allows
-several filters to be applied in series with one another without having
-to perform a Fourier and inverse Fourier transform for each successive
-filter. [I should maybe show this matlab filter issue in an
-appendix.]{style="color: red"}
-
-Some additional uses of temporal filters would be in sizing and/or
-designing an adaptive optics system. A low-pass filter with a cut-off at
-the bandwidth of either a fast-steering or deformable mirror would help
-determine the signal that a system would need to reject. A control
-system may need to have the bandwidth reduced in order to keep a
-mirror's travel within limits. While a high-pass filter would inform
-designers of the remaining optical aberrations that cannot be corrected.
+Note that for filters that operate in one-dimension, the filters were
+applied over both positive and negative frequencies to the n-dimensional
+Fourier transform in order to preserve the direction of travel of the
+signal. This also allowed several filters to be applied in series with
+one another without having to perform a Fourier and inverse Fourier
+transform for each successive filter. Temporal filters are also used in
+sizing and/or designing adaptive optics systems [@ADD_SOURCE] for
+example. A low-pass filter with a cutoff at the bandwidth of either a
+fast-steering or deformable mirror is often used to define the signal
+that the system needs to reject [@ADD_SOURCE]. A control system may need
+to have the bandwidth reduced in order to keep a mirror's travel within
+limits [@ADD_SOURCE], while a high-pass filter would inform designers of
+the remaining optical aberrations that cannot be corrected.
 
 Upstream/Downstream Moving
 --------------------------
 
-For the filtering of upstream and downstream moving optical disturbances
-a logistic function was chosen,
+In the preceding section, filters based on temporal frequency only were
+discussed. In this section, another filtering approach is presented in
+which signals are identified based on their dispersion velocity. For the
+filtering of upstream and downstream moving optical disturbances a
+logistic function was chosen,
 $$f(x) = \frac{1}{1+\exp\{-kx\}} \textrm{.}
- \label{eqn:06_logistic}$$ This function needs to be expanded into
+ \label{eqn:06_logistic}$$ This function was then expanded into
 two-dimensions ($x$ and $t$) with the filter ideally returning a value
-of one in both the first and third quadrants and zero otherwise for a
-filter outputs disturbances moving in the direction of flow. To
-accomplish this the logistic curve in each dimension is scaled and
+of one in both the first and third quadrants and zero otherwise, for a
+filter that acts on disturbances moving in the direction of flow. To
+accomplish this, the logistic curve in each dimension was scaled and
 offset to output values between negative one and positive one,
 $$G_t(f) = \frac{2}{1+\exp\{-k_tf\}}-1
  \label{eqn:06_logistic_time}$$ and
 $$G_x(\xi_x) = \frac{2}{1+\exp\{\pm k_x\xi_x\}}-1 \textrm{,}
  \label{eqn:06_logistic_space}$$ where $\pm$ determines whether the
-filter is obtaining upstream traveling disturbances ($+$) or downstream
-traveling ($-$). These two gain functions are then multiplied together
-and scaled to output values between zero and one,
+filter is designed to act on upstream-traveling disturbances ($+$) or
+downstream-traveling ($-$). These two gain functions are then multiplied
+together and scaled to output values between zero and one,
 $$G(\xi_x,f) = \frac{(G_t\cdot G_x)+1}{2} \textrm{.}
  \label{eqn:06_up_down_filter}$$ As the values of $k_x$ and $k_t$ go to
-infinity an ideal case is obtained. Downstream traveling disturbances
-have a gain of one in the first and third quadrants, zero in the second
-and forth quadrants, and a value of $1/2$ when either frequency is zero.
+infinity an ideal filter is obtained. In a plot of the gain with the
+horizontal spatial frequency on the x-axis and the temporal frequency on
+the y-axis, an ideal filter for obtaining only the downstream traveling
+disturbances would have a gain of one in the first and third quadrants,
+zero in the second and fourth quadrants, and a value of $1/2$ when
+either frequency is zero. The value of $1/2$ would equally split the
+component of a disturbance that is neither traveling upstream or
+downstream between the two directions.
 
-The dispersion analysis using an ideal downstream moving filter on the
-synthetic wavefront is shown in Figure
+The multidimensional spectrum using an ideal downstream moving filter on
+the synthetic wavefront is shown in Figure
 [\[fig:06\_filter\_downstream\]](#fig:06_filter_downstream){reference-type="ref"
 reference="fig:06_filter_downstream"} along side the dispersion of the
 unfiltered wavefront.
 
-![Dispersion isosurface of the synthetic wavefront with a downstream
-filter in
+![Multidimensional spectral isosurface of the synthetic wavefront with a
+downstream filter in
 place.](../matlab/06_single_sensor_filtering/filter_downstream.eps)
 
 [\[fig:06\_filter\_downstream\]]{#fig:06_filter_downstream
@@ -2159,158 +2606,225 @@ the stationary modes remain while only the acoustic and vibration
 signals that are propagating in the direction of flow remain. The
 aero-optical signal is clipped slightly at $\xi_x=0$ due to the spatial
 width of the signal. The ratio of the time-averaged spatial-RMS of the
-filtered signal when compared to the aero-optic only signal was 1.24
+filtered signal when compared to the aero-optical only signal was 1.24
 while the unfiltered ratio was 1.53. When the filter was applied to only
-the aero-optic signal the ratio was 0.96. This filter method will retain
-any disturbance that is traveling in the direction of flow. Even with an
-ideal filter there is some slight attenuation of the aero-optical signal
-due to signal having some spectral width that crosses into
-upstream-moving portion of the dispersion plot.
+the aero-optical signal the ratio was 0.96. This filter method will
+retain any disturbance that is traveling in the direction of flow. Even
+with an ideal filter there is some slight attenuation of the
+aero-optical signal due to signal having some spectral width that
+crosses into upstream-moving portion of the dispersion plot.
 
 Velocity Filtering
 ------------------
 
-The dispersion plot shows flow structures that are traveling at a given
-speed as having a constant slope. A plane in the dispersion plot can be
-used to measure a flow structure's velocity in both $x$ and
-$y$-directions. The distance from any given point in the dispersion plot
-to a plane described by the velocities $v_x$ and $v_y$ can be computed
-by $$d = \frac{|v_x\xi_x+v_y\xi_y-f|}{\sqrt{v_x^2+v_y^2+1}} \textrm{.}
- \label{eqn:06_dist_point_2_plane}$$ A low-pass or high-pass filter can
-then be used to retain only disturbances that are traveling at that
-velocity, or to exclude those disturbances respectively.
+Using dispersion analysis on a multidimensional spectral plot shows that
+flow structures traveling at a given speed as having a constant slope. A
+plane in the multidimensional spectral plot can be used to measure a
+flow structure's velocity in both $x$ and $y$-directions. The distance
+from any given point in the multidimensional spectral space to a plane
+described by the velocities $v_x$ and $v_y$ can be computed by
+$$d = \frac{|v_x\xi_x+v_y\xi_y-f|}{\sqrt{v_x^2+v_y^2+1}} \textrm{.}
+ \label{eqn:06_dist_point_2_plane}$$ Equation
+[\[eqn:06\_dist\_point\_2\_plane\]](#eqn:06_dist_point_2_plane){reference-type="ref"
+reference="eqn:06_dist_point_2_plane"} above can therefor be used to
+construct a low-pass or high-pass filter that retains only disturbances
+that are traveling at that velocity, or to exclude those disturbances
+respectively,
+$$G(d) = \frac{1}{\sqrt{1+\left(\frac{d}{d_c}\right)^{\pm2n}}} \textrm{.}
+  \label{eqn:06_butterworth_velocity}$$ where $d_c$ is the cutoff
+distance from the theoretical plane defined by the velocities $v_x$ and
+$v_y$. Because of difference in the temporal and spatial sample rates of
+several orders of magnitude, the filter function used frequencies that
+have been normalized by the sample rate.
 
 A low-pass velocity-filter of the synthetic wavefront is shown in Figure
 [\[fig:06\_filter\_velocity\]](#fig:06_filter_velocity){reference-type="ref"
 reference="fig:06_filter_velocity"}.
 
-![Dispersion isosurface of the synthetic wavefront with a low-pass
-velocity-filter in
+![Multidimensional spectral isosurface of the synthetic wavefront with a
+low-pass velocity-filter in
 place.](../matlab/06_single_sensor_filtering/filter_velocity.eps)
 
 [\[fig:06\_filter\_velocity\]]{#fig:06_filter_velocity
 label="fig:06_filter_velocity"}
 
-The filtered dispersion plot shows primarily only the aero-optic signal
-remains with some additional low-frequency content from the
+The filter was constructed for a $v_x$ at the mean boundary-layer
+velocity, $v_y$ of zero, $d_c$ of 1/80, and $n$ of 1. The filtered
+multidimensional spectral plot shows primarily only the aero-optic
+signal remains with some additional low-frequency content from the
 blade-passing frequency and harmonic disturbances as well as some
-stationary and acoustic disturbances. The ratio of the time-averaged
-spatial-RMS relative to that of the aero-optical only signal went from
-1.53 in the unfiltered case to 1.01 in the filtered case. This method
-can provide a very effective way in quickly estimating the clean
-spatial-RMS of a contaminated wavefront.
+stationary and acoustic disturbances. The ratio of the $\opdrms$
+relative to that of the aero-optical only signal went from 1.53 in the
+unfiltered case to 1.01 in the filtered case. This method can provide a
+very effective way to quickly estimate the $\opdrms$ of a convecting
+aero-optical disturbance in a noise-contaminated wavefront.
 
-Another use of the synthetic wavefront is measuring the speed of a
-broadband disturbance such as the aero-optical signal of a boundary
-layer. This is done by finding the velocity that maximizes the output
-spatial-RMS of the velocity filter, see Figure
+Another use of the velocity filter is measuring the speed of a broadband
+convecting disturbance such as the aero-optical signal of a boundary
+layer. This can be accomplished by applying a series of low-pass
+velocity filters to the multidimensional spectrum of the wavefront along
+with a high-pass radial frequency filter to remove a significant portion
+of the stationary modes and acoustic cone,
+$$S_{xx,f}(\xi_x,\xi_y,f) = S_{xx}(\xi_x,\xi_y,f) G_v^2 G_\rho^2 \textrm{,}$$
+where $G_v$ is the velocity filter and $G_\rho$ is the radial frequency
+filter. Once the wavefront has been filtered in multidimensional
+spectral space, the total power remaining can be calculated,
+$$P = \sum (S_{xx,f}\prod{\overrightarrow{f_s}}) \textrm{.}$$ The
+average convective velocity of the structure will be the maximum power
+output.
+
+This velocity finding procedure was tested on the synthetic wavefront
+which had a known boundary-layer mean velocity in Figure
 [\[fig:06\_filter\_velocity\_measure\]](#fig:06_filter_velocity_measure){reference-type="ref"
 reference="fig:06_filter_velocity_measure"}.
 
-![Velocity low-pass filter used to determine the mean disturbance
-velocity. The maximum value corresponds with the actual value used in
-the creation of the synthetic
+![Boundary layer velocity measurement of the synthetic wavefront using a
+combination of a low-pass velocity filter and a high-pass radial
+frequency filter. The maximum value at $u_{BL}/U=0.8$ corresponds with
+the actual value used in the creation of the synthetic
 wavefront.](../matlab/06_single_sensor_filtering/filter_velocity_measure.eps)
 
 [\[fig:06\_filter\_velocity\_measure\]]{#fig:06_filter_velocity_measure
 label="fig:06_filter_velocity_measure"}
 
-In this case boundary layer speed was determined to be 163 m/s which
-corresponds to the design velocity of the synthetic signal of $0.8U$. If
-the velocity range used is to large, a false result can be obtained due
-to the inclusion of disturbance structures not related to the
-aero-optical signal. For signals that have a mean-velocity component
-that is not aligned with an axis both velocity components can be varied
-as shown in Figure
+The low-pass velocity filter used the same parameters as used previously
+except that $v_x$ was varied and the high-pass radial frequency filter
+used a cutoff value of 0.1 with an order of 2. The radial frequency,
+$\xi_\rho=\sqrt{\xi_x^2+\xi_y^2}$, was normalized by the spatial
+sampling rate. In this case boundary layer speed was determined to be
+163 m/s which corresponds to the design velocity of the synthetic signal
+of $0.8U$. For signals where the mean-velocity component that is not
+aligned with either the horizontal or vertical axis, both velocity
+components can be varied as shown in Figure
 [\[fig:06\_filter\_velocity\_real\]](#fig:06_filter_velocity_real){reference-type="ref"
 reference="fig:06_filter_velocity_real"}.
 
 ![Velocity low-pass filter used to determine the mean disturbance
 velocity of measured data presented in Figure
-[\[fig:06\_dispersion\_real\]](#fig:06_dispersion_real){reference-type="ref"
-reference="fig:06_dispersion_real"}. The velocity in the x-direction was
+[\[fig:04\_dispersion\_3d\]](#fig:04_dispersion_3d){reference-type="ref"
+reference="fig:04_dispersion_3d"}. The velocity in the x-direction was
 measured to be 207 m/s and -17 m/s in the
 y-direction.](../matlab/06_single_sensor_filtering/filter_velocity_real.eps)
 
 [\[fig:06\_filter\_velocity\_real\]]{#fig:06_filter_velocity_real
 label="fig:06_filter_velocity_real"}
 
-In this case a variable low-pass velocity filter was employed with a
-high-pass spatial filter operating in the radial direction. This helped
-eliminate some of the low-frequency stationary disturbances as well as
-some of the disturbances related to the blade-passing frequency. The
-velocity was measured using the optical disturbances in the dispersion
-plot to be approximately 207 m/s in the x-direction and -17 m/s in the
-y-direction.
+In this case the same filtering parameters were used as the synthetic
+case except the distance cutoff was 1/40 and both $v_x$ and $v_y$ were
+variables. The velocity was measured using the boundary-layer optical
+disturbances in the multidimensional spectral plot to be approximately
+152 m/s in the x-direction and 3 m/s in the y-direction. The
+boundary-layer velocity was approximately $0.85U$ when compared to the
+pitot probe measurement of the free-stream velocity and the overall flow
+angle of the boundary-layer was approximately $1.1^\circ$.
+
+Baseline Spectrum
+-----------------
+
+If all of the narrow-band temporal signals could be assumed to be
+measurement contamination that need to be filtered out, a method for
+calculating the baseline of the spectrum would provide a simple way of
+filtering a portion of the signal contamination. For analysis of Raman
+spectra, the baseline spectra must often be removed
+[@Schulze-2012-GmyAqzC7]. This task is often performed manually which
+has which has brought a number of attempts to create automated technique
+estimate the baseline spectra
+[@Mosier-Boss-1995-keK3ckUN; @Schulze-2005-QkUeywxD; @Schulze-2012-GmyAqzC7; @Zhao-2007-HAc6j8Wb].
+One of those techniques [@Schulze-2012-GmyAqzC7], a small-window moving
+average-based fully automated baseline estimation method was used in
+this research. At each spatial frequency location the baseline spectra
+was computed along the temporal axis. Figure
+[\[fig:06\_filter\_baseline\]](#fig:06_filter_baseline){reference-type="ref"
+reference="fig:06_filter_baseline"}, shows the multidimensional spectra
+of an unfiltered measurement (top left) and its estimated baseline
+spectra (top right).
+
+![Baseline spectrum estimation. The top left plot shows the unfiltered
+multidimensional spectrum and the baseline spectrum on the top right.
+The green line in each of these plots represents the location at which
+the spectra in the bottom plot is
+shown.](../matlab/06_single_sensor_filtering/filter_baseline.eps)
+
+[\[fig:06\_filter\_baseline\]]{#fig:06_filter_baseline
+label="fig:06_filter_baseline"}
+
+The bottom plot of the figure shows the spectra along the green line in
+the two multidimensional spectral plots. The total power of the signal
+has been reduced by $~71\%$ with all of the narrow-band signals removed.
+A large portion of this signal removal is the very low
+temporal-frequency components. The blade-passing frequency and harmonics
+are completely removed but the broadband acoustic duct-modes remain
+intact. The peak of the boundary-layer signal is reduced slightly as
+well as the high frequency fluctuations.
 
 Basic Filter Summary
 --------------------
 
 Three different basic wavefront filters were shown and discussed in this
-chapter. The temporal filter is most useful when separating an optical
-wavefront into frequency bands. Adaptive optics system performance can
-be evaluated by using both high-pass and low-pass temporal filters.
-High-pass filters can be used to determine a systems performance that
-cannot be corrected while low-pass filters can be used to sizing the
-travel of active optical components. Band-pass filters are helpful in
-analyzing a wavefront over a narrow-band to examine the optical
-aberrations at specific frequencies that significantly contribute to the
-overall optical disturbance.
+chapter. The temporal filter is most useful when filtering out a
+frequency band of optical noise. Besides filtering out optical noise,
+band-pass filters can be used to analyze a wavefront over a narrow-band
+to examine the optical aberrations at specific frequencies that
+significantly contribute to the overall optical disturbance; for
+example, as was shown in Chapter
+[3](#chap:03_optical_acoustics){reference-type="ref"
+reference="chap:03_optical_acoustics"}, band-pass filters along with an
+implementation of an acoustic mode-marching method can help determine
+with some confidence that a narrow-band signal is likely to have been
+created by the wind-tunnel fan and can be removed.
 
 Filters that separate upstream and downstream-moving disturbances are
-useful as most of the optical contamination comes from acoustic signals
-that are traveling upstream form a wind-tunnel fan. These filters would
-also be useful for separating out an aero-optical signal that has a
-broad range of velocities that can occur in a span wise measurement of a
-boundary layer. [Use some of sontag's data and site his
-dissertation.]{style="color: red"}
+useful to filter out the optical contamination that comes from acoustic
+signals that are traveling upstream from a wind-tunnel fan. These
+filters would also be useful for separating out an aero-optical signal
+that has a broad range of velocities that can occur in a span wise
+measurement of a boundary layer. The velocity filter is the most useful
+for isolating the aero-optical portion of a wavefront measurement given
+the aero-optical signal has a fairly narrow and constant velocity range.
+This filter also can be used to measure the speed associated with an
+optical disturbance in both x and y-directions.
 
-The velocity filter is the most useful for isolating the aero-optical
-portion of a wavefront measurement given the aero-optical signal has a
-fairly narrow and constant velocity range. By using this filter to
-maximize the power over a range of velocities it can be used to measure
-the speed in both x and y-directions of an optical disturbance.
+The spectral baseline provides an simple way of removing all of the
+narrow-band signals with slight attenuation to the broadband signals.
+The broadband acoustic and stationary modes remain but could be filtered
+with via other techniques such as using a velocity filter. Narrow-band
+features that are not likely to be environmental contamination could be
+easily added back in.
 
 Multiple Sensor Filtering Techniques {#chap:07_multiple_filter}
 ====================================
 
-::: {style="color: red"}
--   Maybe combine Figures
-    [\[fig:07\_lse\_spod\]](#fig:07_lse_spod){reference-type="ref"
-    reference="fig:07_lse_spod"} and
-    [\[fig:07\_lse\_mspod\]](#fig:07_lse_mspod){reference-type="ref"
-    reference="fig:07_lse_mspod"}
-:::
-
 The previous chapter investigated filtering optical wavefront corruption
 by applying a variety of filters to the wavefront in the
-multi-dimensional spectral domain. These techniques involve only data
+multidimensional spectral domain. These techniques involve only data
 from the optical wavefront itself and user knowledge and experience to
-obtain filtered data. When additional data streams are available, such
-as from microphones or accelerators, a targeted filter mechanisms become
-available.
+obtain filtered data. When additional data is available, such as from
+microphones or accelerators, a targeted filter approach becomes
+possilbe.
 
-A previous study [@DeLucca-2014-RAJvGdv7] focused on using the
-combination of linear stochastic estimation (LSE) and spectral proper
-orthogonal decomposition (SPOD) to remove vibration related
-contamination from aero-optical wind-tunnel measurements. This process
-along with optical tip and tilt removal showed approximately an 85%
-reduction in the measured $\opdrms$ by combining accelerator
-measurements with optical wavefront measurements.
+This kind of approach is described in a previous study
+[@DeLucca-2014-RAJvGdv7] in which a combination of linear stochastic
+estimation (LSE) and spectral proper orthogonal decomposition (SPOD) was
+used to remove vibration related contamination from aero-optical
+wind-tunnel measurements. This process along with optical tip and tilt
+removal showed approximately an 85% reduction in the measured $\opdrms$
+by using accelerometer measurements to remove vibration effects from
+optical wavefront measurements.
 
 Optical Tip and Tilt
 --------------------
 
-Zernike polynomials are traditionally used for describing optical
-aberrations of a optical system [@Born-1965-HHGYgjdH]. These polynomials
-are defined on the unit circle and form a set of orthogonal functions,
-$$Z_n^m(\rho,\theta) = R_n^m(\rho)\cos(m\theta)
+lthough they are usually not employed in areo-optical investigations,
+Zernike polynomials have been traditionally used for modal decomposition
+of the optical aberrations of a optical system [@Born-1965-HHGYgjdH].
+These polynomials are defined on the unit circle and form a set of
+orthogonal functions, $$Z_n^m(\rho,\theta) = R_n^m(\rho)\cos(m\theta)
   \label{eqn:07_zernike}$$ where $R_n^m(\rho)$ is the radial basis
 function and $\cos(m\theta)$ is the angular basis function. For values
 of $-m$ the angular basis function becomes $\sin(m\theta)$. The radial
 basis function are developed from Jacobi polynomials but for purposes in
 this study, only a few simple ones will be used. An optical wavefront
-can be approximated by a summation of Zernike polynomials multiplied by
+can be represented by a summation of Zernike polynomials multiplied by
 their corresponding coefficients $$\wf \approx \sum Z_ja_j \textrm{.}
   \label{eqn:07_zernike_coeff}$$
 
@@ -2318,8 +2832,8 @@ The Noll naming scheme is an method of organizing the Zernike
 polynomials into a single notation of $Z_j$, along with normalizing each
 polynomial to have a spatial RMS equal to one [@Noll-1976-HHKzd88f]. The
 first three of these using the Noll naming scheme are piston, tip, and
-tilt. Piston is simply the average $\opd$ value of the single wavefront
-frame $$Z_1 = 1 \textrm{.}
+tilt. Piston is simply the average $\opd$ value of the wavefront
+$$Z_1 = 1 \textrm{.}
   \label{eqn:07_zernike_1}$$ Tip and tilt are the best planar fit to the
 $\opd$ along the x-axis and y-axis respectively where tip is
 $$Z_2 = 2\rho\cos\theta \textrm{,}
@@ -2400,7 +2914,7 @@ portions of the original signal that best resemble the additional sensor
 data. Assuming that the additional sensor data represents signal
 contamination of the original signal, a filtered coefficient matrix can
 be computed from the difference between the original and estimated
-coefficient matrix. $$\hat{\Psi}^F=\hat{\Psi}-\hat{\Psi}^E \textrm{.}
+coefficient matrices. $$\hat{\Psi}^F=\hat{\Psi}-\hat{\Psi}^E \textrm{.}
   \label{eqn:07_lse_spod_03}$$ A filtered signal, $Q^F$ can be
 constructed by using the filtered coefficient matrix and the spatial
 functions, $$\hat{Q} = \hat{\Psi}^F\hat{\Phi}^H \textrm{.}$$
@@ -2408,20 +2922,90 @@ functions, $$\hat{Q} = \hat{\Psi}^F\hat{\Phi}^H \textrm{.}$$
 Filtering Experimental Data
 ---------------------------
 
-This filtering technique was tried with the same data sets that were
-shown in Figure
+The filtering technique described in the preceding section was applied
+to the same data sets that were shown in Figure
 [\[fig:04\_dispersion\_mach\]](#fig:04_dispersion_mach){reference-type="ref"
-reference="fig:04_dispersion_mach"}. Both simultaneous accelerometer and
-microphone were made along side the optical wavefront measurements. The
-locations of some of the additional sensors are shown in Figure
+reference="fig:04_dispersion_mach"}. Simultaneous accelerometer and
+microphone measurements were made alongside the optical wavefront
+measurements. The locations of some of the additional sensors are shown
+in Figure
 [\[fig:07\_sensor placement\]](#fig:07_sensor placement){reference-type="ref"
-reference="fig:07_sensor placement"}.
+reference="fig:07_sensor placement"} with a CAD drawing of the test
+section in Figure
+[\[fig:07\_test\_section\_mic\_accel\]](#fig:07_test_section_mic_accel){reference-type="ref"
+reference="fig:07_test_section_mic_accel"}. Table
+[\[tab:07\_sensor\_list\]](#tab:07_sensor_list){reference-type="ref"
+reference="tab:07_sensor_list"} shows a list of the additional sensors
+including the number designation used in Figures
+[\[fig:07\_sensor placement\]](#fig:07_sensor placement){reference-type="ref"
+reference="fig:07_sensor placement"} and
+[\[fig:07\_test\_section\_mic\_accel\]](#fig:07_test_section_mic_accel){reference-type="ref"
+reference="fig:07_test_section_mic_accel"}, the model of the sensor and
+preamplifier used as well as a sensor grouping designation.
 
 ![The locations of some of the additional sensors used in the LSE-SPOD
-filtering.](../photos/IMG_9655.jpeg){width="90%"}
+filtering. The sensors are labeled with the sensor numbers, see Table
+[\[tab:07\_sensor\_list\]](#tab:07_sensor_list){reference-type="ref"
+reference="tab:07_sensor_list"}.](../photos/IMG_9655.jpeg "fig:"){width="90%"}
+(-65,120) (-40,220) (-50,165) (-125,40) (-243,240) (-180,120) (-320,110)
 
 [\[fig:07\_sensor placement\]]{#fig:07_sensor placement
 label="fig:07_sensor placement"}
+
+![CAD drawing view of the inside of the test-section with some of the
+sensor locations labeled. Flow is from left to right. The numbers in the
+circles are the sensor numbers on the model side of the test-section.
+The numbers in the square are the sensor numbers opposite of the model
+side. The dashed line represents the optics window opposite of the model
+for the beam angle of $90^\circ$. The window was moved up and downstream
+depending on the beam
+angle.](../cad/test_section_mic_accel.pdf "fig:"){width="90%"} (-272,77)
+(-274,60) (-131,61) (-133,45) (-203,82) (-220,46) (-188,46) (-188,12)
+(-243,100) (-140,100) (-350,10)Flow $\Longrightarrow$
+
+[\[fig:07\_test\_section\_mic\_accel\]]{#fig:07_test_section_mic_accel
+label="fig:07_test_section_mic_accel"}
+
+   Channel    Sensor Type      Model        Preamp         Group
+  --------- --------------- ------------ ------------ ---------------
+      1       Microphone     ACO 7016B     B&K 2690       Ambient
+      2       Microphone      B&K 4939     B&K 2690       Ambient
+      3       Microphone     PCB 103B02    PCB 483C    Test Section
+      4       Microphone     PCB 103B02    PCB 483C    Test Section
+      5       Microphone     PCB 103B02    PCB 483C    Test Section
+      6       Microphone     PCB 103B02    PCB 483C    Test Section
+      7      Accelerometer   PCB 352C33    PCB 483C    Primary Lens
+      8      Accelerometer   PCB 352C33    PCB 483C    Test Section
+      9      Accelerometer   PCB 352C33    PCB 483C    Test Section
+     10      Accelerometer   PCB 352C33    PCB 483C    Test Section
+     11      Accelerometer   PCB 352C33   PCB 482A22   Test Section
+     12      Accelerometer   PCB 352C33   PCB 482A22   Test Section
+     13      Accelerometer   PCB 352C33   PCB 482A22   Test Section
+     14      Accelerometer   PCB 352C33   PCB 482A22   Optics Bench
+     15      Accelerometer   PCB 352C33   PCB 482A22   Return Mirror
+     16      Accelerometer   PCB 352C33   PCB 482A22   Return Mirror
+
+  : Additional sensors used the the LSE-SPOD filtering.
+
+[\[tab:07\_sensor\_list\]]{#tab:07_sensor_list
+label="tab:07_sensor_list"}
+
+All of the test-section mounted sensors are shown in their approximate
+locations in Figure
+[\[fig:07\_test\_section\_mic\_accel\]](#fig:07_test_section_mic_accel){reference-type="ref"
+reference="fig:07_test_section_mic_accel"} in a view that is looking at
+the wind-tunnel model from inside of the test-section with the flow
+moving from left-to-right. The dashed box represent the optical window
+on the opposite side of the tunnel from the model which was moved up or
+downstream depending on the beam angle relative to the flow. Sensors
+11-13 were attached to this optical window and moved with it. The
+picture in Figure
+[\[fig:07\_sensor placement\]](#fig:07_sensor placement){reference-type="ref"
+reference="fig:07_sensor placement"} was taken from the opposite side of
+the test-section and model that is shown in Figure
+[\[fig:07\_test\_section\_mic\_accel\]](#fig:07_test_section_mic_accel){reference-type="ref"
+reference="fig:07_test_section_mic_accel"} and as such the flow goes
+from right-to-left.
 
 Two microphones were used for ambient measurement (a ACO 7016B
 [@ACO-Microphones] and a Brüel & Kjær 4939 [@Bruel-Kjaer-4939]), four
@@ -2439,24 +3023,32 @@ The test-sections microphones were in groups of two either upstream or
 downstream from the optical beam by about 20-inches, with the upstream
 microphone locations viewable in Figure
 [\[fig:07\_sensor placement\]](#fig:07_sensor placement){reference-type="ref"
-reference="fig:07_sensor placement"}. The model installed in the
+reference="fig:07_sensor placement"} (sensors 3 and 4) and shown in
+Figure
+[\[fig:07\_test\_section\_mic\_accel\]](#fig:07_test_section_mic_accel){reference-type="ref"
+reference="fig:07_test_section_mic_accel"}. The model installed in the
 test-section represents the outside of an aircraft fuselage with a
 5-foot diameter and is angled to account for the aircraft's
-angle-of-attack for steady-level-flight at cruise. This results in the
-fuselage model being shifted approximately 2-inches higher from the
-test-section centerline upsteam at the microphone location. The duct
-microphones were placed about 2.75-inches from the model centerline.
+angle-of-attack ( 6$^\circ$) for steady-level-flight at cruise. This
+results in the fuselage model being shifted approximately 2-inches
+higher from the test-section centerline upsteam at the microphone
+location. The duct microphones were placed about 2.75-inches from the
+model centerline.
 
 There were six accelerometers attached to the test-section windows, with
-three being on each side. The locations of the three accelerometers on
-the model side can be seen in Figure
+three being on each side as shown in Figure
+[\[fig:07\_test\_section\_mic\_accel\]](#fig:07_test_section_mic_accel){reference-type="ref"
+reference="fig:07_test_section_mic_accel"}. The locations of the three
+accelerometers (sensors 8-10) on the model side can be seen in Figure
 [\[fig:07\_sensor placement\]](#fig:07_sensor placement){reference-type="ref"
 reference="fig:07_sensor placement"}, the three accelerometers on the
-other window used the opposite pattern (two high and one low). One
-accelerometer was placed on the primary lens (also shown) and one was
-placed in the center of the optics bench. The last two accelerometers
-were located on the return mirror and oriented in a way to measure the
-tip and tilt of the return beam.
+other window used the opposite pattern (two high and one low). The
+optical window on the far side of the test-section was moved laterally
+depending on the angle of the beam relative to the flow. One
+accelerometer was placed on the primary lens (also shown, sensor 7) and
+one was placed in the center of the optics bench. The last two
+accelerometers were located on the return mirror and oriented in a way
+to measure the tip and tilt of the return beam.
 
 The power-spectra of all of the sensors at the three Mach numbers are
 shown in Figure
@@ -2471,55 +3063,57 @@ length
 [\[fig:07\_sensor\_spectra\]]{#fig:07_sensor_spectra
 label="fig:07_sensor_spectra"}
 
-These plots are presented as Strouhal number per characteristic length
-with the different groups of sensors shown together. The blade-passing
-frequency for these data sets is at a $St/l$ of approximately 3-$m^{-1}$
-with a clear and consistant narrow-band signal at for but the $M=0.3$
-run which has a slight increase in signal for some of the sensors. For
-the $M=0.5$ case there is an additional strong narrow-band signal at
-20-$m^{-1}$ for all sensors and a slightly broader signal at 38-$m^{-1}$
-that is only present in the test-section mounted sensors that may be due
-to extra fan vibration which is currently limiting the top speed of the
-wind-tunnel. The test-section mounted microphones are picking up
-boundary layer accoustic noise above $St/l$ of approximately
-20-$m^{-1}$.
+These plots are presented as Strouhal number per unit characteristic
+length with the different groups of sensors shown together. The
+blade-passing frequency for these data sets is at a $St/l$ of
+approximately 3 $m^{-1}$ with a clear and consistent narrow-band signal
+at that $St/l$ for all but the $M=0.3$ run, which has a slight increase
+in signal for some of the sensors. For the $M=0.5$ case there is an
+additional strong narrow-band signal at 20 $m^{-1}$ for all sensors and
+a slightly broader signal at 38 $m^{-1}$ that is only present in the
+test-section mounted sensors that may be due to extra fan vibration
+which was limiting the top speed of the wind-tunnel. The test-section
+mounted microphones are picking up boundary layer acoustic noise above
+$St/l$ of approximately 20 $m^{-1}$.
 
-Two variants of this filtering technique were tried. The first was a
+Two variants of the filtering technique were tried. The first was a
 standard LSE-SPOD technique in which the spectral POD was performed on
-the data set that was Fourier transformed in time only. The second will
-be referred to here as LSE-MSPOD, in which the spectral POD was applied
-to a data set in which the Fourier transformed was performed in all
-dimensions of space and time. Figures
+the data set that was Fourier transformed in time only. For the second
+technique, which will be referred to here as LSE-MSPOD, the spectral POD
+was applied to a data set in which the Fourier transform was performed
+in all dimensions of space and time, which is a portion of the
+computation for the multidimensional spectral estimation. Figures
 [\[fig:07\_lse\_spod\]](#fig:07_lse_spod){reference-type="ref"
 reference="fig:07_lse_spod"} and
 [\[fig:07\_lse\_mspod\]](#fig:07_lse_mspod){reference-type="ref"
-reference="fig:07_lse_mspod"} show multi-dimensional power spectrum
-plots at a temporal block length of $2^{10}$ with no overlap.
+reference="fig:07_lse_mspod"} show multidimensional power spectrum plots
+at a temporal block length of $2^{10}$ with no overlap.
 
-![A multi-dimensional power spectrum of an unfiltered wavefront and the
+![A multidimensional power spectrum of an unfiltered wavefront and the
 same wavefront filtered with the LSE-SPOD method using all 16 additional
 microphone or accelerometer measurements.
 ](../matlab/07_multiple_sensor_filtering/lse_spod.eps)
 
 [\[fig:07\_lse\_spod\]]{#fig:07_lse_spod label="fig:07_lse_spod"}
 
-![A multi-dimensional power spectrum of an unfiltered wavefront and the
+![A multidimensional power spectrum of an unfiltered wavefront and the
 same wavefront filtered with the LSE-MSPOD method using all 16
 additional microphone or accelerometer measurements.
 ](../matlab/07_multiple_sensor_filtering/lse_mspod.eps)
 
 [\[fig:07\_lse\_mspod\]]{#fig:07_lse_mspod label="fig:07_lse_mspod"}
 
-These plots show a combination of the isosurface and horizontal moving
-plane-wave slice. Both of these methods preformed effectively identical
-to one another with a drop of 14.2% drop in overall RMS value of the
-filtered wavefront (both time and space). There is a significant drop in
-the signal at the blade-passing frequency and its harmonics, especially
-at the higher spatial frequencies. The stationary signal information is
-also significantly reduced along with the high temporal-frequency
-acoustic signal. The aero-optical boundary layer signal is also
-partially reduced, which is most noticeable at higher
-temporal-frequencies. Some of this lost signal can be restored by
+These plots show the $f$-$\xi_x$ plane of the multidimensional spectrum
+that captures horizontally-moving plane waves with a portion of the
+acoustic cone isosurface wrapping behind it. Both of these methods
+performed effectively identically to one another with a 14.2% drop in
+overall RMS value of the filtered wavefront (both time and space). There
+is a significant drop in the signal at the blade-passing frequency and
+its harmonics, especially at the higher spatial frequencies. The
+stationary signal information is also significantly reduced along with
+the high temporal-frequency acoustic signal. The aero-optical boundary
+layer signal is also partially reduced, which is most noticeable at
+higher temporal-frequencies. Some of this lost signal can be restored by
 increasing the overlap of the temporal frequency blocks, but this also
 restores some of the unwanted high temporal-frequency contamination.
 
@@ -2535,7 +3129,7 @@ restores some of the unwanted high temporal-frequency contamination.
      Velocity Filter      0.0090(83.9%)   0.0146(72.1%)   0.0217(73.7%)
        +All Sensors       0.0075(86.7%)   0.0122(76.7%)   0.0181(78.0%)
 
-  : $\opdrms$ ($\mu m$) comparison using different combinations of
+  : $\opdrms$ ($\mu m$) comparison of using different combinations of
   additional sensor information in the LSE-MSPOD filtering process.
 
 [\[tab:07\_lse\_mspod\_table\]]{#tab:07_lse_mspod_table
@@ -2547,44 +3141,57 @@ reference="tab:07_lse_mspod_table"} shows the time averaged $\opdrms$ of
 three different data sets at a beam angle through the test-section of
 $90^\circ$. The data sets were at Mach numbers of 0.3, 0.4 and 0.5 that
 had an unfiltered $\opdrms$ of 0.0561, 0.0521, and 0.0824 $\mu m$
-respectively. Note that in the raw processed wavefronts for the Mach
-number of 0.3 was higher than the 0.4 case. There was a significant drop
-of between 62.6 and 78.6% in the $\opdrms$ by removing the Zernike modes
-corresponding to tip and tilt. It is at this point the Mach number of
-0.4 case has a higher $\opdrms$ than the 0.3 case as would be expected .
+respectively. Note that in the raw processed wavefronts, the $\opdrms$
+at a Mach number of 0.3 was higher than the 0.4 case. There was a
+significant drop of between 62.6 and 78.6% in the $\opdrms$ by removing
+the Zernike modes corresponding to tip and tilt. It is at this point the
+Mach number of 0.4 case has a higher $\opdrms$ than the 0.3 case as
+would be expected [@Gordeyev-2014-jcJndkHM]. Note that it is standard
+practice to remove optical tip/tilt from wavefront measurements, since
+tip/tilt is largely imposed by the measurement optics rather than the
+actual aero-optical flow.
 
-Five different combinations of additional sensors were examined for
+Table
+[\[tab:07\_lse\_mspod\_table\]](#tab:07_lse_mspod_table){reference-type="ref"
+reference="tab:07_lse_mspod_table"} also shows the effect of five
+different combinations of additional sensors that were used for
 filtering with the LSE-MSPOD process. The first set was all of the
 accelerometers which resulted in an additional drop in $\opdrms$ of
 between 3 and 5%. The second and third sets used either the ambient or
 duct microphones and those sets had slightly less reduction than the
-accelerometers resulted in. The forth set was the test-section sensors
-that was comprised of six window mounted accelerometers and four duct
-mounted microphones. This set of sensors preformed the same as all of
-the accelerometers, while the use of all of the additional sensors in
-the last set performed the best, with an additional reduction in
-$\opdrms$ of 4 to 6% from the tip/tilt removal cases.
+accelerometers. The fourth set was the test-section sensors comprised of
+six window mounted accelerometers and four duct mounted microphones.
+This set of sensors performed the same as all of the accelerometers,
+while the use of all of the additional sensors in the last set performed
+the best, with an additional reduction in $\opdrms$ of 4 to 6% from the
+tip/tilt removal cases.
 
 A velocity filter was also tried in addition to just the tip/tilt
 removal or in conjunction with tip/tilt and all the sensors being used
 in the LSE-MSPOD process. The velocity filter performed better than the
-all sensors removal case by an additional 1.5 to 3%. When all sensors
+all-sensors removal case by an additional 1.5 to 3%. When all sensors
 were used with LSE-MSPOD on the velocity filtered wavefronts an
-additional 3 to 4% of the $\opdrms$ was removed from just the velocity
-filtered case or an additional 8.1% reduction for only doing tip/tilt
-removal on the Mach number of 0.3 case or 14.1 and 13.3% reduction for
-the 0.4 and 0.5 Mach number cases.
+additional 3 to 4% of the $\opdrms$ was removed compared to just the
+velocity-filtered case or an additional 8.1% reduction for only doing
+tip/tilt removal on the Mach number of 0.3 case or 14.1 and 13.3%
+reduction for the 0.4 and 0.5 Mach number cases.
 
-Using either the temporal or multi-dimensional version of the LSE-SPOD
-filtering technique can help remove some of the narrow-band acoustic and
-vibration reduction in an optical wavefront. This additional reduction
-does seem to be somewhat tied to the number of sensors used with more
-sensors having a greater impact on the signal reduction. Since the
-vibrations and acoustics have the same primary source, the wind-tunnel
-fan, they seems to do a relatively equivalent job at filtering the
-optical contamination. Accelerometers have a benefit easier installation
-but the microphones do not necessary have to be installed inside of the
+In summary, Table
+[\[tab:07\_lse\_mspod\_table\]](#tab:07_lse_mspod_table){reference-type="ref"
+reference="tab:07_lse_mspod_table"} shows that using either the temporal
+or multidimensional version of the LSE-SPOD filtering technique can help
+remove some of the narrow-band acoustic and vibration reduction in an
+optical wavefront. This additional reduction does seem to be somewhat
+tied to the number of sensors used with more sensors having a greater
+impact on the signal reduction. Since the vibrations and acoustics have
+the same primary source, the wind-tunnel fan, they seems to do a
+relatively equivalent job at filtering the optical contamination.
+Accelerometers have the benefit of easier installation but the
+microphones do not necessarily have to be installed inside of the
 wind-tunnel.
+
+Conclusion {#chap:08_conclusion}
+==========
 
 Sample Code
 ===========
