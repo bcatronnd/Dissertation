@@ -16,7 +16,7 @@ This fluctuating pressure is related to the sound pressure level, $\spl$ by
   \label{eqn:03_spl}
 \end{equation}
 where $p_{rms}$ is the root mean square of the pressure fluctuation, and $p_0$ is the reference pressure (20 $\mu$Pa for air).
-The pressure fluctuations can be converted to the density fluctuations via the definition of the speed of sound:
+The pressure fluctuations can be related to the density fluctuations via the definition of the speed of sound:
 \begin{equation}
   c_0^2 = \left(\frac{\partial p}{\partial \rho}\right)_s=\frac{p'}{\rho'}
   \label{eqn:03_speed_sound}
@@ -38,18 +38,18 @@ to provide a way of computing the optical path difference of a sound pressure fi
 \label{sect:03_simulated_beam}
 The following analysis is presented for the case of a measurement field subject to acoustic excitation at a discrete frequency. Parameter values at each point in the field oscillate at the frequency of the acoustic field, with a magnitude and phase relationship to the acoustic field that can be represented by complex notation and that depends on the physics of the interaction with the acoustic field.
 
-An optical wavefront can be simulated from a complex pressure field by applying Equation \ref{eqn:03_opd_pressure}.
+The effect of a complex acoustic pressure field on an optical wavefront can be simulated by applying Equation \ref{eqn:03_opd_pressure}.
 To accomplish this, two separate coordinate systems will need to be defined.
-The first is the beam coordinate system, $\mathbf{x}_B $, that will have a measurement aperture, which is typically circular, defined in the xy-plane and propagates in the z-direction.
+The first is the beam coordinate system, $\mathbf{x}_B $, that will have a measurement aperture, which is typically circular, defined in the xy-plane and assuming the beam propagates in the z-direction.
 The second is the acoustic coordinate system, $\mathbf{x}_A$, that will be defined based on the source location or the geometry that the acoustic waves are propagating through.
-These two coordinate systems will have a function representing a transform from one to the other
+A function representing the transformation from one coordinate system to the other can be defined as
 \begin{equation}
   \mathbf{x}_A = R\mathbf{x}_B+T \textrm{,}
   \label{eqn:03_coord_transform}
 \end{equation}
 where $R$ is a matrix which represents the rotation and $T$ is a vector that represents the translation.
 
-The important parameters for defining the aperture on which the beam coordinate system is based are the aperture size, $Ap$, and the number of lenslets or sub-apertures in the wavefront sensor, $N_{lenslets}$.
+The important parameters for defining the aperture on which the beam coordinate system is based are the aperture size, $Ap$, and the spatial discretization which, if the beam is measured using a Shack-Hartmann wavefront sensor, is the number of lenslets or sub-apertures in the wavefront sensor, $N_{lenslets}$.
 Assuming that the aperture is either circular or square and the lenslet size and sub-aperture size is approximately $Ap/N_{lenslets}$, the x locations of the center of the sub-apertures go from $-Ap/2(1-1/N_{lenslets})$ to $Ap/2(1-1/N_{lenslets})$ by steps of $Ap/N_{lenslets}$ with the y locations having the same values.
 This gives a matrix representing both $x_{Ap}$ and $y_{Ap}$ that is $N_{lenslets}$ by $N_{lenslets}$.
 For the purpose of removing piston, tip, and tilt and creating a mask that represents the beam aperture, the radial coordinates, $\rho_{Ap}$ and $\theta_{Ap}$, of the aperture should also be calculated.
@@ -144,15 +144,15 @@ Figure \ref{fig:03_planar_sample_calc_2} shows a typical optical disturbance fro
   \caption{Theoretical time-averaged $\opdrms$ for the two acoustic waves (u+c and u-c) for the blade pass frequency (534 Hz) at Mach 0.6 with a RMS sound pressure of 1 Pa ($\spl$ of 94 dB), $l_n$ of 1 m, and $Ap$ of 15 cm.}
   \label{fig:03_planar_sample_calc_2}
 \end{figure}
-Both waves have an RMS sound pressure of 1 Pa and the beam has an aperture of 15 cm and propagates through an acoustic field inside the duct of width, $l_n$, of 1 m.
-Over a vast majority of the look back angles the upstream-traveling acoustic wave has a much greater effect on the optical disturbance compared to the downstream-traveling acoustic wave, due to the much shorter wavelength of the upstream-traveling waves which is less affected by aperture filtering.
-However, the upstream-traveling wave goes through several zero points so that the downstream-traveling wave dominates at some look back angles.
+Both waves have an RMS sound pressure of 1 Pa and the beam has an aperture of 15 cm and propagates through an acoustic field inside a duct of width, $l_n$, of 1 m.
+Over the vast majority of the look back angles the upstream-traveling acoustic wave has a much greater effect on the optical disturbance compared to the downstream-traveling acoustic wave, due to the much shorter wavelength of the upstream-traveling waves which is less affected by aperture filtering.
+However, the upstream-traveling wave goes through several zero points so that the downstream-traveling wave dominates at some beam angles.
 
 % In summary, Figures \ref{fig:03_planar_sample_calc_3} to \ref{fig:03_planar_sample_calc_2} give an example of how planar acoustic waves are expected to affect a beam traveling a finite distance $l_n$ at an angle $\theta$ through the acoustic field.
 
 \subsection{Spherical Acoustic Waves}
 \label{sect:03_examples_spherical}
-The acoustic field from a speaker maybe assumed to be a spherical wave from a pulsating point if the frequency is sufficiently low and the measurement region is far enough away from the source \cite{Randall-1951-9NtPPXPq}.
+The acoustic field from a speaker may be assumed to be a spherical wave from a pulsating point if the frequency is sufficiently low and the measurement region is far enough away from the source \cite{Randall-1951-9NtPPXPq}.
 This pressure field when converted to complex pressure is represented by
 \begin{equation}
   \hat{p}(r,t) = \frac{A_0}{r}\exp\left\{-j(kr-\omega t)\right\} \textrm{,}
@@ -173,16 +173,18 @@ A set of optical properties were calculated for a beam passing through a spheric
   \put(-140,130){\fcolorbox{white}{white}{\large $R$}}
   \put(-140,155){\fcolorbox{white}{white}{\large $\Lambda$}}
   \put(-95,43){\fcolorbox{white}{white}{\large $Ap$}}
+  \put(-240,115){\large Acoustic Source}
+  \put(-70,100){\rotatebox{90}{\large Beam}}
   \caption{Diagram of the geometry used in the spherical wave simulation.}
   \label{fig:03_spherical_simulation}
 \end{figure}
 These calculations used a circular aperture size of 0.25-m in diameter that was assumed to be measured using a Shack-Hartmann WFS with 32x32 sub-apertures with a non-dimensional acoustic wavelength, $\Lambda$, of $Ap/4$ to $10Ap$.
 The normal vector from the point source to the axis of the measurement beam defined the coordinate system.
-This normal distance, $R$, was at a minimum $5Ap$ and a maximum $25Ap$, keeping the measurement beam away from the singularity at the origin of the acoustic source.
-The beam was integrated over $\pm5$-m from the plane of the point source.
+This normal distance, $R$, was a minimum $5Ap$ and a maximum of $25Ap$, keeping the measurement beam away from the singularity at the origin of the acoustic source.
+The $\opd$ for the beam was integrated over a distance of $\pm5$-m from the plane of the point source.
 To calculate the time-averaged $\opdrms$ the phase of the source was varied from 0 to $2\pi$ with 25 total steps.
 
-The result of these simulated acoustic fields is shown in Figure \ref{fig:03_spherical_sample}.
+The result of these $\opdrms$ calculations is shown in Figure \ref{fig:03_spherical_sample}.
 \begin{figure}
   \centering
   \includegraphics{../matlab/03_aero_optics_acoustics/spherical_sample.eps}
@@ -192,7 +194,7 @@ The result of these simulated acoustic fields is shown in Figure \ref{fig:03_sph
 \end{figure}
 The top plots shows the expected optical disturbance ratio, $\opdrms/|A_0|$, for a perfectly spherical acoustic field measured over the beam length.
 The oscillations in the solutions for different $R/Ap$ are caused by end effects in the integration.
-The oscillations can be greatly reduced by using a windowing function in the z-direction such as a Hanning or Tukey window which also can be used to roughly model directivity of the speaker's acoustic emission as shown in the bottom plot.
+Because speakers often have a directivity in their emission, the oscillations can be greatly reduced by using a windowing function in the z-direction, such as a Hanning or Tukey window, the roughly model this directivity as shown in the bottom plot.
 While this plot was calculated with a single aperture diameter, the general trend holds for all other aperture diameters that were tested, the only effect was the size and width of the oscillations.
 
 The peak of the optical disturbance ratio, $\opdrms/|A_0|$, is located at $\Lambda/Ap\approx0.75$ for a circular aperture.
@@ -205,7 +207,7 @@ An approximate function fit to these data is
   \label{eqn:03_spherical_sample_fit}
 \end{equation}
 with coefficient values shown Table \ref{tab:03_spherical_sample_coeff}.
-This functional fit has a $R^2$ value of 0.9991.
+This functional fit has a coefficient of determination, $R^2$, value of 0.9991.
 \begin{table}
 \centering
 \caption{Curve fit values for Figure \ref{fig:03_spherical_sample} and Equation \ref{eqn:03_spherical_sample_fit}}
@@ -215,33 +217,36 @@ This functional fit has a $R^2$ value of 0.9991.
 
 
 \subsubsection{Measurement of a Spherical Acoustic Wave with an Optical Beam}
-A small bench top experiment was used to compare the simultaneous optical and microphone measurements of an acoustic field from a speaker as shown in the measurement plane in Figure \ref{fig:03_speaker_test}.
+A small bench top experiment was used to compare the simultaneous optical and microphone measurements of an acoustic field from a speaker as shown in Figure \ref{fig:03_speaker_test}.
 \begin{figure}
   \centering
   \includegraphics[width=3.5in,clip,trim=100 100 100 100]{../cad/speak_test.pdf}
+  \put(-146,25){\large Speaker}
+  \put(-141,230){\large Beam}
+  \put(-160,310){\fcolorbox{white}{white}{\large Microphone}}
   \caption{Spherical acoustic wave measurement test.}
   \label{fig:03_speaker_test}
 \end{figure}
-The distance from center of the beam to the speaker was 102-mm with a beam diameter of 28-mm.
-An ACO model 7016B microphone \cite{ACO-Microphones} was placed directly over the speaker at a distance of 158-mm and was used with a Br\"uel \& Kj\ae r model 2670 preamplifier \cite{Bruel-Kjaer-2670}.
+The distance from the center of the beam to the speaker was 102 mm with a beam diameter of 28 mm.
+An ACO model 7016B microphone \cite{ACO-Microphones} was placed directly over the speaker at a distance of 158 mm and was used with a Br\"uel \& Kj\ae r model 2670 preamplifier \cite{Bruel-Kjaer-2670}.
 The speaker used was a Peerless model XT25SC90-04 \cite{Peerless-XT25SC90-04-1} which has a fairly flat on-axis response from 1-kHz to 40kHz.
 % A Br\"uel \& Kj\ae r model 2690 \cite{Bruel-Kjaer-2690} signal conditioner was used as part of the data aquiztion system
 
 The wavefront measurements system utilized in these measurements is similar to that shown in Figure \ref{fig:02_typical_wavefront_system} except there was no primary telescope.
-The speaker was located in the center of the measurement region which was about 2-feet in length and the re-imaging telescope reduced the beam diameter by a factor of two and re-imaged the return mirror.
-Optical wavefronts and microphone measurements were taken at 49-kHz.
-The speaker was sinusoidally excited at three different frequencies (9, 14, and 18-kHz) at a variety of voltages.
+The speaker was located in the center of the measurement region which was about 2 feet in length and the re-imaging telescope reduced the beam diameter by a factor of two and re-imaged the return mirror.
+Optical wavefronts and microphone measurements were taken at 49 kHz.
+The speaker was sinusoidally excited at three different frequencies (9, 14, and 18 kHz) at a variety of voltages.
 
 The absolute value of the fluctuating pressure strength, $|A_0|$, was calculated two different ways.
-The power spectrum of the microphone data was used to calculate the average $p_{rms}$ at the excitation frequency and the fluctuating pressure strength using Equation \ref{eqn:03_spherical_pressure_rms}.
+First, the power spectrum of the microphone data was used to calculate the average $p_{rms}$ at the excitation frequency and the fluctuating pressure strength using Equation \ref{eqn:03_spherical_pressure_rms}.
 For the second method, the optical wavefront was band-pass filtered at the excitation frequency using a process that will be discussed in Chapter \ref{chap:06_single_filter}.
 The time averaged $\opdrms$ of the filtered wavefront data was then used to calculate the fluctuating pressure strength using Equation \ref{eqn:03_spherical_sample_fit}.
 
 The results of these measurements of the fluctuating pressure strength is shown in Table \ref{tab:03_spherical_measurement}.
 The differences between the two techniques for measuring the fluctuating pressure strength fell into two groups.
-For the 9-kHz cases, the differences ranged from 20-26\% while for the higher frequency cases the differences were between 1.1-1.5\%.
+For the 9 kHz cases, the differences ranged from 20-26\% while for the higher frequency cases the differences were between 1.1-1.5\%.
 In all cases the wavefront measurement reported a higher fluctuating pressure strength.
-With the exception of the highest excitation case at 9-kHz, the differences between the to techniques was fairly constant for each frequency group.
+With the exception of the highest excitation case at 9 kHz, the differences between the to techniques was fairly constant for each frequency group.
 Some of these differences maybe attributable to the frequency response of the microphone.
 \begin{table}
   \centering
@@ -250,31 +255,32 @@ Some of these differences maybe attributable to the frequency response of the mi
   \label{tab:03_spherical_measurement}
 \end{table}
 
-Measured wavefronts are compared to the wavefronts simulated using the method described in Section \ref{chap:03_simulated_beam} in Figure \ref{fig:03_spherical_plot} for the highest excitation cases at each frequency.
+In Figure \ref{fig:03_spherical_plot}, measured wavefronts are compared to the wavefronts simulated using the method described in Section \ref{chap:03_simulated_beam} for the highest excitation cases at each frequency.
 \begin{figure}
   \centering
   \includegraphics{../matlab/03_aero_optics_acoustics/spherical_plot_measured.eps}
   \includegraphics{../matlab/03_aero_optics_acoustics/spherical_plot_simulated.eps}
-  \caption{Comparison of some of the measured wavefronts and simulated ones.}
+  \caption{Comparison of measured wavefront to simulated ones for the highest-amplitude speaker excitation at each frequency.}
   \label{fig:03_spherical_plot}
 \end{figure}
-The 9-kHz case shows some anomalies on the measured wavefront on the right side, and deviates from a spherical wave significantly, likely contributing to the significantly higher estimated pulsating field strength value when compared to the microphone estimate in Table \ref{tab:03_spherical_measurement}.
-The 14 and 18-kHz cases show some remarkable agreement between the measured and simulated images.
+The 9 kHz case shows some anomalies on the measured wavefront on the right side, and deviates from a spherical wave significantly, likely contributing to the significantly higher estimated pulsating field strength value when compared to the microphone estimate in Table \ref{tab:03_spherical_measurement}.
+The 14 and 18 kHz cases show some remarkable agreement between the measured and simulated images.
 Optical wavefront measurements can therefore be used for making non-intrusive acoustic field measurements especially when the acoustic field is simple.
 
 
 
-\section{Estimating the Acoustic Field Inside the Test-Section}
+\section{Estimating the Acoustic Field Inside a Wind-Tunnel Test-Section}
 \label{sect:03_test_section}
-Several mode-matching methods have been previously employed, from axially-segmented turbofan duct liner \cite{McAlpine-2006-NrCzhW4Z} to muffler modeling \cite{Ji-2013-agaCHhcP}.
-Both of these methods require the entire field to be solved simultaneously because there are duct modes traveling in both directions at each axial-spatial location.
-Using the turbofan duct liner version, a single azimuthal order, $m$, and only a few radial orders, $n$, need to be computed for the various boundary conditions with a constant mesh used through the four segments.
+Several mode-matching methods have been previously employed to solve the acoustic field in ducts, ranging from methods designed to solve axially-segmented turbofan duct liners \cite{McAlpine-2006-NrCzhW4Z} to muffler modeling \cite{Ji-2013-agaCHhcP}.
+These methods require the entire field to be solved simultaneously because there are duct modes traveling in both directions at each axial-spatial location.
+Using the turbofan duct liner version, a single azimuthal order, $m$, and only a few radial orders, $n$, need to be computed for the various boundary conditions with a constant mesh used through all the segments.
 In the muffler model version, step changes in the cross-section are employed, allowing for a constant mesh to be generated to account for all possible cross-sections.
 
-For a wind-tunnel that has a numerous cross-sectional area changes, a square cross-section for the test-section, and a circular cross-section for the fan, the mode-matching method can become computational expensive.
-At each axial-location, all possible duct modes need to be calculated up to a value of $k_m$ necessary to fully resolve local duct modes.
-This will need to be at least high enough to resolve all of the cut-on modes \cite{Gabard-2008-H4mEEeVt}.
-In order to reduce the computational cost of simulating the acoustic environment inside of a wind tunnel, a mode marching method was employed where an initial cross-sectional pressure field was marched from the wind-tunnel fan in both directions around the wind-tunnel and through the test-section.
+For a wind-tunnel that has numerous cross-sectional area changes, specifically, a square cross-section for the test-section and a circular cross-section for the fan, the mode-matching method can become computational expensive.
+At each axial-location, all possible duct modes need to be calculated up to at the very least the cutoff mode $k_m$, if not higher \cite{Gabard-2008-H4mEEeVt}, to fully resolve local duct modes.
+As such, in order to reduce the computational cost of simulating the acoustic environment inside of a wind tunnel, a mode marching method was employed instead of a mode-matching method, where an initial cross-sectional pressure field was marched from the wind-tunnel fan in both directions around the wind-tunnel and through the test-section.
+Although the mode-marching method is computationally simpler than the mode-matching method, there are also arguments for using the mode-marching method that are justified by the expected acoustic behavior in typical wind-tunnel circuits.
+Specifically, since the wind-tunnel test section normally has the smallest cross-sectional dimensions, higher-order acoustic modes tend to be reflected away from the test section; hence using a mode-marching method that does not rigorously account for reflections or all high-order modes should not add significant inaccuracy to the predicted results.
 
 For the circular to square transition on either side of the wind-tunnel fan, a deformable mesh was used such that there would be a one-to-one mapping of mesh points throughout the transition.
 An example of the deformable mesh is shown in Figure \ref{fig:deformable_mesh} at both the square and circular limits and halfway in between.
@@ -285,7 +291,7 @@ An example of the deformable mesh is shown in Figure \ref{fig:deformable_mesh} a
   \label{fig:deformable_mesh}
 \end{figure}
 Because cross-sectional wavenumber scales with the area ($k_m^2A=\textrm{const}$), all modes were solved for a cross-section of unit area.
-Modes in square cross-section were calculated with both the deformable mesh and a rectangular mesh in order to allow for easy transitions in the cruciform region of the wind-tunnel diffuser.
+For the simulation of the Notre Dame White Field wind tunnel (described below) modes in the square cross-sections of the wind tunnel were calculated with both the deformable mesh and a rectangular mesh in order to allow for easy transitions in the cruciform region of this wind-tunnel's diffuser.
 
 \subsection{Mode-Marching Method Procedure}
 \label{sect:03_test_section_mode_marching}
@@ -295,12 +301,14 @@ Modes in square cross-section were calculated with both the deformable mesh and 
   \begin{equation}
     \hat{p}^0(x,y)
   \end{equation}
+  For wind tunnels, the acoustic disturbance is generated by the main fan; hence $\hat{p}^0$ is the rotating radial fan modes associated with the rotating fan blades \cite{Cumpsty-1989-8wEYqb7t}.
 
   \item \textit{Modal Best Fit} \\
   The pressure disturbance at the current axial location is best fit to the possible modes.
   \begin{equation}
-    \hat{p}^i(x,y)=\Psi_M^i(x,y)\cdot C_m^i
+    \hat{p}^i(x,y)=\Psi_m^i(x,y)\cdot C_m^i
   \end{equation}
+  where $\Psi_m^i$ are the possible modes for the local duct shape.
 
   \item \textit{Transmitted Pressure Ratio} \\
   The pressure attenuation due to Mach number change \cite{Powell-1959-W7KVArvn} as a ratio of transmitted pressure to incident pressure is computed for an acoustic wave traveling with subsonic flow,
@@ -342,13 +350,13 @@ Modes in square cross-section were calculated with both the deformable mesh and 
   \end{equation}
 
   \item \textit{Repeat} \\
-  Repeat steps 2-4 until the desired location is reached.
+  Repeat steps 2-5 until the desired location is reached (i.e. the wind-tunnel test section).
   Different starting pressure disturbances can also be checked.
 \end{enumerate}
 
 \subsection{University of Notre Dame White Field Wind-Tunnel Simulation}
 \label{sect:03_test_section_sim}
-The University of Notre Dame White Field wind-tunnel is capable of reaching speeds of Mach 0.6 in the 3-foot by 3-foot test-section.
+The University of Notre Dame White Field wind-tunnel is capable of reaching speeds of Mach 0.6 in the 3 foot by 3 foot test-section.
 A CAD model of the wind-tunnel is shown in Figure \ref{fig:03_tunnel_model}.
 \begin{figure}
   \centering
@@ -398,26 +406,27 @@ For the distances in Table \ref{tab:03_wind_tunnel_specs} the corners have been 
 The transition segments on either side of the wind-tunnel fan convert the circular cross-section to a square cross-section.
 Between cross-section 6 and 7 the diffuser has a cruciform splitting it into four separate segments in which the duct modes were independently marched.
 The test-section is 2.75-m long and the main contraction shape from section 8 to 9 follows a fifth-order polynomial.
-Acoustic reflections that would be due turning vains or other internal structures have been neglected along with the fan hub and motor shaft geometry.
+Acoustic reflections that would be due to turning vanes or other internal structures have been neglected along with the fan hub and motor shaft geometry.
 
 The wind-tunnel was discretized into smaller segments that were a maximum of 0.25-m in length.
-The speed throughout the wind-tunnel was determined via conservation of mass and steady-flow energy relations \cite{Sutcliff-2013-PMZyfvn7} and the pressure transmission ratios were computed using Equations \ref{eqn:03_pressure_ratio_with} and \ref{eqn:03_pressure_ratio_against}.
+The speed throughout the wind-tunnel was determined via isentropic relations and the pressure transmission ratios were computed using Equations \ref{eqn:03_pressure_ratio_with} and \ref{eqn:03_pressure_ratio_against}.
 % Redo equation ref
-Pressure reflection ratios calculated using Equations \ref{eqn:03_pressure_ratio_with_reflected} and \ref{eqn:03_pressure_ratio_against_reflected} and verified to be small.
+Pressure reflection ratios were calculated using Equations \ref{eqn:03_pressure_ratio_with_reflected} and \ref{eqn:03_pressure_ratio_against_reflected} and verified to be small.
 Figure \ref{fig:03_tunnel_discretization} shows these parameters for the tunnel at a Mach number of 0.6 in the test-section with flow going from right-to-left.
 \begin{figure}
   \centering
   \includegraphics{../matlab/03_aero_optics_acoustics/tunnel_discretization_0.60.eps}
-  \caption{Wind-tunnel discretization at a Mach number of 0.6.}
+  \put(-162,375){\rotatebox{90}{\large Test Section}}
+  \caption{Wind-tunnel discretization at a Mach number of 0.6. The solid lines in the sound transmission plots represent the transmitted pressure ratio while the dotted lines represent the reflected pressure ratio.}
   \label{fig:03_tunnel_discretization}
 \end{figure}
 For most of the wind-tunnel the Mach number is around 0.1 with the transmission pressure ratio (solid lines) at effectively unity.
 In the regions of rapid Mach number change around the contraction and the test-section diffuser, the transmission pressure ratio can deviated significantly from unity, especially for sound waves traveling upstream.
 These regions also show some reflected pressure ratios (dotted lines) that are non-negligible.
-For acoustic waves traveling in both directions, the section on the opposite side of the test section produces reflected acoustic waves back into the test section.
+For acoustic waves traveling in both directions, the section on the opposite side of the test section produces some reflected acoustic waves back into the test section.
 
 The wind-tunnel fan was modeled using a circular duct mode of $m=8$ and $n=0$ at a frequency of 520-Hz which corresponds to the blade-passing frequency of the Mach number 0.6 case.
-The duct mode of $m=8$ and $n=0$ is the largest cut-on mode in which the azimuthal mode number is a factor of the total number of fan blades, 32.
+The duct mode of $m=8$ and $n=0$ is the largest cut-on mode in which the azimuthal mode number is a whole-number fraction of the total number of fan blades, 32.
 The peak-to-peak acoustic pressure of the fan was set to unity to allow the results to be easily scaled.
 To check for the possibility of some duct modes only being present at certain orientations of the fan blades, the initial acoustic pressure disturbance was rotated by replacing $\omega t$ in the temporal portion of Equation \ref{eqn:02_pressure_solution_duct} with a phase offset that varied from 0 to 2$\pi$.
 
@@ -452,11 +461,12 @@ The acoustic field cross-section at the center of the test-section is shown in F
 \end{figure}
 As the fan blades rotate so too does the acoustic field within the test-section.
 The real component of the duct modes are shown in Figure \ref{fig:03_test_section_modes} as a function of the initial phase angle.
-The primary duct mode in the test-section is the $m=2$, $n=2$ mode with contributions from in-sync pairs of modes $m=0,2$, $n=2,0$ and out-of-sync pairs $m=1,3$, $n=3,1$.
+The primary duct mode in the test-section is the $m=2$, $n=2$ mode with contributions from pairs of modes $m=0,2$, $n=2,0$ which are in phase with one another and out of phase mode pairs $m=1,3$, $n=3,1$.
+Note that for Figures \ref{fig:03_test_section_modes} and \ref{fig:03_test_section_modes_with} the $m=0,2$, $n=2,0$ modes overlap one another in the plots.
 \begin{figure}
   \centering
   \includegraphics{../matlab/03_aero_optics_acoustics/tunnel_acoustic_against_0.6_8_0.eps}
-  \caption{The real component of the acoustic mode coefficients making up the acoustic field in the middle of the test-section as a function of the initial phase angle.}
+  \caption{The real component of the acoustic mode coefficients making up the upstream-traveling acoustic field in the middle of the test-section as a function of the initial phase angle.}
   \label{fig:03_test_section_modes}
 \end{figure}
 These five modes can be used to simulate the optical response of the fan driven acoustics inside of the test section by using the maximum value of the modal coefficient and a relative phase angle between the different modes by using Equation \ref{eqn:02_pressure_solution_duct} and
@@ -465,29 +475,20 @@ These five modes can be used to simulate the optical response of the fan driven 
   \label{eqn:03_opd_complex}
 \end{equation}
 where $\widehat{\opd}$ is the complex optical path difference and $K_{GD}$ is the Gladstone-Dale constant.
-The temporal portion of Equation \ref{eqn:02_pressure_solution_duct} can be applied after the integration process in Equation \ref{eqn:03_opd_complex} and just before taking the real component to simulate a measured value.
+The temporal portion of Equation \ref{eqn:02_pressure_solution_duct} can be applied after the integration process in Equation \ref{eqn:03_opd_complex} and just before taking the real component to simulate a measured value at a particular instant in time.
 
 The acoustic duct modes in the center of the test-section for the acoustic waves traveling in the direction of the flow are shown in Figure \ref{fig:03_test_section_modes_with}.
 \begin{figure}
   \centering
   \includegraphics{../matlab/03_aero_optics_acoustics/tunnel_acoustic_with_0.6_8_0.eps}
-  \caption{The real component of the acoustic mode coefficients making up the acoustic field in the middle of the test-section as a function of the initial phase angle.}
+  \caption{The real component of the acoustic mode coefficients making up the downstream-traveling acoustic field in the middle of the test-section as a function of the initial phase angle.}
   \label{fig:03_test_section_modes_with}
 \end{figure}
 The downstream-traveling acoustic field inside of the test-section is comprised of the same duct modes as the upstream-traveling acoustic field but the mode coefficient are approximately an order-of-magnitude lower.
-All of the phase offsets remained the same except for the $m=2$, $n=2$ mode which was offset by $\pi$ radians.
+All of the phase offsets for the modes remain the same except for the $m=2$, $n=2$ mode which is now different by $\pi$ radians compared to the upstream-traveling modes in Figure \ref{fig:03_test_section_modes}.
 When the downstream-traveling acoustic field enters the cruciform after the test-section a portion of it is reflected, see Figure \ref{fig:03_tunnel_discretization}.
-When the maximum reflected pressure ratio, approximately -0.25, is combined with the strength of the downstream-traveling acoustic field, the acoustic field reflected back into the test-section is 1-2 orders-of-magnitude lower than the upstream-traveling acoustic field from the fan.
-The reflected field from the upstream-traveling acoustic field after it leaves the test-section is on the same order-of-magnitude as the downstream-traveling acoustic field.
-Assuming there was a reflected pressure ratio of 0.25 on both ends of the test-section, the trapped acoustic field if there were perfect constructive interference, would be only 33\% the strength of the original acoustic field,
-\begin{equation}
-  \sum_{n=1}^\infty 0.25^n = 1/3 \textrm{.}
-\end{equation}
-
-\section{Summary}
-\label{sect:03_summary}
-Acoustic waves affect the transmission of light by causing the local index-of-refraction to change with the pressure fluctuations.
-When the acoustic field is well modeled, as was the case with a few of the spherical wave measurements, an optical wavefront measurement can provide an accurate measurement of the acoustic field strength non-intrusively.
+When the maximum reflected pressure ratio, approximately -0.2, is combined with the strength of the downstream-traveling acoustic field, the acoustic field reflected back into the test-section is 1-2 orders-of-magnitude lower than the upstream-traveling acoustic field from the fan.
+On the other hand, the reflected field from the upstream-traveling acoustic field after it leaves the test-section is on the same order-of-magnitude as the downstream-traveling acoustic field.
 
 A comparison between a measured optical wavefront that has been band-pass filtered at the blade-passing frequency and a simulated optical wavefront that has been shot through the estimated acoustic field computed by the mode-marching method is shown in Figure \ref{fig:03_tunnel_comparison}.
 \begin{figure}
@@ -496,14 +497,19 @@ A comparison between a measured optical wavefront that has been band-pass filter
   \caption{Comparison of a measured optical wavefront and a simulated one passing through the estimated acoustic field.}
   \label{fig:03_tunnel_comparison}
 \end{figure}
-Qualitatively, there is some significant agreement between the two wavefronts.
-Since there was not a microphone installed in either the test-section or around the wind-tunnel fan, there cannot be a quantitative comparison made.
+Qualitatively, there is significant agreement between the two wavefronts.
+Since there was no microphones installed in either the test-section or around the wind-tunnel fan, there cannot be a quantitative comparison made.
+
+\section{Summary}
+\label{sect:03_summary}
+Acoustic waves affect the transmission of light by causing the local index-of-refraction to change with the pressure fluctuations.
+When the acoustic field is well modeled, as was the case with the spherical wave measurements, an optical wavefront measurement can provide an accurate measurement of the acoustic field strength non-intrusively.
 
 The mode-marching method provides a computationally rapid way of estimating an acoustic signal as it travels through a duct system like a wind-tunnel.
-This method assumes that the reflected component will be minimal and can typically be ignored.
-A significant contribution of this work to the computational procedure of this method is computing the eigen-functions for the various geometries that are neither circular nor rectangular.
+This method assumes that the reflected component will be minimal and can be ignored.
+A significant contribution of this work to the computational procedure of this method is computing the eigen-functions for the wind-tunnel fan transition geometries that are neither circular nor rectangular.
 These computations would become even more costly if the cross-section cannot be assumed to have a uniform flow speed \cite{Wilson-2019-VV2zh7Au}.
-This method has neglected the effect that the corners would have on the signal or other internal geometry such as the turning vanes or the turbulence screens.
+Finally, note that the mode-marching method used here has neglected the effect that the corners would have on the signal or other internal geometry such as the turning vanes or the turbulence screens.
 
 The main benefit to using a mode-marching method is to simulate narrow-band signals that appear in the optical wavefront spectra and to have some level of confidence that the source of that signal is the wind-tunnel fan.
 If the narrow-band signal does not match up with the simulated signal, it could have a source that may not be due to the testing environment and would likely need to be investigated further.

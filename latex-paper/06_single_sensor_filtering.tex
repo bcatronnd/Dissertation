@@ -3,33 +3,34 @@
 
 \chapter{Single Sensor Filtering Techniques}
 \label{chap:06_single_filter}
-\textcolor{red}{
-  \begin{itemize}
-    \item Work on the chapter intro
-    \item Filter applied in Fourier space and multidimensional spectral space
-  \end{itemize}
-}
+% \textcolor{red}{
+%   \begin{itemize}
+%     \item Work on the chapter intro
+%     \item Filter applied in Fourier space and multidimensional spectral space
+%   \end{itemize}
+% }
 
-Transfer function, $H(j\omega) = H(s)$
-Filter gain, $G(\omega) = |H(j\omega)|$
-Filter phase, $\Phi(\omega) = \arg(H(j\omega))$
-A filter is a function, $G(\mathbf{\omega})$, that describes the gain a signal will experience in frequency space.
-In the simplest case, the filtered signal is the inverse Fourier transform of the gain multiplied by the Fourier transform of the signal.
-Additionally, a windowing function, $W(\mathbf{x})$, can be used to help suppress finite sampling effects,
+Using multidimensional spectral estimates on wavefronts, as shown in Chapter \ref{chap:04_dispersion}, clear differences in source disturbances become evident.
+When just the wavefront measurement itself is available, digital filters can be used to separate or isolate a single disturbance source or at least minimize the impact from other sources.
+The digital filters used in this dissertation, use a transfer function, $H(j\omega)$, and are applied in Fourier space.
+The transfer functions themselves are typically derived in Laplace space, $H(s)$, but because $s=j\omega$ they are valid in Fourier space as well \cite{Hamming-1998-CdhcDuvZ}.
+The transfer function is compromised of two components which attenuate the signal, gain and phase.
+The filter gain is the magnitude of the transfer function, $G(\omega) = |H(j\omega)|$, while the filter phase is the argument, $\Phi(\omega) = \arg(H(j\omega))$.
+In the simplest case, the filtered signal is the inverse Fourier transform of the gain multiplied by the Fourier transform of the signal,
 \begin{equation}
  f_F(\mathbf{x}) = \real\left(\ifftn[H(j\mathbf{\omega})\fftn\{\mathbf{x}\}]\right) \textrm{,}
  \label{eqn:06_filter_function}
 \end{equation}
 where $f$ is the signal function and $f_F$ is the filtered signal.
-Depending on the windowing function some data could be destroyed during this process if there is a zero present due to the possibility of dividing by zero.
 
-A basic MATLAB code for applying a filter to a wavefront using a separate function for both generating and applying the gain function which is presented in Listing \ref{code:sc_basic_wavefront_filters}.
-This code generates a windowing function as described by Equations \ref{eqn:04_hann_window}, \ref{eqn:04_window_sep}, and \ref{eqn:04_window_space_arb}.
-The temporal windowing function was generated with an additional two terms such that the end points which are equal to zero could be removed to prevent the first and last frames from being destroyed.
-Likewise, the spatial window used the arbitrary aperture function which ensures that all of the points inside of the aperture are non-zero.
-In some cases, a windowing function was not used due to filtered wavefront having a far greater magnitude in some places despite the precautions used.
-The filter presented in this code sample is a second order temporal high-pass filter with a cutoff frequency of 2000 Hz.
-The function \lstinline{WFfilter} takes input based on a normalized cut-point in reference to the sample rate.
+
+% A basic MATLAB code for applying a filter to a wavefront using a separate function for both generating and applying the gain function which is presented in Listing \ref{code:sc_basic_wavefront_filters}.
+% This code generates a windowing function as described by Equations \ref{eqn:04_hann_window}, \ref{eqn:04_window_sep}, and \ref{eqn:04_window_space_arb}.
+% The temporal windowing function was generated with an additional two terms such that the end points which are equal to zero could be removed to prevent the first and last frames from being destroyed.
+% Likewise, the spatial window used the arbitrary aperture function which ensures that all of the points inside of the aperture are non-zero.
+% In some cases, a windowing function was not used due to filtered wavefront having a far greater magnitude in some places despite the precautions used.
+% The filter presented in this code sample is a second order temporal high-pass filter with a cutoff frequency of 2000 Hz.
+% The function \lstinline{WFfilter} takes input based on a normalized cut-point in reference to the sample rate.
 
 \section{Temporal Filter Methods}
 The methods presented in this section are based on Butterworth filters but could be extended to other types of filters.
@@ -78,16 +79,16 @@ An example of band-pass and band-stop filtering is shown in Figure \ref{fig:06_f
  \caption{Measured wavefronts filtered at the blade-passing frequency (532$\pm$10 Hz).  The left column is band-stop filtered while the right is band-pass filtered.}
  \label{fig:06_filter_temporal_bandpass}
 \end{figure}
-The figure shows several wavefront frames of the measured data presented in Chapter \ref{chap:03_optical_acoustics} in the Notre Dame White Field wind tunnel (see Figure \ref{ADD_REFERENCE}) that is band-stop filtered in the left column and band-pass filtered in the right column.
+The figure shows several wavefront frames of the measured data presented in Chapter \ref{chap:03_optical_acoustics} in the Notre Dame White Field wind tunnel (see Figure \ref{fig:03_tunnel_comparison}) that is band-stop filtered in the left column and band-pass filtered in the right column.
 The flow is from right-to-left and the band-pass filtered wavefront clearly shows upstream-moving optical disturbances (moving left-to-right against the flow direction) associated with acoustic duct modes traveling upstream from the fan.
 On the other hand, the band-stop filtered wavefronts on the left of Figure \ref{fig:06_filter_temporal_bandpass} show much slower-moving optical disturbances that are in general moving in the direction of the flow.
 In particular, the downstream-moving disturbances on the left side of Figure \ref{fig:06_filter_temporal_bandpass} have the appearance of boundary-layer aero-optical disturbances, with a scale on the order of the boundary-layer thickness.
 
 Note that for filters that operate in one-dimension, the filters were applied over both positive and negative frequencies to the n-dimensional Fourier transform in order to preserve the direction of travel of the signal.
 This also allowed several filters to be applied in series with one another without having to perform a Fourier and inverse Fourier transform for each successive filter.
-Temporal filters are also used in sizing and/or designing adaptive optics systems \cite{ADD_SOURCE} for example.
-A low-pass filter with a cutoff at the bandwidth of either a fast-steering or deformable mirror is often used to define the signal that the system needs to reject \cite{ADD_SOURCE}.
-A control system may need to have the bandwidth reduced in order to keep a mirror’s travel within limits \cite{ADD_SOURCE}, while a high-pass filter would inform designers of the remaining optical aberrations that cannot be corrected.
+Temporal filters are also used in sizing and/or designing adaptive optics systems \cite{Greenwood-1977-aWDqUh6C} for example.
+A low-pass filter with a cutoff at the bandwidth of either a fast-steering or deformable mirror is often used to define the signal that the system needs to reject \cite{Whiteley-2007-bHbWRWUu}.
+A control system may need to have the bandwidth reduced in order to keep a mirror’s travel within limits \cite{Madec-2012-YJ8eWhPB}, while a high-pass filter would inform designers of the remaining optical aberrations that cannot be corrected.
 
 
 

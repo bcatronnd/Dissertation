@@ -59,15 +59,14 @@ Assuming that the optical disturbances from aero-optical effects are statistical
   \opdrms_{TOTAL}^2 = \opdrms_{MODEL}^2+\opdrms_{ENVIRONMENT}^2 \textrm{.}
   \label{eqn:01_combined_opd}
 \end{equation}
- an example of the effect that optical contamination may have on system design, Figure \ref{fig:01_design_iteration} illustrates a hypothetical iterative design process, where the design objective is to obtain a design that meets a required level of performance shown in red, in the presence of a level of environmental optical contamination shown in orange.
+As an example of the effect that optical contamination may have on system design, Figure \ref{fig:01_design_iteration} illustrates a hypothetical iterative design process, where the design objective is to obtain a design that meets a required level of performance shown in red, in the presence of a level of environmental optical contamination shown in orange.
 \begin{figure}
   \centering
   \includegraphics{../matlab/01_introduction/design_iteration.eps}
   \caption{Hypothetical iterative design process of an airborne directed-energy system.  The required performance level is shown by the red line and the testing environment's contamination is shown by the orange line.}
   \label{fig:01_design_iteration}
 \end{figure}
-
-As the design process was simulated by an initial aero-optical $\opdrms$ shown on the left of the plot, and the improvement in system performance achieved with each design iteration was simulated as a nearly linear reduction in $\opdrms$ combined with 15\% random variation.
+The design process was simulated by an initial aero-optical $\opdrms$ shown on the left of the plot, and the improvement in system performance achieved with each design iteration was simulated as a nearly linear reduction in $\opdrms$ combined with 15\% random variation.
 If only the measured data, that is, including the effect of environmental contamination using Equation \ref{eqn:01_combined_opd}, is used to assess the system's performance then three additional design iterations are needed to achieve a usable design, which can add significantly to the development time and costs.
 If the environmental contamination is greater than the design requirement, the measured performance will never reach the required performance criteria.
 However, if the environmental contamination can be estimated, mitigated and/or removed, then the measured performance is a more accurate evaluation of the true aero-optical performance, and design convergence can be achieved more quickly and with more accurate results.

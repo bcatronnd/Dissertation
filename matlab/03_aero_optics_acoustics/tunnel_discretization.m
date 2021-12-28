@@ -96,32 +96,33 @@ WindTunnel.pra = (1-Ma)./(1+Ma).*(Mb-Ma)./(Mb+Ma).*Yab./Xab;
 
 
 f1 = figure(1);
-subplot(3,1,1);
+subplot(4,1,1);
 plot(wtZ/wtZ(end),wtS,'ok',WindTunnel.z/wtZ(end),WindTunnel.area,'k-');%,wtz/wtZ(end),wteta,'b-');
 grid on;
 ylabel('Area ($m^2$)','interpreter','latex');
-subplot(3,1,2);
+subplot(4,1,2);
 plot(WindTunnel.z/wtZ(end),WindTunnel.mach,'k-');
 grid on;
 ylabel('Mach Number','interpreter','latex');
-% subplot(4,1,3);
-% plot(WindTunnel.z(2:end)/wtZ(end),WindTunnel.ptw,'k-',WindTunnel.z(2:end)/wtZ(end),WindTunnel.prw,'k:');
-% grid on;
-% ylabel({'Sound Transmission';'With Flow'},'interpreter','latex');
-subplot(3,1,3);
+subplot(4,1,3);
+plot(WindTunnel.z(2:end)/wtZ(end),WindTunnel.ptw,'k-',WindTunnel.z(2:end)/wtZ(end),WindTunnel.prw,'k:');
+grid on;
+ylabel({'Sound Transmission';'With Flow'},'interpreter','latex');
+subplot(4,1,4);
 plot(WindTunnel.z(1:end-1)/wtZ(end),WindTunnel.pta,'k-',WindTunnel.z(1:end-1)/wtZ(end),WindTunnel.pra,'k:');
 grid on;
+xlabel({'Normalized Tunnel Length';'$\Longleftarrow$ Flow'},'interpreter','latex');
 ylabel({'Sound Transmission';'Against Flow'},'interpreter','latex');
 % sgtitle(['$M_{TS}=' num2str(tsMach) '$'],'interpreter','latex');
 f1.Children(2).TickLabelInterpreter = 'latex';
 f1.Children(3).TickLabelInterpreter = 'latex';
 f1.Children(1).TickLabelInterpreter = 'latex';
-% f1.Children(5).TickLabelInterpreter = 'latex';
+f1.Children(4).TickLabelInterpreter = 'latex';
 f1.Units = 'inches';
-f1.Position = [1 1 4.5 5];
+f1.Position = [1 1 5.5 7];
 
-% saveas(f1,['tunnel_discretization_' num2str(tsMach,'%0.2f') '.eps'],'epsc');
-saveas(f1,['tunnel_discretization_' num2str(tsMach,'%0.2f') '.png'],'png');
+saveas(f1,['tunnel_discretization_' num2str(tsMach,'%0.2f') '.eps'],'epsc');
+% saveas(f1,['tunnel_discretization_' num2str(tsMach,'%0.2f') '.png'],'png');
 % save(['tunnel_discretization_' num2str(tsMach,'%0.2f') '.mat'],'WindTunnel');
 
 for aa=1:length(wtZ)

@@ -88,6 +88,7 @@ disp(rms(sqrt(wf1*prod(RunLog.samplerate)),'all'));
 close all;
 log_range = -14;
 scolor = parula(2);
+clim = [-14 -8];
 
 f1 = figure(1);
 subplot(1,2,1);
@@ -98,6 +99,7 @@ daspect([1 1 50]);
 xlim(RunLog.samplerate(1)/2*[-1 1]);
 ylim(RunLog.samplerate(2)/2*[-1 1]);
 zlim(RunLog.samplerate(3)/2*[0 1]);
+caxis(clim);
 xlabel('$\xi_x\ (m^{-1})$','Interpreter','Latex');
 ylabel('$\xi_y\ (m^{-1})$','Interpreter','Latex');
 zlabel('$f\ (Hz)$','Interpreter','Latex');
@@ -115,6 +117,7 @@ daspect([1 1 50]);
 xlim(RunLog.samplerate(1)/2*[-1 1]);
 ylim(RunLog.samplerate(2)/2*[-1 1]);
 zlim(RunLog.samplerate(3)/2*[0 1]);
+caxis(clim);
 xlabel('$\xi_x\ (m^{-1})$','Interpreter','Latex');
 ylabel('$\xi_y\ (m^{-1})$','Interpreter','Latex');
 zlabel('$f\ (Hz)$','Interpreter','Latex');
@@ -125,8 +128,24 @@ camlight;
 f1.Children(1).TickLabelInterpreter = 'latex';
 
 
+colorbar('location','south');
+f1.Children(1).Position(1) = f1.Children(3).Position(1);
+f1.Children(1).Position(3) = f1.Children(2).Position(1)+f1.Children(2).Position(3)-f1.Children(3).Position(1);
+f1.Children(1).Position(2) = 0.025;
+plot_offset = 0.225;
+f1.Children(2).Position(4) = f1.Children(2).Position(4)-plot_offset+f1.Children(2).Position(2);
+f1.Children(2).Position(2) = plot_offset;
+f1.Children(3).Position(4) = f1.Children(3).Position(4)-plot_offset+f1.Children(3).Position(2);
+f1.Children(3).Position(2) = plot_offset;
+
+f1.Children(1).Label.String = '$S_{xx}$ ($\mu m^2/Hz/m^{-2}$)';
+f1.Children(1).Label.Interpreter = 'latex';
+f1.Children(1).TickLabelInterpreter = 'latex';
+for aa=1:length(f1.Children(1).TickLabels)
+    f1.Children(1).TickLabels{aa} = ['$10^{' f1.Children(1).TickLabels{aa} '}$'];
+end
 f1.Units = 'inches';
-f1.Position = [1 1 5.5 3.5];
+f1.Position = [1 1 5.5 4.25];
 
 saveas(f1,'lse_mspod.eps','epsc');
 

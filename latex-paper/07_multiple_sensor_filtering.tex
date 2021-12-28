@@ -12,14 +12,14 @@
 
 The previous chapter investigated filtering optical wavefront corruption by applying a variety of filters to the wavefront in the multidimensional spectral domain.
 These techniques involve only data from the optical wavefront itself and user knowledge and experience to obtain filtered data.
-When additional data is available, such as from microphones or accelerators, a targeted filter approach becomes possilbe.
+When additional data is available, such as from microphones or accelerometers, a targeted filter approach becomes possible.
 
 
 This kind of approach is described in a previous study \cite{DeLucca-2014-RAJvGdv7} in which a combination of linear stochastic estimation (LSE) and spectral proper orthogonal decomposition (SPOD) was used to remove vibration related contamination from aero-optical wind-tunnel measurements.
 This process along with optical tip and tilt removal showed approximately an 85\% reduction in the measured $\opdrms$ by using accelerometer measurements to remove vibration effects from optical wavefront measurements.
 
 \section{Optical Tip and Tilt}
-lthough they are usually not employed in areo-optical investigations, Zernike polynomials have been traditionally used for modal decomposition of the optical aberrations of a optical system \cite{Born-1965-HHGYgjdH}.
+lthough they are usually not employed in areo-optical investigations, Zernike polynomials have been traditionally used for modal decomposition of the optical aberrations of an optical system \cite{Born-1965-HHGYgjdH}.
 These polynomials are defined on the unit circle and form a set of orthogonal functions,
 \begin{equation}
   Z_n^m(\rho,\theta) = R_n^m(\rho)\cos(m\theta)
@@ -30,11 +30,11 @@ For values of $-m$ the angular basis function becomes $\sin(m\theta)$.
 The radial basis function are developed from Jacobi polynomials but for purposes in this study, only a few simple ones will be used.
 An optical wavefront can be represented by a summation of Zernike polynomials multiplied by their corresponding coefficients
 \begin{equation}
-  \wf \approx \sum Z_ja_j \textrm{.}
+  \wf = \sum Z_ja_j \textrm{.}
   \label{eqn:07_zernike_coeff}
 \end{equation}
 
-The Noll naming scheme is an method of organizing the Zernike polynomials into a single notation of $Z_j$, along with normalizing each polynomial to have a spatial RMS equal to one \cite{Noll-1976-HHKzd88f}.
+The Noll naming scheme is a method of organizing the Zernike polynomials into a single notation of $Z_j$, along with normalizing each polynomial to have a spatial RMS equal to one \cite{Noll-1976-HHKzd88f}.
 The first three of these using the Noll naming scheme are piston, tip, and tilt.
 Piston is simply the average $\opd$ value of the wavefront
 \begin{equation}
@@ -215,7 +215,7 @@ The picture in Figure \ref{fig:07_sensor placement} was taken from the opposite 
 Two microphones were used for ambient measurement (a ACO 7016B \cite{ACO-Microphones} and a Br\"uel \& Kj\ae r 4939 \cite{Bruel-Kjaer-4939}), four microphones were used for test-section noise measurement (PCB 103B02 \cite{PCB-103B02-C}), and ten accelerometers were located throughout the setup (PCB 352C33 \cite{PCB-352C33-H}).
 One of the ambient microphones was mounted to the top of the optics bench facing the test-section and can be seen in Figure \ref{fig:07_sensor placement} just to the right of the primary lens and the other ambient microphone was hanging below the optics bench end towards the test-section.
 
-The test-sections microphones were in groups of two either upstream or downstream from the optical beam by about 20-inches, with the upstream microphone locations viewable in Figure \ref{fig:07_sensor placement} (sensors 3 and 4) and shown in Figure \ref{fig:07_test_section_mic_accel}.
+The test-section microphones were in groups of two either upstream or downstream from the optical beam by about 20-inches, with the upstream microphone locations viewable in Figure \ref{fig:07_sensor placement} (sensors 3 and 4) and shown in Figure \ref{fig:07_test_section_mic_accel}.
 The model installed in the test-section represents the outside of an aircraft fuselage with a 5-foot diameter and is angled to account for the aircraft's angle-of-attack (~6$^\circ$) for steady-level-flight at cruise.
 This results in the fuselage model being shifted approximately 2-inches higher from the test-section centerline upsteam at the microphone location.
 The duct microphones were placed about 2.75-inches from the model centerline.
@@ -224,7 +224,7 @@ There were six accelerometers attached to the test-section windows, with three b
 The locations of the three accelerometers (sensors 8-10) on the model side can be seen in Figure \ref{fig:07_sensor placement}, the three accelerometers on the other window used the opposite pattern (two high and one low).
 The optical window on the far side of the test-section was moved laterally depending on the angle of the beam relative to the flow.
 One accelerometer was placed on the primary lens (also shown, sensor 7) and one was placed in the center of the optics bench.
-The last two accelerometers were located on the return mirror and oriented in a way to measure the tip and tilt of the return beam.
+The last two accelerometers were located on the back of the return mirror with one on the top and the other on the side.
 
 The power-spectra of all of the sensors at the three Mach numbers are shown in Figure \ref{fig:07_sensor_spectra}.
 \begin{figure}
@@ -254,7 +254,7 @@ Figures \ref{fig:07_lse_spod} and \ref{fig:07_lse_mspod} show multidimensional p
   \caption{A multidimensional power spectrum of an unfiltered wavefront and the same wavefront filtered with the LSE-MSPOD method using all 16 additional microphone or accelerometer measurements.  }
   \label{fig:07_lse_mspod}
 \end{figure}
-These plots show the $f$-$\xi_x$ plane of the multidimensional spectrum that captures horizontally-moving plane waves with a portion of the acoustic cone isosurface wrapping behind it.
+These plots show the $f$-$\xi_x$ plane of the multidimensional spectrum that captures horizontally-moving (streamwise) plane waves with a portion of the acoustic cone isosurface wrapping behind it.
 Both of these methods performed effectively identically to one another with a 14.2\% drop in overall RMS value of the filtered wavefront (both time and space).
 There is a significant drop in the signal at the blade-passing frequency and its harmonics, especially at the higher spatial frequencies.
 The stationary signal information is also significantly reduced along with the high temporal-frequency acoustic signal.
@@ -269,13 +269,13 @@ Some of this lost signal can be restored by increasing the overlap of the tempor
 \end{table}
 
 Table \ref{tab:07_lse_mspod_table} shows the time averaged $\opdrms$ of three different data sets at a beam angle through the test-section of $90^\circ$.
-The data sets were at Mach numbers of 0.3, 0.4 and 0.5 that had an unfiltered $\opdrms$ of 0.0561, 0.0521, and 0.0824 $\mu m$ respectively.
+The data sets were at Mach numbers of 0.3, 0.4, and 0.5 and had an unfiltered $\opdrms$ of 0.0561, 0.0521, and 0.0824 $\mu m$ respectively.
 Note that in the raw processed wavefronts, the $\opdrms$ at a Mach number of 0.3 was higher than the 0.4 case.
 There was a significant drop of between 62.6 and 78.6\% in the $\opdrms$ by removing the Zernike modes corresponding to tip and tilt.
 It is at this point the Mach number of 0.4 case has a higher $\opdrms$ than the 0.3 case as would be expected \cite{Gordeyev-2014-jcJndkHM}.
 Note that it is standard practice to remove optical tip/tilt from wavefront measurements, since tip/tilt is largely imposed by the measurement optics rather than the actual aero-optical flow.
 
-Table \ref{tab:07_lse_mspod_table} also shows the effect of five different combinations of additional sensors that were used for filtering with the LSE-MSPOD process.
+Table \ref{tab:07_lse_mspod_table} also shows the effect of five different combinations of additional sensors that were used for filtering with the LSE-MSPOD process (the bracketed percentage in Table \ref{tab:07_lse_mspod_table} shows the percent reduction in $\opdrms$ due to the filtering).
 The first set was all of the accelerometers which resulted in an additional drop in $\opdrms$ of between 3 and 5\%.
 The second and third sets used either the ambient or duct microphones and those sets had slightly less reduction than the accelerometers.
 The fourth set was the test-section sensors comprised of six window mounted accelerometers and four duct mounted microphones.
@@ -286,6 +286,7 @@ The velocity filter performed better than the all-sensors removal case by an add
 When all sensors were used with LSE-MSPOD on the velocity filtered wavefronts an additional 3 to 4\% of the $\opdrms$ was removed compared to just the velocity-filtered case or an additional 8.1\% reduction for only doing tip/tilt removal on the Mach number of 0.3 case or 14.1 and 13.3\% reduction for the 0.4 and 0.5 Mach number cases.
 
 In summary, Table \ref{tab:07_lse_mspod_table} shows that using either the temporal or multidimensional version of the LSE-SPOD filtering technique can help remove some of the narrow-band acoustic and vibration reduction in an optical wavefront.
+These temporally narrow-band signals have broadband spatial content that is attenuated.
 This additional reduction does seem to be somewhat tied to the number of sensors used with more sensors having a greater impact on the signal reduction.
 Since the vibrations and acoustics have the same primary source, the wind-tunnel fan, they seems to do a relatively equivalent job at filtering the optical contamination.
 Accelerometers have the benefit of easier installation but the microphones do not necessarily have to be installed inside of the wind-tunnel.

@@ -24,10 +24,10 @@ The benefits of using multidimensional spectral estimation are shown in Figure \
   \caption{Multidimensional spectral estimation plot example and comparison to traditional power spectrum measurements. A single row of an optical wavefront measurement was used in this example. The top plot shows the typical power spectrum averaged over the entire row of data. Both the middle and bottom plots show the multidimensional spectrum plot with the y-axis as spacial-frequency in the middle and velocity in the bottom assuming $u=f/\xi_x$.}
   \label{fig:04_dispersion_demo}
 \end{figure}
-A single row of sub-apertures was from an optical wavefront measurement with a 5-inch diameter beam propagating normally through a wind-tunnel test section with a free-stream Mach number of 0.5.
+A single row of sub-apertures was from an optical wavefront measurement with a 5 inch diameter beam propagating normally through a wind-tunnel test section with a free-stream Mach number of 0.5.
 This measurement was preformed in the University of Notre Dame Whitefield Wind Tunnel in a test section that contained a model representing the fuselage of the AAOL aircraft \cite{Jumper-2013-8KtN3pue} with window that was flat and flush to the outer mold line of the fuselage.
 The top plot shows a traditional power spectrum ensemble-averaged over the row of data.
-Both the blade-passing frequency (517-Hz) and its sub-harmonic had similar amplitudes  with an additional five harmonics showing significant spikes above the local baseline measurement.
+Both the blade-passing frequency (517 Hz) and its sub-harmonic had similar amplitudes  with an additional five harmonics showing significant spikes above the local baseline measurement.
 There are three additional strong peaks at approximately 3100, 4850, and 5850 Hz that are likely due to additional fan vibration that is currently limiting the top speed of the tunnel.
 
 Both the middle and bottom plots show the multidimensional spectral estimation plot of  two-dimensional measurement.
@@ -35,7 +35,7 @@ The colorbars were intentionally not shown in order to allow for all three plots
 The colorbar range in this plot is the same is constant with the other plots throughout this chapter.
 In the middle plot the y-axis represents the stream wise spatial frequency, $\xi_x$ with the units of inverse meters.
 It is important to note that, unlike temporal-frequencies, spatial-frequencies can have positive or negative values depending on the direction of travel of the disturbance; this means that, waves with positive spatial-frequencies are moving in the direction of flow.
-The upstream and downstream traveling signals begin to diverge at around 2000-Hz with the signal below that point primarily laying on the upstream traveling side of the plot.
+The upstream and downstream traveling signals begin to diverge at around 2000 Hz with the signal below that point primarily laying on the upstream traveling side of the plot.
 The blade-passing frequency and its various harmonics can also be discerned in the center plot, by the vertical ``streaks'' that line up  with the peaks in the standard spectrum shown in the top plot; the center spectral plot shows that these fan blade-passing signals have significant broadband spatial-frequency content.
 All of these narrow-band signals have a majority of their signal traveling upstream.
 In addition to optical disturbances branching off in the upstream and downstream moving directions there are significant disturbances along zero spatial-frequency representing a collection of standing waves.
@@ -65,7 +65,7 @@ If we are to assume that a wave packet intercepts the origin ($f=\xi=0$) then ev
 
 The bottom plot shows the same multidimensional spectral estimation plot as the middle one but with the y-axis representing an assumed velocity.
 There is not much in the way of velocity measurement capability at low temporal-frequencies
-The primary optical disturbance moving in the direction of flow is moving at the free-stream velocity of approximately 175-m/s.
+The primary optical disturbance moving in the direction of flow is moving at the free-stream velocity of approximately 175 m/s.
 The upstream traveling disturbance is traveling at the same speed but due to the signal being broader is more difficult to measure this way.
 The stationary modes in the middle plot are nowhere to be found on the bottom plot.
 When the assumed velocity for this these waves is calculated their speed approaches infinity.
@@ -247,7 +247,7 @@ This can be more clearly seen in two temporal-frequency slice in Figure \ref{fig
 \begin{figure}
   \centering
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_slices_velocity.eps}
-  \caption{Temporal-frequency slices at 5 and 10-kHz with the various horizontal velocities labeled.}
+  \caption{Temporal-frequency slices at 5 and 10 kHz with the various horizontal velocities labeled.}
   \label{fig:04_dispersion_slices_velocity}
 \end{figure}
 Here the horizontal spatial-frequency has been replaced with the normalized horizontal velocity.
@@ -260,13 +260,13 @@ The downstream-traveling acoustic wave, $u+c$, has a low signal power than the u
 The likely explanation for this difference in signal power is that most of the acoustic energy in the wind tunnel is generated by the fan which propagates upstream and downstream within the wind-tunnel ducting.
 However, sound waves that move in the flow direction have their wavelength stretched as the flow is accelerated into the test-section contraction, while sound waves moving against the flow have their wavelength contracted.
 Hence the downstream-traveling waves have a longer wavelength as they pass through the measurement beam and thus more of the optical signal from the downstream-travelling waves is filtered out due to aperture filtering \cite{Siegenthaler-2008-9Yutbt6c}.
-At low temporal-frequencies, the blade-passing frequency (~520-Hz) and its associated harmonics appear as vertical lines with regular spacing in Figure \ref{fig:04_dispersion_xy}.
+At low temporal-frequencies, the blade-passing frequency (~520 Hz) and its associated harmonics appear as vertical lines with regular spacing in Figure \ref{fig:04_dispersion_xy}.
 % There also appears to be some constructive interference with the BPF and some of the aliased data around $\xi_x = \pm100\ m^{-1}$.
 
 The two main features on the vertical spectral slice plot on the bottom of Figure \ref{fig:04_dispersion_xy} are the signals moving at the speed of sound ($\pm c$) including some significant aliasing of these signals.
 These two lines represent acoustic waves that are traveling either straight up or down through the measurement beam.
 The blade-passing frequency and its harmonics are also visible in the vertical moving wave plots in both directions and have much less broadband spatial content in the vertical direction.
-Some of the high temporal-frequency narrow-band signals (~3, 5, and 6-kHz) contain most of the signal power at the speed of sound lines in the vertical spectral slice plot.
+Some of the high temporal-frequency narrow-band signals (~3, 5, and 6 kHz) contain most of the signal power at the speed of sound lines in the vertical spectral slice plot.
 These signals has some dependence on the free-stream Mach number (see Figure \ref{fig:04_dispersion_mach}).
 These maybe vibrations originating from the tunnel fan that are currently limiting the top speed of the tunnel; some older optical wavefronts collected in this tunnel under similar measurement conditions do not show these narrow-band signals.
 Because the portion of these signals with the most power is traveling vertically through the test section instead of steam wise, the tunnel walls maybe excited by the fan and resonating.
@@ -289,7 +289,7 @@ The same data that has been previously shown in two-dimensional form, is depicte
 This particular isosurface encompasses approximately 99.9\% of the power of the optical disturbances.
 The largest feature is the boundary layer which resembles an ellipsoidal plane that is tilted in the $f-\xi_s$ plane.
 The other main feature is the acoustic signal which appears as a cone which is slightly tilted in the direction of upstream-moving disturbances.
-The acoustic signal separates into several spikes at high temporal frequencies some of which are constructive interference from aliased signal ($\xi_x\approx25\ m^{-1},\ \xi_y\approx\pm60\ m^{-1}, and f\approx20 kHz$) which is better visualized in the 20-kHz temporal-frequency spectral slice in Figure \ref{fig:04_dispersion_slices_velocity}.
+The acoustic signal separates into several spikes at high temporal frequencies some of which are constructive interference from aliased signal ($\xi_x\approx25\ m^{-1},\ \xi_y\approx\pm60\ m^{-1}, \textrm{and}\ f\approx20 kHz$) which is better visualized in the 20 kHz temporal-frequency spectral slice in Figure \ref{fig:04_dispersion_slices_velocity}.
 There may also be a small number of dominant duct modes at these high temporal-frequencies.
 The last feature is the stationary modes which appears as the cylindrical structure along the center of the plot (near zero spatial-frequency in x and y), which have a near constant shape and magnitude through all temporal-frequency ranges.
 
@@ -340,13 +340,13 @@ Views inside of the isosurface of the horizontal and vertical plane waves were s
   \caption{Multidimensional spectral estimate slices at various temporal-frequencies.}
   \label{fig:04_dispersion_slices}
 \end{figure}
-The temporal-frequencies spectral slices shown are at: 0-Hz, the blade-passing frequency at 517-Hz, the second harmonic of the blade-passing frequency at 1551-Hz, and additional slices at 5, 10, and 20-kHz.
+The temporal-frequencies spectral slices shown are at: 0 Hz, the blade-passing frequency at 517 Hz, the second harmonic of the blade-passing frequency at 1551 Hz, and additional slices at 5, 10, and 20 kHz.
 The slice at 0 Hz temporal frequency shows the spatial frequencies of the wavefront disturbance that does not change with time.
 This temporally constant wavefront disturbance is typically called the ``mean lensing''component of the wavefront measurement, since it is has an effect similar to a lens placed in the beam.
-The mean lensing slice at 0-Hz shows a mostly axisymmetric pattern with most of its power concentrated at low spatial frequencies.
+The mean lensing slice at 0 Hz shows a mostly axisymmetric pattern with most of its power concentrated at low spatial frequencies.
 There appear to be the occasional spike radiating out from the center, most noticeably in line with the boundary layer signal.
 
-The next four slices, for $f$=517.1-Hz to 10-kHz, show a vertical line associated with the boundary layers aero-optical disturbance, which  progressively moves towards positive x-spatial frequencies with increasing frequency.
+The next four slices, for $f$=517.1 Hz to 10 kHz, show a vertical line associated with the boundary layers aero-optical disturbance, which  progressively moves towards positive x-spatial frequencies with increasing frequency.
 The boundary-layer disturbance appears to be rotated slightly counter-clockwise indicating that the interrogation beam is slightly rotated between the test section and the wavefront sensor.
 The boundary layer signals at the lower temporal-frequencies appear to have equal decay in both the positive and negative $\xi_x$ directions while at the higher frequencies, the decay is much more gradual in the positive $\xi_x$ direction.
 This could be indicative of the lower temporal-frequency disturbances in the boundary layer typically traveling at a more uniform speed very near the free-stream velocity likely being either in the outer boundary layer or free-stream tunnel turbulence.
@@ -355,47 +355,80 @@ The higher temporal-frequency disturbances seem to have a much wider range of ve
 The acoustic disturbances show an interesting evolution as the temporal-frequency increases.
 At low temporal-frequencies, the acoustic disturbances are concentrated near zero spatial frequency and with strong power.
 At high temporal-frequencies the acoustic disturbances appear as elliptically shaped rings.
-At 20-kHz, there are two elliptical shapes that are easily identifiable, the smaller one is the signal that is actually present at that frequency while the other one is aliased data due to the limited temporal sample rate.
+At 20 kHz, there are two elliptical shapes that are easily identifiable, the smaller one is the signal that is actually present at that frequency while the other one is aliased data due to the limited temporal sample rate.
 There is constructive interference where the two acoustic ring intersect.
-The 10-kHz slice also shows a small amount of acoustic aliasing
-Both the 10 and 20-kHz acoustic rings show some a non-uniform signal power throughout the circumference which are also visible in the three-dimensional views as the spikes at the high temporal-frequencies.
+The 10 kHz slice also shows a small amount of acoustic aliasing
+Both the 10 and 20 kHz acoustic rings show some a non-uniform signal power throughout the circumference which are also visible in the three-dimensional views as the spikes at the high temporal-frequencies.
 % Both of these temporal spectral slices show the center stationary mode column that appears to be nearly identical.
 
-
+\subsection{Acoustic Cone}
+The shape of the acoustic cone can be visualized by plotting the relationship between the temporal frequency and the vertical and axial wavenumbers for a beam going through a duct at $90^\circ$.
+Figure \ref{fig:04_dispersion_sound} shows the acoustic cone mode lines for a small set of duct modes at various Mach numbers for a duct that is 1 meter square.
 \begin{figure}
   \centering
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_sound.eps}
   \caption{Acoustic duct mode lines showing the spatial-frequency location as a function of temporal-frequency, Mach number, and mode number.}
   \label{fig:04_dispersion_sound}
 \end{figure}
+The cross-sectional wavenumbers are $k_x = m\pi/l_x$ and $k_y = n\pi/l_y$ with the vertical spacial-frequency , $\xi_y=k_y/2\pi$.
+The horizontal spacial-frequency is related to the axial wavenumbers, Equation \ref{eqn:02_kzm}, for sound traveling upstream or downstream.
 
+The plot on the left of Figure \ref{fig:04_dispersion_sound} shows the acoustic cone when $m=0$ and $n\in [0,3]$ at Mach numbers of 0, 0.3, and 0.6.
+Only shown is the positive vertical spatial-frequency.
+As the vertical spatial-frequency of a duct-mode varies only with the mode number $n$ each set occupies a distinct plane, $\xi_y=n/2l_y$.
+Only acoustic cone modal lines representing the cut-on duct modes are shown.
 
+The plot on the right of Figure \ref{fig:04_dispersion_sound} shows the acoustic modal lines at $\xi_y=0$ for $n=0$ which fill the inside of the acoustic cone.
+The Mach number has a far greater impact on the acoustic cone for the waves traveling upstream.
+As the Mach number increases, the cut-on frequency (minimum value in $f$) decreases and the horizontal spatial-frequency at the cut-on frequency also decreases.
+This effect is more pronounced at higher mode numbers.
+The phase velocity of a downstream-traveling acoustic wave can travel upstream.
 
-\subsection{Artificially Increased Sample Rate}
+It maybe possible to individually resolve the separate acoustic duct modes using optical wavefronts if the spatial frequency resolution where high enough.
+To measure of the vertical mode number, $n$, the spatial-frequency resolution would need to be $\Delta\xi_y\ge 1/2l_y$ for a square duct.
+With a single beam going through the duct perpendicularly, the axial wave number is directly measurable but its sensitivity is diminished as the temporal-frequency is increased.
+It would be most sensitive to measuring modes that have just been cut-on.
+
+\subsection{Signal Aliasing}
 In the spectral slices shown in Figure \ref{fig:04_dispersion_xy}, when a signal crosses a plane represented by one of the Nyquist frequencies (positive or negative) it is transposed to the conjugate Nyquist frequency plane and continues on with the same gradient as before.
-This behavior is illustrated in Figure \ref{fig:04_dispersion_supersample} using the horizontal and vertical multidimensional spectrum slices.
+This behavior is illustrated in Figure \ref{fig:04_dispersion_supersample} using tiled horizontal and vertical multidimensional spectrum slices.
 \begin{figure}
   \centering
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_supersample.eps}
   \caption{Artificially increased temporal sample rate using a dispersion analysis. The black box represents original dispersion plot.}
   \label{fig:04_dispersion_supersample}
 \end{figure}
-Here the black box represents the original extents of the spectrum, while outside of the box the spectrum has simply been duplicated and appended which effectively artificially increases the sample rate.
-In this case the spectrum array was tiled in a three-by-three grid for each of the horizontal and vertical slices.
-This process has been previously discussed for two-dimensional spectral plots \cite{Lynch-2021-DygYkEGU}.
-Along the spatial Nyquist frequency edges, there is a significant dip in the signal strength which would result in a spatial super sampling to have a significant loss of signal at these frequencies.
+The tiling process for the spectral slices,
+\begin{equation}
+  S_{xx}^{\xi_y=0} = \left[
+    \begin{array}{c c c}
+      S_{xx}^{\xi_y=0} & S_{xx}^{\xi_y=0} & S_{xx}^{\xi_y=0} \\
+      S_{xx}^{\xi_y=0} & S_{xx}^{\xi_y=0} & S_{xx}^{\xi_y=0} \\
+      S_{xx}^{\xi_y=0} & S_{xx}^{\xi_y=0} & S_{xx}^{\xi_y=0}
+    \end{array}
+  \right] \textrm{,}
+\end{equation}
+where $S_{xx}^{\xi_y=0}$ is the spectral slice showing the horizontal moving disturbances at $\xi_y=0$.
+The temporal frequency is tiled,
+\begin{equation}
+  f = \left[
+    \begin{array}{c c c}
+      f-f_s & f & f+f_s
+    \end{array}
+  \right] \textrm{,}
+\end{equation}
+where the other frequencies are similarly tiled.
+This tiling process could be used on the full multidimensional spectrum with the tiling occurring on each axis.
+This process has the effect of artificially increasing the sampling rate while also duplicating all of the data many times \cite{Lynch-2021-DygYkEGU}.
 
-On the upstream moving disturbance side there is some noticeable aliasing that is present including a significant spike at 18-kHz (-80-$m^{-1}$) while aliased and about 31-kHz (-200-$m^{-1}$) when it has been unaliased.
+In Figure \ref{fig:04_dispersion_supersample}, the black box represents the original extents of the spectrum along with lines representing the free-stream velocity and the sonic lines.
+When these characteristic lines are extended past the original sample rate, aliased information becomes more apparent.
+On the upstream moving disturbance side there is some noticeable aliasing that is present including a significant spike at 18 kHz (-80 $m^{-1}$) while aliased and about 31 kHz (-200 $m^{-1}$) when it has been unaliased.
 As that upstream moving acoustic disturbance crosses the spatial Nyquist frequency, the signal strength drops significantly to local background levels.
 The boundary layer signal is unfortunately to well aligned with its tiled self for any aliased data to be noticeable.
 The vertically moving disturbances have some significant temporal aliasing but little to no spatial aliasing.
 
-This process can both of increase the sample rate and de-alias a multidimensional spectrum but it will also create additional aliased data.
-Depending on the downstream analysis to be performed, this additional aliased signal may need to be filtered out.
-In cases where the signal and an aliased data source do not intersect this process would work when investigating the spectrum along a path with little issue \cite{Lynch-2021-DygYkEGU}.
-Signal interpolation may be needed to extract the signal from an intersection with aliased data.
-
-There maybe some circumstances when the sample rate cannot be increased nor aliased data removed, such is likely the case for the boundary layer signal shown in the horizontal moving disturbances plot because the signal is directly inline with its aliased self.
+There maybe some circumstances when aliased data cannot even be identified, such is likely the case for the boundary layer signal shown in the horizontal moving disturbances plot because the signal is directly inline with its aliased self.
 This may also cause an issue when trying to analyze the original spectrum, particularly at the higher frequencies where the aliased data is sufficiently strong and overlapping the true signal.
 To avoid this the sample rate velocity,
 \begin{equation}
@@ -403,5 +436,9 @@ To avoid this the sample rate velocity,
 \end{equation}
 should sufficiently different enough from the disturbance's characteristic velocity.
 This difference will vary for the depending on the spectral width of the signal.
-The sample rate velocity of the spectrum in Figure \ref{fig:04_dispersion_supersample} is 176.4-m/s, the free-stream velocity is 174.3-m/s and the boundary layer has a significant spectral with to the signal such that it would be difficult to separate the real and aliased signals.
-The upstream-traveling acoustic wave however is a fairly thin signal that is distinguishable from the aliased signal and it has a characteristic velocity of -173.0-m/s.
+The sample rate velocity of the spectrum in Figure \ref{fig:04_dispersion_supersample} is 176.4 m/s, the free-stream velocity is 174.3 m/s and the boundary layer has a significant spectral with to the signal such that it would be difficult to separate the real and aliased signals.
+The upstream-traveling acoustic wave however is a fairly thin signal that is distinguishable from the aliased signal and it has a characteristic velocity of -173.0 m/s.
+
+\section{Summary}
+The use of multidimensional spectral estimation on optical wavefronts can provide significant additional insight to the various components that are being measured, including the desired aero-optical signal but also various forms of noise including sound and vibration.
+The process of filtering these multidimensional spectra will be discussed in Chapters \ref{chap:06_single_filter} and \ref{chap:07_multiple_filter}. 
