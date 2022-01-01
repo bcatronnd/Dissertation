@@ -142,22 +142,22 @@ for aa=1:length(TestPoint)
     clear Y WFfiltered;
 end
 
-fileID = fopen('lse_mspod_table.txt','w');
-fprintf(fileID,'\\begin{tabular}{c c c c}\n');
-fprintf(fileID,'\\hline \n');
-fprintf(fileID,' & M=0.3 & M=0.4 & M=0.5 \\\\ \n');
-fprintf(fileID,'\\hline \n');
-fprintf(fileID,[DataSummaryLabels{1} ' & ' num2str(DataSummary(1,1),'%0.4f') ' & ' num2str(DataSummary(1,2),'%0.4f') ' & ' num2str(DataSummary(1,3),'%0.4f') ' \\\\ \n']);
-fprintf(fileID,[DataSummaryLabels{2} ' & ' num2str(DataSummary(2,1),'%0.4f') '(' num2str((1-DataSummary(2,1)/DataSummary(1,1))*100,'%0.1f') '\\%%) & ' num2str(DataSummary(2,2),'%0.4f') '(' num2str((1-DataSummary(2,2)/DataSummary(1,2))*100,'%0.1f') '\\%%) & ' num2str(DataSummary(2,3),'%0.4f') '(' num2str((1-DataSummary(2,3)/DataSummary(1,3))*100,'%0.1f') '\\%%) \\\\ \n']);
-fprintf(fileID,'\\hline \n');
-for aa=3:size(DataSummary,1)-2
-    fprintf(fileID,[DataSummaryLabels{aa} ' & ' num2str(DataSummary(aa,1),'%0.4f') '(' num2str((1-DataSummary(aa,1)/DataSummary(1,1))*100,'%0.1f') '\\%%) & ' num2str(DataSummary(aa,2),'%0.4f') '(' num2str((1-DataSummary(aa,2)/DataSummary(1,2))*100,'%0.1f') '\\%%) & ' num2str(DataSummary(aa,3),'%0.4f') '(' num2str((1-DataSummary(aa,3)/DataSummary(1,3))*100,'%0.1f') '\\%%) \\\\ \n']);
-end
-fprintf(fileID,'\\hline \n');
-for aa=size(DataSummary,1)-1:size(DataSummary,1)
-    fprintf(fileID,[DataSummaryLabels{aa} ' & ' num2str(DataSummary(aa,1),'%0.4f') '(' num2str((1-DataSummary(aa,1)/DataSummary(1,1))*100,'%0.1f') '\\%%) & ' num2str(DataSummary(aa,2),'%0.4f') '(' num2str((1-DataSummary(aa,2)/DataSummary(1,2))*100,'%0.1f') '\\%%) & ' num2str(DataSummary(aa,3),'%0.4f') '(' num2str((1-DataSummary(aa,3)/DataSummary(1,3))*100,'%0.1f') '\\%%) \\\\ \n']);
-end
-fprintf(fileID,'\\hline \n');
-fprintf(fileID,'\\end{tabular}\n');
+save('lse_mspod_table.mat','DataSummary','DataSummaryLabels','SensorSelection','TestPoint');
+
+% fileID = fopen('lse_mspod_table.txt','w');
+% fprintf(fileID,'\\begin{tabular}{c c c c}\n');
+% fprintf(fileID,' & M=0.3 & M=0.4 & M=0.5 \\\\ \n');
+% fprintf(fileID,'\\hline \\hline \n');
+% fprintf(fileID,[DataSummaryLabels{1} ' & ' num2str(DataSummary(1,1),'%0.4f') ' & ' num2str(DataSummary(1,2),'%0.4f') ' & ' num2str(DataSummary(1,3),'%0.4f') ' \\\\ \n']);
+% fprintf(fileID,[DataSummaryLabels{2} ' & ' num2str(DataSummary(2,1),'%0.4f') '(' num2str((1-DataSummary(2,1)/DataSummary(1,1))*100,'%0.1f') '\\%%) & ' num2str(DataSummary(2,2),'%0.4f') '(' num2str((1-DataSummary(2,2)/DataSummary(1,2))*100,'%0.1f') '\\%%) & ' num2str(DataSummary(2,3),'%0.4f') '(' num2str((1-DataSummary(2,3)/DataSummary(1,3))*100,'%0.1f') '\\%%) \\\\ \n']);
+% fprintf(fileID,'\\hline \n');
+% for aa=3:size(DataSummary,1)-2
+%     fprintf(fileID,[DataSummaryLabels{aa} ' & ' num2str(DataSummary(aa,1),'%0.4f') '(' num2str((1-DataSummary(aa,1)/DataSummary(1,1))*100,'%0.1f') '\\%%) & ' num2str(DataSummary(aa,2),'%0.4f') '(' num2str((1-DataSummary(aa,2)/DataSummary(1,2))*100,'%0.1f') '\\%%) & ' num2str(DataSummary(aa,3),'%0.4f') '(' num2str((1-DataSummary(aa,3)/DataSummary(1,3))*100,'%0.1f') '\\%%) \\\\ \n']);
+% end
+% fprintf(fileID,'\\hline \n');
+% for aa=size(DataSummary,1)-1:size(DataSummary,1)
+%     fprintf(fileID,[DataSummaryLabels{aa} ' & ' num2str(DataSummary(aa,1),'%0.4f') '(' num2str((1-DataSummary(aa,1)/DataSummary(1,1))*100,'%0.1f') '\\%%) & ' num2str(DataSummary(aa,2),'%0.4f') '(' num2str((1-DataSummary(aa,2)/DataSummary(1,2))*100,'%0.1f') '\\%%) & ' num2str(DataSummary(aa,3),'%0.4f') '(' num2str((1-DataSummary(aa,3)/DataSummary(1,3))*100,'%0.1f') '\\%%) \\\\ \n']);
+% end
+% fprintf(fileID,'\\end{tabular}\n');
 
 

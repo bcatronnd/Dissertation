@@ -81,14 +81,29 @@ end
 WF1 = reshape(squeeze(mean(abs(Window.wf.cw*WF).^2,2)/prod(BlockSize)/prod(RunLog.samplerate)),BlockSize);
 wf1 = reshape(squeeze(mean(abs(Window.wf.cw*wf).^2,2)/prod(BlockSize)/prod(RunLog.samplerate)),BlockSize);
 
+nSamples = size(WF1);
+phase = pi*(2*rand(nSamples)-1);
+% phase(nSamples(1)/2+1,nSamples(2)/2+1,nSamples(3)/2+1) = 0;
+phase(2:nSamples(1),2:nSamples(2),nSamples(3)/2+2:nSamples(3)) = -flip(flip(flip(phase(2:nSamples(1),2:nSamples(2),2:nSamples(3)/2),1),2),3);
+
+
+
+[sxx,frequency] = computeSXX(nanrms(reshape(real(ifftn(ifftshift(sqrt((WF1)*prod(RunLog.samplerate)*numel(WF1)).*exp(1i*phase)))).*WFInfo.Mask_WF,size(WF1,1)*size(WF1,2),size(WF1,3))),'positiveonly',1,'samplerate',RunLog.samplerate(3));
+[sxx2] = computeSXX(nanrms(reshape(real(ifftn(ifftshift(sqrt((wf1)*prod(RunLog.samplerate)*numel(wf1)).*exp(1i*phase)))).*WFInfo.Mask_WF,size(wf1,1)*size(wf1,2),size(wf1,3))),'positiveonly',1,'samplerate',RunLog.samplerate(3));
+
 
 %%
+close(findobj('type','figure','number',1));
 f1 = figure(1);
-loglog(squeeze(Frequency.t),squeeze(sqrt(mean(WF1,[1 2])*prod(RunLog.samplerate))),squeeze(Frequency.t),squeeze(sqrt(mean(wf1,[1 2])*prod(RunLog.samplerate))));
+colororder(linspecer(5));
+
+semilogx(frequency,10*log10(sxx./sxx2),'linewidth',1.25);
 grid on;
 xlabel('Frequency (Hz)','interpreter','latex');
-ylabel('OPD$_{RMS}$(f) Reduction','interpreter','latex');
+ylabel('Reduction in $OPD_{RMS}$ (dB/Hz)','interpreter','latex');
+% xlim(10.^[2 5]);
+f1.Children(1).TickLabelInterpreter = 'latex';
+f1.Units = 'inches';
+f1.Position = [1 1 5.5 3.25];
 
-
-
-
+saveas(f1,'lse_mspod_freq.eps','epsc');

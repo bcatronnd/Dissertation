@@ -90,10 +90,8 @@ Temporal filters are also used in sizing and/or designing adaptive optics system
 A low-pass filter with a cutoff at the bandwidth of either a fast-steering or deformable mirror is often used to define the signal that the system needs to reject \cite{Whiteley-2007-bHbWRWUu}.
 A control system may need to have the bandwidth reduced in order to keep a mirror’s travel within limits \cite{Madec-2012-YJ8eWhPB}, while a high-pass filter would inform designers of the remaining optical aberrations that cannot be corrected.
 
-
-
-%Bookmark (page 53 of 4.3)
 \section{Upstream/Downstream Moving}
+\label{chap:06_up_down_filter}
 In the preceding section, filters based on temporal frequency only were discussed. In this section, another filtering approach is presented in which signals are identified based on their dispersion velocity.
 For the filtering of upstream and downstream moving optical disturbances a logistic function was chosen,
 \begin{equation}
@@ -138,6 +136,7 @@ Even with an ideal filter there is some slight attenuation of the aero-optical s
 
 
 \section{Velocity Filtering}
+\label{chap:06_velocity_filter}
 Using dispersion analysis on a multidimensional spectral plot shows that flow structures traveling at a given speed as having a constant slope.
 A plane in the multidimensional spectral plot can be used to measure a flow structure's velocity in both $x$ and $y$-directions.
 The distance from any given point in the multidimensional spectral space to a plane described by the velocities $v_x$ and $v_y$ can be computed by
@@ -200,6 +199,7 @@ The velocity was measured using the boundary-layer optical disturbances in the m
 The boundary-layer velocity was approximately $0.85U$ when compared to the pitot probe measurement of the free-stream velocity and the overall flow angle of the boundary-layer was approximately $1.1^\circ$.
 
 \section{Baseline Spectrum}
+\label{chap:06_baseline}
 If all of the narrow-band temporal signals could be assumed to be measurement contamination that need to be filtered out, a method for calculating the baseline of the spectrum would provide a simple way of filtering a portion of the signal contamination.
 For analysis of Raman spectra, the baseline spectra must often be removed \cite{Schulze-2012-GmyAqzC7}.
 This task is often performed manually which has which has brought a number of attempts to create automated technique estimate the baseline spectra \cite{Mosier-Boss-1995-keK3ckUN, Schulze-2005-QkUeywxD, Schulze-2012-GmyAqzC7, Zhao-2007-HAc6j8Wb}.
