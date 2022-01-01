@@ -29,6 +29,7 @@ plot(z,abs(p),'linewidth',1.25);
 grid on;
 xlabel('z (m)','interpreter','latex');
 ylabel('$|\hat{p}(z)|/|\hat{p}(0)|$','interpreter','latex'); 
+title(['m = ' num2str(m) '    n = ' num2str(n)],'interpreter','latex');
 f1.Children(1).TickLabelInterpreter = 'latex';
 f1.Units = 'inches';
 f1.Position = [1 1 5.5 3.5];
