@@ -3,15 +3,17 @@
 
 \chapter{Literature Review}
 \label{chap:02_lit_review}
+
+Strong narrow-band acoustic waves traveling upstream have been measured in-flight with optical wavefronts from a turret as part of the AAOL program \cite{DeLucca-2018-gBQdjTmT}.
+This was one of the first indications that a temporally narrow-band acoustic signal related to a fan was a noise source that could contribute significantly to the overall signal.
+Additional measurements have shown both narrow-band and broad-band acoustic signals measured in-flight through a flat window with both boundary and shear layers present \cite{Gordeyev-2020-6HnfJMnC}.
+Broad-band acoustic signals had been reported previously during boundary layer measurements in wind-tunnels with optical wavefront measurements but was only a dominate issue at low temporal-frequencies \cite{Gordeyev-2014-jcJndkHM,Smith-2013-VXArwwux}.
+Optical measurements have also been have also been made looking specifically for the acoustic waves inside a wind-tunnel, by looking for narrow-band optical disturbances associated with the wind-tunnel fan or various model support structures \cite{Catron-2018-DdVp6VZf} or measurement of acoustic duct modes showing that the optical disturbances due to the acoustic environment not only traveling upstream at $u-c$, but also downstream at $u+c$ and cross-stream at $\pm c$ \cite{Catron-2020-x8njYmmu}.
+
 The literature review will consist of primarily two sections.
 The first section will examine aero-optics while the second will look at acoustics inside of ducts.
-\section{Aero-Optics}
-% Optical communication and directed energy systems require a tightly focused beam on target in order to meet system performance objectives.
-% The farfield performance of airborne optical systems can be degraded by the nearfield flow that becomes optically active at compressible flow speeds.
-% ``Aero-optics'' is the study of the optical effect of these nearfield flow disturbances.
-% Examples of important aero-optical flows that have been studied extensively include boundary layers \cite{Gordeyev-2014-jcJndkHM,Smith-2013-VXArwwux,Wang-2012-gJ7rttg7}, shear layers \cite{Fitzgerald-2004-DgAgbreK,Rennie-2008-Wku6NheG}, shock waves \cite{Jumper-2013-8KtN3pue}, and even tip vortices \cite{Porter-2013-pQcNWHJ6}.
-% The effect of acoustic disturbances on aero-optical measurements has also been shown in both flight testing \cite{DeLucca-2018-gBQdjTmT} and ground testing \cite{Catron-2018-DdVp6VZf,Catron-2020-x8njYmmu}.
 
+\section{Aero-Optics}
 In optically active flows the index-of-refraction, $n$, varies locally as does the other fluid properties.
 Gladstone and Dale \cite{Gladstone-1863-ND4wtDT9} found that the index-of-refraction is primarily a function of density with a loose dependence on the wavelength of light.
 Gladstone and Dale proposed a ``specific refractive energy'' now known as the Gladstone-Dale constant, $K_{GD}$,
@@ -234,39 +236,36 @@ By measuring the displacement, \cite{Nightingale-2013-gqr4p7GY}, of the focal do
 where $f$ is the focal length of the lenslet.
 With an array of gradient data, the optical path difference at each lenslet can be calculated using a number of integration methods \cite{Huang-2015-W29DqPyp}.
 
-% \subsection{A Brief History of Aero-Optics}
-% The field of aero-optics began with an investigation by Liepmann \cite{Liepmann-1952-89GQ7wyA} into the limits of sensitivity of schlieren systems when used in high-speed flow analysis.
-% Liepmann used geometric optics to analyze a small-diameter beam and derive its mean-squared fluctuating deflection angle, $\left<\theta^2\right>$.
-% Liepmann propagated the beam in the $y$ direction and assumed the index of refraction changes in the $x-z$ plane were statistically similar.
-% Liepmann's analysis for a boundary layer of thickness $\delta$ resulted in
-% \begin{equation}
-%   \left<\theta^2\right> = \frac{1}{[n_0(\delta)]^2}\int_0^\delta\int_0^\delta n_0(y)n_0(\zeta)\left<\left(\frac{\partial\nu}{\partial y}\right)^2\right>R_v(|y-\zeta|)dyd\zeta
-%   \label{eqn:02_liepmann_deflection_angle}
-% \end{equation}
-% where the index of refraction is determined from $n=n_0(y)(1+\nu)$ and $R_v(|y-\zeta|)$ is the correlation function for the index variation.
-% This analysis introduced the concept of a linking equation that allows one to predict time-averaged optical degradation to turbulent flow statistical measurements.
-
-% \section{Acoustics}
-% \subsection{Basic Acoustics}
-% Starting with the conservation of mass,
-% \begin{equation}
-%   \frac{\partial\rho}{\partial t}+\nabla\cdot\left(\rho\mathbf{u}\right)=0  \textrm{,}
-%   \label{eqn:02_cons_of_mass}
-% \end{equation}
-% and separating the density into a time-averaged ($\rho_0$) and fluctuating portion ($\rho'$), $\rho = \rho_0+\rho'$.
-% The fluctuating conservation of mass equation is obtained by separating the density ($\rho = \rho_0+\rho'$) into a temporally averaged density, $\rho_0$, and a
-% \begin{equation}
-%   \frac{\mathbf{D}\rho'}{\mathbf{Dt}}+\nabla\cdot\left(\rho_0\mathbf{u}\right)=0
-%   \label{eqn:02_cons_of_mass_fluc}
-% \end{equation}
-% For acoustics waves of frequency less than $10^9$ Hz the compression of the fluid can be assumed to be adiabatic \cite{Morse-1968-yygEdQZf}.
-% \begin{equation}
-%   \left.\frac{\partial p}{\partial\rho}\right|_s = c_0^2
-%   \label{eqn:02_speed_of_sound}
-% \end{equation}
+\subsection{Boundary Layer Optical Distortions}
+Because optical wavefront measurements within a wind tunnel will inevitably include the boundary layer optical distortions, it is important to have some familiarity.
+The time averaged optical disturbance for a large aperture has been reported as,
+\begin{equation}
+  \opdrms = B(\gamma)K_{GD}\rho_\infty M^2\delta\sqrt{C_f}G(M) \textrm{,}
+  \label{eqn:02_opdrms_gor}
+\end{equation}
+where $C_f$ is the skin-friction coefficient,
+\begin{equation}
+  B(\gamma) = \frac{0.19}{\sin(\gamma)} \textrm{,}
+\end{equation}
+and
+\begin{equation}
+  G(M) = 1-0.19M^2+0.03M^4 \textrm{.}
+\end{equation}
+Aperture size can be accounted for by Figure \ref{fig:02_gordeyev_2014} (Figure 18 in Gordeyev \cite{Gordeyev-2014-jcJndkHM}) with an approximation for the fit,
+\begin{equation}
+  \frac{\opdrms(Ap)}{\opdrms} \approx 1-a\exp\left\{b\frac{Ap}{\delta}\right\}-(1-a)\exp\left\{c\frac{Ap}{\delta}\right\} \textrm{,}
+  \label{eqn:02_opdrms_gor_fit}
+\end{equation}
+where $a=0.7795$, $b=-0.9616$, and $c=-0.1382$.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.75\textwidth]{../other-sources/gordeyev_2014_figure_18.png}
+  \caption{Aperture size correction for $\opdrms$ (Figure 18 in Gordeyev \cite{Gordeyev-2014-jcJndkHM}).}
+  \label{fig:02_gordeyev_2014}
+\end{figure}
 
 \section{Duct Acoustics}
-Acoustic waves are often enclosed inside of somesort of structure.
+Acoustic waves are often enclosed inside of a structure.
 This section will look at acoustics when confined to a duct in which the acoustic waves primarily travel along one-axis and have walls confining the acoustics along the other two axes as is the case inside of a wind tunnel.
 Figure \ref{fig:02_duct_drawing} shows the diagram used for deriving the acoustic properties inside of a constant area duct.
 \begin{figure}

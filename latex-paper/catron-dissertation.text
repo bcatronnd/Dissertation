@@ -1,5 +1,41 @@
 ---
-abstract: Abstract Goes Here
+abstract: |
+    With development of new airborne optical systems, there is a significant
+    amount of effort being put into maximizing the farfield performance of
+    these optical systems. To meet this goal, the root mean square of the
+    optical path difference, $\opdrms$, over the aperture, a measure of the
+    nearfield optical distortions, is being reduced as much as possible.
+    Part of this development process involves testing models of these
+    systems with various configurations in wind tunnels. In these tests, the
+    optical disturbances due to the testing environment are becoming a large
+    percentage of the measured optical disturbances. It is now a necessity
+    to be able to identify, measure, and remove the various noise sources
+    that appear in aero-optical measurements that take place in wind
+    tunnels.
+
+    One of the primary sources of signal noise in these measurements, is
+    acoustics. Both the wing-tunnel fan and the flow through out the tunnel
+    generate large amounts of acoustic noise that travel throughout the
+    tunnel as acoustic duct modes. The fan primary generates strong
+    narrow-band signals at the blade-passing frequency and its harmonics.
+    There is also a significant broad-band acoustic duct mode signals along
+    with vibration related signals and strong mostly-steady optical lensing
+    signals that add to the overall measurement.
+
+    The signal identification and filtering mostly take place in the
+    multidimensional spectrum, where the optical wavefront is not only split
+    into its temporal frequency components but also its spatial frequency
+    components. A significant portion of this dissertation is dedicated to
+    analyzing optical wavefront in the multidimensional spectral space. The
+    combination of three filters is able to remove most of the noise signals
+    while retaining most of the aero-optical signal. A velocity filter,
+    which retains a narrow band of signal that is traveling within a small
+    velocity range, is able to remove most of the broad-band signal noise,
+    especially at higher temporal-frequencies. A forward filter, which
+    retains on the portion of a signal that is traveling in the direction of
+    flow, removes signal that the velocity filter is not able to at lower
+    temporal-frequencies. Finally a baseline filter, which identifies the
+    baseline spectrum and removes narrow-band peaks.
 author:
 - Brian Lowell Catron
 bibliography:
@@ -8,6 +44,21 @@ title: 'Filtering of Acoustic Information from Aero-Optical Measurements'
 ---
 
 To my wife Karen & our son Arthur
+
+I would like to thank my advisors R. Mark Rennie and Eric J. Jumper
+along with Stanislav Gordeyev for helping me grow not only in my ability
+to take measurements, but also as a researcher, designing experiments
+and analyzing the data. I would also like to think my fellow grad
+students, particularly Jon Wells, Barry Pawlowski, Matt Kalensky, and
+Matt Kemnetz, who endured alongside me. You helped me when I needed help
+and gave me some interesting problems to solve.
+
+Most of all I would like to thank my family. My parents, Kevin and Nila,
+whom pushed me to meet my potential when I was younger. I would like to
+think you for the sacrifices you made for my benefit. Thank you Karen,
+my wife, for putting up with my slow progress at times. Thank you for
+everything you do for me and our child. Arthur, watching you grow and
+learn brings me joy everyday.
 
 Introduction {#chap:01_intro}
 ============
@@ -181,6 +232,26 @@ test measurements.
 Literature Review {#chap:02_lit_review}
 =================
 
+Strong narrow-band acoustic waves traveling upstream have been measured
+in-flight with optical wavefronts from a turret as part of the AAOL
+program [@DeLucca-2018-gBQdjTmT]. This was one of the first indications
+that a temporally narrow-band acoustic signal related to a fan was a
+noise source that could contribute significantly to the overall signal.
+Additional measurements have shown both narrow-band and broad-band
+acoustic signals measured in-flight through a flat window with both
+boundary and shear layers present [@Gordeyev-2020-6HnfJMnC]. Broad-band
+acoustic signals had been reported previously during boundary layer
+measurements in wind-tunnels with optical wavefront measurements but was
+only a dominate issue at low temporal-frequencies
+[@Gordeyev-2014-jcJndkHM; @Smith-2013-VXArwwux]. Optical measurements
+have also been have also been made looking specifically for the acoustic
+waves inside a wind-tunnel, by looking for narrow-band optical
+disturbances associated with the wind-tunnel fan or various model
+support structures [@Catron-2018-DdVp6VZf] or measurement of acoustic
+duct modes showing that the optical disturbances due to the acoustic
+environment not only traveling upstream at $u-c$, but also downstream at
+$u+c$ and cross-stream at $\pm c$ [@Catron-2020-x8njYmmu].
+
 The literature review will consist of primarily two sections. The first
 section will examine aero-optics while the second will look at acoustics
 inside of ducts.
@@ -188,23 +259,8 @@ inside of ducts.
 Aero-Optics
 -----------
 
-Optical communication and directed energy systems require a tightly
-focused beam on target in order to meet system performance objectives.
-The farfield performance of airborne optical systems can be degraded by
-the nearfield flow that becomes optically active at compressible flow
-speeds. "Aero-optics" is the study of the optical effect of these
-nearfield flow disturbances. Examples of important aero-optical flows
-that have been studied extensively include boundary layers
-[@Gordeyev-2014-jcJndkHM; @Smith-2013-VXArwwux; @Wang-2012-gJ7rttg7],
-shear layers [@Fitzgerald-2004-DgAgbreK; @Rennie-2008-Wku6NheG], shock
-waves [@Jumper-2013-8KtN3pue], and even tip vortices
-[@Porter-2013-pQcNWHJ6]. The effect of acoustic disturbances on
-aero-optical measurements has also been shown in both flight testing
-[@DeLucca-2018-gBQdjTmT] and ground testing
-[@Catron-2018-DdVp6VZf; @Catron-2020-x8njYmmu].
-
-In these optically active flows the index-of-refraction, $n$, varies
-locally as does the other fluid properties. Gladstone and Dale
+In optically active flows the index-of-refraction, $n$, varies locally
+as does the other fluid properties. Gladstone and Dale
 [@Gladstone-1863-ND4wtDT9] found that the index-of-refraction is
 primarily a function of density with a loose dependence on the
 wavelength of light. Gladstone and Dale proposed a "specific refractive
@@ -241,7 +297,7 @@ alternate form is often more useful $$n'=K_{GD}\rho'
 the quantity represents the fluctuating component ($n' = n-\bar{n}$).
 
 When a beam with an initially planar wave front passes through a region
-of optical active flow its wave front aberrated The optical path length
+of optical active flow its wavefront aberrated The optical path length
 ($\opl$) at any point in the beam can be obtained by integrating the
 index of refraction along the propagation of an optical ray
 [@Klein-1986-8Vx29RfE]. $$\opl (x,y,t) = \int^{s_2}_{s_1} n(x,y,z,t)ds
@@ -253,16 +309,91 @@ $\opd$ can be calculated directly
 $$\opd(x,y,t) = \int^{s_2}_{s_1} n'(x,y,z,t)ds \textrm{.}
   \label{eqn:02_opd_n}$$
 
-When $\opd$ is combined with the beam intensity profile, one can compute
-the farfield complex amplitude distribution using the Fraunhofer
-approximation [@Goodman-1968-zPUmuuzx].
-$$U(x_0,y_0,t)\propto\iint_{Ap}\exp\left\{\frac{2\pi j}{\lambda}\left[\opd(x_1,y_1,t)-\frac{(x_0x_1+y_0y_1)}{z}\right]\right\}dx_1dy_1
-  \label{eqn:02_fraunhofer}$$ where $U$ is the complex amplitude, the
-subscripts 0 and 1 represent the coordinates of the farfield and
-nearfield respectively. The intensity can be computed from the complex
-amplitude via: $I = UU^\ast$. For cases in which optical aberrations are
-nonexistent (i.e. $\opd(x,y,t)=0$), the farfield irradiance pattern that
-results from Equation
+As a finite beam of light travels normal to its wavefront it is
+diffracted, producing a theoretical limit on the performance of an
+optical system, i.e. diffraction-limited [@Born-1965-HHGYgjdH].
+Sommerfeld defined diffraction as "any deviation of light rays from
+rectilinear paths which cannot be interpreter as reflection or
+refraction" [@Sommerfeld-1954-ep2AWrFF].
+
+Diffraction through an aperture can be approximated with the
+Huygens-Fresnel principle by assuming that every point within the
+aperture produces a spherical wavelet [@Huygens-1690-gD8nxCn8],
+$$U(x_0,y_0) = \iint_{Ap} h(x_0,y_0;x_1,y_1)U(x_1,y_1)dx_1dy_1 \textrm{,}
+  \label{eqn:02_huygens}$$ where $U$ is the complex amplitude, the
+subscripts 0 and 1 represent the coordinates of the observation plane
+and aperture plane respectively, and
+$$h(x_0,y_0;x_1,y_1) = \frac{1}{j\lambda}\frac{\exp\{jkr_{01}\}}{r_{01}}\cos(\overrightarrow{n},\overrightarrow{r}_{01}) \textrm{,}
+  \label{eqn:02_huygens_h}$$ where
+$r_{01} = \sqrt{z^2+(x_0-x_1)^2+(x_0-y_1)^2}$. Equation
+[\[eqn:02\_huygens\]](#eqn:02_huygens){reference-type="ref"
+reference="eqn:02_huygens"} can be expanded to infinite limits with the
+Kirchhoff boundary conditions where $U(x_1,y_1)$ is equal to zero
+outside of the aperture. The obliquity factor,
+$\cos(\overrightarrow{n},\overrightarrow{r}_{01})$, can be approximated
+a being equal to one by assuming that the observation plane is at a much
+greater distance than the size of the aperture and is a small finite
+region. The accuracy of this assumption is with 5% if the angle between
+$\overrightarrow{n}$ and $\overrightarrow{r}_{01}$ does not exceed
+$18^\circ$[@Goodman-1968-zPUmuuzx]. With this assumption under similar
+limits, $r_{01}$ in the denominator of Equation
+[\[eqn:02\_huygens\_h\]](#eqn:02_huygens_h){reference-type="ref"
+reference="eqn:02_huygens_h"} can be replaced with $z$, resulting in
+$$h(x_0,y_0;x_1,y_1) \approxeq \frac{1}{j\lambda z}\exp\{jkr_{01}\} \textrm{.}$$
+
+The Fresnel approximation replaces the spherical wavelets with a
+quadratic surface [@Fresnel-1818-FmMCMbDK],
+$$h(x_0,y_0;x_1,y_1) = \frac{jkz}{j\lambda z}\exp\left\{j\frac{k}{2z}[(x_0-x_1)^2+(y_0-y_1)^2]\right\} \textrm{,}
+  \label{eqn:02_fresnel_approx}$$ which has a theoretical requirement
+that $z^3 \gg \frac{\pi}{4\lambda}\max\{[(x_0-x_1)^2+(y_0-y_1)^2]^2\}$
+due to the limited number of terms used in a binomial expansion of
+$r_{01}$. In practice this limit is not that critical
+[@Goodman-1968-zPUmuuzx]. By combining Equations
+[\[eqn:02\_fraunhofer\]](#eqn:02_fraunhofer){reference-type="ref"
+reference="eqn:02_fraunhofer"} and
+[\[eqn:02\_fresnel\_approx\]](#eqn:02_fresnel_approx){reference-type="ref"
+reference="eqn:02_fresnel_approx"}, an expression for Fresnel
+diffraction can be obtained, $$\begin{aligned}
+    U(x_0,y_0) =& \frac{\exp\{jkz\}}{j\lambda z}\exp\left\{j\frac{k}{2z}(x_0^2+y_0^2)\right\}\iint_{-\infty}^{+\infty}\left[U(x_1,y_1)\exp\left\{j\frac{k}{2z}(x_1^2+y_1^2)\right\}\right] \\
+    &\exp\left\{-j\frac{2\pi}{\lambda z}(x_0x_1+y_0y_1)\right\} dx_1dy_1 \textrm{.}
+  \end{aligned}
+  \label{eqn:02_fresnel}$$ The function $U(x_0,y_0)$ maybe found from
+$$U(x_0,y_0) = \ffttwo\left[U(x_1,y_1)\exp\left\{j\frac{k}{2z}(x_1^2+y_1^2)\right\}\right]
+  \label{eqn:02_fresnel_fft}$$ where the transform is evaluated at the
+spatial frequencies $\xi_x = x_0/\lambda z$, $\xi_y = y_0/\lambda z$.
+
+The Fraunhofer approximation [@Goodman-1968-zPUmuuzx],
+$$z \gg \frac{k\max[x_1^2+y_1^2]}{2} \textrm{,}
+  \label{eqn:02_fraunhofer_approx}$$ places further restrictions than
+the Fresnel assumption approximation which results in
+$\exp\left\{j\frac{k}{2z}(x_1^2+y_1^2)\right\}$ being approximately
+unity over the aperture further simplifying Equation
+[\[eqn:02\_fresnel\]](#eqn:02_fresnel){reference-type="ref"
+reference="eqn:02_fresnel"} to $$\begin{aligned}
+    U(x_0,y_0) =& \frac{\exp\{jkz\}}{j\lambda z}\exp\left\{j\frac{k}{2z}(x_0^2+y_0^2)\right\} \\
+    &\iint_{-\infty}^{+\infty}U(x_1,y_1)\exp\left\{-j\frac{2\pi}{\lambda z}(x_0x_1+y_0y_1)\right\} dx_1dy_1 \textrm{,}
+  \end{aligned}
+  \label{eqn:02_fraunhofer}$$ known as Fraunhofer diffraction. In
+Fraunhofer diffraction, the function $U(x_0,y_0)$ maybe found from the
+Fourier transform of $U(x_1,y_1)$, when evaluated at the same spatial
+frequencies as Equation
+[\[eqn:02\_fresnel\_fft\]](#eqn:02_fresnel_fft){reference-type="ref"
+reference="eqn:02_fresnel_fft"}. For additional details on the
+derivation of Huygens, Fresnel, and Fraunhofer diffraction, including
+more in depth discussion on the assumptions and limits, see Goodman
+[@Goodman-1968-zPUmuuzx].
+
+The optical path difference can be related to the complex amplitude by
+[@Cicchiello-1997-RHxhNMxj],
+$$U(x_1,y_1) = \exp\left\{j\frac{2\pi}{\lambda}\opd(x_1,y_1)\right\} \textrm{.}$$
+In the range of Fraunhofer diffraction, the nearfield $\opd$ disturbance
+can be used to calculate the farfield intensity profile ($I = UU^*$),
+$$I(x_0,y_0) = \left|\ffttwo\left(\exp\left\{j\frac{2\pi}{\lambda}\opd(x_1,y_1)\right\}\right)\right|^2 \textrm{,}$$
+when the transform is evaluated at the spatial frequencies
+$\xi_x = x_0/\lambda z$, $\xi_y = y_0/\lambda z$ and the complex
+amplitude outside of the aperture is zero. For cases in which optical
+aberrations are nonexistent (i.e. $\opd(x,y,t)=0$), the farfield
+irradiance pattern that results from Equation
 [\[eqn:02\_fraunhofer\]](#eqn:02_fraunhofer){reference-type="ref"
 reference="eqn:02_fraunhofer"} is caused entirely by diffraction from
 the optical aperture, and is referred to as the "diffraction-limited"
@@ -323,9 +454,7 @@ reference="fig:02_all_strehl_ratio"} show that as modern optical systems
 move to shorter wavelengths to increase $I_0$, aero-optical aberrations
 cause a much more serious degradation of the Strehl ratio, illustrating
 why aero-optical considerations are critical in the development of any
-airborne optical system.
-
-Figure
+airborne optical system. Figure
 [\[fig:02\_necessary\_opd\]](#fig:02_necessary_opd){reference-type="ref"
 reference="fig:02_necessary_opd"} shows the $\opdrms$ necessary to
 achieve various Strehl ratios over a range of wavelengths.
@@ -404,34 +533,37 @@ where $f$ is the focal length of the lenslet. With an array of gradient
 data, the optical path difference at each lenslet can be calculated
 using a number of integration methods [@Huang-2015-W29DqPyp].
 
-Acoustics
----------
+### Boundary Layer Optical Distortions
 
-### Basic Acoustics
+Because optical wavefront measurements within a wind tunnel will
+inevitably include the boundary layer optical distortions, it is
+important to have some familiarity. The time averaged optical
+disturbance for a large aperture has been reported as,
+$$\opdrms = B(\gamma)K_{GD}\rho_\infty M^2\delta\sqrt{C_f}G(M) \textrm{,}
+  \label{eqn:02_opdrms_gor}$$ where $C_f$ is the skin-friction
+coefficient, $$B(\gamma) = \frac{0.19}{\sin(\gamma)} \textrm{,}$$ and
+$$G(M) = 1-0.19M^2+0.03M^4 \textrm{.}$$ Aperture size can be accounted
+for by Figure
+[\[fig:02\_gordeyev\_2014\]](#fig:02_gordeyev_2014){reference-type="ref"
+reference="fig:02_gordeyev_2014"} (Figure 18 in Gordeyev
+[@Gordeyev-2014-jcJndkHM]) with an approximation for the fit,
+$$\frac{\opdrms(Ap)}{\opdrms} \approx 1-a\exp\left\{b\frac{Ap}{\delta}\right\}-(1-a)\exp\left\{c\frac{Ap}{\delta}\right\} \textrm{,}
+  \label{eqn:02_opdrms_gor_fit}$$ where $a=0.7795$, $b=-0.9616$, and
+$c=-0.1382$.
 
-Starting with the conservation of mass,
-$$\frac{\partial\rho}{\partial t}+\nabla\cdot\left(\rho\mathbf{u}\right)=0  \textrm{,}
-  \label{eqn:02_cons_of_mass}$$ and separating the density into a
-time-averaged ($\rho_0$) and fluctuating portion ($\rho'$),
-$\rho = \rho_0+\rho'$. The fluctuating conservation of mass equation is
-obtained by separating the density ($\rho = \rho_0+\rho'$) into a
-temporally averaged density, $\rho_0$, and a
+![Aperture size correction for $\opdrms$ (Figure 18 in Gordeyev
+[@Gordeyev-2014-jcJndkHM]).](../other-sources/gordeyev_2014_figure_18.png){width="75%"}
 
-$$\frac{\mathbf{D}\rho'}{\mathbf{Dt}}+\nabla\cdot\left(\rho_0\mathbf{u}\right)=0
-  \label{eqn:02_cons_of_mass_fluc}$$
+[\[fig:02\_gordeyev\_2014\]]{#fig:02_gordeyev_2014
+label="fig:02_gordeyev_2014"}
 
-For acoustics waves of frequency less than $10^9$ Hz the compression of
-the fluid can be assumed to be adiabatic [@Morse-1968-yygEdQZf].
+Duct Acoustics
+--------------
 
-$$\left.\frac{\partial p}{\partial\rho}\right|_s = c_0^2
-  \label{eqn:02_speed_of_sound}$$
-
-### Duct Acoustics
-
-Acoustic waves are often enclosed inside of somesort of structure. This
-section will look at acoustics when confined to a duct in which the
-acoustic waves primarily travel along one-axis and have walls confining
-the acoustics along the other two axes as is the case inside of a wind
+Acoustic waves are often enclosed inside of a structure. This section
+will look at acoustics when confined to a duct in which the acoustic
+waves primarily travel along one-axis and have walls confining the
+acoustics along the other two axes as is the case inside of a wind
 tunnel. Figure
 [\[fig:02\_duct\_drawing\]](#fig:02_duct_drawing){reference-type="ref"
 reference="fig:02_duct_drawing"} shows the diagram used for deriving the
@@ -458,9 +590,8 @@ $$\frac{\mathbf{D}\rho}{\mathbf{Dt}} + \rho_0\nabla\cdot\mathbf{u} = 0 \textrm{,
 $$\rho_0\frac{\mathbf{Du}}{\mathbf{Dt}} + \nabla p = 0 \textrm{.}
   % \rho_0\frac{\partial\mathbf{u}}{\partial t} + \rho_0(\mathbf{u_0}\cdot\nabla)\mathbf{u} + \nabla p = 0 \textrm{.}
   \label{eqn:02_cons_mom}$$ The definition of the speed of sound
-(Equation
-[\[eqn:02\_speed\_of\_sound\]](#eqn:02_speed_of_sound){reference-type="ref"
-reference="eqn:02_speed_of_sound"}) is then substituted into Equation
+($\left.\frac{\partial p}{\partial\rho}\right|_s = c_0^2$) is then
+substituted into Equation
 [\[eqn:02\_cons\_mass\]](#eqn:02_cons_mass){reference-type="ref"
 reference="eqn:02_cons_mass"},
 $$\frac{1}{c_0^2}\frac{\mathbf{D}p}{\mathbf{Dt}} + \rho_0\nabla\cdot\mathbf{u} = 0 \textrm{,}
@@ -540,7 +671,7 @@ $$f_{cuton} = \frac{c_0}{2\pi}\sqrt{(1-M^2)k_m^2} \textrm{.}
   \label{eqn:02_cuton_freq}$$ Below this frequency, an acoustic mode
 will be exponentially attenuated as it travels throught the duct.
 
-#### Characteristic Equations of Cross-Sections
+### Characteristic Equations of Cross-Sections
 
 In order to determine the characteristic equations of an acoustic field
 within a cross-section the solution to Equation
@@ -1025,8 +1156,8 @@ In Figure
 [\[fig:03\_spherical\_plot\]](#fig:03_spherical_plot){reference-type="ref"
 reference="fig:03_spherical_plot"}, measured wavefronts are compared to
 the wavefronts simulated using the method described in Section
-[\[chap:03\_simulated\_beam\]](#chap:03_simulated_beam){reference-type="ref"
-reference="chap:03_simulated_beam"} for the highest excitation cases at
+[3.1](#sect:03_simulated_beam){reference-type="ref"
+reference="sect:03_simulated_beam"} for the highest excitation cases at
 each frequency.
 
 ![Comparison of measured wavefront to simulated ones for the
@@ -1243,7 +1374,8 @@ right-to-left.
 the sound transmission plots represent the transmitted pressure ratio
 while the dotted lines represent the reflected pressure
 ratio.](../matlab/03_aero_optics_acoustics/tunnel_discretization_0.60.eps "fig:")
-(-162,375)
+(-162,375) (-215,60)Acoustic Propagation $\Longrightarrow$
+(-235,190)$\Longleftarrow$ Acoustic Propagation
 
 [\[fig:03\_tunnel\_discretization\]]{#fig:03_tunnel_discretization
 label="fig:03_tunnel_discretization"}
@@ -1648,11 +1780,7 @@ reference="eqn:04_basic_sxx"} is combined with a windowing function and
 associated correction the double sided power spectra equation in one
 dimension becomes
 $$S_{xx} = \frac{|c_w\fft\{x(t) w(t)\}|^2}{Nf_{s}} \textrm{.}
- \label{eqn:04_windowed_sxx}$$ A simple MATLAB function for computing
-the power spectrum of a one-dimensional signal with an arbitrary
-windowing function is shown in Appendix
-[\[code:sc\_simpleSXX\]](#code:sc_simpleSXX){reference-type="ref"
-reference="code:sc_simpleSXX"}.
+ \label{eqn:04_windowed_sxx}$$
 
 N-Dimensional Power Spectra Calculation
 ---------------------------------------
@@ -1677,11 +1805,7 @@ becomes
 $$\sigma^2=\frac{\sum\mathbf{x}}{\prod{\overrightarrow{N}}} = \prod{\overrightarrow{\Delta f_s}}\sum\mathbf{S_{xx}} \textrm{,}
   \label{eqn:04_fftn_energy_conservation}$$ where
 $\overrightarrow{\Delta f_s}$ is a vector representing the frequency
-step sizes in each dimension. A simple MATLAB code for calculating the
-dispersion of $x$ with an arbitrary windowing function is shown in
-Appendix
-[\[code:sc\_simpleSXXn\]](#code:sc_simpleSXXn){reference-type="ref"
-reference="code:sc_simpleSXXn"}.
+step sizes in each dimension.
 
 Non-Rectangular Spatial Windows
 -------------------------------
@@ -1924,9 +2048,9 @@ straight up or down through the measurement beam. The blade-passing
 frequency and its harmonics are also visible in the vertical moving wave
 plots in both directions and have much less broadband spatial content in
 the vertical direction. Some of the high temporal-frequency narrow-band
-signals ( 3, 5, and 6 kHz) contain most of the signal power at the speed
-of sound lines in the vertical spectral slice plot. These signals has
-some dependence on the free-stream Mach number (see Figure
+signals ($\sim$3, 5, and 6 kHz) contain most of the signal power at the
+speed of sound lines in the vertical spectral slice plot. These signals
+has some dependence on the free-stream Mach number (see Figure
 [\[fig:04\_dispersion\_mach\]](#fig:04_dispersion_mach){reference-type="ref"
 reference="fig:04_dispersion_mach"}). These maybe vibrations originating
 from the tunnel fan that are currently limiting the top speed of the
@@ -1959,25 +2083,21 @@ only one power level can be plotted at a time. The same data that has
 been previously shown in two-dimensional form, is depicted in Figure
 [\[fig:04\_dispersion\_3d\]](#fig:04_dispersion_3d){reference-type="ref"
 reference="fig:04_dispersion_3d"} as an isosurface with a power of
-$10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$ and shown from four different
-views.
+$10^{-14}$ $\mu m^2/Hz/m^{-2}$ and shown from four different views.
 
 ![Three-dimensional view of the multidimensional spectral plot showing
-an isosurface at a power of $10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$. The
-isosurface encompasses 99.9% of the power of the
-wavefront.](../matlab/04_dispersion_analysis/dispersion_3d.eps)
+an isosurface at a power of $10^{-14}$
+$\mu m^2/Hz/m^{-2}$.](../matlab/04_dispersion_analysis/dispersion_3d.eps)
 
 [\[fig:04\_dispersion\_3d\]]{#fig:04_dispersion_3d
 label="fig:04_dispersion_3d"}
 
-This particular isosurface encompasses approximately 99.9% of the power
-of the optical disturbances. The largest feature is the boundary layer
-which resembles an ellipsoidal plane that is tilted in the $f-\xi_s$
-plane. The other main feature is the acoustic signal which appears as a
-cone which is slightly tilted in the direction of upstream-moving
-disturbances. The acoustic signal separates into several spikes at high
-temporal frequencies some of which are constructive interference from
-aliased signal
+The largest feature is the boundary layer which resembles an ellipsoidal
+plane that is tilted in the $f-\xi_s$ plane. The other main feature is
+the acoustic signal which appears as a cone which is slightly tilted in
+the direction of upstream-moving disturbances. The acoustic signal
+separates into several spikes at high temporal frequencies some of which
+are constructive interference from aliased signal
 ($\xi_x\approx25\ m^{-1},\ \xi_y\approx\pm60\ m^{-1}, \textrm{and}\ f\approx20 kHz$)
 which is better visualized in the 20 kHz temporal-frequency spectral
 slice in Figure
@@ -1996,19 +2116,16 @@ the multidimensional spectrum over a range of Mach numbers.
 
 ![Multidimensional spectral estimate isosurfaces as the Mach number
 increased from 0.3 to 0.5. The isosurfaces are all shown at a power of
-$10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$ and all encompass 99.9% of the
-wavefront
-power.](../matlab/04_dispersion_analysis/dispersion_mach_0.3.eps "fig:")
+$10^{-14}$
+$\mu m^2/Hz/m^{-2}$.](../matlab/04_dispersion_analysis/dispersion_mach_0.3.eps "fig:")
 ![Multidimensional spectral estimate isosurfaces as the Mach number
 increased from 0.3 to 0.5. The isosurfaces are all shown at a power of
-$10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$ and all encompass 99.9% of the
-wavefront
-power.](../matlab/04_dispersion_analysis/dispersion_mach_0.4.eps "fig:")
+$10^{-14}$
+$\mu m^2/Hz/m^{-2}$.](../matlab/04_dispersion_analysis/dispersion_mach_0.4.eps "fig:")
 ![Multidimensional spectral estimate isosurfaces as the Mach number
 increased from 0.3 to 0.5. The isosurfaces are all shown at a power of
-$10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$ and all encompass 99.9% of the
-wavefront
-power.](../matlab/04_dispersion_analysis/dispersion_mach_0.5.eps "fig:")
+$10^{-14}$
+$\mu m^2/Hz/m^{-2}$.](../matlab/04_dispersion_analysis/dispersion_mach_0.5.eps "fig:")
 
 [\[fig:04\_dispersion\_mach\]]{#fig:04_dispersion_mach
 label="fig:04_dispersion_mach"}
@@ -2052,19 +2169,16 @@ shown in previous figures and at a Mach number of 0.5.
 
 ![Multidimensional spectral estimate isosurfaces of different viewing
 angles through the test section at a Mach number of 0.5. The isosurfaces
-are all shown at a power of $10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$ and
-all encompass 99.9% of the wavefront
-power.](../matlab/04_dispersion_analysis/dispersion_angle_90.eps "fig:")
+are all shown at a power of $10^{-14}$
+$\mu m^2/Hz/m^{-2}$.](../matlab/04_dispersion_analysis/dispersion_angle_90.eps "fig:")
 ![Multidimensional spectral estimate isosurfaces of different viewing
 angles through the test section at a Mach number of 0.5. The isosurfaces
-are all shown at a power of $10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$ and
-all encompass 99.9% of the wavefront
-power.](../matlab/04_dispersion_analysis/dispersion_angle_105.eps "fig:")
+are all shown at a power of $10^{-14}$
+$\mu m^2/Hz/m^{-2}$.](../matlab/04_dispersion_analysis/dispersion_angle_105.eps "fig:")
 ![Multidimensional spectral estimate isosurfaces of different viewing
 angles through the test section at a Mach number of 0.5. The isosurfaces
-are all shown at a power of $10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$ and
-all encompass 99.9% of the wavefront
-power.](../matlab/04_dispersion_analysis/dispersion_angle_120.eps "fig:")
+are all shown at a power of $10^{-14}$
+$\mu m^2/Hz/m^{-2}$.](../matlab/04_dispersion_analysis/dispersion_angle_120.eps "fig:")
 
 [\[fig:04\_dispersion\_angle\]]{#fig:04_dispersion_angle
 label="fig:04_dispersion_angle"}
@@ -2830,7 +2944,7 @@ bandwidth reduced in order to keep a mirror's travel within limits
 [@Madec-2012-YJ8eWhPB], while a high-pass filter would inform designers
 of the remaining optical aberrations that cannot be corrected.
 
-Upstream/Downstream Moving
+Upstream/Downstream Moving {#chap:06_up_down_filter}
 --------------------------
 
 In the preceding section, filters based on temporal frequency only were
@@ -2890,7 +3004,7 @@ with an ideal filter there is some slight attenuation of the
 aero-optical signal due to signal having some spectral width that
 crosses into upstream-moving portion of the dispersion plot.
 
-Velocity Filtering
+Velocity Filtering {#chap:06_velocity_filter}
 ------------------
 
 Using dispersion analysis on a multidimensional spectral plot shows that
@@ -2994,7 +3108,7 @@ boundary-layer velocity was approximately $0.85U$ when compared to the
 pitot probe measurement of the free-stream velocity and the overall flow
 angle of the boundary-layer was approximately $1.1^\circ$.
 
-Baseline Spectrum
+Baseline Spectrum {#chap:06_baseline}
 -----------------
 
 If all of the narrow-band temporal signals could be assumed to be
@@ -3473,3 +3587,346 @@ the wind-tunnel.
 
 Conclusion {#chap:08_conclusion}
 ==========
+
+::: {style="color: red"}
+-   Please double check my estimate for $\opdrms$ from Stas's paper
+:::
+
+When an airborne optical system is tested in a wind tunnel, there is a
+number of sources that contaminate the measurement with noise. This can
+be seen if Figure
+[\[fig:08\_dispersion\_isosurface\]](#fig:08_dispersion_isosurface){reference-type="ref"
+reference="fig:08_dispersion_isosurface"} which shows a multidimensional
+spectral estimation of an optical wavefront measurement made in a wind
+tunnel.
+
+![Multidimensional spectral estimation of an optical wavefront
+measurement made in a wind
+tunnel.](../matlab/08_conclusion/dispersion_isosurface.eps "fig:")
+(-195,120) (-305,250) (-300,69)[BPF
+$\Longrightarrow$]{style="color: white"}
+(-231,180)[]{style="color: white"} (-235,50)
+
+[\[fig:08\_dispersion\_isosurface\]]{#fig:08_dispersion_isosurface
+label="fig:08_dispersion_isosurface"}
+
+The half of the isosurface which represents the portion of the signal
+that has a component that is traveling vertically downward has been made
+transparent to show some of the internal power spectrum of planar waves
+that are traveling parallel to the direction of flow.
+
+In Figure
+[\[fig:08\_dispersion\_isosurface\]](#fig:08_dispersion_isosurface){reference-type="ref"
+reference="fig:08_dispersion_isosurface"}, the aero-optical signal that
+is being measured is the boundary layer which resembles a thin ellipsoid
+which has been rotated up from the $\xi_x-\xi_y$ plane by an amount
+related to the free-stream velocity. Acoustic duct modes make up a
+temporally broadband signal that forms a cone and has a significant
+portion of the signal that travels upstream. In the $\xi_x-f$ plane the
+outer surface of the acoustic cone is limited by the sonic lines at
+$u\pm c$, while in the $\xi_y-f$ plane the limit is at $\pm c$. The
+wind-tunnel fan produces temporally narrow-band acoustic and vibration
+modes that are able to contaminate the wavefront measurement at the
+blade-passing frequency (BPF) and its various harmonics.
+
+Sources of noise shown in Figure
+[\[fig:08\_dispersion\_isosurface\]](#fig:08_dispersion_isosurface){reference-type="ref"
+reference="fig:08_dispersion_isosurface"} not related to the acoustics
+include stationary modes and mean-lensing. The stationary modes do not
+travel in any direction, spatial frequencies are near zero and the
+signal strength is fairly constant in both time and space. Due to the
+temporally white-noise nature of this signal, it is likely not
+physically relevant and could be optical mode noise from the laser,
+electronic noise in the camera, or even numerical noise from the
+processing code. At lower frequencies, especially around the
+blade-passing frequency or its harmonics, there is likely be a
+significant number of stationary modes that are due to vibration of
+various optical elements. The mean-lensing portion of the signal
+($\lessapprox 100$ Hz) is a slowly varying signal with large
+spatial-frequency content. A color coded multidimensional spectral
+estimation plot that allows for easier identification of the various
+component signals is shown in Figure
+[\[fig:05\_synthetic\_dispersion\_input\]](#fig:05_synthetic_dispersion_input){reference-type="ref"
+reference="fig:05_synthetic_dispersion_input"} and was used for
+generating a synthetic wavefront.
+
+Filtering of Optical Wavefronts
+-------------------------------
+
+Two main families of filtering techniques were examined in this
+dissertation. The first family was single sensor filters, Chapter
+[6](#chap:06_single_filter){reference-type="ref"
+reference="chap:06_single_filter"}, which operate on the optical
+wavefronts without knowledge of any other time resolved data. Some of
+these filters may rely on additional information about the average
+sampling conditions used to measure the wavefronts. The second family
+was multiple sensor filters, Chapter
+[7](#chap:07_multiple_filter){reference-type="ref"
+reference="chap:07_multiple_filter"}, which filter the optical wavefront
+using time resolved measurements from additional sensors.
+
+### Single Sensor Filters
+
+The single sensors filters operated directly on the optical wavefront
+measurements. Most of these filters are based on Butterworth filters
+[@Butterworth-1930-DvDrjKha] that operate in the multidimensional
+Fourier domain using a transfer function, $\hat{H}(\xi_x,\xi_y,f)$,
+$$\widehat{WF}(\xi_x,\xi_y,f) = \hat{H}(\xi_x,\xi_y,f)\fftthree(wf(x,y,t)) \textrm{,}$$
+which can be inverse Fourier transformed back into the physical domain
+or be used for calculating the multidimensional spectrum. Filtering can
+also be performed on the multidimensional spectrum using the gain
+function, $G^2 = \hat{H}\hat{H}^*$,
+$$S_{xx}(\xi_x,\xi_y,f) = G^2(\xi_x,\xi_y,f)S_{xx}(\xi_x,\xi_y,f) \textrm{.}$$
+The only filter that was investigated that was not based on basic
+filters was a baseline spectrum estimator [@Schulze-2012-GmyAqzC7]. This
+filter removes narrow-band peaks and noise peaks along the
+temporal-frequency axis smooth spectrum.
+
+Among the filters discussed, three are useful for isolating aero-optical
+signals from a wavefront. The first of these is a filter for separating
+the portion of the optical disturbances that are moving either upstream
+or downstream realities to the flow (Section
+[6.2](#chap:06_up_down_filter){reference-type="ref"
+reference="chap:06_up_down_filter"}). An undesirable effect of this
+filter is that some signals maybe split if a portion of the signal
+crosses the separation plane, which can happen to the boundary-layer
+signal at low temporal-frequencies. The second useful filter is the
+low-pass velocity filter which preserves the signal that is moving
+within a narrow velocity range (Section
+[6.3](#chap:06_velocity_filter){reference-type="ref"
+reference="chap:06_velocity_filter"}). The third useful is the baseline
+estimator (Section [6.4](#chap:06_baseline){reference-type="ref"
+reference="chap:06_baseline"}), which removes the narrow-band signals
+associated with the blade-passing frequency and its harmonics, the
+mean-lensing component, and other temporally narrow-band signals. Some
+of these removed narrow-band signals could be relevant signals created
+by a wind-tunnel model that would be unfortunately removed.
+
+Figure
+[\[fig:08\_dispersion\_filters\]](#fig:08_dispersion_filters){reference-type="ref"
+reference="fig:08_dispersion_filters"} shows the multidimensional
+spectra of the output of these three filters individually plus the
+spectra of these three filters combined.
+
+![Multidimensional spectra of three single sensor filtering techniques
+and a combination
+filter.](../matlab/08_conclusion/dispersion_filters.eps)
+
+[\[fig:08\_dispersion\_filters\]]{#fig:08_dispersion_filters
+label="fig:08_dispersion_filters"}
+
+The forward filter (Figure
+[\[fig:08\_dispersion\_filters\]](#fig:08_dispersion_filters){reference-type="ref"
+reference="fig:08_dispersion_filters"} top left) does remove some of the
+boundary-layer signal at low temporal-frequencies. The portion of the
+acoustic cone and stationary modes that are on the downstream-moving
+portion of the spectrum are retained. The velocity filter (Figure
+[\[fig:08\_dispersion\_filters\]](#fig:08_dispersion_filters){reference-type="ref"
+reference="fig:08_dispersion_filters"} top right) removes most of the
+broadband signal from the various noise sources. There is a portion of
+the acoustic cone and stationary modes that intersect or lay near the
+boundary-layer signal is slightly attenuated producing a slight hump on
+the upstream-moving side of the boundary-layer that extends up to about
+10 kHz and along the $\xi_y$ axis over the range of about
+$\pm25\ m^{-1}$.
+
+The baseline filter (Figure
+[\[fig:08\_dispersion\_filters\]](#fig:08_dispersion_filters){reference-type="ref"
+reference="fig:08_dispersion_filters"} bottom left) removes all of the
+temporal narrow-band signals including the mean-lensing portion of the
+spectra. The noisy surface of the spectra is removed which does
+eliminate some the the desired boundary-layer signal. The combination
+filter (Figure
+[\[fig:08\_dispersion\_filters\]](#fig:08_dispersion_filters){reference-type="ref"
+reference="fig:08_dispersion_filters"} bottom right) applies the
+velocity and forward filter to the baseline filter. This filter loses
+some of the boundary-layer signal due to the noisy surface being
+smoothed out and the portion that crosses into the upstream-traveling
+portion of the spectrum. The portion of the the acoustic cone and
+stationary modes that is the most contaminating in the velocity filter
+is removed due to the forward and baseline filter.
+
+A zoomed in slice of the multidimensional spectra is shown in Figure
+[\[fig:08\_dispersion\_filters\_slices\]](#fig:08_dispersion_filters_slices){reference-type="ref"
+reference="fig:08_dispersion_filters_slices"} for the horizontal moving
+plane waves.
+
+![Multidimensional spectral slices for the various single sensor
+filtering techniques showing the horizontal moving plane
+waves.](../matlab/08_conclusion/dispersion_filters_slices.eps)
+
+[\[fig:08\_dispersion\_filters\_slices\]]{#fig:08_dispersion_filters_slices
+label="fig:08_dispersion_filters_slices"}
+
+A large portion of the single contamination happens at the blade-passing
+frequency and its harmonics as well as in the mean-lensing region. This
+contamination is present in all of the multidimensional spectra that do
+not utilize the baseline filter. Even with the velocity filter there is
+significant contamination on the upstream-moving portion of the spectra
+due to these narrow-band signals as well as due to the presence of the
+acoustic cone and stationary modes. While the forward filter removes
+some of the boundary-layer signal it removes significantly more of the
+noise signals that would otherwise be present in the spectra with just
+the velocity and baseline filters applied.
+
+Representative wavefronts were generated from these multidimensional
+spectra using the same process as generating a synthetic wavefront from
+the synthetic spectra in Chapter
+[5](#chap:05_synthetic){reference-type="ref"
+reference="chap:05_synthetic"} in order to calculate the $\opdrms$.
+Table
+[\[tab:08\_filter\_summary\]](#tab:08_filter_summary){reference-type="ref"
+reference="tab:08_filter_summary"} shows the $\opdrms$ values for the
+various filters used in Figure
+[\[fig:08\_dispersion\_filters\_slices\]](#fig:08_dispersion_filters_slices){reference-type="ref"
+reference="fig:08_dispersion_filters_slices"}.
+
+    Filter    $\opdrms\ (\mu m)$
+  ---------- --------------------
+     None           0.0260
+   Forward          0.0166
+   Velocity         0.0238
+   Baseline         0.0156
+     V+B            0.0140
+    F+V+B           0.0110
+
+  : Summary of single sensor filters
+
+[\[tab:08\_filter\_summary\]]{#tab:08_filter_summary
+label="tab:08_filter_summary"}
+
+Both the forward and baseline filters reduced the $\opdrms$ of the
+wavefront a similar amount of 36 and 40% respectively. The velocity
+filter only reduced the $\opdrms$ a small amount of 8.5% due to the
+retention of the strongest portion of the narrow-band signals. The
+combination of the velocity and baseline filters reduced the $\opdrms$
+of the wavefront by 46% but those still retain a significant portion of
+the acoustic cone and stationary mode signal. By combining these three
+single sensors filters, the $\opdrms$ was reduced 58% but this is likely
+under the true value due to some loss of the boundary-layer signal from
+the forward filter at low temporal-frequencies and the removal of the
+fluctuations from the baseline filter. There could be some narrow-band
+signals that would be generated by a model that would be removed with
+this filtering scheme. The estimated $\opdrms$ from Gordeyev
+[@Gordeyev-2014-jcJndkHM] (Equations
+[\[eqn:02\_opdrms\_gor\]](#eqn:02_opdrms_gor){reference-type="ref"
+reference="eqn:02_opdrms_gor"} and
+[\[eqn:02\_opdrms\_gor\_fit\]](#eqn:02_opdrms_gor_fit){reference-type="ref"
+reference="eqn:02_opdrms_gor_fit"}) is $0.0142\ \mu m$ for a double
+boundary layer, which puts the velocity and baseline filter combination
+in good agreement.
+
+### Multiple Sensor Filtering
+
+The multiple sensor filtering used a combination of Linear Stochastic
+Estimation (LSE) and Spectral Proper Orthogonal Decomposition (SPOD)
+which has been shown previously to remove vibration noise from wavefront
+measurements with an approximately 85% reduction in $\opdrms$ at Mach of
+0.3 [@DeLucca-2014-RAJvGdv7]. Similar results were observed using the
+combination of optical tip/tilt removal and LSE-SPOD on both single
+dimension (temporal) and multidimensional spectra. Optical tip/tilt
+removal alone accounted for a 78.6% reduction in $\opdrms$, with a
+combination of 16 microphones and accelerometers and the LSE-SPOD
+bringing the reduction in $\opdrms$ to 83.9% at Mach of 0.3. The
+combination of tip/tilt removal and the velocity filter showed a greater
+reduction of 83.9%. At a Mach number of 0.5, the use of optical tip/tilt
+removal, the velocity filter, and 16 sensors in LSE-SPOD, the $\opdrms$
+was brought down to 0.0181 $\mu m$ and stilled showed a significant
+amount of narrow-band signals (see Figure
+[\[fig:07\_lse\_spod\]](#fig:07_lse_spod){reference-type="ref"
+reference="fig:07_lse_spod"} and
+[\[fig:07\_lse\_mspod\]](#fig:07_lse_mspod){reference-type="ref"
+reference="fig:07_lse_mspod"}). This is about a 30% reduction when
+compared with the other filters used in Table
+[\[tab:08\_filter\_summary\]](#tab:08_filter_summary){reference-type="ref"
+reference="tab:08_filter_summary"}. This was also significantly above
+the estimated $\opdrms$ of 0.0112 $\mu m$.
+
+With the LSE-SPOD method the more sensors that were used in the
+filtering process the greater the reduction in the $\opdrms$, as can be
+seen in Figure
+[\[fig:08\_lse\_summary\]](#fig:08_lse_summary){reference-type="ref"
+reference="fig:08_lse_summary"}.
+
+![Percent reduction in $\opdrms$ from the tip/tilt removed case using
+LSE-SPOD filtering.](../matlab/08_conclusion/lse_summary.eps)
+
+[\[fig:08\_lse\_summary\]]{#fig:08_lse_summary
+label="fig:08_lse_summary"}
+
+With the combination of the DAQ and preamplifier used for the duct
+mounted microphones they had a fairly low dynamic range possibly leading
+to the diminished reduction in the four sensor and the lower set at each
+Mach number of the ten sensor sets. The signal reduction was fairly
+uniform with frequency, as shown in Figure
+[\[fig:08\_lse\_mspod\_freq\]](#fig:08_lse_mspod_freq){reference-type="ref"
+reference="fig:08_lse_mspod_freq"}.
+
+![Reduction in $\opdrms$ as a function of temporal-frequency using 16
+sensors with LSE-SPOD in the M=0.5 case when compared to tip/tilt
+removal.](../matlab/07_multiple_sensor_filtering/lse_mspod_freq.eps)
+
+On average there was a 1.3dB/Hz reduction in the $\opdrms$ with
+typically slight peaks at some of the significant narrow-band signals.
+At the blade-passing frequency there was a 2dB/Hz reduction and at the
+narrow-band signals around 3 and 6 kHz there was a 3dB/Hz reduction. The
+first, second, and third harmonics of the blade-passing frequency had a
+below average reduction in the signal.
+
+While the use of additional sensor measurements to aid in filtering of
+optical wavefront measurements using LSE-SPOD showed little benefit in
+this study (at least compared to the single sensor filtering
+techniques), it could show significant benefit in future measurements.
+For measurements with models that are likely to create narrow-band
+signal noise, additional sensor information could utilized in
+conjunction with a baseline filter for determining which narrow-band
+signals need to be added back into spectrum. If at some point in the
+future there is an algorithm that shows significant benefit in filtering
+wavefront data with the aid of additional sensor measurements, having
+the ability to go back into old data and quickly test maybe worth the
+extra effort in the near term.
+
+Other Useful Products
+---------------------
+
+### Synthetic Wavefront {#synthetic-wavefront}
+
+A synthetic wavefront was developed in Chapter
+[5](#chap:05_synthetic){reference-type="ref"
+reference="chap:05_synthetic"} to test various filters used in Chapter
+[6](#chap:06_single_filter){reference-type="ref"
+reference="chap:06_single_filter"}. In the process used to create the
+synthetic wavefront, each of these signal components was generated
+separately in the multidimensional spectrum. While this synthetic
+wavefront generation technique produced a qualitative approximation of a
+wavefront, it provided a useful set of known fully known data to test
+various filters. There is some significant room for improvement in the
+process of creating synthetic wavefront that are more physically
+accurate. Even without improvement this process maybe useful in
+generating a set of synthetic wavefronts with a known aero-optical and
+noise components that can be used for training a neural network to
+filter [@Lo-1994-W6aWeuaT] wavefront measurements. A neural network
+based filter may be able to separate the overlapping component signals
+at low frequencies.
+
+### Measuring Acoustic Field Optically
+
+In section [3.2.2](#sect:03_examples_spherical){reference-type="ref"
+reference="sect:03_examples_spherical"}, optical wavefront were shown to
+have a fairly good agreement with a microphone for measuring the
+fluctuating field strength of a spherical wave generated by a speaker.
+the optical wavefront measurement however had issues when the acoustic
+field diverged from being nearly spherical. Optical wavefronts can make
+for a excellent way to non-intrusively measure an acoustic field if the
+field closely resembles a model.
+
+### Acoustic Mode-Marching
+
+An acoustic mode-marching method was utilized to quickly estimate the
+acoustic field within a wind-tunnel test-section assuming that the
+primary noise source was the wind-tunnel fan. This is likely to have
+limited application in filter of optical wavefronts, it maybe useful for
+assisting in determining whether specific narrow-band signals are likely
+a product of the wind-tunnel fan and can be filtered out. There also
+maybe some application during the initial design of a tunnel for
+estimating the acoustic field in some critical components.
