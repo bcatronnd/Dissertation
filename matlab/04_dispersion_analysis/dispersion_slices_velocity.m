@@ -50,7 +50,7 @@ colorbar('south');
 f1.Children(1).Position(1) = f1.Children(3).Position(1)+0.025;
 f1.Children(1).Position(2) = f1.Children(1).Position(2)-0.3;
 f1.Children(1).Position(3) = f1.Children(2).Position(3)+f1.Children(2).Position(1)-f1.Children(3).Position(1)-0.05;
-f1.Children(1).Label.String = '$S_{xx}$ ($\mu m^2/Hz/m^{-1}/m^{-1}$)';
+f1.Children(1).Label.String = '$S_{xx}$ ($\mu m^2/Hz/m^{-2}$)';
 f1.Children(1).Label.Interpreter = 'latex';
 f1.Children(1).TickLabelInterpreter = 'latex';
 for aa=1:length(f1.Children(1).TickLabels)
@@ -58,6 +58,8 @@ for aa=1:length(f1.Children(1).TickLabels)
 end
 f1.Units = 'inches';
 f1.Position = [1 1 5.5 3];
+f1.Children(2).LineWidth = 0.8;
+f1.Children(3).LineWidth = 0.8;
 
 saveas(f1,'dispersion_slices_velocity.eps','epsc');
 saveas(f1,'dispersion_slices_velocity.png','png');

@@ -6,13 +6,13 @@
 The literature review will consist of primarily two sections.
 The first section will examine aero-optics while the second will look at acoustics inside of ducts.
 \section{Aero-Optics}
-Optical communication and directed energy systems require a tightly focused beam on target in order to meet system performance objectives.
-The farfield performance of airborne optical systems can be degraded by the nearfield flow that becomes optically active at compressible flow speeds.
-``Aero-optics'' is the study of the optical effect of these nearfield flow disturbances.
-Examples of important aero-optical flows that have been studied extensively include boundary layers \cite{Gordeyev-2014-jcJndkHM,Smith-2013-VXArwwux,Wang-2012-gJ7rttg7}, shear layers \cite{Fitzgerald-2004-DgAgbreK,Rennie-2008-Wku6NheG}, shock waves \cite{Jumper-2013-8KtN3pue}, and even tip vortices \cite{Porter-2013-pQcNWHJ6}.
-The effect of acoustic disturbances on aero-optical measurements has also been shown in both flight testing \cite{DeLucca-2018-gBQdjTmT} and ground testing \cite{Catron-2018-DdVp6VZf,Catron-2020-x8njYmmu}.
+% Optical communication and directed energy systems require a tightly focused beam on target in order to meet system performance objectives.
+% The farfield performance of airborne optical systems can be degraded by the nearfield flow that becomes optically active at compressible flow speeds.
+% ``Aero-optics'' is the study of the optical effect of these nearfield flow disturbances.
+% Examples of important aero-optical flows that have been studied extensively include boundary layers \cite{Gordeyev-2014-jcJndkHM,Smith-2013-VXArwwux,Wang-2012-gJ7rttg7}, shear layers \cite{Fitzgerald-2004-DgAgbreK,Rennie-2008-Wku6NheG}, shock waves \cite{Jumper-2013-8KtN3pue}, and even tip vortices \cite{Porter-2013-pQcNWHJ6}.
+% The effect of acoustic disturbances on aero-optical measurements has also been shown in both flight testing \cite{DeLucca-2018-gBQdjTmT} and ground testing \cite{Catron-2018-DdVp6VZf,Catron-2020-x8njYmmu}.
 
-In these optically active flows the index-of-refraction, $n$, varies locally as does the other fluid properties.
+In optically active flows the index-of-refraction, $n$, varies locally as does the other fluid properties.
 Gladstone and Dale \cite{Gladstone-1863-ND4wtDT9} found that the index-of-refraction is primarily a function of density with a loose dependence on the wavelength of light.
 Gladstone and Dale proposed a ``specific refractive energy'' now known as the Gladstone-Dale constant, $K_{GD}$,
 \begin{equation}
@@ -50,7 +50,7 @@ but when applied to situations where there are significant fluctuations in the f
 \end{equation}
 where $'$ denotes the quantity represents the fluctuating component ($n' = n-\bar{n}$).
 
-When a beam with an initially planar wave front passes through a region of optical active flow its wave front aberrated
+When a beam with an initially planar wave front passes through a region of optical active flow its wavefront aberrated
 The optical path length ($\opl$) at any point in the beam can be obtained by integrating the index of refraction along the propagation of an optical ray \cite{Klein-1986-8Vx29RfE}.
 \begin{equation}
   \opl (x,y,t) = \int^{s_2}_{s_1} n(x,y,z,t)ds
@@ -67,14 +67,79 @@ When working with fluctuating components, the $\opd$ can be calculated directly
   \label{eqn:02_opd_n}
 \end{equation}
 
-When $\opd$ is combined with the beam intensity profile, one can compute the farfield complex amplitude distribution using the Fraunhofer approximation \cite{Goodman-1968-zPUmuuzx}.
+As a finite beam of light travels normal to its wavefront it is diffracted, producing a theoretical limit on the performance of an optical system, i.e. diffraction-limited \cite{Born-1965-HHGYgjdH}.
+Sommerfeld defined diffraction as ``any deviation of light rays from rectilinear paths which cannot be interpreter as reflection or refraction'' \cite{Sommerfeld-1954-ep2AWrFF}.
+
+
+Diffraction through an aperture can be approximated with the Huygens-Fresnel principle by assuming that every point within the aperture produces a spherical wavelet \cite{Huygens-1690-gD8nxCn8},
 \begin{equation}
-  U(x_0,y_0,t)\propto\iint_{Ap}\exp\left\{\frac{2\pi j}{\lambda}\left[\opd(x_1,y_1,t)-\frac{(x_0x_1+y_0y_1)}{z}\right]\right\}dx_1dy_1
+  U(x_0,y_0) = \iint_{Ap} h(x_0,y_0;x_1,y_1)U(x_1,y_1)dx_1dy_1 \textrm{,}
+  \label{eqn:02_huygens}
+\end{equation}
+where $U$ is the complex amplitude, the subscripts 0 and 1 represent the coordinates of the observation plane and aperture plane respectively, and
+\begin{equation}
+  h(x_0,y_0;x_1,y_1) = \frac{1}{j\lambda}\frac{\exp\{jkr_{01}\}}{r_{01}}\cos(\overrightarrow{n},\overrightarrow{r}_{01}) \textrm{,}
+  \label{eqn:02_huygens_h}
+\end{equation}
+where $r_{01} = \sqrt{z^2+(x_0-x_1)^2+(x_0-y_1)^2}$.
+Equation \ref{eqn:02_huygens} can be expanded to infinite limits with the Kirchhoff boundary conditions where $U(x_1,y_1)$ is equal to zero outside of the aperture.
+The obliquity factor, $\cos(\overrightarrow{n},\overrightarrow{r}_{01})$, can be approximated a being equal to one by assuming that the observation plane is at a much greater distance than the size of the aperture and is a small finite region.
+The accuracy of this assumption is with 5\% if the angle between  $\overrightarrow{n}$ and $\overrightarrow{r}_{01}$ does not exceed $18^\circ$\cite{Goodman-1968-zPUmuuzx}.
+With this assumption under similar limits, $r_{01}$ in the denominator of Equation \ref{eqn:02_huygens_h} can be replaced with $z$, resulting in
+\begin{equation}
+  h(x_0,y_0;x_1,y_1) \approxeq \frac{1}{j\lambda z}\exp\{jkr_{01}\} \textrm{.}
+\end{equation}
+
+The Fresnel approximation replaces the spherical wavelets with a quadratic surface \cite{Fresnel-1818-FmMCMbDK},
+\begin{equation}
+  h(x_0,y_0;x_1,y_1) = \frac{jkz}{j\lambda z}\exp\left\{j\frac{k}{2z}[(x_0-x_1)^2+(y_0-y_1)^2]\right\} \textrm{,}
+  \label{eqn:02_fresnel_approx}
+\end{equation}
+which has a theoretical requirement that $z^3 \gg \frac{\pi}{4\lambda}\max\{[(x_0-x_1)^2+(y_0-y_1)^2]^2\}$ due to the limited number of terms used in a binomial expansion of $r_{01}$.
+In practice this limit is not that critical \cite{Goodman-1968-zPUmuuzx}.
+By combining Equations \ref{eqn:02_fraunhofer} and \ref{eqn:02_fresnel_approx}, an expression for Fresnel diffraction can be obtained,
+\begin{equation}
+  \begin{aligned}
+    U(x_0,y_0) =& \frac{\exp\{jkz\}}{j\lambda z}\exp\left\{j\frac{k}{2z}(x_0^2+y_0^2)\right\}\iint_{-\infty}^{+\infty}\left[U(x_1,y_1)\exp\left\{j\frac{k}{2z}(x_1^2+y_1^2)\right\}\right] \\
+    &\exp\left\{-j\frac{2\pi}{\lambda z}(x_0x_1+y_0y_1)\right\} dx_1dy_1 \textrm{.}
+  \end{aligned}
+  \label{eqn:02_fresnel}
+\end{equation}
+The function $U(x_0,y_0)$ maybe found from
+\begin{equation}
+  U(x_0,y_0) = \ffttwo\left[U(x_1,y_1)\exp\left\{j\frac{k}{2z}(x_1^2+y_1^2)\right\}\right]
+  \label{eqn:02_fresnel_fft}
+\end{equation}
+where the transform is evaluated at the spatial frequencies $\xi_x = x_0/\lambda z$, $\xi_y = y_0/\lambda z$.
+
+The Fraunhofer approximation \cite{Goodman-1968-zPUmuuzx},
+\begin{equation}
+  z \gg \frac{k\max[x_1^2+y_1^2]}{2} \textrm{,}
+  \label{eqn:02_fraunhofer_approx}
+\end{equation}
+places further restrictions than the Fresnel assumption approximation which results in
+$\exp\left\{j\frac{k}{2z}(x_1^2+y_1^2)\right\}$ being approximately unity over the aperture further simplifying Equation \ref{eqn:02_fresnel} to
+\begin{equation}
+  \begin{aligned}
+    U(x_0,y_0) =& \frac{\exp\{jkz\}}{j\lambda z}\exp\left\{j\frac{k}{2z}(x_0^2+y_0^2)\right\} \\
+    &\iint_{-\infty}^{+\infty}U(x_1,y_1)\exp\left\{-j\frac{2\pi}{\lambda z}(x_0x_1+y_0y_1)\right\} dx_1dy_1 \textrm{,}
+  \end{aligned}
   \label{eqn:02_fraunhofer}
 \end{equation}
-where $U$ is the complex amplitude, the subscripts 0 and 1 represent the coordinates of the farfield and nearfield respectively.
-The intensity can be computed from the complex amplitude via: $I = UU^\ast$.
-For cases in which optical aberrations are nonexistent (i.e. $\opd(x,y,t)=0$), the farfield irradiance pattern that results from Equation \ref{eqn:02_fraunhofer} is caused entirely by diffraction from the optical aperture, and is referred to as the “diffraction-limited” irradiance pattern.
+known as Fraunhofer diffraction.
+In Fraunhofer diffraction, the function $U(x_0,y_0)$ maybe found from the Fourier transform of $U(x_1,y_1)$, when evaluated at the same spatial frequencies as Equation \ref{eqn:02_fresnel_fft}.
+For additional details on the derivation of Huygens, Fresnel, and Fraunhofer diffraction, including more in depth discussion on the assumptions and limits, see Goodman \cite{Goodman-1968-zPUmuuzx}.
+
+The optical path difference can be related to the complex amplitude by \cite{Cicchiello-1997-RHxhNMxj},
+\begin{equation}
+  U(x_1,y_1) = \exp\left\{j\frac{2\pi}{\lambda}\opd(x_1,y_1)\right\} \textrm{.}
+\end{equation}
+In the range of Fraunhofer diffraction, the nearfield $\opd$ disturbance can be used to calculate the farfield intensity profile ($I = UU^*$),
+\begin{equation}
+  I(x_0,y_0) = \left|\ffttwo\left(\exp\left\{j\frac{2\pi}{\lambda}\opd(x_1,y_1)\right\}\right)\right|^2 \textrm{,}
+\end{equation}
+when the transform is evaluated at the spatial frequencies $\xi_x = x_0/\lambda z$, $\xi_y = y_0/\lambda z$ and the complex amplitude outside of the aperture is zero.
+For cases in which optical aberrations are nonexistent (i.e. $\opd(x,y,t)=0$), the farfield irradiance pattern that results from Equation \ref{eqn:02_fraunhofer} is caused entirely by diffraction from the optical aperture, and is referred to as the ``diffraction-limited'' irradiance pattern.
 For a beam with a flat wave front and circular aperture, the farfield irradiance pattern is the Airy’s disk, and the peak irradiance at the center of the disk, $I_0$ , is the maximum irradiance that can be achieved by the optical system:
 \begin{equation}
   I_0 = \left(\frac{kAp^2}{8z}\right)^2
@@ -112,7 +177,6 @@ where $\opdrms$ is the spatial rms of the wave front and $\lambda$ is the wavele
 Equation \ref{eqn:02_strehl_ratio} shows a key relationship between $\opd$, wavelength, and the farfield performance, plotted in Figure \ref{fig:02_all_strehl_ratio}.
 On the other hand, Equation \ref{eqn:02_airy_pattern} shows that the diffraction-limited farfield irradiance increases as the wavelength is shortened, plotted in Figure \ref{fig:02_farfield_intensity}.
 Together, Figure \ref{fig:02_farfield_intensity} and \ref{fig:02_all_strehl_ratio} show that as modern optical systems move to shorter wavelengths to increase $I_0$, aero-optical aberrations cause a much more serious degradation of the Strehl ratio, illustrating why aero-optical considerations are critical in the development of any airborne optical system.
-
 Figure \ref{fig:02_necessary_opd} shows the $\opdrms$ necessary to achieve various Strehl ratios over a range of wavelengths.
 \begin{figure}
   \centering
@@ -182,50 +246,37 @@ With an array of gradient data, the optical path difference at each lenslet can 
 % where the index of refraction is determined from $n=n_0(y)(1+\nu)$ and $R_v(|y-\zeta|)$ is the correlation function for the index variation.
 % This analysis introduced the concept of a linking equation that allows one to predict time-averaged optical degradation to turbulent flow statistical measurements.
 
-\section{Acoustics}
+% \section{Acoustics}
+% \subsection{Basic Acoustics}
+% Starting with the conservation of mass,
+% \begin{equation}
+%   \frac{\partial\rho}{\partial t}+\nabla\cdot\left(\rho\mathbf{u}\right)=0  \textrm{,}
+%   \label{eqn:02_cons_of_mass}
+% \end{equation}
+% and separating the density into a time-averaged ($\rho_0$) and fluctuating portion ($\rho'$), $\rho = \rho_0+\rho'$.
+% The fluctuating conservation of mass equation is obtained by separating the density ($\rho = \rho_0+\rho'$) into a temporally averaged density, $\rho_0$, and a
+% \begin{equation}
+%   \frac{\mathbf{D}\rho'}{\mathbf{Dt}}+\nabla\cdot\left(\rho_0\mathbf{u}\right)=0
+%   \label{eqn:02_cons_of_mass_fluc}
+% \end{equation}
+% For acoustics waves of frequency less than $10^9$ Hz the compression of the fluid can be assumed to be adiabatic \cite{Morse-1968-yygEdQZf}.
+% \begin{equation}
+%   \left.\frac{\partial p}{\partial\rho}\right|_s = c_0^2
+%   \label{eqn:02_speed_of_sound}
+% \end{equation}
 
-\subsection{Basic Acoustics}
-
-
-Starting with the conservation of mass,
-\begin{equation}
-  \frac{\partial\rho}{\partial t}+\nabla\cdot\left(\rho\mathbf{u}\right)=0  \textrm{,}
-  \label{eqn:02_cons_of_mass}
-\end{equation}
-and separating the density into a time-averaged ($\rho_0$) and fluctuating portion ($\rho'$), $\rho = \rho_0+\rho'$.
-The fluctuating conservation of mass equation is obtained by separating the density ($\rho = \rho_0+\rho'$) into a temporally averaged density, $\rho_0$, and a
-
-\begin{equation}
-  \frac{\mathbf{D}\rho'}{\mathbf{Dt}}+\nabla\cdot\left(\rho_0\mathbf{u}\right)=0
-  \label{eqn:02_cons_of_mass_fluc}
-\end{equation}
-
-
-
-
-
-For acoustics waves of frequency less than $10^9$ Hz the compression of the fluid can be assumed to be adiabatic \cite{Morse-1968-yygEdQZf}.
-
-
-\begin{equation}
-  \left.\frac{\partial p}{\partial\rho}\right|_s = c_0^2
-  \label{eqn:02_speed_of_sound}
-\end{equation}
-
-\subsection{Duct Acoustics}
+\section{Duct Acoustics}
 Acoustic waves are often enclosed inside of somesort of structure.
 This section will look at acoustics when confined to a duct in which the acoustic waves primarily travel along one-axis and have walls confining the acoustics along the other two axes as is the case inside of a wind tunnel.
 Figure \ref{fig:02_duct_drawing} shows the diagram used for deriving the acoustic properties inside of a constant area duct.
 \begin{figure}
 \centering
-  % \fbox{
     \includegraphics[trim=2.2in 0.7in 2.2in 0.7in,clip,width=4.5in]{../autocad/02_background/duct_drawing.eps}
     \put(-155,62){\fcolorbox{white}{white}{$l_x$}}
     \put(-227,113){\fcolorbox{white}{white}{$l_y$}}
     \put(-103,119){$\mathbf{x}$}
     \put(-198,220){$\mathbf{y}$}
     \put(-26,4){$\mathbf{z}$}
-  % }
   \caption{Duct with a rectangular cross-section.}
   \label{fig:02_duct_drawing}
 \end{figure}
@@ -245,7 +296,7 @@ and conservation of momentum,
   % \rho_0\frac{\partial\mathbf{u}}{\partial t} + \rho_0(\mathbf{u_0}\cdot\nabla)\mathbf{u} + \nabla p = 0 \textrm{.}
   \label{eqn:02_cons_mom}
 \end{equation}
-The definition of the speed of sound (Equation \ref{eqn:02_speed_of_sound}) is then substituted into Equation \ref{eqn:02_cons_mass},
+The definition of the speed of sound ($\left.\frac{\partial p}{\partial\rho}\right|_s = c_0^2$) is then substituted into Equation \ref{eqn:02_cons_mass},
 \begin{equation}
   \frac{1}{c_0^2}\frac{\mathbf{D}p}{\mathbf{Dt}} + \rho_0\nabla\cdot\mathbf{u} = 0 \textrm{,}
   % \frac{1}{c_0^2}\frac{\partial p}{\partial t} + \frac{1}{c_0^2}(\mathbf{u}\cdot\nabla p) + \rho_0(\nabla\cdot\mathbf{u}) = 0 \textrm{,}
@@ -329,7 +380,7 @@ This presents a frequency at which a given mode will cut-on,
 \end{equation}
 Below this frequency, an acoustic mode will be exponentially attenuated as it travels throught the duct.
 
-\subsubsection{Characteristic Equations of Cross-Sections}
+\subsection{Characteristic Equations of Cross-Sections}
 In order to determine the characteristic equations of an acoustic field within a cross-section the solution to Equation \ref{eqn:02_wave_xy} needs to be determined.
 A typical boundary condition that is used in the solution of this 2-D Helmholtz equation is using the assumption that the walls are rigid.
 \begin{equation}

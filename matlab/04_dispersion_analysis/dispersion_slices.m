@@ -38,7 +38,7 @@ colorbar('south');
 f1.Children(1).Position(1) = f1.Children(3).Position(1)+0.025;
 f1.Children(1).Position(2) = f1.Children(1).Position(2)-0.125;
 f1.Children(1).Position(3) = f1.Children(2).Position(3)+f1.Children(2).Position(1)-f1.Children(3).Position(1)-0.05;
-f1.Children(1).Label.String = '$S_{xx}$ ($\mu m^2/Hz/m^{-1}/m^{-1}$)';
+f1.Children(1).Label.String = '$S_{xx}$ ($\mu m^2/Hz/m^{-2}$)';
 f1.Children(1).Label.Interpreter = 'latex';
 f1.Children(1).TickLabelInterpreter = 'latex';
 for aa=1:length(f1.Children(1).TickLabels)

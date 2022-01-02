@@ -108,7 +108,7 @@ When Equation \ref{eqn:04_basic_sxx} is combined with a windowing function and a
  S_{xx} = \frac{|c_w\fft\{x(t) w(t)\}|^2}{Nf_{s}} \textrm{.}
  \label{eqn:04_windowed_sxx}
 \end{equation}
-A simple MATLAB function for computing the power spectrum of a one-dimensional signal with an arbitrary windowing function is shown in Appendix \ref{code:sc_simpleSXX}.
+% A simple MATLAB function for computing the power spectrum of a one-dimensional signal with an arbitrary windowing function is shown in Appendix \ref{code:sc_simpleSXX}.
 
 \section{N-Dimensional Power Spectra Calculation}
 For measurements with multiple spatial and temporal dimensions the Fast Fourier Transform is applied $n$-times where $n$ is the total number of dimensions, with each application in a different dimension,
@@ -133,7 +133,7 @@ The signal energy conservation relationship becomes
   \label{eqn:04_fftn_energy_conservation}
 \end{equation}
 where $\overrightarrow{\Delta f_s}$ is a vector representing the frequency step sizes in each dimension.
-A simple MATLAB code for calculating the dispersion of $x$ with an arbitrary windowing function is shown in Appendix \ref{code:sc_simpleSXXn}.
+% A simple MATLAB code for calculating the dispersion of $x$ with an arbitrary windowing function is shown in Appendix \ref{code:sc_simpleSXXn}.
 
 \section{Non-Rectangular Spatial Windows}
 For n-dimensional data sets that fill a rectangular array, a windowing function can be created by multiplying together a series of one-dimensional windowing functions in the direction of each dimension.
@@ -266,7 +266,7 @@ At low temporal-frequencies, the blade-passing frequency (~520 Hz) and its assoc
 The two main features on the vertical spectral slice plot on the bottom of Figure \ref{fig:04_dispersion_xy} are the signals moving at the speed of sound ($\pm c$) including some significant aliasing of these signals.
 These two lines represent acoustic waves that are traveling either straight up or down through the measurement beam.
 The blade-passing frequency and its harmonics are also visible in the vertical moving wave plots in both directions and have much less broadband spatial content in the vertical direction.
-Some of the high temporal-frequency narrow-band signals (~3, 5, and 6 kHz) contain most of the signal power at the speed of sound lines in the vertical spectral slice plot.
+Some of the high temporal-frequency narrow-band signals ($\sim$3, 5, and 6 kHz) contain most of the signal power at the speed of sound lines in the vertical spectral slice plot.
 These signals has some dependence on the free-stream Mach number (see Figure \ref{fig:04_dispersion_mach}).
 These maybe vibrations originating from the tunnel fan that are currently limiting the top speed of the tunnel; some older optical wavefronts collected in this tunnel under similar measurement conditions do not show these narrow-band signals.
 Because the portion of these signals with the most power is traveling vertically through the test section instead of steam wise, the tunnel walls maybe excited by the fan and resonating.
@@ -279,14 +279,13 @@ At higher temporal-frequencies, the stationary modes maybe related to electronic
 
 \subsection{3-D Representations of Multidimensional Spectral Estimation}
 While the two-dimensional slices are fairly informative, particularly when it comes to signal strength of various flow structures and their velocities, a three-dimensional plot allows better visualization of the overall flow structures although some details are lost because typically only one power level can be plotted at a time.
-The same data that has been previously shown in two-dimensional form, is depicted in Figure \ref{fig:04_dispersion_3d} as an isosurface with a power of $10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$ and shown from four different views.
+The same data that has been previously shown in two-dimensional form, is depicted in Figure \ref{fig:04_dispersion_3d} as an isosurface with a power of $10^{-14}$ $\mu m^2/Hz/m^{-2}$ and shown from four different views.
 \begin{figure}
   \centering
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_3d.eps}
-  \caption{Three-dimensional view of the multidimensional spectral plot showing an isosurface at a power of $10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$. The isosurface encompasses 99.9\% of the power of the wavefront.}
+  \caption{Three-dimensional view of the multidimensional spectral plot showing an isosurface at a power of $10^{-14}$ $\mu m^2/Hz/m^{-2}$.}
   \label{fig:04_dispersion_3d}
 \end{figure}
-This particular isosurface encompasses approximately 99.9\% of the power of the optical disturbances.
 The largest feature is the boundary layer which resembles an ellipsoidal plane that is tilted in the $f-\xi_s$ plane.
 The other main feature is the acoustic signal which appears as a cone which is slightly tilted in the direction of upstream-moving disturbances.
 The acoustic signal separates into several spikes at high temporal frequencies some of which are constructive interference from aliased signal ($\xi_x\approx25\ m^{-1},\ \xi_y\approx\pm60\ m^{-1}, \textrm{and}\ f\approx20 kHz$) which is better visualized in the 20 kHz temporal-frequency spectral slice in Figure \ref{fig:04_dispersion_slices_velocity}.
@@ -299,7 +298,7 @@ Figure \ref{fig:04_dispersion_mach} shows two views of an isosurface of the mult
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_mach_0.3.eps}
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_mach_0.4.eps}
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_mach_0.5.eps}
-  \caption{Multidimensional spectral estimate isosurfaces as the Mach number increased from 0.3 to 0.5. The isosurfaces are all shown at a power of $10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$ and all encompass 99.9\% of the wavefront power.}
+  \caption{Multidimensional spectral estimate isosurfaces as the Mach number increased from 0.3 to 0.5. The isosurfaces are all shown at a power of $10^{-14}$ $\mu m^2/Hz/m^{-2}$.}
   \label{fig:04_dispersion_mach}
 \end{figure}
 All of these plots are of an isosurface with the same power as used in Figure \ref{fig:04_dispersion_3d}.
@@ -322,7 +321,7 @@ This can be seen in Figure \ref{fig:04_dispersion_angle} with the same isosurfac
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_angle_90.eps}
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_angle_105.eps}
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_angle_120.eps}
-  \caption{Multidimensional spectral estimate isosurfaces of different viewing angles through the test section at a Mach number of 0.5. The isosurfaces are all shown at a power of $10^{-14}$ $\mu m^2/Hz/m^{-1}/m^{-1}$ and all encompass 99.9\% of the wavefront power.}
+  \caption{Multidimensional spectral estimate isosurfaces of different viewing angles through the test section at a Mach number of 0.5. The isosurfaces are all shown at a power of $10^{-14}$ $\mu m^2/Hz/m^{-2}$.}
   \label{fig:04_dispersion_angle}
 \end{figure}
 The $90^\circ$ case has been shown previously and the vertical component of the optical  disturbance sees little change as the viewing angle is increase except a small reduction in the boundary layer signal and some additional signal at the high temporal-frequencies in the acoustic cone.
@@ -441,4 +440,4 @@ The upstream-traveling acoustic wave however is a fairly thin signal that is dis
 
 \section{Summary}
 The use of multidimensional spectral estimation on optical wavefronts can provide significant additional insight to the various components that are being measured, including the desired aero-optical signal but also various forms of noise including sound and vibration.
-The process of filtering these multidimensional spectra will be discussed in Chapters \ref{chap:06_single_filter} and \ref{chap:07_multiple_filter}. 
+The process of filtering these multidimensional spectra will be discussed in Chapters \ref{chap:06_single_filter} and \ref{chap:07_multiple_filter}.
