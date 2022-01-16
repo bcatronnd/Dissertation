@@ -12,10 +12,10 @@
 Acoustic waves are isentropic compression waves with the fluctuating pressure, $p'$, determining the strength of the wave.
 This fluctuating pressure is related to the sound pressure level, $\spl$ by
 \begin{equation}
-  \spl = 20\log_{10}\left(\frac{p_{rms}}{p_0}\right)
+  \spl = 20\log_{10}\left(\frac{p_{RMS}}{p_0}\right)
   \label{eqn:03_spl}
 \end{equation}
-where $p_{rms}$ is the root mean square of the pressure fluctuation, and $p_0$ is the reference pressure (20 $\mu$Pa for air).
+where $p_{RMS}$ is the root mean square of the pressure fluctuation, and $p_0$ is the reference pressure (20 $\mu$Pa for air).
 The pressure fluctuations can be related to the density fluctuations via the definition of the speed of sound:
 \begin{equation}
   c_0^2 = \left(\frac{\partial p}{\partial \rho}\right)_s=\frac{p'}{\rho'}
@@ -100,7 +100,7 @@ The second will be a spherical acoustic wave that will be both numerically simul
 A planar wave is the simplest solution to the wave equation and varies only in time and the direction of travel.
 A planar wave can be calculated from the set of solutions for duct acoustics, Equation \ref{eqn:02_pressure_solution_duct}, given that $\Psi_m(x,y)=1$,
 \begin{equation}
-  \hat{p}(z,t) = p_m\exp\left\{j(\omega t \mp k_{zm}^\pm z)\right\} \textrm{.}
+  \hat{p}(z,t) = C_m\exp\left\{j(\omega t \mp k_{zm}^\pm z)\right\} \textrm{.}
   \label{eqn:03_plane_wave}
 \end{equation}
 This section will show the effect that acoustic waves have on the optical wavefront of a planar wave with the general geometry shown in Figure \ref{fig:03_planar_sample_domain}.
@@ -127,7 +127,7 @@ The effect of aperture filtering is more clearly shown in Figure \ref{fig:03_pla
 \begin{figure}
   \centering
   \includegraphics{../matlab/03_aero_optics_acoustics/planar_sample_calc_1.eps}
-  \caption{Theoretical time-averaged $\opdrms$ for a rms sound pressure of 1 Pa ($\spl$ of 94 dB), $l_n$ of 1 m, and various angles and $\Lambda/Ap$ ratios.}
+  \caption{Theoretical time-averaged $\opdrms$ for a RMS sound pressure of 1 Pa ($\spl$ of 94 dB), $l_n$ of 1 m, and various angles and $\Lambda/Ap$ ratios.}
   \label{fig:03_planar_sample_calc_1}
 \end{figure}
 As the $\Lambda/Ap$ ratio increases from 0.1, time-averaged $\opdrms$ remains fairly constant until it starts to drop around $\Lambda/Ap$ of 0.7 and starts to asymptotically approach zero which it basically reaches by $\Lambda/Ap$ of 10.
@@ -161,12 +161,12 @@ This pressure field when converted to complex pressure is represented by
 where $A_0$ is the fluctuating pressure strength and $r$ is the distance from the source to the measurement point.
 The RMS pressure of this field can be represented by
 \begin{equation}
-  p_{rms} = \frac{|A_0|}{r\sqrt{2}} \textrm{.}
+  p_{RMS} = \frac{|A_0|}{r\sqrt{2}} \textrm{.}
   \label{eqn:03_spherical_pressure_rms}
 \end{equation}
 
 \subsubsection{Theoretical $\opd$ Calculations}
-A set of optical properties were calculated for a beam passing through a spherical acoustic field as defined by a point source using the process described previously in Section \ref{chap:03_simulated_beam} and shown in Figure \ref{fig:03_spherical_simulation}.
+A set of optical properties were calculated for a beam passing through a spherical acoustic field as defined by a point source using the process described previously in Section \ref{sect:03_simulated_beam} and shown in Figure \ref{fig:03_spherical_simulation}.
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{../cad/spherical_simulation.pdf}
@@ -178,7 +178,7 @@ A set of optical properties were calculated for a beam passing through a spheric
   \caption{Diagram of the geometry used in the spherical wave simulation.}
   \label{fig:03_spherical_simulation}
 \end{figure}
-These calculations used a circular aperture size of 0.25-m in diameter that was assumed to be measured using a Shack-Hartmann WFS with 32x32 sub-apertures with a non-dimensional acoustic wavelength, $\Lambda$, of $Ap/4$ to $10Ap$.
+These calculations used a circular aperture size of 0.25 m in diameter that was assumed to be measured using a Shack-Hartmann WFS with 32x32 sub-apertures with a non-dimensional acoustic wavelength, $\Lambda$, of $Ap/4$ to $10Ap$.
 The normal vector from the point source to the axis of the measurement beam defined the coordinate system.
 This normal distance, $R$, was a minimum $5Ap$ and a maximum of $25Ap$, keeping the measurement beam away from the singularity at the origin of the acoustic source.
 The $\opd$ for the beam was integrated over a distance of $\pm5$-m from the plane of the point source.
@@ -189,7 +189,7 @@ The result of these $\opdrms$ calculations is shown in Figure \ref{fig:03_spheri
   \centering
   \includegraphics{../matlab/03_aero_optics_acoustics/spherical_sample.eps}
   \includegraphics{../matlab/03_aero_optics_acoustics/spherical_sample_win.eps}
-  \caption{Theoretical time-averaged $\opdrms$ for a spherical acoustic wave. The top plot shows a perfect spherical acoustic signal integrated over $\pm$5-m. The bottom plot shows has a Tukey window applied along the beam length to partially emulate source directivity which significantly reduces the measured oscillations.}
+  \caption{Theoretical time-averaged $\opdrms$ for a spherical acoustic wave. The top plot shows a perfect spherical acoustic signal integrated over $\pm$5 m. The bottom plot shows has a Tukey window applied along the beam length to partially emulate source directivity which significantly reduces the measured oscillations.}
   \label{fig:03_spherical_sample}
 \end{figure}
 The top plots shows the expected optical disturbance ratio, $\opdrms/|A_0|$, for a perfectly spherical acoustic field measured over the beam length.
@@ -229,7 +229,7 @@ A small bench top experiment was used to compare the simultaneous optical and mi
 \end{figure}
 The distance from the center of the beam to the speaker was 102 mm with a beam diameter of 28 mm.
 An ACO model 7016B microphone \cite{ACO-Microphones} was placed directly over the speaker at a distance of 158 mm and was used with a Br\"uel \& Kj\ae r model 2670 preamplifier \cite{Bruel-Kjaer-2670}.
-The speaker used was a Peerless model XT25SC90-04 \cite{Peerless-XT25SC90-04-1} which has a fairly flat on-axis response from 1-kHz to 40kHz.
+The speaker used was a Peerless model XT25SC90-04 \cite{Peerless-XT25SC90-04-1} which has a fairly flat on-axis response from 1 kHz to 40 kHz.
 % A Br\"uel \& Kj\ae r model 2690 \cite{Bruel-Kjaer-2690} signal conditioner was used as part of the data aquiztion system
 
 The wavefront measurements system utilized in these measurements is similar to that shown in Figure \ref{fig:02_typical_wavefront_system} except there was no primary telescope.
@@ -238,7 +238,7 @@ Optical wavefronts and microphone measurements were taken at 49 kHz.
 The speaker was sinusoidally excited at three different frequencies (9, 14, and 18 kHz) at a variety of voltages.
 
 The absolute value of the fluctuating pressure strength, $|A_0|$, was calculated two different ways.
-First, the power spectrum of the microphone data was used to calculate the average $p_{rms}$ at the excitation frequency and the fluctuating pressure strength using Equation \ref{eqn:03_spherical_pressure_rms}.
+First, the power spectrum of the microphone data was used to calculate the average $p_{RMS}$ at the excitation frequency and the fluctuating pressure strength using Equation \ref{eqn:03_spherical_pressure_rms}.
 For the second method, the optical wavefront was band-pass filtered at the excitation frequency using a process that will be discussed in Chapter \ref{chap:06_single_filter}.
 The time averaged $\opdrms$ of the filtered wavefront data was then used to calculate the fluctuating pressure strength using Equation \ref{eqn:03_spherical_sample_fit}.
 
@@ -405,10 +405,10 @@ The cross-sectional area and distance from the wind-tunnel fan going upstream ar
 For the distances in Table \ref{tab:03_wind_tunnel_specs} the corners have been straightened out and set to a length equal to the center-line arc from the entrance to the exit of that segment.
 The transition segments on either side of the wind-tunnel fan convert the circular cross-section to a square cross-section.
 Between cross-section 6 and 7 the diffuser has a cruciform splitting it into four separate segments in which the duct modes were independently marched.
-The test-section is 2.75-m long and the main contraction shape from section 8 to 9 follows a fifth-order polynomial.
+The test-section is 2.75 m long and the main contraction shape from section 8 to 9 follows a fifth-order polynomial.
 Acoustic reflections that would be due to turning vanes or other internal structures have been neglected along with the fan hub and motor shaft geometry.
 
-The wind-tunnel was discretized into smaller segments that were a maximum of 0.25-m in length.
+The wind-tunnel was discretized into smaller segments that were a maximum of 0.25 m in length.
 The speed throughout the wind-tunnel was determined via isentropic relations and the pressure transmission ratios were computed using Equations \ref{eqn:03_pressure_ratio_with} and \ref{eqn:03_pressure_ratio_against}.
 % Redo equation ref
 Pressure reflection ratios were calculated using Equations \ref{eqn:03_pressure_ratio_with_reflected} and \ref{eqn:03_pressure_ratio_against_reflected} and verified to be small.
@@ -427,7 +427,7 @@ In the regions of rapid Mach number change around the contraction and the test-s
 These regions also show some reflected pressure ratios (dotted lines) that are non-negligible.
 For acoustic waves traveling in both directions, the section on the opposite side of the test section produces some reflected acoustic waves back into the test section.
 
-The wind-tunnel fan was modeled using a circular duct mode of $m=8$ and $n=0$ at a frequency of 520-Hz which corresponds to the blade-passing frequency of the Mach number 0.6 case.
+The wind-tunnel fan was modeled using a circular duct mode of $m=8$ and $n=0$ at a frequency of 520 Hz which corresponds to the blade-passing frequency of the Mach number 0.6 case.
 The duct mode of $m=8$ and $n=0$ is the largest cut-on mode in which the azimuthal mode number is a whole-number fraction of the total number of fan blades, 32.
 The peak-to-peak acoustic pressure of the fan was set to unity to allow the results to be easily scaled.
 To check for the possibility of some duct modes only being present at certain orientations of the fan blades, the initial acoustic pressure disturbance was rotated by replacing $\omega t$ in the temporal portion of Equation \ref{eqn:02_pressure_solution_duct} with a phase offset that varied from 0 to 2$\pi$.
@@ -441,13 +441,13 @@ Cross-sectional slices of the acoustic field as the waves march upstream from th
   \includegraphics[trim={0.3in 0.3in 0.3in 0.3in},clip]{../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_1.5708_006.eps} \\
   \includegraphics[trim={0.3in 0.3in 0.3in 0.3in},clip]{../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_0_012.eps}
   \includegraphics[trim={0.3in 0.3in 0.3in 0.3in},clip]{../matlab/03_aero_optics_acoustics/tunnel_slices/tunnel_acoustic_against_0.6_8_0_1.5708_012.eps}
-  \caption{Cross-sectional slices of the acoustic field through the circle to square transition for the acoustic waves traveling upstream. Left side are the waves traveling from the fan at a phase of 0-radians and the right side at a phase of $\pi$/2-radians. The top plots are the fan acoustic field, the middle plots are halfway through the transition, and the bottom plots are just into the square duct.}
+  \caption{Cross-sectional slices of the acoustic field through the circle to square transition for the acoustic waves traveling upstream. Left side are the waves traveling from the fan at a phase of 0 radians and the right side at a phase of $\pi$/2 radians. The top plots are the fan acoustic field, the middle plots are halfway through the transition, and the bottom plots are just into the square duct.}
   \label{fig:03_transition_acoustics}
 \end{figure}
-The plots on the left side are at an initial phase angle of 0-radians and the right side are at a phase angle of $\pi$/2-radians.
+The plots on the left side are at an initial phase angle of 0 radians and the right side are at a phase angle of $\pi$/2 radians.
 The top plots are the cross-sectional slices of the acoustic field directly upstream of the fan, the middle plots are halfway through the transition, and the bottom plots are just into the square duct.
 As an acoustic wave propagates upstream, a phase shift can be observed with the halfway transitioned cross-sectional slices having an opposite local phase.
-As the acoustic wave enters the square duct the 0-radian phase, left side, bears little resemblance to the original acoustic wave while the $\pi$/2-radian phase shows some significant similarities.
+As the acoustic wave enters the square duct the 0 radian phase, left side, bears little resemblance to the original acoustic wave while the $\pi$/2 radian phase shows some significant similarities.
 
 The acoustic field cross-section at the center of the test-section is shown in Figure \ref{fig:03_test_section_acoustics} for a variety of initial phase angles.
 \begin{figure}

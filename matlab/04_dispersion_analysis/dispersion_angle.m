@@ -7,14 +7,14 @@ angle = [75 90 105 120];
 BlockSize = 2^10;
 log_range = -14;
 for aa=1:length(testPoint)
-    close all;
+%     close all;
     [WF,CineInfo,RunLog,WFInfo] = loadWF([directory testPoint{aa} '_WF.mat'],'Scale',1e6);
     WF = WF(:,:,1:floor(size(WF,3)/BlockSize)*BlockSize);
     WF = cat(1,WF,NaN*zeros(2^nextpow2(size(WF,1))-size(WF,1),size(WF,2),size(WF,3)));
     WF = cat(2,WF,NaN*zeros(size(WF,1),2^nextpow2(size(WF,2))-size(WF,2),size(WF,3)));
     [WF,freq] = simpleDispersion(WF,'BlockSize',BlockSize,'SampleRate',RunLog.samplerate);
     disp(['Total Energy Inside Surface: ' num2str(sum(10.^WF(WF>log_range),'all')/sum(10.^WF,'all')*100,'%0.1f') '%']);
-    f1 = figure(4);
+    f1 = figure(aa);
     subplot(1,2,1);
     scolor = parula(2);
     patch(isocaps(freq{1},freq{2},freq{3}(end/2+1:end),WF(:,:,end/2+1:end),log_range(1),'all'),'facecolor','interp','edgecolor','none','facelighting','none');
@@ -47,7 +47,7 @@ for aa=1:length(testPoint)
     material dull;
     camlight;
     f1.Children(1).TickLabelInterpreter = 'latex';
-    sgtitle(['$\theta$ = ' num2str(angle(aa),'%0.0f') '$^{\circ}$'],'interpreter','latex');
+    sgtitle(['$\gamma$ = ' num2str(angle(aa),'%0.0f') '$^{\circ}$'],'interpreter','latex');
     f1.Units = 'inches';
     f1.Position = [1 1 5.5 2.5];
     

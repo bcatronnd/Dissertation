@@ -49,8 +49,8 @@ hold on;
 plot3(v(idc),u(idr),1,'ko','markerfacecolor','k','markersize',10);
 view(45,45);
 grid on;
-xlabel('v (m/s)','interpreter','latex');
-ylabel('u (m/s)','interpreter','latex');
+xlabel('$u_y$ (m/s)','interpreter','latex');
+ylabel('$u_x$ (m/s)','interpreter','latex');
 zlabel('Normalized Power','interpreter','latex');
 f1.Children(1).TickLabelInterpreter = 'latex';
 
