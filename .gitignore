@@ -1,12 +1,6 @@
 # ignore converted eps files
 *-eps-converted-to.pdf
 
-# ignore gifs and jpegs
-*.gif
-*.jpeg
-*.jpg
-*.JPEG
-
 # ignore some Matlab files
 *.mat
 *.asv

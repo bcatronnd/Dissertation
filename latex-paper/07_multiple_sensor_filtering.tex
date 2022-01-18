@@ -10,16 +10,19 @@
 % }
 
 
-The previous chapter investigated filtering optical wavefront corruption by applying a variety of filters to the wavefront in the multidimensional spectral domain.
+In the previous chapter, methods of filtering optical wavefront corruption by applying a variety of filters to the wavefront in the multidimensional spectral domain were investigated.
 These techniques involve only data from the optical wavefront itself and user knowledge and experience to obtain filtered data.
-When additional data is available, such as from microphones or accelerometers, a targeted filter approach becomes possible.
+When additional data are available, such as from microphones or accelerometers, a targeted filter approach becomes possible.
+An approach is described in this chapter.
 
 
 This kind of approach is described in a previous study \cite{DeLucca-2014-RAJvGdv7} in which a combination of linear stochastic estimation (LSE) and spectral proper orthogonal decomposition (SPOD) was used to remove vibration related contamination from aero-optical wind-tunnel measurements.
-This process along with optical tip and tilt removal showed approximately an 85\% reduction in the measured $\opdrms$ by using accelerometer measurements to remove vibration effects from optical wavefront measurements.
+This process along with optical tip and tilt removal showed approximately an 85\% removal of contamination in the measured $\opdrms$ by using accelerometer measurements to remove vibration effects from optical wavefront measurements.
+
+Finally, this chapter concludes by showing results produced by applying the LSE-SPOD filter to experimental wavefront data acquired in the White Field wind tunnel, both by itself and in combination with the filters described in Chapter \ref{chap:06_single_filter}. The objective of the filtering approaches shown was to filter out contamination from the aero-optical signal produced by the boundary layer on the measurement aperture. The performance of the various filtering methods are compared and recommendations for the best filtering approach are given.
 
 \section{Optical Tip and Tilt}
-Although they are usually not employed in areo-optical investigations, Zernike polynomials have been traditionally used for modal decomposition of the optical aberrations of an optical system \cite{Born-1965-HHGYgjdH}.
+Although they are usually not employed in aero-optical investigations, Zernike polynomials have been traditionally used for modal decomposition of the optical aberrations of an optical system \cite{Born-1965-HHGYgjdH}.
 These polynomials are defined on the unit circle and form a set of orthogonal functions,
 \begin{equation}
   Z_n^m(\rho,\theta) = R_n^m(\rho)\cos(m\theta)
@@ -27,7 +30,7 @@ These polynomials are defined on the unit circle and form a set of orthogonal fu
 \end{equation}
 where $R_n^m(\rho)$ is the radial basis function and $\cos(m\theta)$ is the angular basis function.
 For values of $-m$ the angular basis function becomes $\sin(m\theta)$.
-The radial basis function are developed from Jacobi polynomials but for purposes in this study, only a few simple ones will be used.
+The radial basis function are developed from Jacobi polynomials but for purposes of this study, only a few simple ones will be used.
 An optical wavefront can be represented by a summation of Zernike polynomials multiplied by their corresponding coefficients
 \begin{equation}
   \wf = \sum Z_ja_j \textrm{.}
@@ -51,7 +54,7 @@ and tilt is
   Z_3 = 2\rho\sin\theta \textrm{.}
   \label{eqn:07_zernike_3}
 \end{equation}
-Once the coefficients for these modes are solved for they can be filtered out
+Once the coefficients for these modes are solved for they can be removed from the original wavefront, $WF$:
 \begin{equation}
   WF^F = WF-\sum Z_ja_j \textrm{.}
 \end{equation}
@@ -148,7 +151,7 @@ A filtered signal, $Q^F$ can be constructed by using the filtered coefficient ma
 \end{equation}
 
 \section{Filtering Experimental Data}
-The filtering technique described in the preceding section was applied to the same data sets that were shown in Figure \ref{fig:04_dispersion_mach}.
+The filtering technique described in the preceding section was applied to the same data sets that were shown in Figure \ref{fig:04_dispersion_mach}, either separately or in combination with the basic filtering methods described in Chapter \ref{chap:06_single_filter}.
 Simultaneous accelerometer and microphone measurements were made alongside the optical wavefront measurements.
 The locations of some of the additional sensors are shown in Figure \ref{fig:07_sensor placement} with a CAD drawing of the test section in Figure \ref{fig:07_test_section_mic_accel}.
 Table \ref{tab:07_sensor_list} shows a list of the additional sensors including the number designation used in Figures \ref{fig:07_sensor placement} and \ref{fig:07_test_section_mic_accel}, the model of the sensor and preamplifier used as well as a sensor grouping designation.
@@ -226,6 +229,7 @@ The optical window on the far side of the test-section was moved laterally depen
 One accelerometer was placed on the primary lens (also shown, sensor 7) and one was placed in the center of the optics bench.
 The last two accelerometers were located on the back of the return mirror with one on the top and the other on the side.
 
+\section{Results}
 The power-spectra of all of the sensors at the three Mach numbers are shown in Figure \ref{fig:07_sensor_spectra}.
 \begin{figure}
   \centering
@@ -233,7 +237,8 @@ The power-spectra of all of the sensors at the three Mach numbers are shown in F
   \caption{Power-spectra of the additional sensor measurements at the three Mach numbers tested. The x-axis is in Strouhal number per characteristic length ($St/l$).}
   \label{fig:07_sensor_spectra}
 \end{figure}
-These plots are presented as Strouhal number per unit characteristic length with the different groups of sensors shown together.
+These plots are presented as Strouhal number per unit characteristic length, since this puts the signals related to the fan blade-passing frequency at the same x-axis location for all three tested wind speeds.
+Figure \ref{fig:07_sensor_spectra} also shows the different groups of sensors shown together in separate plots.
 The blade-passing frequency for these data sets is at a $St/l$ of approximately 3 $m^{-1}$ with a clear and consistent narrow-band signal at that $St/l$ for all but the $M=0.3$ run, which has a slight increase in signal for some of the sensors.
 For the $M=0.5$ case there is an additional strong narrow-band signal at 20 $m^{-1}$ for all sensors and a slightly broader signal at 38 $m^{-1}$ that is only present in the test-section mounted sensors that may be due to extra fan vibration which was limiting the top speed of the wind-tunnel.
 The test-section mounted microphones are picking up boundary layer acoustic noise above $St/l$ of approximately 20 $m^{-1}$.
@@ -259,7 +264,7 @@ Both of these methods performed effectively identically to one another with a 14
 There is a significant drop in the signal at the blade-passing frequency and its harmonics, especially at the higher spatial frequencies.
 The stationary signal information is also significantly reduced along with the high temporal-frequency acoustic signal.
 The aero-optical boundary layer signal is also partially reduced, which is most noticeable at higher temporal-frequencies.
-Some of this lost signal can be restored by increasing the overlap of the temporal frequency blocks, but this also restores some of the unwanted high temporal-frequency contamination.
+% Some of this lost signal can be restored by increasing the overlap of the temporal frequency blocks, but this also restores some of the unwanted high temporal-frequency contamination.
 
 \begin{table}
   \centering
@@ -282,7 +287,7 @@ The fourth set was the test-section sensors comprised of six window mounted acce
 This set of sensors performed the same as all of the accelerometers, while the use of all of the additional sensors in the last set performed the best, with an additional reduction in $\opdrms$ of 4 to 6\% from the tip/tilt removal cases.
 
 A velocity filter was also tried in addition to just the tip/tilt removal or in conjunction with tip/tilt and all the sensors being used in the LSE-MSPOD process.
-The velocity filter performed better than the all-sensors removal case by an additional 1.5 to 3\%.
+The velocity filter performed better than the all-sensors removal case by an additional 1.5 to 3\% but some of the narrow-band signals remain.
 When all sensors were used with LSE-MSPOD on the velocity filtered wavefronts an additional 3 to 4\% of the $\opdrms$ was removed compared to just the velocity-filtered case or an additional 8.1\% reduction for only doing tip/tilt removal on the Mach number of 0.3 case or 14.1 and 13.3\% reduction for the 0.4 and 0.5 Mach number cases.
 
 In summary, Table \ref{tab:07_lse_mspod_table} shows that using either the temporal or multidimensional version of the LSE-SPOD filtering technique can help remove some of the narrow-band acoustic and vibration reduction in an optical wavefront.

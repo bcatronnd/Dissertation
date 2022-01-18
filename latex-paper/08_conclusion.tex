@@ -3,14 +3,14 @@
 
 \chapter{Conclusion}
 \label{chap:08_conclusion}
-\textcolor{red}{
-  \begin{itemize}
-    \item Please double check my estimate for $\opdrms$ from Stas's paper
-  \end{itemize}
-}
+% \textcolor{red}{
+%   \begin{itemize}
+%     \item
+%   \end{itemize}
+% }
 
-When an airborne optical system is tested in a wind tunnel, there is a number of sources that contaminate the measurement with noise.
-This can be seen if Figure \ref{fig:08_dispersion_isosurface} which shows a multidimensional spectral estimation of an optical wavefront measurement made in a wind tunnel.
+When an aero-optical measurements are made in a wind tunnel, there is a number of sources that contaminate the measurement with noise.
+This can be seen in Figure \ref{fig:08_dispersion_isosurface} which shows a multidimensional spectral estimation of an optical wavefront measurement made in a wind tunnel.
 \begin{figure}
   \centering
   \includegraphics{../matlab/08_conclusion/dispersion_isosurface.eps}
@@ -22,19 +22,20 @@ This can be seen if Figure \ref{fig:08_dispersion_isosurface} which shows a mult
   \caption{Multidimensional spectral estimation of an optical wavefront measurement made in a wind tunnel.}
   \label{fig:08_dispersion_isosurface}
 \end{figure}
-The half of the isosurface which represents the portion of the signal that has a component that is traveling vertically downward has been made transparent to show some of the internal power spectrum of planar waves that are traveling parallel to the direction of flow.
+In Figure \ref{fig:08_dispersion_isosurface}, the half of the isosurface which represents the portion of the signal that has a component that is traveling vertically downward has been made transparent to show some of the internal power spectrum of planar waves that are traveling parallel to the direction of flow.
 
-In Figure \ref{fig:08_dispersion_isosurface}, the aero-optical signal that is being measured is the boundary layer which resembles a thin ellipsoid which has been rotated up from the $\xi_x-\xi_y$ plane by an amount related to the free-stream velocity.
-Acoustic duct modes make up a temporally broadband signal that forms a cone and has a significant portion of the signal that travels upstream.
+In Figure \ref{fig:08_dispersion_isosurface}, the aero-optical signal that is considered to be the objective of the measurement is the boundary layer which resembles a thin ellipsoid that has an angle in the $x-\xi_x$ plane (where the $xi_x$ coordinate represents spatial frequencies in the stream-wise direction) by an amount related to the free-stream velocity (see Equation \ref{eqn:04_velocity_assumed}).
+Acoustic duct modes make up a temporally broadband signal that forms a cone and have a significant portion of the signal that travels upstream.
 In the $\xi_x-f$ plane the outer surface of the acoustic cone is limited by the sonic lines at $u\pm c$, while in the $\xi_y-f$ plane the limit is at $\pm c$.
 The wind-tunnel fan produces temporally narrow-band acoustic and vibration modes that are able to contaminate the wavefront measurement at the blade-passing frequency (BPF) and its various harmonics.
 
 Sources of noise shown in Figure \ref{fig:08_dispersion_isosurface} not related to the acoustics include stationary modes and mean-lensing.
 The stationary modes do not travel in any direction, spatial frequencies are near zero and the signal strength is fairly constant in both time and space.
 Due to the temporally white-noise nature of this signal, it is likely not physically relevant and could be optical mode noise from the laser, electronic noise in the camera, or even numerical noise from the processing code.
-At lower frequencies, especially around the blade-passing frequency or its harmonics, there is likely be a significant number of stationary modes that are due to vibration of various optical elements.
+At lower frequencies, especially around the blade-passing frequency or its harmonics, there is likely a significant number of stationary modes that are due to vibration of various optical elements.
 The mean-lensing portion of the signal ($\lessapprox 100$ Hz) is a slowly varying signal with large spatial frequency content.
 A color coded multidimensional spectral estimation plot that allows for easier identification of the various component signals is shown in Figure \ref{fig:05_synthetic_dispersion_input} and was used for generating a synthetic wavefront.
+As such, a major contribution of this dissertation research is an improved understanding of the signals and contamination that appear in aero-optical data, and how those signals appear in multi-dimensional spectra. This information provides a better understanding of aero-optical data, as well as guidance towards methods of filtering out contaminating noise sources.
 
 \section{Filtering of Optical Wavefronts}
 Two main families of filtering techniques were examined in this dissertation.
@@ -57,12 +58,13 @@ The only filter that was investigated that was not based on basic filters was a 
 This filter removes narrow-band peaks and noise peaks along the temporal frequency axis smooth spectrum.
 
 Among the filters discussed, three are useful for isolating aero-optical signals from a wavefront.
-The first of these is a filter for separating the portion of the optical disturbances that are moving either upstream or downstream realities to the flow (Section  \ref{chap:06_up_down_filter}).
-An undesirable effect of this filter is that some signals maybe split if a portion of the signal crosses the separation plane, which can happen to the boundary-layer signal at low temporal frequencies.
+The first of these is a filter for separating the portion of the optical disturbances that are moving either upstream or downstream to the flow (Section  \ref{chap:06_up_down_filter}).
+An undesirable effect of this filter is that some signals may be split portions of the signal are moving upstream and downstream, which can happen to the boundary-layer signal at low temporal frequencies.
 The second useful filter is the low-pass velocity filter which preserves the signal that is moving within a narrow velocity range (Section \ref{chap:06_velocity_filter}).
-The third useful is the baseline estimator (Section \ref{chap:06_baseline}), which removes the narrow-band signals associated with the blade-passing frequency and its harmonics, the mean-lensing component, and other temporally narrow-band signals.
-Some of these removed narrow-band signals could be relevant signals created by a wind-tunnel model that would be unfortunately removed.
+The third is the baseline estimator (Section \ref{chap:06_baseline}), which removes the narrow-band signals associated with the blade-passing frequency and its harmonics, the mean-lensing component, and other temporally narrow-band signals.
+Some of these removed narrow-band signals could include part of the aero-optical signal of the wind-tunnel model.
 
+% Clear up forward filter
 Figure \ref{fig:08_dispersion_filters} shows the multidimensional spectra of the output of these three filters individually plus the spectra of these three filters combined.
 \begin{figure}
   \centering
@@ -73,13 +75,13 @@ Figure \ref{fig:08_dispersion_filters} shows the multidimensional spectra of the
 The forward filter (Figure \ref{fig:08_dispersion_filters} top left) does remove some of the boundary-layer signal at low temporal frequencies.
 The portion of the acoustic cone and stationary modes that are on the downstream-moving portion of the spectrum are retained.
 The velocity filter (Figure \ref{fig:08_dispersion_filters} top right) removes most of the broadband signal from the various noise sources.
-There is a portion of the acoustic cone and stationary modes that intersect or lay near the boundary-layer signal is slightly attenuated producing a slight hump on the upstream-moving side of the boundary-layer that extends up to about 10 kHz and along the $\xi_y$ axis over the range of about $\pm25\ m^{-1}$.
+There is a portion of the acoustic cone and stationary modes that intersect or lay near the boundary-layer signal that is slightly attenuated, producing a slight hump on the upstream-moving side of the boundary-layer that extends up to about 10 kHz and along the $\xi_y$ axis over the range of about $\pm25\ m^{-1}$.
 
 The baseline filter (Figure \ref{fig:08_dispersion_filters} bottom left) removes all of the temporal narrow-band signals including the mean-lensing portion of the spectra.
-The noisy surface of the spectra is removed which does eliminate some the the desired boundary-layer signal.
+The noisy surface of the spectra is removed which also eliminates some the boundary-layer aero-optical signal.
 The combination filter (Figure \ref{fig:08_dispersion_filters} bottom right) applies the velocity and forward filter to the baseline filter.
 This filter loses some of the boundary-layer signal due to the noisy surface being smoothed out and the portion that crosses into the upstream-traveling portion of the spectrum.
-The portion of the the acoustic cone and stationary modes that is the most contaminating in the velocity filter is removed due to the forward and baseline filter.
+The portion of the acoustic cone and stationary modes that is the most contaminating in the velocity filter is removed due to the forward and baseline filter.
 
 A zoomed in slice of the multidimensional spectra is shown in Figure \ref{fig:08_dispersion_filters_slices} for the horizontal moving plane waves.
 \begin{figure}
@@ -88,7 +90,7 @@ A zoomed in slice of the multidimensional spectra is shown in Figure \ref{fig:08
   \caption{Multidimensional spectral slices for the various single sensor filtering techniques showing the horizontal moving plane waves.}
   \label{fig:08_dispersion_filters_slices}
 \end{figure}
-A large portion of the single contamination happens at the blade-passing frequency and its harmonics as well as in the mean-lensing region.
+A large portion of the signal contamination happens at the blade-passing frequency and its harmonics as well as in the mean-lensing region.
 This contamination is present in all of the multidimensional spectra that do not utilize the baseline filter.
 Even with the velocity filter there is significant contamination on the upstream-moving portion of the spectra due to these narrow-band signals as well as due to the presence of the acoustic cone and stationary modes.
 While the forward filter removes some of the boundary-layer signal it removes significantly more of the noise signals that would otherwise be present in the spectra with just the velocity and baseline filters applied.
@@ -151,17 +153,18 @@ If at some point in the future there is an algorithm that shows significant bene
 \subsection{Synthetic Wavefront}
 A synthetic wavefront was developed in Chapter \ref{chap:05_synthetic} to test various filters used in Chapter \ref{chap:06_single_filter}.
 In the process used to create the synthetic wavefront, each of these signal components was generated separately in the multidimensional spectrum.
-While this synthetic wavefront generation technique produced a qualitative approximation of a wavefront, it provided a useful set of known fully known data to test various filters.
-There is some significant room for improvement in the process of creating synthetic wavefront that are more physically accurate.
-Even without improvement this process maybe useful in generating a set of synthetic wavefronts with a known aero-optical and noise components that can be used for training a neural network to filter \cite{Lo-1994-W6aWeuaT} wavefront measurements.
+While this synthetic wavefront generation technique produced a qualitative approximation of a wavefront, it provided a useful set of fully known data to test various filters.
+There is some significant room for improvement in the process of creating synthetic wavefronts that are more physically accurate.
+Even without improvement this process may be useful in generating a set of synthetic wavefronts with a known aero-optical and noise components that can be used for training a neural network to filter \cite{Lo-1994-W6aWeuaT} wavefront measurements.
 A neural network based filter may be able to separate the overlapping component signals at low frequencies.
 
 \subsection{Measuring Acoustic Field Optically}
 In section \ref{sect:03_examples_spherical}, optical wavefront were shown to have a fairly good agreement with a microphone for measuring the fluctuating field strength of a spherical wave generated by a speaker.
-the optical wavefront measurement however had issues when the acoustic field diverged from being nearly spherical.
-Optical wavefronts can make for a excellent way to non-intrusively measure an acoustic field if the field closely resembles a model.
+The optical wavefront measurement however had issues when the acoustic field diverged from being nearly spherical.
+Optical wavefronts can be a method to non-intrusively measure an acoustic field, although the beam-path integrated results of the wavefront measurement require additional interpretation to extract information on the acoustic field. .
 
 \subsection{Acoustic Mode-Marching}
-An acoustic mode-marching method was utilized to quickly estimate the acoustic field within a wind-tunnel test-section assuming that the primary noise source was the wind-tunnel fan.
-This is likely to have limited application in filter of optical wavefronts, it maybe useful for assisting in determining whether specific narrow-band signals are likely a product of the wind-tunnel fan and can be filtered out.
+An acoustic mode-marching method was developed to quickly estimate the acoustic field within a wind-tunnel test-section assuming that the primary noise source was the wind-tunnel fan.
+Although, this is likely to have limited application in filtering of optical wavefronts, it is useful for assisting researchers in determining whether specific narrow-band signals are produced by the wind-tunnel fan and can be filtered out.
+Since there may be upstream-traveling components of the aero-optical signal such as that produced by recirculation zones or sound produced by the test model, the capability to definitively identify the optical signal produced by the wind-tunnel main fan is useful information. 
 There also maybe some application during the initial design of a tunnel for estimating the acoustic field in some critical components.
