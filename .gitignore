@@ -18,5 +18,10 @@
 *.synctex.gz
 *.toc
 
-# ignore Rennie's comment files
-*_MR.docx
+# ignore gifs
+*.gif
+
+# ignore directories
+photos-not-used/
+rennie-notes/
+**/old/
