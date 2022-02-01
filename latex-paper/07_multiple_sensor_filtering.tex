@@ -1,297 +1,109 @@
 % !TEX root = catron-dissertation.tex
 \epstopdfsetup{outdir=./images/07_multiple_sensor_filtering/}
 
-\chapter{Multiple Sensor Filtering Techniques}
+\chapter{Combination of Filters}
 \label{chap:07_multiple_filter}
 % \textcolor{red}{
 %   \begin{itemize}
-%     \item
+%     \item Figure 7.2 - ylabel OPDRMS(t)
+%     \item Figure 7.3,7.4 - Backward Moving Filter
+%     \item Add figure showing the combined Velocity_LSE_MSPOD multidimensional spectrum
 %   \end{itemize}
 % }
 
-
-In the previous chapter, methods of filtering optical wavefront corruption by applying a variety of filters to the wavefront in the multidimensional spectral domain were investigated.
-These techniques involve only data from the optical wavefront itself and user knowledge and experience to obtain filtered data.
-When additional data are available, such as from microphones or accelerometers, a targeted filter approach becomes possible.
-An approach is described in this chapter.
+The previous chapter investigated a series of filters that were applied in a singular fashion to a set of optical wavefronts.
+This chapter will discuss combining several of these filters together in series.
 
 
-This kind of approach is described in a previous study \cite{DeLucca-2014-RAJvGdv7} in which a combination of linear stochastic estimation (LSE) and spectral proper orthogonal decomposition (SPOD) was used to remove vibration related contamination from aero-optical wind-tunnel measurements.
-This process along with optical tip and tilt removal showed approximately an 85\% removal of contamination in the measured $\opdrms$ by using accelerometer measurements to remove vibration effects from optical wavefront measurements.
-
-Finally, this chapter concludes by showing results produced by applying the LSE-SPOD filter to experimental wavefront data acquired in the White Field wind tunnel, both by itself and in combination with the filters described in Chapter \ref{chap:06_single_filter}. The objective of the filtering approaches shown was to filter out contamination from the aero-optical signal produced by the boundary layer on the measurement aperture. The performance of the various filtering methods are compared and recommendations for the best filtering approach are given.
-
-\section{Optical Tip and Tilt}
-Although they are usually not employed in aero-optical investigations, Zernike polynomials have been traditionally used for modal decomposition of the optical aberrations of an optical system \cite{Born-1965-HHGYgjdH}.
-These polynomials are defined on the unit circle and form a set of orthogonal functions,
-\begin{equation}
-  Z_n^m(\rho,\theta) = R_n^m(\rho)\cos(m\theta)
-  \label{eqn:07_zernike}
-\end{equation}
-where $R_n^m(\rho)$ is the radial basis function and $\cos(m\theta)$ is the angular basis function.
-For values of $-m$ the angular basis function becomes $\sin(m\theta)$.
-The radial basis function are developed from Jacobi polynomials but for purposes of this study, only a few simple ones will be used.
-An optical wavefront can be represented by a summation of Zernike polynomials multiplied by their corresponding coefficients
-\begin{equation}
-  \wf = \sum Z_ja_j \textrm{.}
-  \label{eqn:07_zernike_coeff}
-\end{equation}
-
-The Noll naming scheme is a method of organizing the Zernike polynomials into a single notation of $Z_j$, along with normalizing each polynomial to have a spatial RMS equal to one \cite{Noll-1976-HHKzd88f}.
-The first three of these using the Noll naming scheme are piston, tip, and tilt.
-Piston is simply the average $\opd$ value of the wavefront
-\begin{equation}
-  Z_1 = 1 \textrm{.}
-  \label{eqn:07_zernike_1}
-\end{equation}
-Tip and tilt are the best planar fit to the $\opd$ along the x-axis and y-axis respectively where tip is
-\begin{equation}
-  Z_2 = 2\rho\cos\theta \textrm{,}
-  \label{eqn:07_zernike_2}
-\end{equation}
-and tilt is
-\begin{equation}
-  Z_3 = 2\rho\sin\theta \textrm{.}
-  \label{eqn:07_zernike_3}
-\end{equation}
-Once the coefficients for these modes are solved for they can be removed from the original wavefront, $WF$:
-\begin{equation}
-  WF^F = WF-\sum Z_ja_j \textrm{.}
-\end{equation}
-
-\section{LSE-SPOD}
-The LSE-SPOD technique starts with performing SPOD on the primary data set and then using the Fourier transforms of the additional sensor data to perform a filtering operation.
-The spectral proper orthogonal decomposition technique is described in detail by Schmidt and Colonius \cite{Schmidt-2020-m2emACkX}.
-A schematic of the SPOD algorithm is shown in Figure \ref{fig:07_spod_algorithm}.
-\begin{figure}
-  \centering
-  \includegraphics{../other-sources/schmidt_2020_figure_01.jpeg}
-  \put(-20,235){\fcolorbox{white}{white}{\footnotesize(\ref{eqn:07_data_block})}}
-  \put(-230,210){\rotatebox{90}{\fcolorbox{white}{white}{\color{white}{empt}}}}
-  \put(-20,102){\fcolorbox{white}{white}{\footnotesize(\ref{eqn:07_frequency_block})}}
-  \put(-231,69){\rotatebox{90}{\fcolorbox{white}{white}{\footnotesize(\ref{eqn:07_pod_01}-\ref{eqn:07_pod_04})}}}
-  \caption{Schematic of the SPOD algorithm (taken from \cite{Schmidt-2020-m2emACkX}). The numbers in parentheses denote the equations used.}
-  \label{fig:07_spod_algorithm}
-\end{figure}
-The algorithm begins by separating the original data set, $Q$, into a number of smaller blocks,
-\begin{equation}
-  Q = \left[
-  \begin{matrix}
-    \mid & \mid & & \mid \\
-    q^{(1)} & q^{(2)} & \cdots & q^{(N)} \\
-    \mid & \mid & & \mid
-  \end{matrix}
-  \right]\textrm{,}\quad Q\in\mathbb{C}^{M\times N}
-  \label{eqn:07_data_block}
-\end{equation}
-where $M$ is the total number of degrees of freedom (number of spatial points times the block length in time) and $N$ is the number of blocks.
-Each block is then Fourier Transformed in the temporal dimension or through all dimensions.
-Once in the frequency domain the data blocks are then reorganized by creating new blocks of identical temporal-frequencies,
-\begin{equation}
-  \hat{Q} = \left[
-  \begin{matrix}
-    \mid & \mid & & \mid \\
-    \hat{q}^{(1)} & \hat{q}^{(2)} & \cdots & \hat{q}^{(N)} \\
-    \mid & \mid & & \mid
-  \end{matrix}
-  \right]\textrm{,}\quad \hat{Q}\in\mathbb{C}^{M\times N}
-  \label{eqn:07_frequency_block}
-\end{equation}
-where $M$ is now the number of spatial points times the number of blocks and $N$ is block length in time.
-Proper orthogonal decomposition is then performed separately on each temporal-frequency block via either traditional POD
-\begin{equation}
-  \hat{C} = \frac{1}{N-1}\hat{Q}\hat{Q}^H \textrm{,}
-  \label{eqn:07_pod_01}
-\end{equation}
-\begin{equation}
-  \hat{C}W\hat{\Phi}=\hat{\Phi}\hat{\Lambda} \textrm{,}
-  \label{eqn:07_pod_02}
-\end{equation}
-or the method of snapshots,
-\begin{equation}
-  \hat{Q}^HW\hat{Q}\hat{\Psi}=\hat{\Psi}\hat{\Lambda} \textrm{,}
-  \label{eqn:07_pod_03}
-\end{equation}
-\begin{equation}
-  \hat{\Phi}=\hat{Q}\hat{\Psi} \textrm{,}
-  \label{eqn:07_pod_04}
-\end{equation}
-where $H$ denotes the Hermitian transpose, $W$ is a weighting matrix, $\Phi$ is the set of deterministic spatial functions, $\Lambda$ is the eigen-values, and $\Psi$ is the coefficient matrix.
-
-The linear stochastic estimation portion of the technique is described by Adrian \cite{Adrian-1975-VenaZyuv}.
-This process uses a linear sum, $L_{ij}$, of additional measurements, $y_j$, to approximate a measured signal, $x_i$,
-\begin{equation}
-  x_i^{LSE}=L_{ij}y_j \textrm{,}
-  \label{eqn:07_lse_01}
-\end{equation}
-where
-\begin{equation}
-  L_{ij} = \langle x_iy_k\rangle\langle y_jy_k\rangle^{-1} \textrm{.}
-  \label{eqn:07_lse_02}
-\end{equation}
-When combined with SPOD, the estimation matrix, $L$, becomes
-\begin{equation}
-  L=(\hat{\Psi}\hat{y}^H)(\hat{y}\hat{y}^H)^{-1} \textrm{,}
-  \label{eqn:07_lse_spod_01}
-\end{equation}
-which allows for an estimated version of the coefficient matrix to be calculated
-\begin{equation}
-  \hat{\Psi}^E=L\hat{y} \textrm{.}
-  \label{eqn:07_lse_spod_02}
-\end{equation}
-The estimated coefficient matrix contains portions of the original signal that best resemble the additional sensor data.
-Assuming that the additional sensor data represents signal contamination of the original signal, a filtered coefficient matrix can be computed from the difference between the original and estimated coefficient matrices.
-\begin{equation}
-  \hat{\Psi}^F=\hat{\Psi}-\hat{\Psi}^E \textrm{.}
-  \label{eqn:07_lse_spod_03}
-\end{equation}
-A filtered signal, $Q^F$ can be constructed by using the filtered coefficient matrix and the spatial functions,
-\begin{equation}
-  \hat{Q} = \hat{\Psi}^F\hat{\Phi}^H \textrm{.}
-\end{equation}
-
-\section{Filtering Experimental Data}
-The filtering technique described in the preceding section was applied to the same data sets that were shown in Figure \ref{fig:04_dispersion_mach}, either separately or in combination with the basic filtering methods described in Chapter \ref{chap:06_single_filter}.
-Simultaneous accelerometer and microphone measurements were made alongside the optical wavefront measurements.
-The locations of some of the additional sensors are shown in Figure \ref{fig:07_sensor placement} with a CAD drawing of the test section in Figure \ref{fig:07_test_section_mic_accel}.
-Table \ref{tab:07_sensor_list} shows a list of the additional sensors including the number designation used in Figures \ref{fig:07_sensor placement} and \ref{fig:07_test_section_mic_accel}, the model of the sensor and preamplifier used as well as a sensor grouping designation.
-\begin{figure}
-  \centering
-  \includegraphics[trim={0 0 5in 3in},clip,width=0.9\textwidth]{../photos/IMG_9655.jpeg}
-  \put(-65,120){\circledfill{\large 1}}
-  \put(-40,220){\circledfill{\large 3}}
-  \put(-50,165){\circledfill{\large 4}}
-  \put(-125,40){\circledfill{\large 7}}
-  \put(-243,240){\circledfill{\large 8}}
-  \put(-180,120){\circledfill{\large 9}}
-  \put(-320,110){\circledfill{\large 10}}
-  \caption{The locations of some of the additional sensors used in the LSE-SPOD filtering. The sensors are labeled with the sensor numbers, see Table \ref{tab:07_sensor_list}.}
-  \label{fig:07_sensor placement}
-\end{figure}
-\begin{figure}
-  \centering
-  \includegraphics[trim={1in 2.75in 1in 2.75in},clip,width=0.9\textwidth]{../cad/test_section_mic_accel.pdf}
-  \put(-272,77){\circled{\large 3}}
-  \put(-274,60){\circled{\large 4}}
-  \put(-131,61){\circled{\large 5}}
-  \put(-133,45){\circled{\large 6}}
-  \put(-203,82){\circled{\large 8}}
-  \put(-220,46){\circled{\large 9}}
-  \put(-188,46){\circled{\large 10}}
-  \put(-188,12){\squared{\large 11}}
-  \put(-243,100){\squared{\large 12}}
-  \put(-140,100){\squared{\large 13}}
-  \put(-350,10){\Large Flow $\Longrightarrow$}
-  \caption{CAD drawing view of the inside of the test-section with some of the sensor locations labeled. Flow is from left to right. The numbers in the circles are the sensor numbers on the model side of the test-section. The numbers in the square are the sensor numbers opposite of the model side. The dashed line represents the optics window opposite of the model for the beam angle of $90^\circ$. The window was moved up and downstream depending on the beam angle.}
-  \label{fig:07_test_section_mic_accel}
-\end{figure}
+\section{Velocity and LSE-SPOD Filter}
+In addition to the LSE-SPOD filter using all 16 additional sensors that was shown in Chapter \ref{chap:06_single_filter}, a velocity filter was applied to the wavefront first.
+Table \ref{tab:07_lse_mspod_table_vel} shows the summary of these filters when used separately or together.
+The LSE-SPOD was shown previously to remove vibration noise from wavefront measurements with an approximately 85\% reduction in $\opdrms$ at Mach of 0.3 \cite{DeLucca-2014-RAJvGdv7}.
+Similar results were observed using the combination of optical tip/tilt removal and LSE-SPOD on both single dimension (temporal) and multidimensional spectra.
+Optical tip/tilt removal alone accounted for a 78.6\% reduction in $\opdrms$, with a combination of 16 microphones and accelerometers and the LSE-SPOD bringing the reduction in $\opdrms$ to 83.9\% at Mach of 0.3.
+The combination of tip/tilt removal and the velocity filter showed a greater reduction of 82.3\%.
+At a Mach number of 0.5, the use of optical tip/tilt removal, the velocity filter, and 16 sensors in LSE-SPOD, the $\opdrms$ was brought down to 0.0181 $\mu m$ and stilled showed a significant amount of narrow-band signals (see Figure \ref{fig:07_lse_spod} and \ref{fig:07_lse_mspod}).
+This is about a 30\% reduction when compared with the other filters used in Table \ref{tab:08_filter_summary}, and represents almost entirely an additional reduction in contamination to the aero-optical signal by removing the broadband disturbances.
+This was also significantly above the estimated $\opdrms$ of 0.0142 $\mu m$ for the $M=0.6$ case (See Section \ref{sect:02_BL_OPD} and \cite{Gordeyev-2014-jcJndkHM}).
 \begin{table}
   \centering
-  \caption{Additional sensors used the the LSE-SPOD filtering.}
-  \begin{tabular}{c c c c c}
-    Channel & Sensor Type & Model & Preamp & Group\\
-    \hline \hline
-    1 & Microphone & ACO 7016B & B\&K 2690 & Ambient \\
-    2 & Microphone & B\&K 4939 & B\&K 2690 & Ambient \\
-    3 & Microphone & PCB 103B02 & PCB 483C & Test Section \\
-    4 & Microphone & PCB 103B02 & PCB 483C & Test Section \\
-    5 & Microphone & PCB 103B02 & PCB 483C & Test Section \\
-    6 & Microphone & PCB 103B02 & PCB 483C & Test Section \\
-    7 & Accelerometer & PCB 352C33 & PCB 483C & Primary Lens \\
-    8 & Accelerometer & PCB 352C33 & PCB 483C & Test Section \\
-    9 & Accelerometer & PCB 352C33 & PCB 483C & Test Section \\
-    10 & Accelerometer & PCB 352C33 & PCB 483C & Test Section \\
-    11 & Accelerometer & PCB 352C33 & PCB 482A22 & Test Section \\
-    12 & Accelerometer & PCB 352C33 & PCB 482A22 & Test Section \\
-    13 & Accelerometer & PCB 352C33 & PCB 482A22 & Test Section \\
-    14 & Accelerometer & PCB 352C33 & PCB 482A22 & Optics Bench \\
-    15 & Accelerometer & PCB 352C33 & PCB 482A22 & Return Mirror \\
-    16 & Accelerometer & PCB 352C33 & PCB 482A22 & Return Mirror \\
-  \end{tabular}
-  \label{tab:07_sensor_list}
+  \caption{$\opdrms$ ($\mu m$) comparison of using LSE-MSPOD filtering process when combined with a velocity filter.}
+  \input{../matlab/07_multiple_sensor_filtering/lse_mspod_table_vel.txt}
+  \label{tab:07_lse_mspod_table_vel}
 \end{table}
-All of the test-section mounted sensors are shown in their approximate locations in Figure \ref{fig:07_test_section_mic_accel} in a view that is looking at the wind-tunnel model from inside of the test-section with the flow moving from left-to-right.
-The dashed box represent the optical window on the opposite side of the tunnel from the model which was moved up or downstream depending on the beam angle relative to the flow.
-Sensors 11-13 were attached to this optical window and moved with it.
-The picture in Figure \ref{fig:07_sensor placement} was taken from the opposite side of the test-section and model that is shown in Figure \ref{fig:07_test_section_mic_accel} and as such the flow goes from right-to-left.
 
-Two microphones were used for ambient measurement (a ACO 7016B \cite{ACO-Microphones} and a Br\"uel \& Kj\ae r 4939 \cite{Bruel-Kjaer-4939}), four microphones were used for test-section noise measurement (PCB 103B02 \cite{PCB-103B02-C}), and ten accelerometers were located throughout the setup (PCB 352C33 \cite{PCB-352C33-H}).
-One of the ambient microphones was mounted to the top of the optics bench facing the test-section and can be seen in Figure \ref{fig:07_sensor placement} just to the right of the primary lens and the other ambient microphone was hanging below the optics bench end towards the test-section.
-
-The test-section microphones were in groups of two either upstream or downstream from the optical beam by about 20-inches, with the upstream microphone locations viewable in Figure \ref{fig:07_sensor placement} (sensors 3 and 4) and shown in Figure \ref{fig:07_test_section_mic_accel}.
-The model installed in the test-section represents the outside of an aircraft fuselage with a 5-foot diameter and is angled to account for the aircraft's angle-of-attack (~6$^\circ$) for steady-level-flight at cruise.
-This results in the fuselage model being shifted approximately 2-inches higher from the test-section centerline upsteam at the microphone location.
-The duct microphones were placed about 2.75-inches from the model centerline.
-
-There were six accelerometers attached to the test-section windows, with three being on each side as shown in Figure \ref{fig:07_test_section_mic_accel}.
-The locations of the three accelerometers (sensors 8-10) on the model side can be seen in Figure \ref{fig:07_sensor placement}, the three accelerometers on the other window used the opposite pattern (two high and one low).
-The optical window on the far side of the test-section was moved laterally depending on the angle of the beam relative to the flow.
-One accelerometer was placed on the primary lens (also shown, sensor 7) and one was placed in the center of the optics bench.
-The last two accelerometers were located on the back of the return mirror with one on the top and the other on the side.
-
-\section{Results}
-The power-spectra of all of the sensors at the three Mach numbers are shown in Figure \ref{fig:07_sensor_spectra}.
+With the LSE-SPOD method the more sensors that were used in the filtering process the greater the reduction in the $\opdrms$, as can be seen in Figure \ref{fig:08_lse_summary}.
 \begin{figure}
   \centering
-  \includegraphics{../matlab/07_multiple_sensor_filtering/sensor_spectra.eps}
-  \caption{Power-spectra of the additional sensor measurements at the three Mach numbers tested. The x-axis is in Strouhal number per characteristic length ($St/l$).}
-  \label{fig:07_sensor_spectra}
+  \includegraphics{../matlab/08_conclusion/lse_summary.eps}
+  \caption{Percent reduction in $\opdrms$ from the tip/tilt removed case using LSE-SPOD filtering.}
+  \label{fig:08_lse_summary}
 \end{figure}
-These plots are presented as Strouhal number per unit characteristic length, since this puts the signals related to the fan blade-passing frequency at the same x-axis location for all three tested wind speeds.
-Figure \ref{fig:07_sensor_spectra} also shows the different groups of sensors shown together in separate plots.
-The blade-passing frequency for these data sets is at a $St/l$ of approximately 3 $m^{-1}$ with a clear and consistent narrow-band signal at that $St/l$ for all but the $M=0.3$ run, which has a slight increase in signal for some of the sensors.
-For the $M=0.5$ case there is an additional strong narrow-band signal at 20 $m^{-1}$ for all sensors and a slightly broader signal at 38 $m^{-1}$ that is only present in the test-section mounted sensors that may be due to extra fan vibration which was limiting the top speed of the wind-tunnel.
-The test-section mounted microphones are picking up boundary layer acoustic noise above $St/l$ of approximately 20 $m^{-1}$.
-
-Two variants of the filtering technique were tried.
-The first was a standard LSE-SPOD technique in which the spectral POD was performed on the data set that was Fourier transformed in time only.
-For the second technique, which will be referred to here as LSE-MSPOD, the spectral POD was applied to a data set in which the Fourier transform was performed in all dimensions of space and time, which is a portion of the computation for the multidimensional spectral estimation.
-Figures \ref{fig:07_lse_spod} and \ref{fig:07_lse_mspod} show multidimensional power spectrum plots at a temporal block length of $2^{10}$ with no overlap.
+The combination of the DAQ and preamplifier used for the duct-mounted microphones had a significantly lower dynamic range when compared to the other sensors, possibly leading to a diminished reduction in the performance of the four-sensor filtering.
+The signal reduction using all 16 sensors was fairly uniform with frequency, as shown in Figure \ref{fig:08_lse_mspod_freq}.
 \begin{figure}
   \centering
-  \includegraphics{../matlab/07_multiple_sensor_filtering/lse_spod.eps}
-  \caption{A multidimensional power spectrum of an unfiltered wavefront and the same wavefront filtered with the LSE-SPOD method using all 16 additional microphone or accelerometer measurements.  }
-  \label{fig:07_lse_spod}
+  \includegraphics{../matlab/07_multiple_sensor_filtering/lse_mspod_freq.eps}
+  \caption{Reduction in $\opdrms(t)$ as a function of temporal frequency using 16 sensors with LSE-SPOD in the M=0.5 case when compared to tip/tilt removal.}
+  \label{fig:08_lse_mspod_freq}
 \end{figure}
+On average there was a 1.3dB/Hz reduction in the $\opdrms$ with slight peaks at some of the significant narrow-band signals.
+At the blade-passing frequency (517 Hz) there was a 2dB/Hz reduction and for the narrow-band signals around 3 and 6 kHz there was a 3dB/Hz reduction.
+The first, second, and third harmonics of the blade-passing frequency, at 1034 Hz, 2068 Hz, and 4136 Hz, had a below average reduction in the signal.
+
+While the use of additional sensor measurements to aid in filtering of optical wavefront measurements using LSE-SPOD showed little benefit in this study (at least compared to the single sensor filtering techniques), it could show significant benefit in future measurements.
+Specifically, for measurements with models that are likely to create narrow-band signal noise, additional sensor information could be used in conjunction with a baseline filter for determining which narrow-band signals that need to be retained in the spectrum.
+
+
+\section{Backward, Velocity, and Baseline Filter}
+Among the filters discussed, three are useful for isolating aero-optical signals from a wavefront.
+The first of these is a filter for separating the portion of the optical disturbances that are moving either upstream or downstream to the flow (Section  \ref{chap:06_up_down_filter}).
+An undesirable effect of this filter is that it may remove some of the aero-optical signal, which can happen to the boundary-layer signal\footnote{These low frequency aero-optical disturbances may be a combination of the outer boundary layer and free-stream turbulence.} at low temporal frequencies.
+The second useful filter is the low-pass velocity filter which preserves the signal that is moving within a narrow velocity range (Section \ref{chap:06_velocity_filter}).
+The third is the baseline estimator (Section \ref{chap:06_baseline}), which removes the narrow-band signals associated with the blade-passing frequency and its harmonics, the mean-lensing component, and other temporally narrow-band signals.
+However, some of these removed narrow-band signals could include part of the aero-optical signal of the wind-tunnel model.
+
+Figure \ref{fig:08_dispersion_filters} shows the multidimensional spectra of the output of these three filters individually plus the spectra of these three filters combined.
 \begin{figure}
   \centering
-  \includegraphics{../matlab/07_multiple_sensor_filtering/lse_mspod.eps}
-  \caption{A multidimensional power spectrum of an unfiltered wavefront and the same wavefront filtered with the LSE-MSPOD method using all 16 additional microphone or accelerometer measurements.  }
-  \label{fig:07_lse_mspod}
+  \includegraphics{../matlab/08_conclusion/dispersion_filters.eps}
+  \caption{Multidimensional spectra of three single sensor filtering techniques and a combination filter.}
+  \label{fig:08_dispersion_filters}
 \end{figure}
-These plots show the $f$-$\xi_x$ plane of the multidimensional spectrum that captures horizontally-moving (streamwise) plane waves with a portion of the acoustic cone isosurface wrapping behind it.
-Both of these methods performed effectively identically to one another with a 14.2\% drop in overall RMS value of the filtered wavefront (both time and space).
-There is a significant drop in the signal at the blade-passing frequency and its harmonics, especially at the higher spatial frequencies.
-The stationary signal information is also significantly reduced along with the high temporal-frequency acoustic signal.
-The aero-optical boundary layer signal is also partially reduced, which is most noticeable at higher temporal-frequencies.
-% Some of this lost signal can be restored by increasing the overlap of the temporal frequency blocks, but this also restores some of the unwanted high temporal-frequency contamination.
+The backward moving filter, that removes all upstream-moving disturbances (Figure \ref{fig:08_dispersion_filters} top left), does remove some of the boundary-layer signal at low temporal frequencies.
+The portion of the acoustic cone and stationary modes that are on the downstream-moving portion of the spectrum are retained.
+The velocity filter (Figure \ref{fig:08_dispersion_filters} top right) removes most of the broadband signal from the various noise sources.
+There is a portion of the acoustic cone and stationary modes that intersect or lay near the boundary-layer signal that is slightly attenuated, producing a slight hump on the upstream-moving side of the boundary-layer that extends up to about 10 kHz and along the $\xi_y$ axis over the range of about $\pm25\ m^{-1}$.
 
+The baseline filter (Figure \ref{fig:08_dispersion_filters} bottom left) removes all of the temporal narrow-band signals including the mean-lensing portion of the spectra.
+The noisy surface of the spectra is removed which also eliminates some the boundary-layer aero-optical signal.
+The combination filter (Figure \ref{fig:08_dispersion_filters} bottom right) applies the velocity and backward moving filter to the baseline filter.
+This filter loses some of the boundary-layer signal due to the noisy surface being smoothed out and the portion that crosses into the upstream-traveling portion of the spectrum.
+The portion of the acoustic cone and stationary modes that is the most contaminating in the velocity filter is removed due to the backward moving and baseline filter.
+
+A zoomed in slice of the multidimensional spectra is shown in Figure \ref{fig:08_dispersion_filters_slices} for the horizontal moving plane waves.
+\begin{figure}
+  \centering
+  \includegraphics{../matlab/08_conclusion/dispersion_filters_slices.eps}
+  \caption{Multidimensional spectral slices for the various single sensor filtering techniques showing the horizontal moving plane waves.}
+  \label{fig:08_dispersion_filters_slices}
+\end{figure}
+A large portion of the signal contamination happens at the blade-passing frequency and its harmonics as well as in the mean-lensing region.
+This contamination is present in all of the multidimensional spectra that do not utilize the baseline filter.
+Even with the velocity filter there is significant contamination on the upstream-moving portion of the spectra due to these narrow-band signals as well as due to the presence of the acoustic cone and stationary modes.
+While the backward moving filter removes some of the boundary-layer signal it removes significantly more of the noise signals that would otherwise be present in the spectra with just the velocity and baseline filters applied.
+
+Representative wavefronts were generated from these multidimensional spectra using the same process as generating a synthetic wavefront from the synthetic spectra in Chapter \ref{chap:05_synthetic} in order to calculate the $\opdrms$.
+Table \ref{tab:08_filter_summary} shows the $\opdrms$ values for the various filters used in Figure \ref{fig:08_dispersion_filters_slices}.
 \begin{table}
   \centering
-  \caption{$\opdrms$ ($\mu m$) comparison of using different combinations of additional sensor information in the LSE-MSPOD filtering process.}
-  \input{../matlab/07_multiple_sensor_filtering/lse_mspod_table.txt}
-  \label{tab:07_lse_mspod_table}
+  \caption{Summary of single sensor filters}
+  \input{../matlab/08_conclusion/dispersion_filters.txt}
+  \label{tab:08_filter_summary}
 \end{table}
-
-Table \ref{tab:07_lse_mspod_table} shows the time averaged $\opdrms$ of three different data sets at a beam angle through the test-section of $90^\circ$.
-The data sets were at Mach numbers of 0.3, 0.4, and 0.5 and had an unfiltered $\opdrms$ of 0.0561, 0.0521, and 0.0824 $\mu m$ respectively.
-Note that in the raw processed wavefronts, the $\opdrms$ at a Mach number of 0.3 was higher than the 0.4 case.
-There was a significant drop of between 62.6 and 78.6\% in the $\opdrms$ by removing the Zernike modes corresponding to tip and tilt.
-It is at this point the Mach number of 0.4 case has a higher $\opdrms$ than the 0.3 case as would be expected \cite{Gordeyev-2014-jcJndkHM}.
-Note that it is standard practice to remove optical tip/tilt from wavefront measurements, since tip/tilt is largely imposed by the measurement optics rather than the actual aero-optical flow.
-
-Table \ref{tab:07_lse_mspod_table} also shows the effect of five different combinations of additional sensors that were used for filtering with the LSE-MSPOD process (the bracketed percentage in Table \ref{tab:07_lse_mspod_table} shows the percent reduction in $\opdrms$ due to the filtering).
-The first set was all of the accelerometers which resulted in an additional drop in $\opdrms$ of between 3 and 5\%.
-The second and third sets used either the ambient or duct microphones and those sets had slightly less reduction than the accelerometers.
-The fourth set was the test-section sensors comprised of six window mounted accelerometers and four duct mounted microphones.
-This set of sensors performed the same as all of the accelerometers, while the use of all of the additional sensors in the last set performed the best, with an additional reduction in $\opdrms$ of 4 to 6\% from the tip/tilt removal cases.
-
-A velocity filter was also tried in addition to just the tip/tilt removal or in conjunction with tip/tilt and all the sensors being used in the LSE-MSPOD process.
-The velocity filter performed better than the all-sensors removal case by an additional 1.5 to 3\% but some of the narrow-band signals remain.
-When all sensors were used with LSE-MSPOD on the velocity filtered wavefronts an additional 3 to 4\% of the $\opdrms$ was removed compared to just the velocity-filtered case or an additional 8.1\% reduction for only doing tip/tilt removal on the Mach number of 0.3 case or 14.1 and 13.3\% reduction for the 0.4 and 0.5 Mach number cases.
-
-In summary, Table \ref{tab:07_lse_mspod_table} shows that using either the temporal or multidimensional version of the LSE-SPOD filtering technique can help remove some of the narrow-band acoustic and vibration reduction in an optical wavefront.
-These temporally narrow-band signals have broadband spatial content that is attenuated.
-This additional reduction does seem to be somewhat tied to the number of sensors used with more sensors having a greater impact on the signal reduction.
-Since the vibrations and acoustics have the same primary source, the wind-tunnel fan, they seems to do a relatively equivalent job at filtering the optical contamination.
-Accelerometers have the benefit of easier installation but the microphones do not necessarily have to be installed inside of the wind-tunnel.
+Both the backward moving and baseline filters reduced the $\opdrms$ of the wavefront a similar amount of 36 and 40\% respectively.
+The velocity filter only reduced the $\opdrms$ a small amount of 8.5\% due to the retention of the strongest portion of the narrow-band signals.
+The combination of the velocity and baseline filters reduced the $\opdrms$ of the wavefront by 46\% but those still retain a significant portion of the acoustic cone and stationary mode signal.
+By combining these three single sensors filters, the $\opdrms$ was reduced 58\% but this is likely under the true value due to some loss of the boundary-layer signal from the backward moving filter at low temporal frequencies and the removal of the fluctuations from the baseline filter.
+There could be some narrow-band signals that would be generated by a model that would be removed with this filtering scheme.
+The estimated $\opdrms$ from Gordeyev \cite{Gordeyev-2014-jcJndkHM} (Equations \ref{eqn:02_opdrms_gor} and \ref{eqn:02_opdrms_gor_fit}) is $0.0142\ \mu m$ for a double boundary layer, which puts the velocity and baseline filter combination in good agreement.

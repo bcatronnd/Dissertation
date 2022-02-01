@@ -1,10 +1,10 @@
 \begin{tabular}{c c}
-  Filter & $\opdrms\ (\mu m)$ \\ 
-  \hline \hline 
-  None & 0.0260 \\ 
-  Forward & 0.0166 \\ 
-  Velocity & 0.0238 \\ 
-  Baseline & 0.0156 \\ 
-  V+B & 0.0140 \\ 
-  F+V+B & 0.0110 \\ 
+  Filter & $\opdrms\ (\mu m)$ \\
+  \hline \hline
+  None & 0.0260 \\
+  Backward Moving & 0.0166 \\
+  Velocity & 0.0238 \\
+  Baseline & 0.0156 \\
+  V+B & 0.0140 \\
+  BM+V+B & 0.0110 \\
 \end{tabular}
