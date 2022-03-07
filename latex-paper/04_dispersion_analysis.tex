@@ -276,7 +276,18 @@ At higher temporal frequencies, the stationary modes maybe related to electronic
 
 \subsection{3-D Representations of Multidimensional Spectral Estimation}
 While the two-dimensional slices are fairly informative, particularly when it comes to signal strength of various flow structures and their velocities, a three-dimensional plot allows better visualization of the overall flow structures although some details are lost because typically only one power level can be plotted at a time.
-The same data that has been previously shown in two-dimensional form, is depicted in Figure \ref{fig:04_dispersion_3d} as an isosurface with a power of $10^{-14}$ $\mu m^2/Hz/m^{-2}$ and shown from four different views.
+The same data that has been previously shown in two-dimensional form, is depicted in Figure \ref{fig:04_dispersion_isosurface} as an isosurface with a power of $10^{-14}$ $\mu m^2/Hz/m^{-2}$ and shown from four different views in Figure \ref{fig:04_dispersion_3d}.
+\begin{figure}
+  \centering
+  \includegraphics{../matlab/08_conclusion/dispersion_isosurface.eps}
+  \put(-195,120){\rotatebox{76}{\Large Boundary Layer}}
+  \put(-305,250){\rotatebox{-75}{\Large Acoustic Cone}}
+  \put(-300,69){\textcolor{white}{\Large BPF $\Longrightarrow$}}
+  \put(-231,180){\textcolor{white}{\rotatebox{90}{\Large Stationary Modes}}}
+  \put(-235,50){\rotatebox{15}{\Large Mean-Lensing}}
+  \caption{Multidimensional spectral estimation of an optical wavefront measurement made in a wind tunnel.}
+  \label{fig:04_dispersion_isosurface}
+\end{figure}
 \begin{figure}
   \centering
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_3d.eps}
@@ -302,7 +313,7 @@ All of these plots are of an isosurface with the same power as used in Figure \r
 The stationary modes seem to be constant throughout the range of Mach numbers indicating that they are most likely not flow related.
 The boundary layer signal increases in power significantly as the Mach number is increased while also the slope and thus the velocity is significantly increased as well.
 As shown in  and discussed in Chapter \ref{chap:02_lit_review}, the aero-optical $\opdrms$ of the flat-plate boundary layer on the walls of the wind tunnel is expected to vary according to Equation \ref{eqn:02_opdrms_gor}.
-Hence the significant increase in the power of the boundary-layer spectrum with Mach number that can be observed in Figure \ref{fig:04_dispersion_mach} is expected based on the $M^2$ dependence in Equation \ref{eqn:04_opdrms_bl}.
+Hence the significant increase in the power of the boundary-layer spectrum with Mach number that can be observed in Figure \ref{fig:04_dispersion_mach} is expected based on the $M^2$ dependence in Equation \ref{eqn:02_opdrms_gor}.
 The increase in slope of the boundary-layer signal is also expected, and is caused by the increase in the convection speed of the boundary-layer aero-optical disturbances as the free-stream Mach number increases.
 The acoustic signal sees some interesting evolution as well.
 Along with the strength greatly increasing with Mach number, the slope of the upstream traveling disturbances decreases significantly while the downstream moving acoustic disturbances do not see much change other than an increase in signal strength.

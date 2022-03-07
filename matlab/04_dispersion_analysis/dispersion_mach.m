@@ -1,6 +1,6 @@
 close all; clc; clearvars;
 
-directory = '/media/briancatron/ResearchData/2021-Spectral-Wavefront-Filtering/';
+directory = '../../data/';
 testPoint = {'20210901001' '20210901002' '20210901003'};
 
 BlockSize = 2^10;
@@ -16,8 +16,8 @@ for aa=1:length(testPoint)
     f1 = figure(1);
     subplot(1,2,1);
     scolor = parula(2);
-    patch(isocaps(freq{1},freq{2},freq{3}(end/2+1:end),WF(:,:,end/2+1:end),log_range(1),'all'),'facecolor','interp','edgecolor','none','facelighting','none');
-    patch(isosurface(freq{1},freq{2},freq{3},WF,log_range(1)),'edgecolor','none','facecolor',scolor(1,:),'facelighting','gouraud');%,'specularstrength',0.375);
+    patch(isocaps(freq{1},freq{2},freq{3}(end/2+1:end),WF(:,:,end/2+1:end),log_range(1),'all'),'facecolor','blue','edgecolor','none','facelighting','none');
+    patch(isosurface(freq{1},freq{2},freq{3},WF,log_range(1)),'edgecolor','none','facecolor','blue','facelighting','gouraud');%,'specularstrength',0.375);
     grid on;
     daspect([1 1 100]);
     xlim(RunLog.samplerate(1)/2*[-1 1]);
@@ -32,8 +32,8 @@ for aa=1:length(testPoint)
     f1.Children(1).TickLabelInterpreter = 'latex';
     subplot(1,2,2);
     scolor = parula(2);
-    patch(isocaps(freq{1},freq{2},freq{3}(end/2+1:end),WF(:,:,end/2+1:end),log_range(1),'all'),'facecolor','interp','edgecolor','none','facelighting','none');
-    patch(isosurface(freq{1},freq{2},freq{3},WF,log_range(1)),'edgecolor','none','facecolor',scolor(1,:),'facelighting','gouraud');%,'specularstrength',0.375);
+    patch(isocaps(freq{1},freq{2},freq{3}(end/2+1:end),WF(:,:,end/2+1:end),log_range(1),'all'),'facecolor','blue','edgecolor','none','facelighting','none');
+    patch(isosurface(freq{1},freq{2},freq{3},WF,log_range(1)),'edgecolor','none','facecolor','blue','facelighting','gouraud');%,'specularstrength',0.375);
     grid on;
     daspect([1 1 100]);
     xlim(RunLog.samplerate(1)/2*[-1 1]);

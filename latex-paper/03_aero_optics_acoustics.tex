@@ -194,7 +194,19 @@ The result of these $\opdrms$ calculations is shown in Figure \ref{fig:03_spheri
 \end{figure}
 The top plots shows the expected optical disturbance ratio, $\opdrms/|A_0|$, for a perfectly spherical acoustic field measured over the beam length.
 The oscillations in the solutions for different $R/Ap$ are caused by end effects in the integration.
-Because speakers often have a directivity in their emission, the oscillations can be greatly reduced by using a windowing function in the z-direction, such as a Hanning or Tukey window, the roughly model this directivity as shown in the bottom plot.
+Because speakers often have a directivity in their emission, the oscillations can be greatly reduced by using a windowing function in the z-direction, such as a Hanning \cite{Oppenheim-1999-cfwyTmwq},
+\begin{equation}
+  w(x) = \frac{1}{2}\left\{1-\cos\left(2\pi x\right)\right\} \textrm{,}
+\end{equation}
+or Tukey window \cite{Bloomfield-2000-vD9dkPMd},
+\begin{equation}
+  w(x) = \begin{cases}
+    \frac{1}{2}\left\{1+\cos\left(\frac{2\pi}{r}\left[x-\frac{r}{2}\right]\right)\right\}, & 0\leq x < \frac{r}{2} \\
+    1, & \frac{r}{2}\leq x < 1-\frac{r}{2} \\
+    \frac{1}{2}\left\{1+\cos\left(\frac{2\pi}{r}\left[x-1+\frac{r}{2}\right]\right)\right\}, & 1-\frac{r}{2} \leq x \leq 1
+  \end{cases}
+\end{equation}
+the roughly model this directivity as shown in the bottom plot.
 While this plot was calculated with a single aperture diameter, the general trend holds for all other aperture diameters that were tested, the only effect was the size and width of the oscillations.
 
 The peak of the optical disturbance ratio, $\opdrms/|A_0|$, is located at $\Lambda/Ap\approx0.75$ for a circular aperture.
@@ -286,7 +298,7 @@ For the circular to square transition on either side of the wind-tunnel fan, a d
 An example of the deformable mesh is shown in Figure \ref{fig:deformable_mesh} at both the square and circular limits and halfway in between.
 \begin{figure}
   \centering
-  \includegraphics{../matlab/03_aero_optics_acoustics/deformable_mesh.eps}
+  \includegraphics[width=\textwidth]{../matlab/03_aero_optics_acoustics/deformable_mesh.eps}
   \caption{Deformable mesh for calculating the acoustic modes in the circular to square transitions at three stages.}
   \label{fig:deformable_mesh}
 \end{figure}
