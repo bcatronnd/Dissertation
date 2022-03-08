@@ -55,7 +55,7 @@ The results in Figure \ref{fig:06_filter_temporal} were computed using wavefront
 For reference, the bottom plot of Figure \ref{fig:06_filter_temporal} shows the power spectra of just the aero-optical portion of the wavefront (red curve) and the total wavefront (blue curve) which includes vibration-related peaks associated with the blade-passing frequency and its harmonics.
 The figure shows how a high-pass filter decreases the energy in the total wavefront and in the actual aero-optical wavefront, as the filter cutoff frequency increases.
 As shown in the top plot, at low cutoff frequency, the filter primarily removes vibration effects from the total signal; however, as the cutoff frequency increases, the filter also removes actual aero-optical signal.
-At around 1200 Hz, the $\opdrms$ of the total signal is equal to the $\opdrms$ of the actual aero-optical signal; at this cutoff frequency ~75\% of the aero-optical signal remains and the remaining signal is made up by the remaining contamination.
+Around 1,200 Hz, the $\opdrms$ of the total signal is equal to the $\opdrms$ of the actual aero-optical signal; at this cutoff frequency ~75\% of the aero-optical signal remains and the remaining signal is made up by the remaining contamination.
 This approach can provide a computationally inexpensive way of estimating the aero-optical portion of the wavefront for calculations that rely on the $\opdrms$ of a wavefront.
 While it is more straightforward to determine a cutoff frequency for this synthetic wavefront since all of the signal components are fully known, a measured wavefront will likely take some knowledge or expectation of the contamination that is present in the measurement in order to select a high-pass filter cutoff frequency.
 
@@ -115,7 +115,7 @@ As the values of $k_x$ and $k_t$ go to infinity an ideal filter is obtained.
 In a plot of the gain with the horizontal spatial frequency on the x-axis and the temporal frequency on the y-axis, an ideal filter for obtaining only the downstream traveling disturbances would have a gain of one in the first and third quadrants, zero in the second and fourth quadrants, and a value of $1/2$ when either frequency is zero.
 The value of $1/2$ would equally split the component of a disturbance that is neither traveling upstream or downstream between the two directions.
 
-The multidimensional spectrum using an ideal upstream-moving moving filter on the synthetic wavefront is shown in Figure \ref{fig:06_filter_downstream} alongside the spectrum of the unfiltered wavefront.
+The multidimensional spectrum using an ideal upstream-moving filter on the synthetic wavefront is shown in Figure \ref{fig:06_filter_downstream} alongside the spectrum of the unfiltered wavefront.
 \begin{figure}
  \centering
  \includegraphics{../matlab/06_single_sensor_filtering/filter_downstream.eps}
@@ -235,7 +235,7 @@ These filters would also be useful for separating out an aero-optical signal tha
 The velocity filter is the most useful for isolating the aero-optical portion of a wavefront measurement given the aero-optical signal has a fairly narrow and constant velocity range.
 This filter also can be used to measure the speed associated with an optical disturbance in both x and y-directions.
 
-The spectral baseline provides an simple way of removing all of the narrow-band signals with slight attenuation to the broadband signals.
+The spectral baseline provides a simple way of removing all of the narrow-band signals with slight attenuation to the broadband signals.
 The broadband acoustic and stationary modes remain but could be filtered with via other techniques such as using a velocity filter.
 Narrow-band features that are not likely to be environmental contamination could be easily added back in.
 
@@ -258,7 +258,7 @@ These polynomials are defined on the unit circle and form a set of orthogonal fu
 \end{equation}
 where $R_n^m(\rho)$ is the radial basis function and $\cos(m\theta)$ is the angular basis function.
 For values of $-m$ the angular basis function becomes $\sin(m\theta)$.
-The radial basis function are developed from Jacobi polynomials but for purposes of this study, only a few simple ones will be used.
+The radial basis functions are developed from Jacobi polynomials but for purposes of this study, only a few simple ones will be used.
 An optical wavefront can be represented by a summation of Zernike polynomials multiplied by their corresponding coefficients
 \begin{equation}
   \wf = \sum Z_ja_j \textrm{.}
@@ -504,12 +504,12 @@ The aero-optical boundary layer signal is also partially reduced, which is most 
 Table \ref{tab:07_lse_mspod_table} shows the time averaged $\opdrms$ of three different data sets at a beam angle through the test-section of $90^\circ$.
 The data sets were at Mach numbers of 0.3, 0.4, and 0.5 and had an unfiltered $\opdrms$ of 0.0561, 0.0521, and 0.0824 $\mu m$ respectively.
 Note that in the raw processed wavefronts, the $\opdrms$ at a Mach number of 0.3 was higher than the 0.4 case.
-There was a significant drop of between 62.6 and 78.6\% in the $\opdrms$ by removing the Zernike modes corresponding to tip and tilt.
+There was a significant drop of between 62.6\% and 78.6\% in the $\opdrms$ by removing the Zernike modes corresponding to tip and tilt.
 It is at this point the Mach number of 0.4 case has a higher $\opdrms$ than the 0.3 case as would be expected \cite{Gordeyev-2014-jcJndkHM}.
 Note that it is standard practice to remove optical tip/tilt from wavefront measurements, since tip/tilt is largely imposed by the measurement optics rather than the actual aero-optical flow.
 
 Table \ref{tab:07_lse_mspod_table} also shows the effect of five different combinations of additional sensors that were used for filtering with the LSE-MSPOD process (the bracketed percentage in Table \ref{tab:07_lse_mspod_table} shows the percent reduction in $\opdrms$ due to the filtering).
-The first set was all of the accelerometers which resulted in an additional drop in $\opdrms$ of between 3 and 5\%.
+The first set was all of the accelerometers which resulted in an additional drop in $\opdrms$ of between 3\% and 5\%.
 The second and third sets used either the ambient or duct microphones and those sets had slightly less reduction than the accelerometers.
 The fourth set was the test-section sensors comprised of six window mounted accelerometers and four duct mounted microphones.
 This set of sensors performed the same as all of the accelerometers, while the use of all of the additional sensors in the last set performed the best, with an additional reduction in $\opdrms$ of 4 to 6\% from the tip/tilt removal cases.

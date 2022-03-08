@@ -42,7 +42,7 @@ The cause of the branching in the signal will be discussed later, however note t
 The blade-passing frequency and its various harmonics can also be discerned in the center plot, by the vertical ``streaks'' that line up  with the peaks in the standard spectrum shown in the top plot; the center spectral plot shows that these fan blade-passing signals have significant broadband spatial frequency content.
 All of these narrow-band signals have a majority of their signal traveling upstream.
 In addition to optical disturbances branching off in the upstream and downstream moving directions there are significant disturbances along zero spatial frequency representing a collection of standing waves.
-As already mentioned, he data in Figure \ref{fig:04_dispersion_demo} were plotted logarithmically along the temporal-frequency axis to better show the low frequency content around the fan blade-passing frequency, and how the peaks in the power spectrum in the top plot still appear in the multidimensional spectrum in the middle plot.
+As already mentioned, the data in Figure \ref{fig:04_dispersion_demo} were plotted logarithmically along the temporal-frequency axis to better show the low frequency content around the fan blade-passing frequency, and how the peaks in the power spectrum in the top plot still appear in the multidimensional spectrum in the middle plot.
 As shown later, when the multidimensional spectrum is plotted linearly, the two primary upstream and downstream traveling signals lay in a straight line.
 
 A dispersion analysis can be performed on these multidimensional spectral estimates.
@@ -151,7 +151,7 @@ For the case of a perfectly circular aperture, the Hann window can be reformulat
  \end{cases}
  \label{eqn:04_window_space}
 \end{equation}
-This modified Hann window is two-dimensional with a value of one at the center of the aperture and decreases to zero at the edge of the aperture in the same manner as a Hann windows decreases from the center to either end.
+This modified Hann window is two-dimensional with a value of one at the center of the aperture and decreases to zero at the edge of the aperture in the same manner as a Hann window decreases from the center to either end.
 
 Because the wavefronts measurements often had a clipped edge or some other obscuration, a different method was employed in this study.
 For an arbitrary shaped aperture, the minimum distance from any given measurement location to the edge of the aperture was used to create the spatial windows.
@@ -184,7 +184,7 @@ Figure \ref{fig:04_dispersion_comparison} shows a comparison between the two-dim
 \begin{figure}
   \centering
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_comparison.eps}
-  \caption{Horizontal moving optical disturbances comparison. The top plot shows a slice of the three-dimensional spectrum focusing on the plane waves that are traveling in the horizontal direction. The middle plot is a recreation of the two-dimensional spectrum by integrating through the the vertical spatial frequencies. The bottom plot is the two-dimensional spectrum.}
+  \caption{Horizontal moving optical disturbances comparison. The top plot shows a slice of the three-dimensional spectrum focusing on the plane waves that are traveling in the horizontal direction. The middle plot is a recreation of the two-dimensional spectrum by integrating through the vertical spatial frequencies. The bottom plot is the two-dimensional spectrum.}
   \label{fig:04_dispersion_comparison}
 \end{figure}
 Specifically, the top plot in Figure \ref{fig:04_dispersion_comparison} shows the ``slice'' of the three-dimensional spectral estimation plot taken at $\xi_y=0\ m^{-1}$; because this slice does not contain any information on vertically-moving disturbance, it shows planar waves traveling in the horizontal direction.
@@ -216,7 +216,7 @@ This is also shown in Figure \ref{fig:04_dispersion_max}.
 While the integrated signal over estimated the spectrum going from three-dimensions to two in Figure \ref{fig:04_dispersion_comparison}, it under estimates the spectrum going from two to one dimensions.
 Unfortunately, due to the limited number of spatial sample points and the large dynamic range of the signal, this integrated value can contain a significant amount of error.
 
-Due to the the signal containing a majority of the power in a limited number of spatial frequency bins, a reduced order spectrum can be estimated by
+Due to the signal containing a majority of the power in a limited number of spatial frequency bins, a reduced order spectrum can be estimated by
 \begin{equation}
   S_{xx}^{n-1} \approx \max(S_{xx}^n,m)f_s^m \textrm{,}
 \end{equation}
@@ -271,7 +271,7 @@ Because the portion of these signals with the most power is traveling vertically
 The stationary modes that have been discussed previously that appear as a broad horizontal band along the temporal frequency axis in the horizontal spectral slice plot also appear in the same location in the vertical spectral slice plot.
 These stationary modes appear the be constant when viewed from either direction and through out time.
 As stated by Blackman and Tukey, this kind of white-noise is generally not physical unless it is bandwidth limited with a falloff of at least $1/f^2$ \cite{Blackman-1958-4QtKgDb8}.
-Some of these stationary modes are likely cause by vibrations of various optical elements, especially at low temporal frequencies.
+Some of these stationary modes are likely caused by vibrations of various optical elements, especially at low temporal frequencies.
 At higher temporal frequencies, the stationary modes maybe related to electronic noise from the high-speed camera, higher order optical noise from the laser, or even numerical error from the processing code.
 
 \subsection{3-D Representations of Multidimensional Spectral Estimation}
