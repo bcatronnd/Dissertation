@@ -1,7 +1,7 @@
 close all; clc; clearvars; %#ok<*UNRCH>
 
 % Inputs
-Directory = '/media/briancatron/ResearchData/2021-Spectral-Wavefront-Filtering/';
+Directory = '../../data/';
 TestPoint = '20210901003';
 BlockLength = 2^10;
 OverlapFactor = 0;
@@ -100,7 +100,7 @@ colororder(linspecer(5));
 semilogx(frequency,10*log10(sxx./sxx2),'linewidth',1.25);
 grid on;
 xlabel('Frequency (Hz)','interpreter','latex');
-ylabel('Reduction in $OPD_{RMS}$ (dB/Hz)','interpreter','latex');
+ylabel('Reduction in OPD$_{RMS}(t)$ (dB/Hz)','interpreter','latex');
 % xlim(10.^[2 5]);
 f1.Children(1).TickLabelInterpreter = 'latex';
 f1.Units = 'inches';
