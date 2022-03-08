@@ -531,7 +531,7 @@
 \def\@part[#1]#2{%
   \ifnum \c@secnumdepth >-2\relax
     \refstepcounter{part}%
-    \addcontentsline{toc}{part}{\thepart\hspace{1em}#1}%
+    \addcontentsline{toc}{part}{\partname\ \thepart:\hspace{1em}#1}%
   \else
     \addcontentsline{toc}{part}{#1}%
   \fi
@@ -540,7 +540,7 @@
    \interlinepenalty \@M
    \normalfont
    \ifnum \c@secnumdepth >-2\relax
-     \normalsize\mdseries \partname\nobreakspace\thepart
+     \normalsize\mdseries \MakeTextUppercase{\partname}\nobreakspace\thepart
      \par
      \vskip 20\p@
    \fi
@@ -662,7 +662,7 @@
   \vskip\abovecaptionskip
   \begin{center}
   \parbox{\capwidth}{
-    \centering\singlespacing
+    \singlespacing
     {#1}. {#2}%\par
   \vskip\belowcaptionskip\normalspacing }%
   \end{center}
