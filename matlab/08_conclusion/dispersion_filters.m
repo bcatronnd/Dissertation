@@ -176,7 +176,8 @@ for aa=1:length(f1.Children(1).Ticks)
     f1.Children(1).TickLabels{aa} = ['$10^{' num2str(f1.Children(1).Ticks(aa)) '}$'];
 end
 
-% saveas(f1,'dispersion_filters.eps','epsc');
+saveas(f1,'dispersion_filters.eps','epsc');
+saveas(f1,'dispersion_filters.png','png');
 
 %%
 close(findobj('type','figure','number',2));
@@ -200,7 +201,8 @@ f2.Children(2).TickLabelInterpreter = 'latex';
 f2.Units = 'inches';
 f2.Position = [1 1 5.5 3.5];
 
-% saveas(f2,'dispersion_filters_sxx.eps','epsc');
+saveas(f2,'dispersion_filters_sxx.eps','epsc');
+saveas(f2,'dispersion_filters_sxx.png','png');
 
 %% 
 close(findobj('type','figure','number',3));
@@ -302,7 +304,7 @@ for aa=1:length(f3.Children(1).TickLabels)
 end
 
 saveas(f3,'dispersion_filters_slices.eps','epsc');
-
+saveas(f3,'dispersion_filters_slices.png','png');
 
 
 
