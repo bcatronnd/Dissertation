@@ -93,9 +93,9 @@ The second will be a spherical acoustic wave that will be both numerically simul
 \subsection{Planar Acoustic Waves}
 \label{sect:03_examples_planar}
 A planar wave is the simplest solution to the wave equation and varies only in time and the direction of travel.
-A planar wave can be calculated from the set of solutions for duct acoustics, Equation \ref{eqn:02_pressure_solution_duct}, given that $\Psi_m(x,y)=1$,
+A planar wave can be calculated from the set of solutions for duct acoustics, Equation \ref{eqn:02_pressure_solution_duct}, given that $\Psi_m(x_D,y_D)=1$,
 \begin{equation}
-  \hat{p}(z,t) = C_m\exp\left\{j(\omega t \mp k_{zm}^\pm z)\right\} \textrm{.}
+  \hat{p}(z_D,t) = C_m\exp\left\{j(\omega t \mp k_{zm}^\pm z_D)\right\} \textrm{.}
   \label{eqn:03_plane_wave}
 \end{equation}
 This section will show the effect that acoustic waves have on the optical wavefront of a planar wave with the general geometry shown in Figure \ref{fig:03_planar_sample_domain}.
@@ -147,7 +147,7 @@ However, the upstream-traveling wave goes through several zero points so that th
 
 \subsection{Spherical Acoustic Waves}
 \label{sect:03_examples_spherical}
-The acoustic field from a speaker may be assumed to be a spherical wave from a pulsating point if the frequency is sufficiently low and the measurement region is far enough away from the source \cite{Randall-1951-9NtPPXPq}.
+The acoustic field from a speaker may be assumed to be a spherical wave from a pulsating point if the frequency is sufficiently low and the measurement region is far enough away from the source \cite{Randall-1951-9NtPPXPq}, allowing the source to be an effective compact source.
 This pressure field when converted to complex pressure is represented by
 \begin{equation}
   \hat{p}(r,t) = \frac{A_0}{r}\exp\left\{-j(kr-\omega t)\right\} \textrm{,}
@@ -189,7 +189,7 @@ The result of these $\opdrms$ calculations is shown in Figure \ref{fig:03_spheri
 \end{figure}
 The top plots shows the expected optical disturbance ratio, $\opdrms/|A_0|$, for a perfectly spherical acoustic field measured over the beam length.
 The oscillations in the solutions for different $R/Ap$ are caused by end effects in the integration.
-Because speakers often have a directivity in their emission, the oscillations can be greatly reduced by using a windowing function in the z-direction, such as a Hanning \cite{Oppenheim-1999-cfwyTmwq},
+Because speakers often have a directivity in their emission, the oscillations can be greatly reduced by using a windowing function in the z-direction, such as a Hann Window \cite{Oppenheim-1999-cfwyTmwq},
 \begin{equation}
   w(x) = \frac{1}{2}\left\{1-\cos\left(2\pi x\right)\right\} \textrm{,}
 \end{equation}
@@ -207,6 +207,7 @@ While this plot was calculated with a single aperture diameter, the general tren
 The peak of the optical disturbance ratio, $\opdrms/|A_0|$, is located at $\Lambda/Ap\approx0.75$ for a circular aperture.
 The signal is reduced above this value due to aperture filtering and below this value because the shorter wavelengths have a reduced distance before alternating high and low index-of-refraction regions reduce the optical path difference.
 When the acoustic source point is sufficiently far enough away from the measurement beam, $R/Ap\geq2$, the optical disturbance ratio, $\opdrms/|A_0|$ when multiplied by $\sqrt{R/Ap}$, can be collapsed onto a single curve for a range of $\Lambda/Ap$ of 0.1 to 10.
+% Just below $\Lambda/Ap=1$ the curve reaches a maximum and begins to drop off quickly due to aperture filtering as previously shown in Figure \ref{fig:03_planar_sample_calc_3}.
 Above $\Lambda/Ap=10$ the curves start to diverge away from one another.
 An approximate function fit to these data is
 \begin{equation}
@@ -245,7 +246,7 @@ Optical wavefronts and microphone measurements were taken at 49 kHz.
 The speaker was sinusoidally excited at three different frequencies (9, 14, and 18 kHz) at a variety of voltages.
 
 The absolute value of the fluctuating pressure strength, $|A_0|$, was calculated two different ways.
-First, the power spectrum of the microphone data was used to calculate the average $p_{RMS}$ at the excitation frequency and the fluctuating pressure strength using Equation \ref{eqn:03_spherical_pressure_rms}.
+First, the auto-spectral density of the microphone data was used to calculate the average $p_{RMS}$ at the excitation frequency and the fluctuating pressure strength using Equation \ref{eqn:03_spherical_pressure_rms}.
 For the second method, the optical wavefront was band-pass filtered at the excitation frequency using a process that will be discussed in Chapter \ref{chap:06_single_filter}.
 The time averaged $\opdrms$ of the filtered wavefront data was then used to calculate the fluctuating pressure strength using Equation \ref{eqn:03_spherical_sample_fit}.
 
@@ -271,6 +272,7 @@ In Figure \ref{fig:03_spherical_plot}, measured wavefronts are compared to the w
   \label{fig:03_spherical_plot}
 \end{figure}
 The 9 kHz case shows some anomalies on the measured wavefront on the right side, and deviates from a spherical wave significantly, likely contributing to the significantly higher estimated pulsating field strength value when compared to the microphone estimate in Table \ref{tab:03_spherical_measurement}.
+This deviation for the 9 kHz cases is possibily due the speaker no longer acting as a compact source or measurement not occuring in an anechoic environment.
 The 14 and 18 kHz cases show some remarkable agreement between the measured and simulated images.
 Optical wavefront measurements can therefore be used for making non-intrusive acoustic field measurements especially when the acoustic field is simple.
 
@@ -290,6 +292,7 @@ Although the mode-marching method is computationally simpler than the mode-match
 Specifically, since the wind-tunnel test section normally has the smallest cross-sectional dimensions, higher-order acoustic modes tend to be reflected away from the test section; hence using a mode-marching method that does not rigorously account for reflections or all high-order modes should not add significant inaccuracy to the predicted results.
 
 For the circular to square transition on either side of the wind-tunnel fan, a deformable mesh was used such that there would be a one-to-one mapping of mesh points throughout the transition.
+The duct modes were solved for at each location through the transition using Equations \ref{eqn:02_wave_xy} and \ref{eqn:02_bc_rigig_wall}.
 An example of the deformable mesh is shown in Figure \ref{fig:deformable_mesh} at both the square and circular limits and halfway in between.
 \begin{figure}
   \centering
@@ -306,14 +309,14 @@ For the simulation of the Notre Dame White Field wind tunnel (described below) m
   \item \textit{Starting Acoustic Pressure Disturbance} \\
   The method starts with an initial acoustic pressure disturbance that could be either measured, computed, or assumed.
   \begin{equation}
-    \hat{p}^0(x,y)
+    \hat{p}^0(x_D,y_D)
   \end{equation}
   For wind tunnels, the acoustic disturbance is generated by the main fan; hence $\hat{p}^0$ is the rotating radial fan modes associated with the rotating fan blades \cite{Cumpsty-1989-8wEYqb7t}.
 
   \item \textit{Modal Best Fit} \\
   The pressure disturbance at the current axial location is best fit to the possible modes.
   \begin{equation}
-    \hat{p}^i(x,y)=\Psi_m^i(x,y)\cdot C_m^i
+    \hat{p}^i(x_D,y_D)=\sum\Psi_m^i(x_D,y_D)\cdot C_m^i
   \end{equation}
   where $\Psi_m^i$ are the possible modes for the local duct shape.
 
@@ -353,7 +356,7 @@ For the simulation of the Notre Dame White Field wind tunnel (described below) m
   \item \textit{March Modes Forward} \\
   March the acoustic modes forward to the next axial location.
   \begin{equation}
-    \hat{p}_{i+1}(x,y) = \frac{p_t}{p_i}\sum\Psi_M^i(x,y)\cdot C_m^i\cdot\exp\{\mp j k_{zm}^\pm z\}
+    \hat{p}^{i+1}(x_D,y_D) = \frac{p_t}{p_i}\sum\Psi_M^i(x_D,y_D)\cdot C_m^i\cdot\exp\{\mp j k_{zm}^\pm z\}
   \end{equation}
 
   \item \textit{Repeat} \\

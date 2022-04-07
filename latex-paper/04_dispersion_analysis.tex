@@ -18,27 +18,27 @@ The benefits of using multidimensional spectral estimation are shown in Figure \
 \begin{figure}
 \centering
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_demo.eps}
-  \caption{Multidimensional spectral estimation plot example and comparison to traditional power spectrum measurements. A single row of an optical wavefront measurement was used in this example. The top plot shows the typical power spectrum averaged over the entire row of data. Both the middle and bottom plots show the multidimensional spectrum plot with the y-axis as spatial frequency in the middle and velocity in the bottom assuming $u=f/\xi_x$.}
+  \caption{Multidimensional spectral estimation plot example and comparison to traditional auto-spectral density measurements. A single row of an optical wavefront measurement was used in this example. The top plot shows the typical auto-spectral density averaged over the entire row of data. Both the middle and bottom plots show the multidimensional spectrum plot with the y-axis as spatial frequency in the middle and velocity in the bottom assuming $u=f/\xi_x$.}
   \label{fig:04_dispersion_demo}
 \end{figure}
 The spectra shown in the figure were computed using the OPD measured by a single row of sub-apertures from a Shack-Hartmann optical wavefront measurement in which a 5 inch diameter beam was propagated normally through a wind-tunnel test section with a free-stream Mach number of 0.5.
 This measurement was performed in the University of Notre Dame White Field Wind Tunnel in a test section that contained a model representing the fuselage of the AAOL aircraft \cite{Jumper-2013-8KtN3pue} with window that was flat and flush to the outer mold line of the fuselage.
-The top plot shows a traditional power spectrum ensemble-averaged over the row of data.
+The top plot shows a traditional auto-spectral density ensemble-averaged over the row of data.
 Both the blade-passing frequency (517 Hz) and its sub-harmonic had similar amplitudes  with an additional five harmonics showing significant peaks.
 There are three additional strong peaks at approximately 3100, 4850, and 5850 Hz that are likely due to fan vibration that limited the top speed of the tunnel for the test.
 
 Both the middle and bottom plots show the multidimensional spectral estimation of the two-dimensional data, $\opd(x,t)$.
-Since the figure is for illustrative purposes, colorbars were not shown; however, the color is representative of the logarithm of the power or variance in the wavefront signal (i.e. $\opdrms^2$) with yellow representing more power and blue representing less.
+Since the figure is for illustrative purposes, colorbars were not shown; however, the color is representative of the logarithm of the spectrum or variance in the wavefront signal (i.e. $\opdrms^2$) with yellow representing more spectral amplitude and blue representing less.
 The colorbar range in this figure is the same for the middle and bottom plots and is consistent with the other plots throughout this chapter.
 In the middle plot the y-axis represents the stream-wise spatial frequency, $\xi_x$ with the units of inverse meters.
 It is important to note that, unlike temporal frequencies, spatial frequencies can have positive or negative values depending on the direction of travel of the disturbance,
 in Figure \ref{fig:04_dispersion_demo}, waves with positive spatial frequencies are moving in the direction of flow.
 In the middle plot of Figure \ref{fig:04_dispersion_demo}, there is a strong signal that roughly lies on the zero spatial frequency ($\xi_x\approx0$) axis up to a frequency of ~2000 Hz, after which the signal in the spectrum can be clearly seen to branch off into upstream- and downstream-moving disturbances.
-The cause of the branching in the signal will be discussed later, however note that the reason why the signal appears to lie on $\xi_x\approx0$ at low frequencies is simply an artifact of plotting the spectrum on semilog axes (which was done to better resolve the peaks in the power spectrum in the top plot of the figure); as shown later in plots with linear axes, the signal actually branches off into upstream- and downstream-moving disturbances even at low frequencies.
+The cause of the branching in the signal will be discussed later, however note that the reason why the signal appears to lie on $\xi_x\approx0$ at low frequencies is simply an artifact of plotting the spectrum on semilog axes (which was done to better resolve the peaks in the auto-spectral density in the top plot of the figure); as shown later in plots with linear axes, the signal actually branches off into upstream- and downstream-moving disturbances even at low frequencies.
 The blade-passing frequency and its various harmonics can also be discerned in the center plot, by the vertical ``streaks'' that line up  with the peaks in the standard spectrum shown in the top plot; the center spectral plot shows that these fan blade-passing signals have significant broadband spatial frequency content.
 All of these narrow-band signals have a majority of their signal traveling upstream.
 In addition to optical disturbances branching off in the upstream and downstream moving directions there are significant disturbances along zero spatial frequency representing a collection of standing waves.
-As already mentioned, the data in Figure \ref{fig:04_dispersion_demo} were plotted logarithmically along the temporal-frequency axis to better show the low frequency content around the fan blade-passing frequency, and how the peaks in the power spectrum in the top plot still appear in the multidimensional spectrum in the middle plot.
+As already mentioned, the data in Figure \ref{fig:04_dispersion_demo} were plotted logarithmically along the temporal-frequency axis to better show the low frequency content around the fan blade-passing frequency, and how the peaks in the auto-spectral density in the top plot still appear in the multidimensional spectrum in the middle plot.
 As shown later, when the multidimensional spectrum is plotted linearly, the two primary upstream and downstream traveling signals lay in a straight line.
 
 A dispersion analysis can be performed on these multidimensional spectral estimates.
@@ -66,24 +66,24 @@ The bottom plot shows that the primary optical disturbance moving in the directi
 The upstream traveling disturbance is traveling at the same speed but due to the signal being broader is more difficult to measure this way.
 Note that the stationary modes along $\xi_x\approx0$ in the middle plot are nowhere to be found on the bottom plot; this is because when the disturbance velocity for this these waves is calculated their speed approaches infinity.
 
-\section{One-Dimensional Power Spectrum Calculation}
-Power spectral analysis is typically performed on one-dimensional data sets, for example, a single sensor measurement over time.
-On the other hand, as shown in Figure \ref{fig:04_dispersion_demo}, if a sensor array were used, a multi-dimensional power spectrum could be computed that would also show spatial frequency information.
-For a single-point measurement that varies in time, $x(t)$, the power spectrum calculation is
+\section{One-Dimensional Auto-spectral Density Calculation}
+Auto-spectral density analysis is typically performed on one-dimensional data sets, for example, a single sensor measurement over time.
+On the other hand, as shown in Figure \ref{fig:04_dispersion_demo}, if a sensor array were used, a multi-dimensional spectrum could be computed that would also show spatial frequency information.
+For a single-point measurement that varies in time, $x(t)$, the auto-spectral density calculation is
 \begin{equation}
- S_{xx} = \frac{|\fft\{x(t)\}|^2}{Nf_{s}} \textrm{,}
+ S_{xx} = \frac{\left<|\fft\{x(t)\}|^2\right>}{Nf_{s}} \textrm{,}
  \label{eqn:04_basic_sxx}
 \end{equation}
-where $\fft$ is the Fast Fourier Transform, $N$ is the number of samples, and $f_{s}$ is the sample rate \cite{Blackman-1958-4QtKgDb8}.
-For data that has only a real component the Fast Fourier Transform function produces magnitude and phase relations at each frequency step, $f_{s}/N$, over the range from zero-frequency up to but not including the Nyquist frequency, $f_s/w$, with a mirrored set of data that can be represented either below (starting at $-f_s/2$) or above (ending just below $f_s$) this range.
+where $\fft$ is the Fourier Transform, $N$ is the number of samples, $f_{s}$ is the sample rate \cite{Blackman-1958-4QtKgDb8}, and $\left<\right>$ denotes averaging over an number of blocks of sample data.
+For data that has only a real component the Fourier Transform function produces magnitude and phase relations at each frequency step, $f_{s}/N$, over the range from zero-frequency up to but not including the Nyquist frequency, $f_s/w$, with a mirrored set of data that can be represented either below (starting at $-f_s/2$) or above (ending just below $f_s$) this range.
 The Nyquist frequency not being included and the mirrored data is due to an assumption that is integral to the Fourier Transform, which is that the signal is assumed to be periodic.
 
 The total energy, $\sigma^2$, of the signal must be preserved through the transform from physical space-time to frequency space
 \begin{equation}
-  \sigma^2 = \frac{\sum x^2(t)}{N} = \Delta f\sum S_{xx}(f) \textrm{.}
+  \sigma^2 = \frac{\sum x^2(t)}{N} \approx \Delta f\sum S_{xx}(f) \textrm{.}
   \label{eqn:04_fft_energy_conservation}
 \end{equation}
-Additionally, because of the periodic nature of the Fourier Transform and a finite sample length of discrete data, spectral leakage can cause the power in one frequency bin to leak into adjacent frequency bins.
+Additionally, because of the periodic nature of the Fourier Transform and a finite sample length of discrete data, spectral leakage can cause the energy in one frequency bin to leak into adjacent frequency bins.
 To minimize this spectral leakage, windowing functions are employed which typically force the end points of the signal to zero.
 The Hann window,
 \begin{equation}
@@ -98,32 +98,32 @@ For an arbitrary windowing function the correction factor, $c_w$, can be obtaine
  \label{eqn:04_window_correction}
 \end{equation}
 For a Hann window this correction factor approaches $\sqrt{8/3}$ as $N$ goes to infinity.
-When Equation \ref{eqn:04_basic_sxx} is combined with a windowing function and associated correction the double sided power spectra equation in one dimension becomes
+When Equation \ref{eqn:04_basic_sxx} is combined with a windowing function and associated correction the double sided auto-spectral density equation in one dimension becomes
 \begin{equation}
- S_{xx} = \frac{|c_w\fft\{x(t) w(t)\}|^2}{Nf_{s}} \textrm{.}
+ S_{xx} = \frac{\left<|c_w\fft\{x(t) w(t)\}|^2\right>}{Nf_{s}} \textrm{.}
  \label{eqn:04_windowed_sxx}
 \end{equation}
 
-\section{N-Dimensional Power Spectra Calculation}
-For measurements with multiple spatial and temporal dimensions the Fast Fourier Transform is applied $n$-times where $n$ is the total number of dimensions, with each application in a different dimension,
+\section{N-Dimensional Auto-spectral Density Calculation}
+For measurements with multiple spatial and temporal dimensions the Fourier Transform is applied $n$-times where $n$ is the total number of dimensions, with each application in a different dimension,
 \begin{equation}
  \fftn(x) = \fft(\fft(\cdots\fft(\fft(x,1),2)\cdots,n-1),n) \textrm{,}
  \label{eqn:04_fftn}
 \end{equation}
-where $\fft(x,n)$ is the Fast Fourier Transform of $x$ in the $n^{th}$ dimension \cite{An-1991-QKg7heKm}.
+where $\fft(x,n)$ is the Fourier Transform of $x$ in the $n^{th}$ dimension \cite{An-1991-QKg7heKm}.
 For a $n$-dimensional array the operation becomes \cite{McClellan-1982-rGQzuZ7t}
 \begin{equation}
- \mathbf{S_{xx}} =\frac{|c_w\fftn\{f(\mathbf{x}) w(\mathbf{x})\}|^2}{\prod{\overrightarrow{N}\overrightarrow{f_s}}} \textrm{,}
+ \mathbf{S_{xx}} =\frac{\left<|c_w\fftn\{f(\mathbf{x}) w(\mathbf{x})\}|^2\right>}{\prod{\overrightarrow{N}\overrightarrow{f_s}}} \textrm{,}
  \label{eqn:04_sxxn}
 \end{equation}
-where $\mathbf{S_{xx}}$ is the $n$-dimensional power spectra array or dispersion array, $f(\mathbf{x})$ is an $n$-dimensional set of data, $w(\mathbf{x})$ is an $n$-dimensional windowing function, $\overrightarrow{N}$ is a vector denoting the number of elements in each dimension, $\overrightarrow{f_s}$ is a vector denoting the sample rate in each dimension, and
+where $\mathbf{S_{xx}}$ is the $n$-dimensional auto-spectral array, $f(\mathbf{x})$ is an $n$-dimensional set of data, $w(\mathbf{x})$ is an $n$-dimensional windowing function, $\overrightarrow{N}$ is a vector denoting the number of elements in each dimension, $\overrightarrow{f_s}$ is a vector denoting the sample rate in each dimension, and
 \begin{equation}
  c_w = \frac{1}{\sqrt{\sum w^2(\mathbf{x})/\prod{\overrightarrow{N}}}} \textrm{.}
  \label{eqn:04_windown}
 \end{equation}
 The signal energy conservation relationship becomes
 \begin{equation}
-  \sigma^2=\frac{\sum\mathbf{x}}{\prod{\overrightarrow{N}}} = \prod{\overrightarrow{\Delta f_s}}\sum\mathbf{S_{xx}} \textrm{,}
+  \sigma^2=\frac{\sum\mathbf{x}}{\prod{\overrightarrow{N}}} \approx \prod{\overrightarrow{\Delta f_s}}\sum\mathbf{S_{xx}} \textrm{,}
   \label{eqn:04_fftn_energy_conservation}
 \end{equation}
 where $\overrightarrow{\Delta f_s}$ is a vector representing the frequency step sizes in each dimension.
@@ -172,7 +172,7 @@ This distance is then normalized by the maximum value and the resulting spatial 
 This same basic idea can be extended to data sets where the locations of measurements in space vary with time.
 
 \section{Wavefront Multidimensional Spectrum}
-At the beginning of this chapter a multidimensional spectral plot for data resolved in time and one spatial dimension was shown along with a typical power spectrum plot in Figure \ref{fig:04_dispersion_demo}.
+At the beginning of this chapter a multidimensional spectral plot for data resolved in time and one spatial dimension was shown along with a typical auto-spectral density plot in Figure \ref{fig:04_dispersion_demo}.
 This was shown to facilitate a simple discussion of some of the benefits of using multidimensional spectrum analysis on optical wavefronts.
 That simple analysis was performed on only a single row of a wavefront data set and provided an insight into the disturbances that were moving in the horizontal (stream wise) direction only.
 When multidimensional spectral estimation is performed over all dimensions of a wavefront (i.e. time and both spatial dimensions), as will be done for the remainder of this chapter, additional detail is available, that also enables the determination of optical disturbances moving vertically (i.e. cross-stream to the flow) or in any direction in between.
@@ -188,7 +188,7 @@ The middle plot shows the same three-dimensional spectrum integrated through the
 The bottom plots shows the two-dimensional spectral plot that was previously shown in Figure \ref{fig:04_dispersion_demo} but this time with a linear temporal frequency axis.
 Both of the two-dimensional spectra in the top two plots of Figure \ref{fig:04_dispersion_comparison}, whether directly computed or integrated show a significant increase in the signal content between the acoustic lines ($u\pm c$).
 
-The three-dimensional spectral slice (top plot) shows significant signal energy at the same characteristic velocities of the free-stream velocity, $u$, and the acoustic lines, $u\pm c$, as the two-dimensional spectrum (bottom plot), along with some additional signal laying along the temporal-frequency axis at $\xi_y=0\ m^{-1}$.
+The three-dimensional spectral slice (top plot) shows significant spectral amplitude at the same characteristic velocities of the free-stream velocity, $u$, and the acoustic lines, $u\pm c$, as the two-dimensional spectrum (bottom plot), along with some additional signal laying along the temporal-frequency axis at $\xi_y=0\ m^{-1}$.
 This signal represents a collection of stationary modes at each temporal frequency.
 If this were a flow-related phenomenon the velocity of the disturbance according to Equation \ref{eqn:04_velocity_assumed} would be near infinity; as such, it is more likely caused by mechanical vibration of the wind tunnel and components of the optical measurement system.
 On the three-dimensional spectrum plot there are signals that run parallel to $u$ and $u-c$ that do not emanate from the origin but from $\xi_x\approx\pm80\ m^{-1}$; at present an explanation for these signals cannot be given; however, it is possible that this effect is caused by an optical ghost image.
@@ -196,7 +196,7 @@ There is also an aliased signal that runs parallel to $u+c$ starting on the righ
 Aliased signals are due to the sample rate, either spatial or temporal, being to low.
 
 The middle plot of Figure \ref{fig:04_dispersion_comparison} shows the integrated spectrum through the vertical spatial frequency axis.
-This integration captures the energy in all vertical disturbances which effectively recreates the two-dimensional spectrum plot on the bottom of Figure \ref{fig:04_dispersion_comparison}.
+This integration captures the spectral amplitude in all vertical disturbances which effectively recreates the two-dimensional spectrum plot on the bottom of Figure \ref{fig:04_dispersion_comparison}.
 A reduced order spectrum like this is calculated by
 \begin{equation}
   S_{xx}^{n-1} = \int S_{xx}^n df_s^m \textrm{,}
@@ -206,18 +206,18 @@ This is also shown in Figure \ref{fig:04_dispersion_max}.
 \begin{figure}
   \centering
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_max.eps}
-  \caption{Recovery of time-based power spectrum from two-dimensional spectral estimate.}
+  \caption{Recovery of time-based auto-spectral density from two-dimensional spectral estimate.}
   \label{fig:04_dispersion_max}
 \end{figure}
 While the integrated signal over estimated the spectrum going from three-dimensions to two in Figure \ref{fig:04_dispersion_comparison}, it under estimates the spectrum going from two to one dimensions.
 Unfortunately, due to the limited number of spatial sample points and the large dynamic range of the signal, this integrated value can contain a significant amount of error.
 
-Due to the signal containing a majority of the power in a limited number of spatial frequency bins, a reduced order spectrum can be estimated by
+Due to the signal containing a majority of the spectral amplitude in a limited number of spatial frequency bins, a reduced order spectrum can be estimated by
 \begin{equation}
   S_{xx}^{n-1} \approx \max(S_{xx}^n,m)f_s^m \textrm{,}
 \end{equation}
 where $\max(S_{xx}^n,m)$ is the maximum value of the spectrum along dimension $m$ and $f_s^m$ is the sample rate for that dimension.
-The calculated temporal power spectrum from the two-dimensional spectrum using the maximum value is a good estimation at the center of the frequency range but has some additional decay at both low and high frequencies.
+The calculated temporal auto-spectral density from the two-dimensional spectrum using the maximum value is a good estimation at the center of the frequency range but has some additional decay at both low and high frequencies.
 The calculated reduced order spectrum in Figure \ref{fig:04_dispersion_max} (red curve) appears to follow the functional form of the actual one-dimensional spectrum (blue curve) but with a small offset.
 
 \subsection{2-D Slices of the Multidimensional Spectral Estimation}
@@ -249,8 +249,8 @@ There is also additional signal decay as the absolute value of the vertical spat
 The velocity of this boundary layer optical disturbance will be measured in Chapter \ref{chap:06_single_filter} using a velocity filter to show a mean velocity of $0.85u$, which is near the generally accepted value of $0.83u$ \cite{Gordeyev-2014-jcJndkHM}.
 
 The other two major flow-related structures in Figure \ref{fig:04_dispersion_xy} are related to acoustic signals traveling in both directions through the wind-tunnel, denoted by the dashed and dot-dash lines in the figure.
-The downstream-traveling acoustic wave, $u+c$, has a low signal power than the upstream-traveling acoustic wave, $u-c$.
-The likely explanation for this difference in signal power is that most of the acoustic energy in the wind tunnel is generated by the fan which propagates upstream and downstream within the wind-tunnel ducting.
+The downstream-traveling acoustic wave, $u+c$, has a lower spectral amplitude than the upstream-traveling acoustic wave, $u-c$.
+The likely explanation for this difference in spectral amplitude is that most of the acoustic energy in the wind tunnel is generated by the fan which propagates upstream and downstream within the wind-tunnel ducting.
 However, sound waves that move in the flow direction have their wavelength stretched as the flow is accelerated into the test-section contraction, while sound waves moving against the flow have their wavelength contracted.
 Hence the downstream-traveling waves have a longer wavelength as they pass through the measurement beam and thus more of the optical signal from the downstream-travelling waves is filtered out due to aperture filtering \cite{Siegenthaler-2008-9Yutbt6c}.
 At low temporal frequencies, the blade-passing frequency (~520 Hz) and its associated harmonics appear as vertical lines with regular spacing in Figure \ref{fig:04_dispersion_xy}.
@@ -259,10 +259,10 @@ At low temporal frequencies, the blade-passing frequency (~520 Hz) and its assoc
 The two main features on the vertical spectral slice plot on the bottom of Figure \ref{fig:04_dispersion_xy} are the signals moving at the speed of sound ($\pm c$) including some significant aliasing of these signals.
 These two lines represent acoustic waves that are traveling either straight up or down through the measurement beam.
 The blade-passing frequency and its harmonics are also visible in the vertical moving wave plots in both directions and have much less broadband spatial content in the vertical direction.
-There are also high temporal frequency narrow-band signals ($\sim$3, 5, and 6 kHz) that contain most of their signal power at the speed of sound lines.
+There are also high temporal frequency narrow-band signals ($\sim$3, 5, and 6 kHz) that contain most of their spectral amplitude at the speed of sound lines.
 These signals have some dependence on the free-stream Mach number (see Figure \ref{fig:04_dispersion_mach}).
 These maybe vibrations originating from the tunnel fan that are currently limiting the top speed of the tunnel; some older optical wavefronts collected in this tunnel under similar measurement conditions do not show these narrow-band signals.
-Because the portion of these signals with the most power is traveling vertically through the test section instead of steam wise, the tunnel walls maybe excited by the fan and resonating.
+Because the portion of these signals with the most spectral amplitude is traveling vertically through the test section instead of steam wise, the tunnel walls maybe excited by the fan and resonating.
 
 The stationary modes that have been discussed previously that appear as a broad horizontal band along the temporal frequency axis in the horizontal spectral slice plot also appear in the same location in the vertical spectral slice plot.
 These stationary modes appear the be constant when viewed from either direction and through out time.
@@ -271,8 +271,8 @@ Some of these stationary modes are likely caused by vibrations of various optica
 At higher temporal frequencies, the stationary modes maybe related to electronic noise from the high-speed camera, higher order optical noise from the laser, or even numerical error from the processing code.
 
 \subsection{3-D Representations of Multidimensional Spectral Estimation}
-While the two-dimensional slices are fairly informative, particularly when it comes to signal strength of various flow structures and their velocities, a three-dimensional plot allows better visualization of the overall flow structures although some details are lost because typically only one power level can be plotted at a time.
-The same data that has been previously shown in two-dimensional form, is depicted in Figure \ref{fig:04_dispersion_isosurface} as an isosurface with a power of $10^{-14}$ $\mu m^2/Hz/m^{-2}$ and shown from four different views in Figure \ref{fig:04_dispersion_3d}.
+While the two-dimensional slices are fairly informative, particularly when it comes to signal strength of various flow structures and their velocities, a three-dimensional plot allows better visualization of the overall flow structures although some details are lost because typically only one spectral amplitude level can be plotted at a time.
+The same data that has been previously shown in two-dimensional form, is depicted in Figure \ref{fig:04_dispersion_isosurface} as an isosurface with a spectral level of $10^{-14}$ $\mu m^2/Hz/m^{-2}$ and shown from four different views in Figure \ref{fig:04_dispersion_3d}.
 \begin{figure}
   \centering
   \includegraphics{../matlab/08_conclusion/dispersion_isosurface.eps}
@@ -287,7 +287,7 @@ The same data that has been previously shown in two-dimensional form, is depicte
 \begin{figure}
   \centering
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_3d.eps}
-  \caption{Three-dimensional view of the multidimensional spectral plot showing an isosurface at a power of $10^{-14}$ $\mu m^2/Hz/m^{-2}$.}
+  \caption{Three-dimensional view of the multidimensional spectral plot showing an isosurface at a spectral level of $10^{-14}$ $\mu m^2/Hz/m^{-2}$.}
   \label{fig:04_dispersion_3d}
 \end{figure}
 The largest feature is the boundary layer signal which resembles an ellipsoidal plane that is tilted in the $f-\xi_s$ plane.
@@ -302,14 +302,14 @@ Figure \ref{fig:04_dispersion_mach} shows two views of an isosurface of the mult
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_mach_0.3.eps}
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_mach_0.4.eps}
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_mach_0.5.eps}
-  \caption{Multidimensional spectral estimate isosurfaces as the Mach number increased from 0.3 to 0.5. The isosurfaces are all shown at a power of $10^{-14}$ $\mu m^2/Hz/m^{-2}$.}
+  \caption{Multidimensional spectral estimate isosurfaces as the Mach number increased from 0.3 to 0.5. The isosurfaces are all shown at a spectral level of $10^{-14}$ $\mu m^2/Hz/m^{-2}$.}
   \label{fig:04_dispersion_mach}
 \end{figure}
-All of these plots are of an isosurface with the same power as used in Figure \ref{fig:04_dispersion_3d}.
+All of these plots are of an isosurface with the same spectral level as used in Figure \ref{fig:04_dispersion_3d}.
 The stationary modes seem to be constant throughout the range of Mach numbers indicating that they are most likely not flow related.
-The boundary layer signal increases in power significantly as the Mach number is increased while also the slope and thus the velocity is significantly increased as well.
+The boundary layer signal increases in spectral amplitude significantly as the Mach number is increased while also the slope and thus the velocity is significantly increased as well.
 As shown in  and discussed in Chapter \ref{chap:02_lit_review}, the aero-optical $\opdrms$ of the flat-plate boundary layer on the walls of the wind tunnel is expected to vary according to Equation \ref{eqn:02_opdrms_gor}.
-Hence the significant increase in the power of the boundary-layer spectrum with Mach number that can be observed in Figure \ref{fig:04_dispersion_mach} is expected based on the $M^2$ dependence in Equation \ref{eqn:02_opdrms_gor}.
+Hence the significant increase in the spectral amplitude of the boundary-layer spectrum with Mach number that can be observed in Figure \ref{fig:04_dispersion_mach} is expected based on the $M^2$ dependence in Equation \ref{eqn:02_opdrms_gor}.
 The increase in slope of the boundary-layer signal is also expected, and is caused by the increase in the convection speed of the boundary-layer aero-optical disturbances as the free-stream Mach number increases.
 The acoustic signal sees some interesting evolution as well.
 Along with the strength greatly increasing with Mach number, the slope of the upstream traveling disturbances decreases significantly while the downstream moving acoustic disturbances do not see much change other than an increase in signal strength.
@@ -321,12 +321,12 @@ This can be seen in Figure \ref{fig:04_dispersion_angle} with the same isosurfac
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_angle_90.eps}
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_angle_105.eps}
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_angle_120.eps}
-  \caption{Multidimensional spectral estimate isosurfaces of different viewing angles through the test section at a Mach number of 0.5. The isosurfaces are all shown at a power of $10^{-14}$ $\mu m^2/Hz/m^{-2}$.}
+  \caption{Multidimensional spectral estimate isosurfaces of different viewing angles through the test section at a Mach number of 0.5. The isosurfaces are all shown at a spectral amplitude of $10^{-14}$ $\mu m^2/Hz/m^{-2}$.}
   \label{fig:04_dispersion_angle}
 \end{figure}
 The $90^\circ$ beam case at the top of Figure \ref{fig:04_dispersion_angle} has been shown previously and the vertical component of the optical  disturbance sees little change as the viewing angle is increase except a small reduction in the boundary layer signal and some additional signal at the high temporal frequencies in the acoustic cone.
-As the angle is increased the side of the acoustic cone traveling in the direction of flow is significantly increased in power, with a large amount of the signal being aliased into the upstream-traveling side appearing as `stalactites' at odd angles.
-The upstream-traveling acoustic signal is also increased in power but to a lesser extent.
+As the angle is increased the side of the acoustic cone traveling in the direction of flow is significantly increased in spectral amplitude, with a large amount of the signal being aliased into the upstream-traveling side appearing as `stalactites' at odd angles.
+The upstream-traveling acoustic signal is also increased in spectral amplitude but to a lesser extent.
 The stationary mode pillar experiences some change as well as the viewing angle hits $120^\circ$ and is stretched in the horizontal direction.As the beam angle increases, the acoustic duct modes begin to overlap one another in spectral space causing significant constructive interference.
 This will be shown and discussed more fully later in Section \ref{sect:04_acoustic_cone}.
 The effective velocity of the optical disturbances is reduced for the disturbances traveling in the same direction as the flow and increased for the disturbances traveling in the opposite direction.
@@ -343,7 +343,7 @@ Plots of spatial vs temporal frequencies for the horizontal and vertical plane w
 The temporal frequencies spectral slices shown are at: 0 Hz, the blade-passing frequency at 517 Hz, the second harmonic of the blade-passing frequency at 1551 Hz, and additional slices at 5, 10, and 20 kHz.
 The slice at 0 Hz temporal frequency shows the spatial frequencies of the wavefront disturbance that does not change with time.
 This temporally constant wavefront disturbance is typically called the ``mean lensing''component of the wavefront measurement, since it is has an effect similar to a lens placed in the beam.
-The mean lensing slice at 0 Hz shows a mostly axisymmetric pattern with most of its power concentrated at low spatial frequencies.
+The mean lensing slice at 0 Hz shows a mostly axisymmetric pattern with most of its spectral amplitude concentrated at low spatial frequencies.
 There appear to be the occasional spike radiating out from the center, most noticeably in line with the boundary layer signal.
 
 The next four slices, for $f$=517.1 Hz to 10 kHz, show a vertical line associated with the boundary layers aero-optical disturbance, which  progressively moves towards positive x-spatial frequencies with increasing frequency.
@@ -353,16 +353,17 @@ This could be indicative of the lower temporal frequency disturbances in the bou
 The higher temporal frequency disturbances seem to have a much wider range of velocities that approach the free-stream velocity and are likely small structures that reside in different parts of the boundary layer and hence travel with a wide range of convection velocities.
 
 The acoustic disturbances show an interesting evolution as the temporal frequency increases.
-At low temporal frequencies, the acoustic disturbances are concentrated near zero spatial frequency and with strong power.
+At low temporal frequencies, the acoustic disturbances are concentrated near zero spatial frequency and with strong spectral amplitude.
 At high temporal frequencies the acoustic disturbances appear as elliptically shaped rings.
 At 20 kHz, there are two elliptical shapes that are easily identifiable, the smaller one is the signal that is actually present at that frequency while the other one is aliased data due to the limited temporal sample rate.
 There is constructive interference where the two acoustic rings intersect.
 The 10 kHz slice also shows a small amount of acoustic aliasing
-Both the 10 and 20 kHz acoustic rings show some a non-uniform signal power throughout the circumference which are also visible in the three-dimensional views as the spikes at the high temporal frequencies.
+Both the 10 and 20 kHz acoustic rings show some a non-uniform spectral amplitude throughout the circumference which are also visible in the three-dimensional views as the spikes at the high temporal frequencies.
 
 \subsection{Acoustic Cone}
 \label{sect:04_acoustic_cone}
-The shape of the acoustic cone can be visualized by plotting the relationship between the temporal frequency and the vertical (i.e. cross-stream) and axial (i.e. stream-wise) wavenumbers for a series of acoustic duct modes .
+The shape of the acoustic cone can be visualized by plotting the relationship between the temporal frequency and the vertical (i.e. cross-stream) and axial (i.e. stream-wise) wavenumbers for a series of acoustic duct modes.
+Note that in this section the duct mode equations are cast into the aperture coordinate frame.
 Figure \ref{fig:04_dispersion_sound} shows the acoustic cone mode lines for a small set of duct modes at various Mach numbers for a duct that is 1 meter square and a beam passing through the duct at 90$^\circ$ to the flow.
 \begin{figure}
   \centering
@@ -370,7 +371,7 @@ Figure \ref{fig:04_dispersion_sound} shows the acoustic cone mode lines for a sm
   \caption{Acoustic duct mode lines showing the spatial frequency location as a function of temporal frequency, Mach number, and mode number.}
   \label{fig:04_dispersion_sound}
 \end{figure}
-The lines here represent the solutions to Equation \ref{eqn:02_kzm} for a series of cross-sectional acoustic modes; essentially, these are $f-\xi_x$ planar ``slices'' of the cone-shaped acoustic part of the spectrum, at various discrete values of $xi_y$.
+The lines here represent the solutions to Equation \ref{eqn:02_kzm} for a series of cross-sectional acoustic modes; essentially, these are $f-\xi_x$ planar ``slices'' of the cone-shaped acoustic part of the spectrum, at various discrete values of $\xi_y$.
 The cross-sectional wavenumbers are $k_x = m\pi/l_x$ and $k_y = n\pi/l_y$ with the vertical spatial frequency, $\xi_y=\pm k_y/2\pi$.
 The horizontal spatial frequency is related to the axial wavenumbers, Equation \ref{eqn:02_kzm}, for sound traveling upstream or downstream.
 Note that there is a 90$^\circ$ rotation between the duct and beam coordinate systems (Equation \ref{eqn:03_coord_transform}).
@@ -443,7 +444,7 @@ The temporal frequency is tiled,
 where the other frequencies are similarly tiled.
 This tiling process works because the negative half ($f<0$) of the spectrum is a duplication of the positive half ($f\ge0$) of the spectrum.
 In this research, the spectrum is typically only shown for positive temporal frequencies.
-The spectral power at any point in frequency space ($\pm f,\pm\xi_x,\pm\xi_y$) will be equal to the conjugate of that point ($\mp f,\mp\xi_x,\mp\xi_y$).
+The spectral amplitude at any point in frequency space ($\pm f,\pm\xi_x,\pm\xi_y$) will be equal to the conjugate of that point ($\mp f,\mp\xi_x,\mp\xi_y$).
 This tiling process could be used on the full multidimensional spectrum with the tiling occurring on each axis.
 While only a three-by-three tiling process was shown, the tiling process in theory needs to be extended to infinity but in practice, with real signals being bandwidth limited, only a finite number of tiles are required.
 This process has the effect of artificially increasing the sampling rate \cite{Lynch-2021-DygYkEGU}, especially for spectra that are primarily two-dimensional with structures traveling in only one direction (i.e. supersonic boundary-layers).
@@ -477,15 +478,15 @@ Figure \ref{fig:04_dispersion_3d_tile} shows a portion of the spectrum that has 
 \begin{figure}
   \centering
   \includegraphics{../matlab/04_dispersion_analysis/dispersion_3d_tile.eps}
-  \caption{Three-dimensional tiling of an isosurface of the spectrum at a power of $10^{-14.5}$ $\mu m^2/Hz/m^{-2}$.}
+  \caption{Three-dimensional tiling of an isosurface of the spectrum at a spectral amplitude of $10^{-14.5}$ $\mu m^2/Hz/m^{-2}$.}
   \label{fig:04_dispersion_3d_tile}
 \end{figure}
-The power level of the isosurface in this plot is different from those previously shown ($10^{-14.5}$ $\mu m^2/Hz/m^{-2}$).
+The spectral amplitude level of the isosurface in this plot is different from those previously shown ($10^{-14.5}$ $\mu m^2/Hz/m^{-2}$).
 The level for the previous isosurface plots was chosen because it showed minimal signal aliasing.
 In Figure \ref{fig:04_dispersion_3d_tile} the base spectrum is colored in blue and the tiled portion is shown in red.
 This plot shows only the portion of the spectrum between 40 and 60\% of the temporal sample rate.
 The acoustic cone is the primary structure in this plot that can be seen to having aliasing present.
-The `stalactites' that became apparent at higher beam angles are also apparent at this power level and are a continuation from the tiled spectrum above.
+The `stalactites' that became apparent at higher beam angles are also apparent at this spectral amplitude level and are a continuation from the tiled spectrum above.
 With spectra that have significant three-dimensional content, this process is most useful for identifying portions of the signal that are aliased.
 There is future work that can be done in both filtering the aliased data and artificially increasing the sample rate of the wavefront measurement.
 

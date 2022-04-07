@@ -37,16 +37,16 @@ The gain of this filter is
 A band-pass filter can be constructed by placing a low-pass filter in series with a high-pass filter and a band-stop by placing the two types in parallel.
 
 In many tests, a large portion of the wavefront noise is at low frequencies primarily caused by mechanical vibration.
-In general, a high-pass filter is useful in temporal space for removing this noise, since in many cases most of the power in the aero-optical signal occurs at higher frequency than the low-frequency mechanical vibration. as shown in Figure \ref{fig:06_filter_temporal}.
+In general, a high-pass filter is useful in temporal space for removing this noise, since in many cases most of the spectral amplitude in the aero-optical signal occurs at higher frequency than the low-frequency mechanical vibration. as shown in Figure \ref{fig:06_filter_temporal}.
 \begin{figure}
  \centering
  \includegraphics{../matlab/06_single_sensor_filtering/filter_temporal.eps}
- \caption{The $opdrms$ of high-pass temporal filtered wavefronts relative to the $opdrms$ of the aero-optical only unfiltered wavefront (top). Power spectra of both of the simulated wavefront versions (bottom).}
+ \caption{The $opdrms$ of high-pass temporal filtered wavefronts relative to the $opdrms$ of the aero-optical only unfiltered wavefront (top). Auto-spectral density of both of the simulated wavefront versions (bottom).}
  \label{fig:06_filter_temporal}
 \end{figure}
 The top plot in this figure shows the high-pass filtered $\opdrms$ of both the total and aero-optical only wavefronts normalized by the unfiltered $\opdrms$ of the aero-optical only wavefront, for high-pass filters with various cutoff frequencies.
 The results in Figure \ref{fig:06_filter_temporal} were computed using wavefronts that were simulated using the methods described in Chapter \ref{chap:05_synthetic}.
-For reference, the bottom plot of Figure \ref{fig:06_filter_temporal} shows the power spectra of just the aero-optical portion of the wavefront (red curve) and the total wavefront (blue curve) which includes vibration-related peaks associated with the blade-passing frequency and its harmonics.
+For reference, the bottom plot of Figure \ref{fig:06_filter_temporal} shows the auto-spectral density of just the aero-optical portion of the wavefront (red curve) and the total wavefront (blue curve) which includes vibration-related peaks associated with the blade-passing frequency and its harmonics.
 The figure shows how a high-pass filter decreases the energy in the total wavefront and in the actual aero-optical wavefront, as the filter cutoff frequency increases.
 As shown in the top plot, at low cutoff frequency, the filter primarily removes vibration effects from the total signal; however, as the cutoff frequency increases, the filter also removes actual aero-optical signal.
 Around 1,200 Hz, the $\opdrms$ of the total signal is equal to the $\opdrms$ of the actual aero-optical signal; at this cutoff frequency ~75\% of the aero-optical signal remains and the remaining signal is made up by the remaining contamination.
@@ -162,14 +162,14 @@ This can be accomplished by applying a series of low-pass velocity filters to th
   \label{eqn:06_velocity_filter_measurement}
 \end{equation}
 where $G_v$ is the velocity filter and $G_\rho$ is the radial frequency ($\xi_rho^2 = \xi_x^2+\xi_y^2$) filter.
-Once the wavefront has been filtered in multidimensional spectral space, the total power remaining in the filtered spectrum can be calculated,
+Once the wavefront has been filtered in multidimensional spectral space, the total spectral amplitude remaining in the filtered spectrum can be calculated,
 \begin{equation}
   P = \sum (S_{xx,f}\prod{\overrightarrow{f_s}}) \textrm{.}
 \end{equation}
-The average convective velocity of the structure is then given by the filter parameters that produce the maximum power in the filtered signal.
+The average convective velocity of the structure is then given by the filter parameters that produce the maximum integrated spectral amplitude in the filtered signal.
 
 This velocity finding procedure described in the preceding paragraph was tested on the synthetic wavefront generated in Chapter \ref{chap:05_synthetic}, which had a known boundary-layer mean velocity.
-The results of the velocity finding analysis are shown in Figure \ref{fig:06_filter_velocity_measure}, which shows the power in the filtered signal as a function of the $u_x$ parameter using in the velocity filter component of Equation \ref{eqn:06_velocity_filter_measurement}.
+The results of the velocity finding analysis are shown in Figure \ref{fig:06_filter_velocity_measure}, which shows the integrated spectral amplitude in the filtered signal as a function of the $u_x$ parameter using in the velocity filter component of Equation \ref{eqn:06_velocity_filter_measurement}.
 \begin{figure}
  \centering
  \includegraphics{../matlab/06_single_sensor_filtering/filter_velocity_measure.eps}
@@ -180,7 +180,7 @@ The low-pass velocity filter used the same parameters as used previously except 
 The radial frequency, $\xi_\rho$, was normalized by the spatial sampling rate.
 In this case, the boundary layer speed was determined to be 163 m/s which corresponds to the design velocity of the synthetic signal of $0.8U$.
 For signals where the mean-velocity component of the aero-optical signal is not aligned with either the horizontal or vertical axis, both velocity components can be varied in the velocity filter.
-This produces a three-dimensional surface of filtered signal power as a function of $u_x$ and $u_y$ in the velocity filter, where the velocity components of the moving signal are given by the maximum power of the surface.
+This produces a three-dimensional surface of filtered signal integrated spectral amplitude as a function of $u_x$ and $u_y$ in the velocity filter, where the velocity components of the moving signal are given by the maximum integrated spectral amplitude of the surface.
 An example of this method is shown in Figure \ref{fig:06_filter_velocity_real}, which was computed using experimental wavefront data acquired in the White Field wind tunnel at M=0.5.
 \begin{figure}
  \centering
@@ -214,7 +214,7 @@ Figure \ref{fig:06_filter_baseline}, shows the multidimensional spectrum of an u
   \label{fig:06_filter_baseline}
 \end{figure}
 The bottom plot of the figure shows the unfiltered and baseline spectra along the green line in the two multidimensional spectral plots.
-The total power of the signal has been reduced by $~71\%$ with all of the narrow-band signals removed.
+The total integrated spectral amplitude of the signal has been reduced by $~71\%$ with all of the narrow-band signals removed.
 A large portion of this signal removal is the very low temporal frequency components.
 The blade-passing frequency and harmonics are completely removed but the broadband acoustic duct-modes remain intact.
 The peak of the boundary-layer signal is reduced slightly as well as the high frequency fluctuations.
@@ -452,11 +452,11 @@ One accelerometer was placed on the primary lens (also shown, sensor 7) and one 
 The last two accelerometers were located on the back of the return mirror with one on the top and the other on the side.
 
 \section{Results}
-The power-spectra of all of the sensors at the three Mach numbers are shown in Figure \ref{fig:07_sensor_spectra}.
+The auto-spectral density of all of the sensors at the three Mach numbers are shown in Figure \ref{fig:07_sensor_spectra}.
 \begin{figure}
   \centering
   \includegraphics{../matlab/07_multiple_sensor_filtering/sensor_spectra.eps}
-  \caption{Power-spectra of the additional sensor measurements at the three Mach numbers tested. The x-axis is in Strouhal number per characteristic length ($St/l$).}
+  \caption{Auto-spectral density of the additional sensor measurements at the three Mach numbers tested. The x-axis is in Strouhal number per characteristic length ($St/l$).}
   \label{fig:07_sensor_spectra}
 \end{figure}
 These plots are presented as Strouhal number per unit characteristic length, since this puts the signals related to the fan blade-passing frequency at the same x-axis location for all three tested wind speeds.
@@ -468,17 +468,17 @@ The test-section mounted microphones are picking up boundary layer acoustic nois
 Two variants of the filtering technique were tried.
 The first was a standard LSE-SPOD technique in which the spectral POD was performed on the data set that was Fourier transformed in time only.
 For the second technique, which will be referred to here as LSE-MSPOD, the spectral POD was applied to a data set in which the Fourier transform was performed in all dimensions of space and time, which is a portion of the computation for the multidimensional spectral estimation.
-Figures \ref{fig:07_lse_spod} and \ref{fig:07_lse_mspod} show multidimensional power spectrum plots at a temporal block length of $2^{10}$ with no overlap.
+Figures \ref{fig:07_lse_spod} and \ref{fig:07_lse_mspod} show multidimensional auto-spectral density plots at a temporal block length of $2^{10}$ with no overlap.
 \begin{figure}
   \centering
   \includegraphics{../matlab/07_multiple_sensor_filtering/lse_spod.eps}
-  \caption{A multidimensional power spectrum of an unfiltered wavefront and the same wavefront filtered with the LSE-SPOD method using all 16 additional microphone or accelerometer measurements.  }
+  \caption{A multidimensional auto-spectral density of an unfiltered wavefront and the same wavefront filtered with the LSE-SPOD method using all 16 additional microphone or accelerometer measurements.  }
   \label{fig:07_lse_spod}
 \end{figure}
 \begin{figure}
   \centering
   \includegraphics{../matlab/07_multiple_sensor_filtering/lse_mspod.eps}
-  \caption{A multidimensional power spectrum of an unfiltered wavefront and the same wavefront filtered with the LSE-MSPOD method using all 16 additional microphone or accelerometer measurements.  }
+  \caption{A multidimensional auto-spectral density of an unfiltered wavefront and the same wavefront filtered with the LSE-MSPOD method using all 16 additional microphone or accelerometer measurements.  }
   \label{fig:07_lse_mspod}
 \end{figure}
 These plots show the $f$-$\xi_x$ plane of the multidimensional spectrum that captures horizontally-moving (streamwise) plane waves with a portion of the acoustic cone isosurface wrapping behind it.

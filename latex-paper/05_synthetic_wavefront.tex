@@ -226,7 +226,7 @@ The background noise disturbance (with a few small spots shown in cyan in Figure
 % The relevant code is shown in lines 95-100 of Appendix \ref{code:sc_synthetic_wavefront}.
 
 \section{Synthetic Wavefront Creation}
-A synthetic signal can be created from a power spectrum by solving for $x$ in Equation \ref{eqn:04_basic_sxx} and using the Inverse Fast Fourier Transform,
+A synthetic signal can be created from a auto-spectral density by solving for $x$ in Equation \ref{eqn:04_basic_sxx} and using the Inverse Fourier Transform,
 \begin{equation}
  x(t) = \real\left[\ifft\left\{\sqrt{S_{xx}\cdot N\cdot f_{samp}}\cdot\exp{i\phi}\right\}\right] \textrm{,}
  \label{eqn:05_ifft}

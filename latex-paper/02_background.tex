@@ -268,14 +268,16 @@ where $a=0.7795$, $b=-0.9616$, and $c=-0.1382$.
 \section{Duct Acoustics}
 This section will look at acoustics when confined to a duct in which the acoustic waves primarily travel in the direction of one axis and have walls confining the acoustics along the other two axes as is the case inside of a wind tunnel.
 Figure \ref{fig:02_duct_drawing} shows the diagram used for deriving the acoustic properties inside of a constant area duct.
+For consistancy with other texts on duct acoustics, the cross-section will lay in the x-y plane with the duct along the z-axis.
+This coordinate frame with be subscripted with $D$ to differentiate from the typical aperture coordinate frame with an optical beam propagating along the z-axis.
 \begin{figure}
 \centering
     \includegraphics[trim=2.2in 0.7in 2.2in 0.7in,clip,width=4.5in]{../autocad/02_background/duct_drawing.eps}
     \put(-155,62){\fcolorbox{white}{white}{$l_x$}}
     \put(-227,113){\fcolorbox{white}{white}{$l_y$}}
-    \put(-103,119){$\mathbf{x}$}
-    \put(-198,220){$\mathbf{y}$}
-    \put(-26,4){$\mathbf{z}$}
+    \put(-103,119){$\mathbf{x}_D$}
+    \put(-198,220){$\mathbf{y}_D$}
+    \put(-26,4){$\mathbf{z}_D$}
   \caption{Duct with a rectangular cross-section.}
   \label{fig:02_duct_drawing}
 \end{figure}
@@ -303,25 +305,25 @@ The definition of the speed of sound ($\left.\frac{\partial p}{\partial\rho}\rig
   \label{eqn:02_cons_mass_p}
 \end{equation}
 where $c_0$ is the speed of sound at average fluid properties ($\rho_0$, $p_0$, $T_0$, ...).
-Next the difference between the material derivative ($\mathbf{D}/\mathbf{Dt}$) of Equation \ref{eqn:02_cons_mass_p} and the partial derivative ($\partial/\partial\mathbf{x}$) of Equation \ref{eqn:02_cons_mom} with respect to space is taken which results in the convected 3-D wave equation,
+Next the difference between the material derivative ($\mathbf{D}/\mathbf{Dt}$) of Equation \ref{eqn:02_cons_mass_p} and the partial derivative ($\partial/\partial\mathbf{x}_D$) of Equation \ref{eqn:02_cons_mom} with respect to space is taken which results in the convected 3-D wave equation,
 \begin{equation}
   \left(\frac{\mathbf{D}^2}{\mathbf{Dt}^2}-c_0^2\nabla^2\right)p=0\textrm{.}
   \label{eqn:02_wave_conv_3_c}
 \end{equation}
 Expanding the material derivative and dividing by $c_0^2$,
 \begin{equation}
-  \left(\frac{1}{c_0^2}\frac{\partial^2}{\partial t^2} + \frac{2\mathbf{M}}{c_0}\frac{\partial^2}{\partial t\partial\mathbf{x}} - (1-\mathbf{M}^2)\nabla^2\right)p = 0 \textrm{,}
+  \left(\frac{1}{c_0^2}\frac{\partial^2}{\partial t^2} + \frac{2\mathbf{M}}{c_0}\frac{\partial^2}{\partial t\partial\mathbf{x}_D} - (1-\mathbf{M}^2)\nabla^2\right)p = 0 \textrm{,}
   \label{eqn:02_wave_conv_expand}
 \end{equation}
 where $\mathbf{M} = \mathbf{u_0}/c_0$.
 By using the fact that $c_0=\omega/k_0$, Equation \ref{eqn:02_wave_conv_3_c} can be written in a more convent form,
 \begin{equation}
-  \left(\frac{1}{\omega^2}\frac{\partial^2}{\partial t^2} + \frac{2\mathbf{M}}{\omega k_0}\frac{\partial^2}{\partial t\partial\mathbf{x}} - \frac{1-\mathbf{M}^2}{k_0^2}\nabla^2\right)p = 0 \textrm{,}
+  \left(\frac{1}{\omega^2}\frac{\partial^2}{\partial t^2} + \frac{2\mathbf{M}}{\omega k_0}\frac{\partial^2}{\partial t\partial\mathbf{x}_D} - \frac{1-\mathbf{M}^2}{k_0^2}\nabla^2\right)p = 0 \textrm{,}
   \label{eqn:02_wave_conv_3}
 \end{equation}
 where $\omega$ is the angular frequency and $k_0$ is the total wavenumber.
 
-At this point the pressure field is written in complex form and assumed to be separable in both time and space such that $\hat{p}(\mathbf{x},t) = \hat{p}(x,y)\hat{p}(z)\hat{p}(t)$.
+At this point the pressure field is written in complex form and assumed to be separable in both time and space such that $\hat{p}(\mathbf{x}_D,t) = \hat{p}(x_D,y_D)\hat{p}(z_D)\hat{p}(t)$.
 The temporal solution is assumed to take the form
 \begin{equation}
   \hat{p}(t) = \exp\left\{j\omega t\right\} \textrm{,}
@@ -329,7 +331,7 @@ The temporal solution is assumed to take the form
 \end{equation}
 which results in the spatial component of the convecting wave equation
 \begin{equation}
-  \left((1-\mathbf{M}^2)\nabla^2-2jk_0\mathbf{M}\nabla+k_0^2\right)\hat{p}(x,y)\hat{p}(z) = 0 \textrm{.}
+  \left((1-\mathbf{M}^2)\nabla^2-2jk_0\mathbf{M}\nabla+k_0^2\right)\hat{p}(x_D,y_D)\hat{p}(z_D) = 0 \textrm{.}
   \label{eqn:02_wave_conv_space}
 \end{equation}
 This can be further split into axial and cross-sectional components by splitting $k_0$ into components,
@@ -340,24 +342,24 @@ This can be further split into axial and cross-sectional components by splitting
 and because the mean flow is only in the axial direction ($\mathbf{M} = M\mathbf{\hat{k}}$).
 The cross-sectional component is a typical Helmholtz equation
 \begin{equation}
-  \left(\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}\right)\hat{p}_{xy}(x,y)+k_{xy}^2\hat{p}(x,y) = 0 \textrm{,}
+  \left(\frac{\partial^2}{\partial x_D^2}+\frac{\partial^2}{\partial y_D^2}\right)\hat{p}_{xy}(x_D,y_D)+k_{xy}^2\hat{p}(x_D,y_D) = 0 \textrm{,}
   \label{eqn:02_wave_xy}
 \end{equation}
 whose solution,
 \begin{equation}
-  \hat{p}(x,y) = \Psi_m(x,y) \textrm{,}
+  \hat{p}(x_D,y_D) = \Psi_m(x_D,y_D) \textrm{,}
   \label{eqn:02_pressure_solution_xy}
 \end{equation}
 is one of an infinite number of eigen-function solutions with discrete wavenumbers, $k_m$.
 The axial component of the convecting wave equation,
 \begin{equation}
-  (1-M^2)\frac{\partial^2\hat{p}(z)}{\partial z^2} - 2jk_0M\frac{\partial\hat{p}(z)}{\partial z} + k_z^2\hat{p}(z) = 0 \textrm{,}
+  (1-M^2)\frac{\partial^2\hat{p}(z_D)}{\partial z_D^2} - 2jk_0M\frac{\partial\hat{p}(z_D)}{\partial z_D} + k_z^2\hat{p}(z_D) = 0 \textrm{,}
   \label{eqn:02_wave_z}
 \end{equation}
 retains the total wavenumber in the second term which means its solution will depend on the cross-sectional wavenumber value of the cross-sectional mode.
 The solution to the axial convecting wave equation,
 \begin{equation}
-  \hat{p}(z) = C^+_m\exp{\left\{-jk^+_{zm}z\right\}}+C^-_m\exp{\left\{+jk^-_{zm}z\right\}} \textrm{,}
+  \hat{p}(z_D) = C^+_m\exp{\left\{-jk^+_{zm}z_D\right\}}+C^-_m\exp{\left\{+jk^-_{zm}z_D\right\}} \textrm{,}
   \label{eqn:02_pressure_solution_z}
 \end{equation}
 has waves traveling in both directions with the axial wavenumber in each direction for a given mode
@@ -368,7 +370,7 @@ has waves traveling in both directions with the axial wavenumber in each directi
 
 The solution for a three-dimensional acoustic wave in a duct with a constant but arbitrary cross-section in complex pressure is the combination of the component solutions presented in Equations \ref{eqn:02_pressure_solution_time}, \ref{eqn:02_pressure_solution_xy}, and \ref{eqn:02_pressure_solution_z},
 \begin{equation}
-  \hat{p}(x,y,z,t) = \Psi_m(x,y)\left(C^+_m\exp{\left\{-jk^+_{zm}z\right\}}+C^-_m\exp{\left\{+jk^-_{zm}z\right\}}\right)\exp\left\{j\omega t\right\} \textrm{.}
+  \hat{p}(x_D,y_D,z_D,t) = \Psi_m(x_D,y_D)\left(C^+_m\exp{\left\{-jk^+_{zm}z_D\right\}}+C^-_m\exp{\left\{+jk^-_{zm}z_D\right\}}\right)\exp\left\{j\omega t\right\} \textrm{.}
   \label{eqn:02_pressure_solution_duct}
 \end{equation}
 The two solutions for a plane wave ($\Psi_m=1$, $k_m=0$) traveling in a duct have a characteristic speed of $u\pm c_0$.
@@ -384,7 +386,7 @@ Below this frequency, an acoustic mode will be exponentially attenuated as it tr
 In order to determine the characteristic equations of an acoustic field within a cross-section the solution to Equation \ref{eqn:02_wave_xy} needs to be determined.
 In this research, it will be assumed that the walls of the duct are perfectly rigid, giving the following boundary condition for the 2-D Helmholtz equation:
 \begin{equation}
-  \nabla p_{x,y}(x,y)\cdot\mathbf{n}_{wall} = 0
+  \nabla p_{x_D,y_D}(x_D,y_D)\cdot\mathbf{n}_{wall} = 0
   \label{eqn:02_bc_rigig_wall}
 \end{equation}
 This boundary condition results in the acoustic waves being perfectly reflected off of the duct walls.
@@ -392,7 +394,7 @@ There are several known empirical solution sets of the characteristic equations 
 
 The first of these solutions is for a duct with rectangular cross-section,
 \begin{equation}
-  \Psi_{m,n}(x,y) = \cos(k_xx)\cos(k_yy) \textrm{,}
+  \Psi_{m,n}(x_D,y_D) = \cos(k_xx_D)\cos(k_yy_D) \textrm{,}
   \label{eqn:02_psi_rect}
 \end{equation}
 where the wave numbers along each axis are $k_x = m\pi/l_x$ and $k_y = n\pi/l_y$.
